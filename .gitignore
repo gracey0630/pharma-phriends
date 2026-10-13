@@ -1,0 +1,9 @@
+# cached API responses (large, re-creatable)
+data/raw/
+# secrets
+.env
+# python
+__pycache__/
+*.pyc
+.venv/
+.DS_Store

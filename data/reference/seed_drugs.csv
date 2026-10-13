@@ -1,0 +1,8 @@
+brand_key,brand_name,therapeutic_area,notes
+otezla,OTEZLA,immunology,oral PDE4; first indication PsA (verify)
+cosentyx,COSENTYX,immunology,IL-17A; self-injected
+taltz,TALTZ,immunology,IL-17A; self-injected
+siliq,SILIQ,immunology,IL-17RA; self-injected; REMS
+tremfya,TREMFYA,immunology,IL-23; self-injected
+skyrizi,SKYRIZI,immunology,IL-23; self-injected
+sotyktu,SOTYKTU,immunology,oral TYK2
