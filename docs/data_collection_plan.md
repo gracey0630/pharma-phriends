@@ -36,6 +36,8 @@ Each step of the forecaster journey (see *Launch Forecast Tool: User Journey*) n
 - **Part D Spending by Drug** (annual, current release covers 2020–2024): `Brnd_Name`, `Gnrc_Name`, `Mftr_Name` (use the `"Overall"` row), and per-year `Tot_Clms_YYYY`, `Tot_Benes_YYYY`, `Tot_Spndng_YYYY`, `Avg_Spnd_Per_Clm_YYYY`. **Fills per patient per year = `Tot_Clms / Tot_Benes`.** SDUD has no patient counts, so this is the only public source for that ratio.
   - API: `https://data.cms.gov/data-api/v1/dataset/7e0b4365-fd63-4a29-8f5e-e0ac9f66a81b/data?keyword=<brand>`. Use `keyword`, because exact `filter[Brnd_Name]` misses formulation variants like "Skyrizi On-Body".
   - Older launches need older yearly releases, which go back to about 2012 on the landing page.
+- **Medicaid Spending by Drug** (annual 2020–2024, same layout as Part D minus `Tot_Benes`) is pulled by `scrapers/cms_spending.py`. It matches SDUD national totals (Ibrance 2020: 28,464 in both), so treat it as a cross-check.
+- `Tot_Mftr > 1` flags possible generics/biosimilars, but check manufacturer names first: Otezla's 2 is the Celgene → Amgen relabel.
 - **Quarterly Part D Spending by Drug** gives a quarterly view. Coverage is limited to recent quarters, so it's useful as a Medicare cross-check against SDUD for recent launches.
 - **Part D Prescribers, by Geography and Drug**: national `Tot_Clms`, `Tot_30day_Fills`, `Tot_Benes`. This gives a days-supply adjustment (30-day-equivalent fills vs. raw claims).
 - Caveat: Medicare is 65+ / disabled. That's a different population from Medicaid, so keep `payer` as an explicit column.
@@ -45,10 +47,14 @@ Each step of the forecaster journey (see *Launch Forecast Tool: User Journey*) n
 - `drug/label.json` gives `indications_and_usage` text, which we use to derive first indication and line of therapy (e.g. "after failure of…"). That parsing is a manual or LLM-assisted tagging step, not a scrape.
 - FDA "Novel Drug Approvals for YYYY" pages (CDER) are the HTML source for "first-in-class" and the NME list per year.
 - Get a free openFDA API key. Without one the limit is 1,000 requests/day per IP.
+- **Bulk-file alternative** (`scrapers/fda_files.py`), used when the API is down (it was on 2026-10-13): [Drugs@FDA data files](https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files), [NDC Directory](https://www.accessdata.fda.gov/cder/ndctext.zip), and the [CDER NME & New Biologic Approvals compilation 1985–2025](https://www.fda.gov/drugs/drug-approvals-and-databases/compilation-cder-new-molecular-entity-nme-drug-and-new-biologic-approvals). The compilation's `Approved Use(s)` is the indication at original approval (= `first_indication`), and it also flags accelerated approval, breakthrough, orphan and priority review.
+- **DailyMed** SPL (`dailymed.nlm.nih.gov/dailymed/services/v2`): current indications and the Dosage & Administration section, which sets the ceiling on fills per patient.
+- **RxClass** ATC class: FDA EPC can be too broad (palbociclib = "Kinase Inhibitor"), while ATC gives "CDK inhibitors".
 
 ### 2.4 Supporting sources
 - **RxNav / RxNorm** (`rxnav.nlm.nih.gov/REST`): NDC ↔ RxCUI ↔ ingredient. Catches NDCs openFDA misses (old or discontinued packages).
-- **ClinicalTrials.gov API v2** (`clinicaltrials.gov/api/v2/studies`): eligibility criteria, enrollment and phase. Supports the "eligible" stage of the funnel and the competitive landscape at launch.
+- **ClinicalTrials.gov API v2** (`clinicaltrials.gov/api/v2/studies`): eligibility criteria, enrollment and phase. Supports the "eligible" stage of the funnel and the competitive landscape at launch. `scrapers/clinicaltrials.py` keeps Phase 3 trials plus Phase 2 trials that started before approval (accelerated approvals often rest on a Phase 2).
+- **Oncology epi:** SEER Stat Facts (incidence, subtype share, stage at diagnosis) plus literature for recurrence (Mariotto 2017 for mBC). Line-of-therapy definitions come from NCCN guidelines (read manually, not scraped).
 - **NADAC** (data.medicaid.gov, yearly datasets): pharmacy acquisition cost per unit, as a price reference.
 
 ## 3. Analog universe: start narrow
@@ -57,7 +63,7 @@ The fixed assumptions (US, NME, first indication, retail pharmacy) plus the need
 
 - Approved **2011–2022**. That leaves ≥ 3 full years of SDUD through 2025, and starts after Medicaid managed-care reporting became complete.
 - NME / new BLA, **retail-dispensed** (oral or self-injected). Exclude physician-administered drugs (Part B / J-codes), which don't show up as retail TRx.
-- **MVP therapeutic area:** immunology / dermatology, matching the doc's plaque psoriasis example. Candidate seed list, to be confirmed against openFDA (the first indication matters, e.g. Otezla's first indication was PsA): Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu. After the pipeline works end-to-end on these, add a second area (e.g. diabetes/GLP-1, HCV, or MS orals).
+- **MVP therapeutic area:** immunology / dermatology, matching the doc's plaque psoriasis example. Candidate seed list, to be confirmed against openFDA (the first indication matters, e.g. Otezla's first indication was PsA): Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu. After the pipeline works end-to-end on these, add a second area (e.g. diabetes/GLP-1, HCV, or MS orals). **Oncology started 2026-10-13 with Ibrance** (oral CDK4/6, 2015); Kisqali and Verzenio are next for the class.
 
 ## 4. Shared conventions (agree on these before everyone writes scrapers)
 

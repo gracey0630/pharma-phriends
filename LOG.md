@@ -4,6 +4,46 @@ Running notes on data collection: what we tried, what worked, and what we decide
 
 ---
 
+## 2026-10-13 (part 3): First oncology analog, Ibrance, end to end (Gabrielle)
+
+### Why Ibrance (palbociclib)
+Oral CDK4/6 inhibitor, NME, approved 2015-02-03, dispensed through specialty pharmacy, so it shows up as retail TRx. That gives 11 years of SDUD data. It was first-in-class (Kisqali and Verzenio followed in 2017), so it doubles as an order-of-entry test case. First indication: 1L ER+/HER2– advanced breast cancer with letrozole (accelerated approval from the Phase 2 PALOMA-1 trial; breakthrough, priority review).
+
+### What changed
+| File | Change |
+|---|---|
+| `scrapers/fda_files.py` (new) | Drug master from **FDA bulk files** instead of the openFDA API, which returned 500 on every call today. Sources: Drugs@FDA data files + NDC Directory `ndctext.zip` + CDER NME compilation 1985–2025 + DailyMed SPL (indications, dosing) + RxClass (ATC class). Same columns as `openfda.py` plus `review_designation, accelerated_approval, breakthrough, orphan, atc_class, dosing_text, dailymed_setids, master_source`. |
+| `scrapers/cms_spending.py` (was `partd.py`) | Pulls **Medicare Part D** and **Medicaid Spending by Drug** (same API layout). Adds `n_manufacturers` (Tot_Mftr), `outlier_flag`, `spend_per_claim/unit/bene`, `units_per_claim`, `price_cagr`. Ratios are recomputed from summed totals because per-formulation averages can't be summed. Existing Part D values are unchanged (all 160 old rows match). |
+| `scrapers/clinicaltrials.py` (new) | ClinicalTrials.gov v2: Phase 3 trials plus Phase 2 trials that started before approval, with eligibility text, a `started_before_approval` flag and a keyword `lot_hint` (1L / 2L+ / mixed / adjuvant/early). |
+| `--brands` on every scraper | Replaces only those brands' rows in the output files, so adding an analog doesn't re-pull the other 7 (`common.write_brand_rows`). |
+| `seed_drugs.csv` | Added Ibrance, plus `line_of_therapy` and `first_in_class` columns. Hand tags live here so scraper re-runs don't wipe them. |
+| `epi_funnel.csv` (new) | Curated funnel for 1L HR+/HER2– mBC, with low/base/high and a source tag per step. |
+
+### Results for Ibrance
+- **Drug master:** NDA207103 (capsule, 2015) + NDA212436 (tablet, 2019), Pfizer, Type 1 NME, ATC "CDK inhibitors". FDA EPC is only "Kinase Inhibitor", **too broad for analog matching, so use `atc_class`**. 9 NDC9s, labelers 00069 and 63539. The 63539 (U.S. Pharmaceuticals) NDCs have no Medicaid volume.
+- **SDUD:** 45 quarters (2015Q1–2026Q1), 6 NDC9s, all on the FDA list, 0 name-only matches. TRx goes 85 → 2,109 (Q4) → 6,161 (Q12), peaks at 7,765 in 2021Q3, then declines to ~3.4k by 2025Q4 (2026Q1 is provisional).
+- **Part D (2024):** 131.5k claims, 15.9k beneficiaries, **8.3 fills/patient** (ceiling ≈ 13 at one 28-day cycle per fill), **20.8 units/claim** (= 21 capsules, one 21-on/7-off cycle), $15.5k gross per claim, price CAGR 2020–24 of 5.0%/yr, 1 manufacturer, no outlier flags.
+- **Medicaid Spending by Drug vs. SDUD:** same numbers (2020: 28,464 in both; within 0.6% in other years). Use it as a quick annual cross-check, not as a separate source.
+- **Trials:** 45 Phase 3 + 22 pre-approval Phase 2. Pivotal: PALOMA-1 NCT00721409 (Ph2, 177 pts, 1L), PALOMA-2 NCT01740427 (Ph3, 666, 1L), PALOMA-3 NCT01942135 (Ph3, 521, 2L+).
+- **Epi funnel:** 321,910 new female breast cancers (SEER 2026) × 70–74% HR+/HER2– × 6% de novo distant × 2.5–4.0 to add recurrences (Mariotto 2017) × 75–90% treated 1L endocrine-based = **~25k–52k (base 35k) new 1L patients/yr**. Steps 4–5 are judgment and are tagged that way.
+
+### Findings and gotchas
+1. **Oncology curves look different from immunology.** Ibrance's ramp is concave from Q1 (innovator-driven, high Bass *p*) and **plateaus by about Q12**. The biologics are still climbing at Q20. So for Ibrance, *M* can be read off the curve rather than only from the epi funnel. It also suggests fitting analogs by therapeutic area, or at least letting *p* differ.
+2. **Post-plateau decline isn't diffusion.** It starts in 2022Q4. Likely causes are competition within the CDK4/6 class (to be confirmed once Kisqali/Verzenio are pulled) and Medicaid unwinding in 2023–24. Fit Bass on Q0–Q20 only.
+3. **openFDA was down (HTTP 500) today**; the bulk files are a full substitute. The NME compilation's `Approved Use(s)` is the **indication at original approval**, which fills `first_indication` without parsing labels. Run `fda_files.py` without `--brands` to fill it for the 7 immunology drugs too.
+4. **`Tot_Mftr = 2` for Otezla in Part D** is the Celgene → Amgen relabel, not a generic. The "several manufacturers = poor analog" screen needs a check on manufacturer names before dropping anything.
+5. **Line-of-therapy keywords are fragile.** "Adjuvant" appears in metastatic trials' eligibility ("prior adjuvant therapy allowed"), so `lot_hint` checks for adjuvant only in titles. It's still a hint, not a tag.
+6. **Medicare matters more in oncology.** Ibrance's Part D claims are about 7× its Medicaid claims (2024: 131.5k vs 17.5k). The archived pre-2020 Part D releases matter more for oncology analogs than immunology ones.
+
+### Next steps
+- [ ] Add the CDK4/6 class (Kisqali 2017-03, Verzenio 2017-09) for order-of-entry analogs (`--brands kisqali,verzenio`)
+- [ ] Get archived Part D releases (2015–2019) to cover Ibrance's launch years in Medicare
+- [ ] Part D formulary files: when did Ibrance reach coverage, and with what tier/PA
+- [ ] Replace epi step 5 (assumption) with real-world CDK4/6 uptake literature; check line-of-therapy definitions against NCCN
+- [ ] Re-run `fda_files.py` for all brands to fill `first_indication` from the NME compilation
+
+---
+
 ## 2026-10-13 (part 2): First scrapers built and run (Josh)
 
 ### What got built
