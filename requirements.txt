@@ -1,4 +1,6 @@
-requests>=2.31
-pandas>=2.0
-matplotlib>=3.8
-openpyxl>=3.1
+# Exact versions so everyone gets the same results. Python 3.12+.
+# To upgrade: change the pin here in its own PR.
+requests==2.34.2
+pandas==3.0.6
+matplotlib==3.11.2
+openpyxl==3.1.5
