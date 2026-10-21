@@ -1,6 +1,6 @@
 # Launch Analog and Input Tool: User Journey
 
-> **Status: draft v1** · last updated 2026-10-21 · transcribed from *Pharma Phriends User Journey.pdf*
+> **Status: draft v1** · last updated 2026-10-21 · transcribed from [user_journey_v1.pdf](user_journey_v1.pdf)
 > This document is expected to change as we work through the components. Edit it in a PR and add a line to the change log at the bottom. Tables and sources for each step are in [data_model.md](data_model.md) and [data_sources.md](data_sources.md); decisions and open questions are in [decisions.md](decisions.md).
 
 **Motivating question:** How many TRx will a new brand sell in its first three years, how uncertain is that, and what drives the uncertainty?
