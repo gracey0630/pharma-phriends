@@ -1,0 +1,1415 @@
+analog_id,ndc9,product_ndc,proprietary_name,labeler_name,application_number,dosage_form,route,start_marketing_date,end_marketing_date,listing,match_method
+accrufer_oral,730590001,73059-001,ACCRUFER,Shield TX (UK) Ltd,NDA212320,CAPSULE,ORAL,20210701,,current,application_number
+actemra_sc,502420138,50242-138,Actemra,"Genentech, Inc.",BLA125472,"INJECTION, SOLUTION",SUBCUTANEOUS,20131021,,current,application_number
+actemra_sc,502420143,50242-143,Actemra ACTPen,"Genentech, Inc.",BLA125472,"INJECTION, SOLUTION",SUBCUTANEOUS,20181119,,current,application_number
+adbry_sc,502220346,50222-346,Adbry,LEO Pharma Inc.,BLA761180,"INJECTION, SOLUTION",SUBCUTANEOUS,20220102,,current,application_number
+adbry_sc,502220350,50222-350,Adbry,LEO Pharma Inc.,BLA761180,"INJECTION, SOLUTION",SUBCUTANEOUS,20240701,,current,application_number
+addyi_oral,586040214,58604-214,ADDYI,"Sprout Pharmaceuticals, Inc.",NDA022526,"TABLET, FILM COATED",ORAL,20150818,,current,application_number
+adempas_oral,504190250,50419-250,Adempas,Bayer HealthCare Pharmaceuticals Inc.,NDA204819,"TABLET, FILM COATED",ORAL,20131008,,current,application_number
+adempas_oral,504190251,50419-251,Adempas,Bayer HealthCare Pharmaceuticals Inc.,NDA204819,"TABLET, FILM COATED",ORAL,20131008,,current,application_number
+adempas_oral,504190252,50419-252,Adempas,Bayer HealthCare Pharmaceuticals Inc.,NDA204819,"TABLET, FILM COATED",ORAL,20131008,,current,application_number
+adempas_oral,504190253,50419-253,Adempas,Bayer HealthCare Pharmaceuticals Inc.,NDA204819,"TABLET, FILM COATED",ORAL,20131008,,current,application_number
+adempas_oral,504190254,50419-254,Adempas,Bayer HealthCare Pharmaceuticals Inc.,NDA204819,"TABLET, FILM COATED",ORAL,20131008,,current,application_number
+agamree_oral,696160264,69616-264,AGAMREE,"Catalyst Pharmaceuticals, Inc.",NDA215239,KIT,ORAL,20240201,,current,application_number
+aimovig_sc,555130840,55513-840,AIMOVIG,"Amgen, Inc",BLA761077,INJECTION,SUBCUTANEOUS,20180522,,current,application_number
+aimovig_sc,555130841,55513-841,AIMOVIG,"Amgen, Inc",BLA761077,INJECTION,SUBCUTANEOUS,20180522,,current,application_number
+aimovig_sc,555130842,55513-842,AIMOVIG,"Amgen, Inc",BLA761077,"INJECTION, SOLUTION",SUBCUTANEOUS,20190315,,current,application_number
+aimovig_sc,555130843,55513-843,AIMOVIG,"Amgen, Inc",BLA761077,"INJECTION, SOLUTION",SUBCUTANEOUS,20190315,,current,application_number
+ajovy_sc,517590202,51759-202,AJOVY,"Teva Pharmaceuticals USA, Inc.",BLA761089,INJECTION,SUBCUTANEOUS,20200329,,current,application_number
+ajovy_sc,517590204,51759-204,AJOVY,"Teva Pharmaceuticals USA, Inc.",BLA761089,INJECTION,SUBCUTANEOUS,20180915,,current,application_number
+akynzeo_oral,628560796,62856-796,AKYNZEO,Eisai Inc.,NDA205718,,,20141013,20180531,excluded,application_number; route inferred
+akynzeo_oral,696390101,69639-101,AKYNZEO,"Helsinn Therapeutics (U.S.), Inc.",NDA205718,CAPSULE,ORAL,20141013,,current,application_number
+alecensa_oral,502420130,50242-130,ALECENSA,"Genentech, Inc.",NDA208434,CAPSULE,ORAL,20151211,,current,application_number
+alhemo_sc,001692080,0169-2080,Alhemo,Novo Nordisk,BLA761315,"INJECTION, SOLUTION",SUBCUTANEOUS,20250219,,current,application_number
+alhemo_sc,001692081,0169-2081,Alhemo,Novo Nordisk,BLA761315,"INJECTION, SOLUTION",SUBCUTANEOUS,20250219,,current,application_number
+alhemo_sc,001692084,0169-2084,Alhemo,Novo Nordisk,BLA761315,"INJECTION, SOLUTION",SUBCUTANEOUS,20250219,,current,application_number
+alunbrig_oral,630200090,63020-090,Alunbrig,"Takeda Pharmaceuticals America, Inc.",NDA208772,"TABLET, FILM COATED",ORAL,20170428,,current,application_number
+alunbrig_oral,630200113,63020-113,Alunbrig,"Takeda Pharmaceuticals America, Inc.",NDA208772,"TABLET, FILM COATED",ORAL,20170428,,current,application_number
+alunbrig_oral,630200180,63020-180,Alunbrig,"Takeda Pharmaceuticals America, Inc.",NDA208772,"TABLET, FILM COATED",ORAL,20170428,,current,application_number
+alunbrig_oral,630200198,63020-198,Alunbrig,"Takeda Pharmaceuticals America, Inc.",NDA208772,KIT,,20170428,,current,application_number; route inferred
+alunbrig_oral,761890113,76189-113,Alunbrig,ARIAD Pharmaceuticals Inc.,NDA208772,,,20170428,20201212,excluded,application_number; route inferred
+alyftrek_oral,511670121,51167-121,ALYFTREK,Vertex Pharmaceuticals Incorporated,NDA218730,"TABLET, FILM COATED",ORAL,20241220,,current,application_number
+alyftrek_oral,511670135,51167-135,ALYFTREK,Vertex Pharmaceuticals Incorporated,NDA218730,"TABLET, FILM COATED",ORAL,20241220,,current,application_number
+ampyra_oral,002595010,0259-5010,AMPYRA,"Merz Pharmaceuticals, LLC",NDA022250,"TABLET, FILM COATED, EXTENDED RELEASE",ORAL,20100301,,current,application_number
+ampyra_oral,003780509,0378-0509,dalfampridine,Mylan Pharmaceuticals Inc.,NDA022250,,,20180910,20220531,excluded,application_number; route inferred
+ampyra_oral,101440427,10144-427,AMPYRA,"Merz Pharmaceuticals, LLC",NDA022250,"TABLET, FILM COATED, EXTENDED RELEASE",ORAL,20100301,,current,application_number
+amvuttra_sc,713361003,71336-1003,AMVUTTRA,"Alnylam Pharmaceuticals, Inc.",NDA215515,INJECTION,SUBCUTANEOUS,20220613,,current,application_number
+andembry_sc,638330925,63833-925,ANDEMBRY,CSL,BLA761367,"INJECTION, SOLUTION",SUBCUTANEOUS,20250616,,current,application_number
+aphexda_sc,734410062,73441-062,APHEXDA,Gamida Cell Inc.,NDA217159,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20250615,,current,application_number
+aphexda_sc,827370073,82737-073,Aphexda,BioLineRx USA Inc,NDA217159,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20230908,,current,application_number
+aptiom_oral,634020202,63402-202,Aptiom,"Sumitomo Pharma America, Inc.",NDA022416,TABLET,ORAL,20140407,,current,application_number
+aptiom_oral,634020204,63402-204,Aptiom,"Sumitomo Pharma America, Inc.",NDA022416,TABLET,ORAL,20140407,,current,application_number
+aptiom_oral,634020206,63402-206,Aptiom,"Sumitomo Pharma America, Inc.",NDA022416,TABLET,ORAL,20140407,,current,application_number
+aptiom_oral,634020208,63402-208,Aptiom,"Sumitomo Pharma America, Inc.",NDA022416,TABLET,ORAL,20140407,,current,application_number
+aptiom_oral,634020248,63402-248,Aptiom,"Sumitomo Pharma America, Inc.",NDA022416,KIT,ORAL,20140407,,current,application_number
+aqneursa_oral,838530101,83853-101,AQNEURSA,IntraBio Inc,NDA219132,"GRANULE, FOR SUSPENSION",ORAL,20240924,,current,application_number
+attruby_oral,822280712,82228-712,Attruby,"BridgeBio Pharma, Inc.",NDA216540,"TABLET, FILM COATED",ORAL,20241122,,current,application_number
+aubagio_oral,584680210,58468-0210,Aubagio,Genzyme Corporation,NDA202992,"TABLET, FILM COATED",ORAL,20130501,,current,application_number
+aubagio_oral,584680211,58468-0211,Aubagio,Genzyme Corporation,NDA202992,"TABLET, FILM COATED",ORAL,20130501,,current,application_number
+augtyro_oral,000034040,0003-4040,Augtyro,"E.R. Squibb & Sons, L.L.C.",NDA218213,CAPSULE,ORAL,20231205,,current,application_number
+augtyro_oral,000034160,0003-4160,Augtyro,"E.R. Squibb & Sons, L.L.C.",NDA218213,CAPSULE,ORAL,20241101,,current,application_number
+austedo_oral,685460170,68546-170,Austedo,"Teva Neuroscience, Inc.",NDA208082,"TABLET, COATED",ORAL,20170412,,current,application_number
+austedo_oral,685460171,68546-171,Austedo,"Teva Neuroscience, Inc.",NDA208082,"TABLET, COATED",ORAL,20170412,,current,application_number
+austedo_oral,685460172,68546-172,Austedo,"Teva Neuroscience, Inc.",NDA208082,"TABLET, COATED",ORAL,20170412,,current,application_number
+austedo_oral,685460176,68546-176,AUSTEDO,"Teva Neuroscience, Inc.",NDA208082,KIT,,20200201,,current,application_number; route inferred
+austedo_oral,685460177,68546-177,AUSTEDO,"Teva Neuroscience, Inc.",NDA208082,,,20200201,20230228,excluded,application_number; route inferred
+austedo_oral,685460181,68546-181,AUSTEDO,"Teva Neuroscience, Inc.",NDA208082,,,20210506,20230228,excluded,application_number; route inferred
+austedo_oral,685460182,68546-182,AUSTEDO,"Teva Neuroscience, Inc.",NDA208082,,,20210506,20240229,excluded,application_number; route inferred
+ayvakit_oral,720640110,72064-110,Ayvakit,Blueprint Medicines Corporation,NDA212608,"TABLET, FILM COATED",ORAL,20200109,,current,application_number
+ayvakit_oral,720640120,72064-120,Ayvakit,Blueprint Medicines Corporation,NDA212608,"TABLET, FILM COATED",ORAL,20200109,,current,application_number
+ayvakit_oral,720640125,72064-125,Ayvakit,Blueprint Medicines Corporation,NDA212608,"TABLET, FILM COATED",ORAL,20210616,,current,application_number
+ayvakit_oral,720640130,72064-130,Ayvakit,Blueprint Medicines Corporation,NDA212608,"TABLET, FILM COATED",ORAL,20200109,,current,application_number
+ayvakit_oral,720640150,72064-150,Ayvakit,Blueprint Medicines Corporation,NDA212608,"TABLET, FILM COATED",ORAL,20210616,,current,application_number
+azstarys_oral,650380286,65038-286,AZSTARYS,"Commave Sub, LLC",NDA212994,CAPSULE,ORAL,20210716,,current,application_number
+azstarys_oral,650380429,65038-429,AZSTARYS,"Commave Sub, LLC",NDA212994,CAPSULE,ORAL,20210716,,current,application_number
+azstarys_oral,650380561,65038-561,AZSTARYS,"Commave Sub, LLC",NDA212994,CAPSULE,ORAL,20210716,,current,application_number
+balversa_oral,596760030,59676-030,BALVERSA,Janssen Products LP,NDA212018,"TABLET, FILM COATED",ORAL,20190412,,current,application_number
+balversa_oral,596760040,59676-040,BALVERSA,Janssen Products LP,NDA212018,"TABLET, FILM COATED",ORAL,20190412,,current,application_number
+balversa_oral,596760050,59676-050,BALVERSA,Janssen Products LP,NDA212018,"TABLET, FILM COATED",ORAL,20190412,,current,application_number
+baxdela_oral,708420101,70842-101,Baxdela,"Melinta Therapeutics, LLC",NDA208610,TABLET,ORAL,20170619,,current,application_number
+belsomra_oral,000060005,0006-0005,BELSOMRA,Merck Sharp & Dohme LLC,NDA204569,"TABLET, FILM COATED",ORAL,20140829,,current,application_number
+belsomra_oral,000060033,0006-0033,BELSOMRA,Merck Sharp & Dohme LLC,NDA204569,"TABLET, FILM COATED",ORAL,20140829,,current,application_number
+belsomra_oral,000060325,0006-0325,BELSOMRA,Merck Sharp & Dohme LLC,NDA204569,"TABLET, FILM COATED",ORAL,20140829,,current,application_number
+belsomra_oral,000060335,0006-0335,BELSOMRA,Merck Sharp & Dohme LLC,NDA204569,"TABLET, FILM COATED",ORAL,20140829,,current,application_number
+benlysta_sc,494010088,49401-088,BENLYSTA,GlaxoSmithKline LLC,BLA761043,SOLUTION,SUBCUTANEOUS,20170720,,current,application_number
+benznidazole_oral,006427463,0642-7463,Benznidazole,"Exeltis USA, Inc.",NDA209570,TABLET,ORAL,20180330,,current,application_number
+benznidazole_oral,006427464,0642-7464,Benznidazole,"Exeltis USA, Inc.",NDA209570,TABLET,ORAL,20180330,,current,application_number
+besremi_sc,735360500,73536-500,BESREMi,PharmaEssentia USA,BLA761166,INJECTION,SUBCUTANEOUS,20211112,,current,application_number
+besremi_sc,735360511,73536-511,BESREMi Pen,PharmaEssentia USA,BLA761166,"INJECTION, SOLUTION",SUBCUTANEOUS,20260625,,current,application_number
+biktarvy_oral,500906247,50090-6247,Biktarvy,A-S Medication Solutions,NDA210251,TABLET,ORAL,20180207,,current,application_number
+biktarvy_oral,619582501,61958-2501,Biktarvy,"Gilead Sciences, Inc.",NDA210251,TABLET,ORAL,20180207,,current,application_number
+biktarvy_oral,619582505,61958-2505,Biktarvy,"Gilead Sciences, Inc.",NDA210251,TABLET,ORAL,20211007,,current,application_number
+biktarvy_oral,619582506,61958-2506,Biktarvy,"Gilead Sciences, Inc.",NDA210251,TABLET,ORAL,20241008,,current,application_number
+biktarvy_oral,705183080,70518-3080,Biktarvy,REMEDYREPACK INC.,NDA210251,,,20210428,20250416,excluded,application_number; route inferred
+bimzelx_sc,504740780,50474-780,Bimzelx,"UCB, Inc.",BLA761151,"INJECTION, SOLUTION",SUBCUTANEOUS,20231017,,current,application_number
+bimzelx_sc,504740781,50474-781,Bimzelx,"UCB, Inc.",BLA761151,"INJECTION, SOLUTION",SUBCUTANEOUS,20231017,,current,application_number
+bimzelx_sc,504740782,50474-782,Bimzelx,"UCB, Inc.",BLA761151,"INJECTION, SOLUTION",SUBCUTANEOUS,20241205,,current,application_number
+bimzelx_sc,504740783,50474-783,Bimzelx,"UCB, Inc.",BLA761151,"INJECTION, SOLUTION",SUBCUTANEOUS,20241205,,current,application_number
+blujepa_oral,001730922,0173-0922,Blujepa,GlaxoSmithKline LLC,NDA218230,"TABLET, FILM COATED",ORAL,20250325,,current,application_number
+bosulif_oral,000690135,0069-0135,BOSULIF,Pfizer Laboratories Div Pfizer Inc,NDA203341,"TABLET, FILM COATED",ORAL,20120904,,current,application_number
+bosulif_oral,000690136,0069-0136,BOSULIF,Pfizer Laboratories Div Pfizer Inc,NDA203341,"TABLET, FILM COATED",ORAL,20120904,,current,application_number
+bosulif_oral,000690193,0069-0193,BOSULIF,Pfizer Laboratories Div Pfizer Inc,NDA203341,"TABLET, FILM COATED",ORAL,20171218,,current,application_number
+bosulif_oral,000690504,0069-0504,BOSULIF,Pfizer Laboratories Div Pfizer Inc,NDA217729,CAPSULE,ORAL,20240102,,current,application_number
+bosulif_oral,000691014,0069-1014,BOSULIF,Pfizer Laboratories Div Pfizer Inc,NDA217729,CAPSULE,ORAL,20240102,,current,application_number
+bosulif_oral,635390117,63539-117,BOSULIF,U.S. Pharmaceuticals,NDA203341,,,20120904,20260228,excluded,application_number; route inferred
+bosulif_oral,635390193,63539-193,BOSULIF,U.S. Pharmaceuticals,NDA203341,"TABLET, FILM COATED",ORAL,20120904,,current,application_number
+braftovi_oral,702550020,70255-020,BRAFTOVI,Array BioPharma Inc.,NDA210496,,,20180627,20200417,excluded,application_number; route inferred
+braftovi_oral,702550025,70255-025,BRAFTOVI,Array BioPharma Inc.,NDA210496,CAPSULE,ORAL,20180627,,current,application_number
+brenzavvy_oral,514070826,51407-826,Brenzavvy,"Golden State Medical Supply, Inc.",NDA214373,,,20230120,20240112,excluded,application_number; route inferred
+brenzavvy_oral,514070918,51407-918,Bexagliflozin,"Golden State Medical Supply, Inc.",NDA214373,TABLET,ORAL,20230120,,current,application_number
+brenzavvy_oral,823812000,82381-2000,Bexagliflozin,"TheracosBio, LLC",NDA214373,TABLET,ORAL,20240319,,current,application_number
+brenzavvy_oral,823812174,82381-2174,BRENZAVVY,"TheracosBio, LLC",NDA214373,TABLET,ORAL,20230713,,current,application_number
+brilinta_oral,001860776,0186-0776,BRILINTA,AstraZeneca Pharmaceuticals LP,NDA022433,TABLET,ORAL,20150904,,current,application_number
+brilinta_oral,001860777,0186-0777,BRILINTA,AstraZeneca Pharmaceuticals LP,NDA022433,TABLET,ORAL,20110805,,current,application_number
+brilinta_oral,551549618,55154-9618,BRILINTA,"Cardinal Health 107, LLC",NDA022433,TABLET,ORAL,20110805,,current,application_number
+brilinta_oral,636295292,63629-5292,BRILINTA,Bryant Ranch Prepack,NDA022433,,,20110805,20160430,excluded,application_number; route inferred
+brilinta_oral,716100815,71610-815,BRILINTA,"Aphena Pharma Solutions - Tennessee, LLC",NDA022433,TABLET,ORAL,20110805,,current,application_number
+brinsupri_oral,715580001,71558-001,Brinsupri,Insmed Incorporated,NDA217673,TABLET,ORAL,20250812,,current,application_number
+brinsupri_oral,715580002,71558-002,Brinsupri,Insmed Incorporated,NDA217673,TABLET,ORAL,20250812,,current,application_number
+brintellix_oral,551540256,55154-0256,Trintellix,"Cardinal Health 107, LLC",NDA204447,"TABLET, FILM COATED",ORAL,20131002,,current,application_number
+brintellix_oral,551540257,55154-0257,Trintellix,"Cardinal Health 107, LLC",NDA204447,"TABLET, FILM COATED",ORAL,20131002,,current,application_number
+brintellix_oral,647640550,64764-550,Brintellix,"Takeda Pharmaceuticals America, Inc.",NDA204447,,,20131002,20190815,excluded,application_number; route inferred
+brintellix_oral,647640560,64764-560,Brintellix,"Takeda Pharmaceuticals America, Inc.",NDA204447,,,20131002,20190815,excluded,application_number; route inferred
+brintellix_oral,647640570,64764-570,Brintellix,"Takeda Pharmaceuticals America, Inc.",NDA204447,,,20131002,20190815,excluded,application_number; route inferred
+brintellix_oral,647640580,64764-580,Brintellix,"Takeda Pharmaceuticals America, Inc.",NDA204447,,,20131002,20190815,excluded,application_number; route inferred
+brintellix_oral,647640720,64764-720,Trintellix,"Takeda Pharmaceuticals America, Inc.",NDA204447,"TABLET, FILM COATED",ORAL,20131002,,current,application_number
+brintellix_oral,647640730,64764-730,Trintellix,"Takeda Pharmaceuticals America, Inc.",NDA204447,"TABLET, FILM COATED",ORAL,20131002,,current,application_number
+brintellix_oral,647640740,64764-740,Trintellix,"Takeda Pharmaceuticals America, Inc.",NDA204447,,,20131002,20161004,excluded,application_number; route inferred
+brintellix_oral,647640750,64764-750,Trintellix,"Takeda Pharmaceuticals America, Inc.",NDA204447,"TABLET, FILM COATED",ORAL,20131002,,current,application_number
+brintellix_oral,691890560,69189-0560,Brintellix,Avera McKennan Hospital,NDA204447,,,20150605,20170524,excluded,application_number; route inferred
+brintellix_oral,691890732,69189-0732,Trintellix,Avera McKennan Hospital,NDA204447,,,20160620,20170524,excluded,application_number; route inferred
+brintellix_oral,705182642,70518-2642,Trintellix,REMEDYREPACK INC.,NDA204447,,,20200324,20250530,excluded,application_number; route inferred
+brintellix_oral,705184284,70518-4284,Trintellix,REMEDYREPACK INC.,NDA204447,"TABLET, FILM COATED",ORAL,20250211,,current,application_number
+brintellix_oral,705184483,70518-4483,Trintellix,REMEDYREPACK INC.,NDA204447,"TABLET, FILM COATED",ORAL,20250924,,current,application_number
+briviact_oral,504740370,50474-370,Briviact,"UCB, Inc.",NDA205836,"TABLET, FILM COATED",ORAL,20160512,,current,application_number
+briviact_oral,504740470,50474-470,Briviact,"UCB, Inc.",NDA205836,"TABLET, FILM COATED",ORAL,20160512,,current,application_number
+briviact_oral,504740570,50474-570,Briviact,"UCB, Inc.",NDA205836,"TABLET, FILM COATED",ORAL,20160512,,current,application_number
+briviact_oral,504740670,50474-670,Briviact,"UCB, Inc.",NDA205836,"TABLET, FILM COATED",ORAL,20160512,,current,application_number
+briviact_oral,504740770,50474-770,Briviact,"UCB, Inc.",NDA205836,"TABLET, FILM COATED",ORAL,20160512,,current,application_number
+briviact_oral,504740870,50474-870,Briviact,"UCB, Inc.",NDA205838,SOLUTION,ORAL,20160512,,current,application_number
+brukinsa_oral,725790011,72579-011,BRUKINSA,"BeOne Medicines USA, Inc.",NDA213217,CAPSULE,ORAL,20191114,,current,application_number
+brukinsa_oral,725790122,72579-122,BRUKINSA,"BeOne Medicines USA, Inc.",NDA218785,"TABLET, FILM COATED",ORAL,20250818,,current,application_number
+bylvay_oral,150543301,15054-3301,Bylvay,"Ipsen Biopharmaceuticals, Inc.",NDA215498,"CAPSULE, COATED PELLETS",ORAL,20240110,,current,application_number
+bylvay_oral,150543302,15054-3302,Bylvay,"Ipsen Biopharmaceuticals, Inc.",NDA215498,CAPSULE,ORAL,20240110,,current,application_number
+bylvay_oral,150543303,15054-3303,Bylvay,"Ipsen Biopharmaceuticals, Inc.",NDA215498,"CAPSULE, COATED PELLETS",ORAL,20240110,,current,application_number
+bylvay_oral,150543304,15054-3304,Bylvay,"Ipsen Biopharmaceuticals, Inc.",NDA215498,CAPSULE,ORAL,20240110,,current,application_number
+bylvay_oral,745280020,74528-020,BYLVAY,"Albireo Pharma, Inc.",NDA215498,,,20210720,20260930,excluded,application_number; route inferred
+bylvay_oral,745280040,74528-040,BYLVAY,"Albireo Pharma, Inc.",NDA215498,,,20210720,20260930,excluded,application_number; route inferred
+bylvay_oral,745280060,74528-060,BYLVAY,"Albireo Pharma, Inc.",NDA215498,,,20210720,20260930,excluded,application_number; route inferred
+bylvay_oral,745280120,74528-120,BYLVAY,"Albireo Pharma, Inc.",NDA215498,,,20210720,20260930,excluded,application_number; route inferred
+calquence_oral,003100512,0310-0512,CALQUENCE,AstraZeneca Pharmaceuticals LP,NDA210259,"CAPSULE, GELATIN COATED",ORAL,20171031,,current,application_number
+calquence_oral,003103512,0310-3512,CALQUENCE,AstraZeneca Pharmaceuticals LP,NDA216387,"TABLET, FILM COATED",ORAL,20220804,,current,application_number
+calquence_oral,003104513,0310-4513,CALQUENCE,AstraZeneca Pharmaceuticals LP,NDA216387,"TABLET, FILM COATED",ORAL,20220804,,current,application_number
+camzyos_oral,736250111,73625-111,CAMZYOS,"Myokardia, Inc.",NDA214998,"CAPSULE, GELATIN COATED",ORAL,20220428,,current,application_number
+camzyos_oral,736250112,73625-112,CAMZYOS,"Myokardia, Inc.",NDA214998,"CAPSULE, GELATIN COATED",ORAL,20220428,,current,application_number
+camzyos_oral,736250113,73625-113,CAMZYOS,"Myokardia, Inc.",NDA214998,"CAPSULE, GELATIN COATED",ORAL,20220428,,current,application_number
+camzyos_oral,736250114,73625-114,CAMZYOS,"Myokardia, Inc.",NDA214998,"CAPSULE, GELATIN COATED",ORAL,20220428,,current,application_number
+caplyta_oral,705183497,70518-3497,CAPLYTA,REMEDYREPACK INC.,NDA209500,,,20220824,20230824,excluded,application_number; route inferred
+caplyta_oral,720600110,72060-110,CAPLYTA,"Intra-Cellular Therapies, Inc",NDA209500,CAPSULE,ORAL,20220809,,current,application_number
+caplyta_oral,720600121,72060-121,CAPLYTA,"Intra-Cellular Therapies, Inc",NDA209500,CAPSULE,ORAL,20220809,,current,application_number
+caplyta_oral,720600142,72060-142,CAPLYTA,"Intra-Cellular Therapies, Inc",NDA209500,CAPSULE,ORAL,20200201,,current,application_number
+caprelsa_oral,003107810,0310-7810,Vandetanib,AstraZeneca Pharmaceuticals LP,NDA022405,,,20110421,20130622,excluded,application_number; route inferred
+caprelsa_oral,003107820,0310-7820,CAPRELSA,AstraZeneca Pharmaceuticals LP,NDA022405,,,20110725,20200531,excluded,application_number; route inferred
+caprelsa_oral,003107830,0310-7830,Vandetanib,AstraZeneca Pharmaceuticals LP,NDA022405,,,20110421,20140817,excluded,application_number; route inferred
+caprelsa_oral,003107840,0310-7840,CAPRELSA,AstraZeneca Pharmaceuticals LP,NDA022405,,,20110725,20200531,excluded,application_number; route inferred
+caprelsa_oral,584687820,58468-7820,CAPRELSA,Genzyme Corporation,NDA022405,"TABLET, FILM COATED",ORAL,20110725,,current,application_number
+caprelsa_oral,584687840,58468-7840,CAPRELSA,Genzyme Corporation,NDA022405,"TABLET, FILM COATED",ORAL,20110725,,current,application_number
+carbaglu_oral,522760312,52276-312,Carbaglu,Recordati Rare Diseases,NDA022562,"TABLET, FOR SUSPENSION",ORAL,20100318,,current,application_number
+cerdelga_oral,584680220,58468-0220,Cerdelga,Genzyme Corporation,NDA205494,CAPSULE,ORAL,20140903,,current,application_number
+cholbam_oral,450430001,45043-001,Cholbam,"Manchester Pharmaceuticals, LLC",NDA205750,,,20150331,20260430,excluded,application_number; route inferred
+cholbam_oral,450430002,45043-002,Cholbam,"Manchester Pharmaceuticals, LLC",NDA205750,,,20150331,20260430,excluded,application_number; route inferred
+cholbam_oral,793780001,79378-001,CHOLBAM,Mirum Pharmaceuticals Inc.,NDA205750,CAPSULE,ORAL,20250509,,current,application_number
+cholbam_oral,793780002,79378-002,CHOLBAM,Mirum Pharmaceuticals Inc.,NDA205750,CAPSULE,ORAL,20250509,,current,application_number
+cibinqo_oral,000690235,0069-0235,Cibinqo,Pfizer Laboratories Div Pfizer Inc,NDA213871,"TABLET, FILM COATED",ORAL,20220224,,current,application_number
+cibinqo_oral,000690335,0069-0335,Cibinqo,Pfizer Laboratories Div Pfizer Inc,NDA213871,"TABLET, FILM COATED",ORAL,20220224,,current,application_number
+cibinqo_oral,000690435,0069-0435,Cibinqo,Pfizer Laboratories Div Pfizer Inc,NDA213871,"TABLET, FILM COATED",ORAL,20220224,,current,application_number
+cibinqo_oral,635390236,63539-236,CIBINQO,U.S. Pharmaceuticals,NDA213871,"TABLET, FILM COATED",ORAL,20220224,,current,application_number
+cibinqo_oral,635390336,63539-336,CIBINQO,U.S. Pharmaceuticals,NDA213871,"TABLET, FILM COATED",ORAL,20220224,,current,application_number
+cibinqo_oral,635390436,63539-436,CIBINQO,U.S. Pharmaceuticals,NDA213871,"TABLET, FILM COATED",ORAL,20220224,,current,application_number
+cobenfy_oral,000030050,0003-0050,Cobenfy,"E.R. Squibb & Sons, L.L.C.",NDA216158,"CAPSULE, COATED PELLETS",ORAL,20240927,,current,application_number
+cobenfy_oral,000030125,0003-0125,Cobenfy,"E.R. Squibb & Sons, L.L.C.",NDA216158,"CAPSULE, COATED PELLETS",ORAL,20240927,,current,application_number
+cobenfy_oral,000031100,0003-1100,Cobenfy,"E.R. Squibb & Sons, L.L.C.",NDA216158,"CAPSULE, COATED PELLETS",ORAL,20240927,,current,application_number
+cobenfy_oral,000035150,0003-5150,Cobenfy,"E.R. Squibb & Sons, L.L.C.",NDA216158,KIT,,20240927,,current,application_number; route inferred
+cobenfy_oral,000035200,0003-5200,Cobenfy,"E.R. Squibb & Sons, L.L.C.",NDA216158,KIT,,20240927,,current,application_number; route inferred
+cometriq_oral,423880011,42388-011,COMETRIQ,"Exelixis, Inc.",NDA203756,KIT,,20121129,,current,application_number; route inferred
+cometriq_oral,423880012,42388-012,COMETRIQ,"Exelixis, Inc.",NDA203756,KIT,,20121129,,current,application_number; route inferred
+cometriq_oral,423880013,42388-013,COMETRIQ,"Exelixis, Inc.",NDA203756,CAPSULE,ORAL,20121129,,current,application_number
+cometriq_oral,423880014,42388-014,COMETRIQ,"Exelixis, Inc.",NDA203756,,,20121129,20160531,excluded,application_number; route inferred
+copiktra_oral,717790115,71779-115,Copiktra,"Verastem, Inc.",NDA211155,,,20180925,,excluded,application_number; route inferred
+copiktra_oral,717790125,71779-125,Copiktra,"Verastem, Inc.",NDA211155,,,20180925,,excluded,application_number; route inferred
+copiktra_oral,731160115,73116-115,COPIKTRA,"Secura Bio, Inc.",NDA211155,,,20180925,20220110,excluded,application_number; route inferred
+copiktra_oral,731160125,73116-125,COPIKTRA,"Secura Bio, Inc.",NDA211155,,,20180925,20220110,excluded,application_number; route inferred
+copiktra_oral,731160215,73116-215,COPIKTRA,"Secura Bio, Inc",NDA211155,CAPSULE,ORAL,20180925,,current,application_number
+copiktra_oral,731160225,73116-225,COPIKTRA,"Secura Bio, Inc",NDA211155,CAPSULE,ORAL,20180925,,current,application_number
+corlanor_oral,555130800,55513-800,Corlanor,Amgen Inc,NDA206143,"TABLET, FILM COATED",ORAL,20150420,,current,application_number
+corlanor_oral,555130810,55513-810,Corlanor,Amgen Inc,NDA206143,"TABLET, FILM COATED",ORAL,20150420,,current,application_number
+corlanor_oral,555130813,55513-813,Corlanor,Amgen Inc,NDA209964,SOLUTION,ORAL,20190419,,current,application_number
+corlanor_oral,705183309,70518-3309,Corlanor,REMEDYREPACK INC.,NDA206143,,,20211224,20211230,excluded,application_number; route inferred
+cosentyx_sc,000780639,0078-0639,COSENTYX,Novartis Pharmaceuticals Corporation,BLA125504,INJECTION,SUBCUTANEOUS,20150121,,current,application_number
+cosentyx_sc,000781056,0078-1056,COSENTYX,Novartis Pharmaceuticals Corporation,BLA125504,INJECTION,SUBCUTANEOUS,20150121,,current,application_number
+cosentyx_sc,000781070,0078-1070,COSENTYX,Novartis Pharmaceuticals Corporation,BLA125504,INJECTION,SUBCUTANEOUS,20150121,,current,application_number
+cotellic_oral,502420717,50242-717,Cotellic,"Genentech, Inc.",NDA206192,"TABLET, FILM COATED",ORAL,20151110,,current,application_number
+cresemba_oral,004690320,0469-0320,CRESEMBA,"Astellas Pharma US, Inc.",NDA207500,,,20150306,20221202,excluded,application_number; route inferred
+cresemba_oral,004690520,0469-0520,CRESEMBA,"Astellas Pharma US, Inc.",NDA207500,CAPSULE,ORAL,20151104,,current,application_number
+cresemba_oral,004692860,0469-2860,CRESEMBA,"Astellas Pharma US, Inc.",NDA207500,CAPSULE,ORAL,20221122,,current,application_number
+crysvita_sc,427470102,42747-102,CRYSVITA,"Kyowa Kirin, Inc.",BLA761068,INJECTION,SUBCUTANEOUS,20180418,,current,application_number
+crysvita_sc,427470203,42747-203,CRYSVITA,"Kyowa Kirin, Inc.",BLA761068,INJECTION,SUBCUTANEOUS,20180418,,current,application_number
+crysvita_sc,427470304,42747-304,CRYSVITA,"Kyowa Kirin, Inc.",BLA761068,INJECTION,SUBCUTANEOUS,20180418,,current,application_number
+crysvita_sc,697940102,69794-102,CRYSVITA,Ultragenyx Pharmaceutical Inc.,BLA761068,,,20180418,20241115,excluded,application_number; route inferred
+crysvita_sc,697940203,69794-203,CRYSVITA,Ultragenyx Pharmaceutical Inc.,BLA761068,,,20180418,20241115,excluded,application_number; route inferred
+crysvita_sc,697940304,69794-304,CRYSVITA,Ultragenyx Pharmaceutical Inc.,BLA761068,,,20180418,20241115,excluded,application_number; route inferred
+daliresp_oral,003100088,0310-0088,Daliresp,AstraZeneca Pharmaceuticals LP,NDA022522,TABLET,ORAL,20150701,,current,application_number
+daliresp_oral,003100095,0310-0095,Daliresp,AstraZeneca Pharmaceuticals LP,NDA022522,TABLET,ORAL,20150701,,current,application_number
+daliresp_oral,004560095,0456-0095,Daliresp,"ALLERGAN, INC.",NDA022522,,,20110228,20160731,excluded,application_number; route inferred
+daliresp_oral,551544625,55154-4625,Daliresp,Cardinal Health,NDA022522,,,20110228,20160731,excluded,application_number; route inferred
+daurismo_oral,000690298,0069-0298,Daurismo,Pfizer Laboratories Div Pfizer Inc,NDA210656,"TABLET, FILM COATED",ORAL,20181210,,current,application_number
+daurismo_oral,000691531,0069-1531,Daurismo,Pfizer Laboratories Div Pfizer Inc,NDA210656,"TABLET, FILM COATED",ORAL,20181210,,current,application_number
+dawnzera_sc,718600103,71860-103,DAWNZERA,Ionis Pharmaceuticals Inc.,NDA219407,"INJECTION, SOLUTION",SUBCUTANEOUS,20250821,,current,application_number
+daybue_oral,630900660,63090-660,Daybue,Acadia Pharmaceuticals Inc.,NDA217026,SOLUTION,ORAL,20230310,,current,application_number
+dayvigo_oral,628560405,62856-405,DAYVIGO,Eisai Inc.,NDA212028,"TABLET, FILM COATED",ORAL,20200407,,current,application_number
+dayvigo_oral,628560410,62856-410,DAYVIGO,Eisai Inc.,NDA212028,"TABLET, FILM COATED",ORAL,20200407,,current,application_number
+dayvigo_oral,628560455,62856-455,DAYVIGO,Eisai Inc.,NDA212028,,,20200407,20230228,excluded,application_number; route inferred
+diacomit_oral,684187939,68418-7939,Diacomit,"BIOCODEX, INC.",NDA206709,CAPSULE,ORAL,20180821,,current,application_number
+diacomit_oral,684187940,68418-7940,Diacomit,"BIOCODEX, INC.",NDA206709,CAPSULE,ORAL,20180821,,current,application_number
+diacomit_oral,684187941,68418-7941,Diacomit,"BIOCODEX, INC.",NDA207223,"POWDER, FOR SUSPENSION",ORAL,20180821,,current,application_number
+diacomit_oral,684187942,68418-7942,Diacomit,"BIOCODEX, INC.",NDA207223,"POWDER, FOR SUSPENSION",ORAL,20180821,,current,application_number
+dificid_oral,520150080,52015-080,Dificid,Merck Sharp & Dohme LLC,NDA201699,"TABLET, FILM COATED",ORAL,20110527,,current,application_number
+dificid_oral,520150700,52015-700,DIFICID,Merck Sharp & Dohme LLC,NDA213138,"GRANULE, FOR SUSPENSION",ORAL,20200218,,current,application_number
+dificid_oral,691890083,69189-0083,Dificid,Avera McKennan Hospital,NDA201699,,,20150417,20170524,excluded,application_number; route inferred
+dojolvi_oral,697940050,69794-050,DOJOLVI,Ultragenyx Pharmaceutical Inc.,NDA213687,LIQUID,ORAL,20200701,,current,application_number
+doptelet_oral,713690020,71369-020,DOPTELET,"AkaRx, Inc.",NDA210238,"TABLET, FILM COATED",ORAL,20180523,,current,application_number
+duavee_oral,000081123,0008-1123,Duavee,"Wyeth Pharmaceuticals LLC, a subsidiary of Pfizer Inc.",NDA022247,"TABLET, FILM COATED",ORAL,20131003,,current,application_number
+duavee_oral,635390112,63539-112,Duavee,U.S. Pharmaceuticals,NDA022247,,,20131115,20131115,excluded,application_number; route inferred
+duavee_oral,635390122,63539-122,Duavee,U.S. Pharmaceuticals,NDA022247,"TABLET, FILM COATED",ORAL,20131115,20261231,current,application_number
+dupixent_sc,000245911,0024-5911,Dupixent,Sanofi-Aventis U.S. LLC,BLA761055,,,20211020,20260805,excluded,application_number; route inferred
+dupixent_sc,000245914,0024-5914,Dupixent,Sanofi-Aventis U.S. LLC,BLA761055,"INJECTION, SOLUTION",SUBCUTANEOUS,20170328,,current,application_number
+dupixent_sc,000245915,0024-5915,Dupixent,Sanofi-Aventis U.S. LLC,BLA761055,"INJECTION, SOLUTION",SUBCUTANEOUS,20200619,,current,application_number
+dupixent_sc,000245916,0024-5916,Dupixent,sanofi-aventis U.S. LLC,BLA761055,,,20170328,20220613,excluded,application_number; route inferred
+dupixent_sc,000245918,0024-5918,Dupixent,Sanofi-Aventis U.S. LLC,BLA761055,"INJECTION, SOLUTION",SUBCUTANEOUS,20181019,,current,application_number
+dupixent_sc,000245919,0024-5919,Dupixent,Sanofi-Aventis U.S. LLC,BLA761055,"INJECTION, SOLUTION",SUBCUTANEOUS,20210614,,current,application_number
+duvyzat_oral,117970110,11797-110,DUVYZAT,Italfarmaco SPA,NDA217865,SUSPENSION,ORAL,20240321,,current,application_number
+ebglyss_sc,000027772,0002-7772,EBGLYSS,Eli Lilly and Company,BLA761306,"INJECTION, SOLUTION",SUBCUTANEOUS,20240913,,current,application_number
+ebglyss_sc,000027797,0002-7797,EBGLYSS,Eli Lilly and Company,BLA761306,"INJECTION, SOLUTION",SUBCUTANEOUS,20240913,,current,application_number
+edarbi_oral,525360004,52536-004,Azilsartan Medoxomil,"Wilshire Pharmaceuticals, Inc.",NDA200796,TABLET,ORAL,20260427,,current,application_number
+edarbi_oral,525360008,52536-008,Azilsartan Medoxomil,"Wilshire Pharmaceuticals, Inc.",NDA200796,TABLET,ORAL,20260427,,current,application_number
+edarbi_oral,606310040,60631-040,Edarbi,"Azurity Pharmaceuticals, Inc.",NDA200796,TABLET,ORAL,20130201,,current,application_number
+edarbi_oral,606310080,60631-080,Edarbi,"Azurity Pharmaceuticals, Inc.",NDA200796,TABLET,ORAL,20130201,,current,application_number
+edarbi_oral,647640844,64764-844,edarbi,"Takeda Pharmaceuticals America, Inc.",NDA200796,,,20110225,20180201,excluded,application_number; route inferred
+edarbi_oral,647640884,64764-884,edarbi,"Takeda Pharmaceuticals America, Inc.",NDA200796,,,20110225,20180201,excluded,application_number; route inferred
+edurant_oral,596760278,59676-278,EDURANT,"Janssen Products, LP",NDA202022,"TABLET, FILM COATED",ORAL,20110520,,current,application_number
+egaten_oral,000780937,0078-0937,EGATEN,Novartis Pharmaceuticals Corporation,NDA208711,TABLET,ORAL,20190213,,current,application_number
+egrifta_sc,620640011,62064-011,Egrifta,Theratechnologies Inc.,BLA022505,,,20140714,20200731,excluded,application_number; route inferred
+egrifta_sc,620640241,62064-241,EGRIFTA SV,Theratechnologies Inc.,BLA022505,KIT,SUBCUTANEOUS,20191104,,current,application_number
+egrifta_sc,620640381,62064-381,EGRIFTA WR,Theratechnologies Inc.,BLA022505,KIT,SUBCUTANEOUS,20250715,,current,application_number
+ekterly_oral,829280300,82928-300,EKTERLY,KalVista Pharmaceuticals Ltd,NDA219301,TABLET,ORAL,20250703,,current,application_number
+eliquis_oral,000030893,0003-0893,ELIQUIS,"E.R. Squibb & Sons, L.L.C.",NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,000030894,0003-0894,ELIQUIS,"E.R. Squibb & Sons, L.L.C.",NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,000030898,0003-0898,ELIQUIS SPRINKLE,"E.R. Squibb & Sons, L.L.C.",NDA220073,CAPSULE,ORAL,20250915,,current,application_number
+eliquis_oral,000031028,0003-1028,ELIQUIS,"E.R. Squibb & Sons, L.L.C.",NDA202155,"TABLET, FOR SUSPENSION",ORAL,20250915,,current,application_number
+eliquis_oral,000033764,0003-3764,ELIQUIS,"E.R. Squibb & Sons, L.L.C.",NDA202155,KIT,,20171129,,current,application_number; route inferred
+eliquis_oral,000033765,0003-3765,ELIQUIS,"E.R. Squibb & Sons, L.L.C.",NDA202155,KIT,,20171129,,current,application_number; route inferred
+eliquis_oral,500901436,50090-1436,ELIQUIS,A-S Medication Solutions,NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,500901437,50090-1437,ELIQUIS,A-S Medication Solutions,NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,500906451,50090-6451,ELIQUIS,A-S Medication Solutions,NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,500906454,50090-6454,ELIQUIS,A-S Medication Solutions,NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,551540612,55154-0612,ELIQUIS,"Cardinal Health 107, LLC",NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,551540613,55154-0613,ELIQUIS,"Cardinal Health 107, LLC",NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,636297747,63629-7747,ELIQUIS,Bryant Ranch Prepack,NDA202155,,,20121228,20260128,excluded,application_number; route inferred
+eliquis_oral,636298432,63629-8432,ELIQUIS,Bryant Ranch Prepack,NDA202155,,,20121228,20260129,excluded,application_number; route inferred
+eliquis_oral,672961673,67296-1673,ELIQUIS,"RedPharm Drug, Inc.",NDA202155,,,20190101,,excluded,application_number; route inferred
+eliquis_oral,705181861,70518-1861,ELIQUIS,REMEDYREPACK INC.,NDA202155,,,20190208,20250731,excluded,application_number; route inferred
+eliquis_oral,705184462,70518-4462,ELIQUIS,REMEDYREPACK INC.,NDA202155,"TABLET, FILM COATED",ORAL,20250829,,current,application_number
+eliquis_oral,716100662,71610-662,ELIQUIS,"Aphena Pharma Solutions - Tennessee, LLC",NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,716100811,71610-811,ELIQUIS,"Aphena Pharma Solutions - Tennessee, LLC",NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,828040085,82804-085,ELIQUIS,Proficient Rx LP,NDA202155,"TABLET, FILM COATED",ORAL,20121228,,current,application_number
+eliquis_oral,829820054,82982-054,ELIQUIS,"Pharmasource Meds, LLC",NDA202155,,,20230221,20250831,excluded,application_number; route inferred
+ella_oral,500902835,50090-2835,Ella,A-S Medication Solutions,NDA022474,,,20100813,,excluded,application_number; route inferred
+ella_oral,500905422,50090-5422,Ella,A-S Medication Solutions,NDA022474,TABLET,ORAL,20200511,,current,application_number
+ella_oral,501020911,50102-911,Ella,Afaxys Pharma LLC,NDA022474,,,20100813,20220515,excluded,application_number; route inferred
+ella_oral,525440238,52544-238,Ella,"Actavis Pharma, Inc.",NDA022474,,,20100813,20131227,excluded,application_number; route inferred
+ella_oral,530021630,53002-1630,Ella,"RPK Pharmaceuticals, Inc.",NDA022474,,,20100813,,excluded,application_number; route inferred
+ella_oral,530022630,53002-2630,Ella,"RPK Pharmaceuticals, Inc.",NDA022474,,,20200511,,excluded,application_number; route inferred
+ella_oral,672961466,67296-1466,Ella,"RedPharm Drug, Inc",NDA022474,,,20200511,,excluded,application_number; route inferred
+ella_oral,733020456,73302-456,Ella,"PMI Branded Pharmaceuticals, Inc.",NDA022474,TABLET,ORAL,20200511,,current,application_number
+elrexfio_sc,000692522,0069-2522,Elrexfio,Pfizer Laboratories Div Pfizer Inc,BLA761345,"INJECTION, SOLUTION",SUBCUTANEOUS,20230815,,current,application_number
+elrexfio_sc,000694494,0069-4494,Elrexfio,Pfizer Laboratories Div Pfizer Inc,BLA761345,"INJECTION, SOLUTION",SUBCUTANEOUS,20230815,,current,application_number
+elrexfio_sc,635390252,63539-252,Elrexfio,U.S. Pharmaceuticals,BLA761345,"INJECTION, SOLUTION",SUBCUTANEOUS,20230815,,current,application_number
+emflaza_oral,429980501,42998-501,EMFLAZA,"Marathon Pharmaceuticals, LLC",NDA208684,,,20170209,20200630,excluded,application_number; route inferred
+emflaza_oral,429980502,42998-502,EMFLAZA,"Marathon Pharmaceuticals, LLC",NDA208684,,,20170209,20200630,excluded,application_number; route inferred
+emflaza_oral,429980503,42998-503,EMFLAZA,"Marathon Pharmaceuticals, LLC",NDA208684,,,20170209,20200630,excluded,application_number; route inferred
+emflaza_oral,429980504,42998-504,EMFLAZA,"Marathon Pharmaceuticals, LLC",NDA208684,,,20170209,20200630,excluded,application_number; route inferred
+emflaza_oral,429980505,42998-505,EMFLAZA,"Marathon Pharmaceuticals, LLC",NDA208685,,,20170209,20200630,excluded,application_number; route inferred
+emflaza_oral,528560501,52856-501,EMFLAZA,"PTC Therapeutics, Inc.",NDA208684,TABLET,ORAL,20180910,,current,application_number
+emflaza_oral,528560502,52856-502,EMFLAZA,"PTC Therapeutics, Inc.",NDA208684,TABLET,ORAL,20180910,,current,application_number
+emflaza_oral,528560503,52856-503,EMFLAZA,"PTC Therapeutics, Inc.",NDA208684,TABLET,ORAL,20180910,,current,application_number
+emflaza_oral,528560504,52856-504,EMFLAZA,"PTC Therapeutics, Inc.",NDA208684,TABLET,ORAL,20180910,,current,application_number
+emflaza_oral,528560505,52856-505,EMFLAZA,"PTC Therapeutics, Inc.",NDA208685,SUSPENSION,ORAL,20180910,,current,application_number
+emgality_sc,000021436,0002-1436,EMGALITY,Eli Lilly and Company,BLA761063,"INJECTION, SOLUTION",SUBCUTANEOUS,20180927,,current,application_number
+emgality_sc,000022377,0002-2377,EMGALITY,Eli Lilly and Company,BLA761063,"INJECTION, SOLUTION",SUBCUTANEOUS,20180927,,current,application_number
+emgality_sc,000023115,0002-3115,EMGALITY,Eli Lilly and Company,BLA761063,"INJECTION, SOLUTION",SUBCUTANEOUS,20190604,,current,application_number
+empaveli_sc,736060010,73606-010,Empaveli,"Apellis Pharmaceuticals, Inc.",NDA215014,"INJECTION, SOLUTION",SUBCUTANEOUS,20210514,,current,application_number
+ensacove_oral,830761025,83076-1025,ENSACOVE,"Xcovery Holdings, Inc.",NDA218171,CAPSULE,ORAL,20250430,,current,application_number
+ensacove_oral,830761100,83076-1100,ENSACOVE,"Xcovery Holdings, Inc.",NDA218171,CAPSULE,ORAL,20250430,,current,application_number
+enspryng_sc,502420007,50242-007,Enspryng,"Genentech, Inc.",BLA761149,"INJECTION, SOLUTION",SUBCUTANEOUS,20200814,,current,application_number
+entresto_oral,000780659,0078-0659,ENTRESTO,Novartis Pharmaceuticals Corporation,NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
+entresto_oral,000780696,0078-0696,ENTRESTO,Novartis Pharmaceuticals Corporation,NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
+entresto_oral,000780777,0078-0777,ENTRESTO,Novartis Pharmaceuticals Corporation,NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
+entresto_oral,000789659,0078-9659,ENTRESTO,Novartis Pharmaceuticals Corporation,NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
+entresto_oral,000789777,0078-9777,ENTRESTO,Novartis Pharmaceuticals Corporation,NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
+entresto_oral,716100806,71610-806,ENTRESTO,"Aphena Pharma Solutions - Tennessee, LLC",NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
+entresto_oral,716100807,71610-807,ENTRESTO,"Aphena Pharma Solutions - Tennessee, LLC",NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
+entresto_oral,716100810,71610-810,ENTRESTO,"Aphena Pharma Solutions - Tennessee, LLC",NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
+entyvio_sc,647640107,64764-107,ENTYVIO,"Takeda Pharmaceuticals America, Inc.",BLA761133,"INJECTION, SOLUTION",SUBCUTANEOUS,20230927,,current,application_number
+entyvio_sc,647640108,64764-108,ENTYVIO Pen,"Takeda Pharmaceuticals America, Inc.",BLA761133,"INJECTION, SOLUTION",SUBCUTANEOUS,20230927,,current,application_number
+epclusa_oral,619582201,61958-2201,Epclusa,"Gilead Sciences, Inc.",NDA208341,"TABLET, FILM COATED",ORAL,20160628,,current,application_number
+epclusa_oral,619582203,61958-2203,Epclusa,"Gilead Sciences, Inc.",NDA208341,"TABLET, FILM COATED",ORAL,20200319,,current,application_number
+epclusa_oral,619582204,61958-2204,Epclusa,"Gilead Sciences, Inc.",NDA214187,PELLET,ORAL,20210610,,current,application_number
+epclusa_oral,619582205,61958-2205,Epclusa,"Gilead Sciences, Inc.",NDA214187,PELLET,ORAL,20210610,,current,application_number
+epclusa_oral,726262701,72626-2701,Sofosbuvir and Velpatasvir,Asegua Therapeutics LLC,NDA208341,"TABLET, FILM COATED",ORAL,20181114,,current,application_number
+epidiolex_oral,701270100,70127-100,Epidiolex,"Jazz Pharmaceuticals, Inc.",NDA210365,SOLUTION,ORAL,20181005,,current,application_number
+epkinly_sc,827050002,82705-002,EPKINLY,"Genmab US, Inc.",BLA761324,"INJECTION, SOLUTION",SUBCUTANEOUS,20230519,,current,application_number
+epkinly_sc,827050010,82705-010,EPKINLY,"Genmab US, Inc.",BLA761324,"INJECTION, SOLUTION",SUBCUTANEOUS,20230519,,current,application_number
+erivedge_oral,502420140,50242-140,ERIVEDGE,"Genentech, Inc.",NDA203388,CAPSULE,ORAL,20120130,,current,application_number
+erleada_oral,596760600,59676-600,ERLEADA,"Janssen Products, LP",NDA210951,"TABLET, FILM COATED",ORAL,20180214,,current,application_number
+erleada_oral,596760604,59676-604,ERLEADA,"Janssen Products, LP",NDA210951,"TABLET, FILM COATED",ORAL,20180214,,current,application_number
+esbriet_oral,502420122,50242-122,ESBRIET,"Genentech, Inc.",NDA208780,"TABLET, COATED",ORAL,20170111,20290131,current,application_number
+esbriet_oral,502420123,50242-123,ESBRIET,"Genentech, Inc.",NDA208780,"TABLET, COATED",ORAL,20170111,20290331,current,application_number
+esbriet_oral,831070028,83107-028,ESBRIET,Legacy Pharma USA Inc.,NDA208780,"TABLET, COATED",ORAL,20250531,,current,application_number
+esbriet_oral,831070029,83107-029,ESBRIET,Legacy Pharma USA Inc.,NDA208780,"TABLET, COATED",ORAL,20250531,,current,application_number
+evenity_sc,555130509,55513-509,Evenity,"Amgen, Inc",BLA761062,"INJECTION, SOLUTION",SUBCUTANEOUS,20260101,,current,application_number
+evenity_sc,555130880,55513-880,Evenity,"Amgen, Inc",BLA761062,"INJECTION, SOLUTION",SUBCUTANEOUS,20190409,,current,application_number
+evenity_sc,555130998,55513-998,Evenity,"Amgen, Inc",BLA761062,"INJECTION, SOLUTION",SUBCUTANEOUS,20240701,,current,application_number
+evrysdi_oral,502420175,50242-175,EVRYSDI,"Genentech, Inc.",NDA213535,"POWDER, FOR SOLUTION",ORAL,20200807,,current,application_number
+evrysdi_oral,502420202,50242-202,EVRYSDI,"Genentech, Inc.",NDA219285,TABLET,ORAL,20250211,,current,application_number
+exdensur_sc,001730927,0173-0927,Exdensur,GlaxoSmithKline LLC,BLA761458,"INJECTION, SOLUTION",SUBCUTANEOUS,20251216,,current,application_number
+exxua_oral,235940150,23594-150,EXXUA,"Aytu Therapeutics, LLC",NDA021164,"TABLET, EXTENDED RELEASE",ORAL,20251001,,current,application_number
+exxua_oral,235940151,23594-151,EXXUA,"Aytu Therapeutics, LLC",NDA021164,"TABLET, EXTENDED RELEASE",ORAL,20251001,,current,application_number
+exxua_oral,235940152,23594-152,EXXUA,"Aytu Therapeutics, LLC",NDA021164,"TABLET, EXTENDED RELEASE",ORAL,20251001,,current,application_number
+exxua_oral,235940153,23594-153,EXXUA,"Aytu Therapeutics, LLC",NDA021164,"TABLET, EXTENDED RELEASE",ORAL,20251001,,current,application_number
+exxua_oral,835040150,83504-150,EXXUA,"Fabre Kramer Pharmaceuticals, Inc.",NDA021164,,,20240101,20250930,excluded,application_number; route inferred
+exxua_oral,835040151,83504-151,EXXUA,"Fabre Kramer Pharmaceuticals, Inc.",NDA021164,,,20240101,20250930,excluded,application_number; route inferred
+exxua_oral,835040152,83504-152,EXXUA,"Fabre Kramer Pharmaceuticals, Inc.",NDA021164,,,20240101,20250930,excluded,application_number; route inferred
+exxua_oral,835040153,83504-153,EXXUA,"Fabre Kramer Pharmaceuticals, Inc.",NDA021164,,,20240101,20250930,excluded,application_number; route inferred
+fabhalta_oral,000781189,0078-1189,FABHALTA,Novartis Pharmaceuticals Corporation,NDA218276,CAPSULE,ORAL,20231205,,current,application_number
+farxiga_oral,000031427,0003-1427,FARXIGA,"E.R. Squibb & Sons, L.L.C.",NDA202293,,,20140108,20170430,excluded,application_number; route inferred
+farxiga_oral,000031428,0003-1428,FARXIGA,"E.R. Squibb & Sons, L.L.C.",NDA202293,,,20140108,20170831,excluded,application_number; route inferred
+farxiga_oral,003106205,0310-6205,FARXIGA,AstraZeneca Pharmaceuticals LP,NDA202293,"TABLET, FILM COATED",ORAL,20080114,,current,application_number
+farxiga_oral,003106210,0310-6210,FARXIGA,AstraZeneca Pharmaceuticals LP,NDA202293,"TABLET, FILM COATED",ORAL,20080114,,current,application_number
+farxiga_oral,500903481,50090-3481,FARXIGA,A-S Medication Solutions,NDA202293,"TABLET, FILM COATED",ORAL,20080114,,current,application_number
+farxiga_oral,500903482,50090-3482,FARXIGA,A-S Medication Solutions,NDA202293,"TABLET, FILM COATED",ORAL,20080114,,current,application_number
+farxiga_oral,500907056,50090-7056,DAPAGLIFLOZIN,A-S Medication Solutions,NDA202293,"TABLET, FILM COATED",ORAL,20240103,,current,application_number
+farxiga_oral,500907057,50090-7057,DAPAGLIFLOZIN,A-S Medication Solutions,NDA202293,"TABLET, FILM COATED",ORAL,20240103,,current,application_number
+farxiga_oral,551546932,55154-6932,FARXIGA,"Cardinal Health 107, LLC",NDA202293,,,20080114,20260331,excluded,application_number; route inferred
+farxiga_oral,551546933,55154-6933,FARXIGA,"Cardinal Health 107, LLC",NDA202293,,,20080114,20260731,excluded,application_number; route inferred
+farxiga_oral,636293253,63629-3253,DAPAGLIFLOZIN,Bryant Ranch Prepack,NDA202293,"TABLET, FILM COATED",ORAL,20240103,,current,application_number
+farxiga_oral,669930456,66993-456,DAPAGLIFLOZIN,Prasco Laboratories,NDA202293,"TABLET, FILM COATED",ORAL,20240103,,current,application_number
+farxiga_oral,669930457,66993-457,DAPAGLIFLOZIN,Prasco Laboratories,NDA202293,"TABLET, FILM COATED",ORAL,20240103,,current,application_number
+farxiga_oral,705184614,70518-4614,FARXIGA,REMEDYREPACK INC.,NDA202293,"TABLET, FILM COATED",ORAL,20260423,,current,application_number
+fasenra_sc,003101730,0310-1730,FASENRA,AstraZeneca Pharmaceuticals LP,BLA761070,"INJECTION, SOLUTION",SUBCUTANEOUS,20171114,,current,application_number
+fasenra_sc,003101745,0310-1745,FASENRA,AstraZeneca Pharmaceuticals LP,BLA761070,"INJECTION, SOLUTION",SUBCUTANEOUS,20240405,,current,application_number
+fasenra_sc,003101830,0310-1830,FASENRA,AstraZeneca Pharmaceuticals LP,BLA761070,"INJECTION, SOLUTION",SUBCUTANEOUS,20191004,,current,application_number
+ferriprox_oral,101220100,10122-100,FERRIPROX,"Chiesi USA, Inc.",NDA021825,,,20111125,20260331,excluded,application_number; route inferred
+ferriprox_oral,101220101,10122-101,FERRIPROX,"Chiesi USA, Inc.",NDA208030,SOLUTION,ORAL,20150909,,current,application_number
+ferriprox_oral,101220103,10122-103,FERRIPROX,"Chiesi USA, Inc.",NDA021825,"TABLET, FILM COATED",ORAL,20190801,,current,application_number
+ferriprox_oral,101220104,10122-104,FERRIPROX,"Chiesi USA, Inc.",NDA212269,TABLET,ORAL,20200519,,current,application_number
+ferriprox_oral,526090006,52609-0006,FERRIPROX,"ApoPharma USA, Inc.",NDA021825,,,20111125,,excluded,application_number; route inferred
+ferriprox_oral,526090007,52609-0007,FERRIPROX,"ApoPharma USA, Inc.",NDA021825,,,20190801,,excluded,application_number; route inferred
+ferriprox_oral,526094502,52609-4502,FERRIPROX,"ApoPharma USA, Inc.",NDA208030,,,20150909,20240108,excluded,application_number; route inferred
+fexinidazole_oral,000244512,0024-4512,Fexinidazole,Sanofi-Aventis U.S. LLC,NDA214429,TABLET,ORAL,20210716,,current,application_number
+filspari_oral,689740200,68974-200,FILSPARI,"Travere Therapeutics, Inc.",NDA216403,"TABLET, FILM COATED",ORAL,20230217,,current,application_number
+filspari_oral,689740400,68974-400,FILSPARI,"Travere Therapeutics, Inc.",NDA216403,"TABLET, FILM COATED",ORAL,20230217,,current,application_number
+firazyr_sc,540920135,54092-135,Icatibant,"Takeda Pharmaceuticals America, Inc.",NDA022150,,,20190730,20210331,excluded,application_number; route inferred
+firazyr_sc,540920702,54092-702,Firazyr,"Takeda Pharmaceuticals America, Inc.",NDA022150,"INJECTION, SOLUTION",SUBCUTANEOUS,20110825,,current,application_number
+firdapse_oral,696160211,69616-211,Firdapse,"Catalyst Pharmaceuticals, Inc.",NDA208078,TABLET,ORAL,20190107,,current,application_number
+forzinity_sc,725070800,72507-800,FORZINITY,Stealth Biotherapeutics Inc.,NDA215244,INJECTION,SUBCUTANEOUS,20251030,,current,application_number
+fotivda_oral,456290089,45629-089,FOTIVDA,"AVEO Pharmaceuticals, Inc.",NDA212904,CAPSULE,ORAL,20210310,,current,application_number
+fotivda_oral,456290134,45629-134,FOTIVDA,"AVEO Pharmaceuticals, Inc.",NDA212904,CAPSULE,ORAL,20210310,,current,application_number
+fruzaqla_oral,630200210,63020-210,Fruzaqla,"Takeda Pharmaceuticals America, Inc.",NDA217564,CAPSULE,ORAL,20231108,,current,application_number
+fruzaqla_oral,630200225,63020-225,Fruzaqla,"Takeda Pharmaceuticals America, Inc.",NDA217564,CAPSULE,ORAL,20231108,,current,application_number
+fulyzaq_oral,656490802,65649-802,FULYZAQ,"Salix Pharmaceuticals, Inc.",NDA202292,,,20121231,20171231,excluded,application_number; route inferred
+fulyzaq_oral,705640802,70564-802,MYTESI,"Napo Pharmaceuticals, Inc.",NDA202292,"TABLET, COATED",ORAL,20160801,,current,application_number
+fycompa_oral,628560270,62856-270,Fycompa,Eisai Inc.,NDA202834,,,20121022,20160513,excluded,application_number; route inferred
+fycompa_oral,628560272,62856-272,Fycompa,Eisai Inc.,NDA202834,TABLET,ORAL,20121022,,current,application_number
+fycompa_oral,628560274,62856-274,Fycompa,Eisai Inc.,NDA202834,TABLET,ORAL,20121022,,current,application_number
+fycompa_oral,628560276,62856-276,Fycompa,Eisai Inc.,NDA202834,TABLET,ORAL,20121022,,current,application_number
+fycompa_oral,628560278,62856-278,Fycompa,Eisai Inc.,NDA202834,TABLET,ORAL,20121022,,current,application_number
+fycompa_oral,628560280,62856-280,Fycompa,Eisai Inc.,NDA202834,TABLET,ORAL,20121022,,current,application_number
+fycompa_oral,628560282,62856-282,Fycompa,Eisai Inc.,NDA202834,TABLET,ORAL,20121022,,current,application_number
+fycompa_oral,628560290,62856-290,Fycompa,Eisai Inc.,NDA208277,SUSPENSION,ORAL,20160430,,current,application_number
+fycompa_oral,696160272,69616-272,Fycompa,"Catalyst Pharmaceuticals, Inc.",NDA202834,TABLET,ORAL,20240102,,current,application_number
+fycompa_oral,696160274,69616-274,Fycompa,"Catalyst Pharmaceuticals, Inc.",NDA202834,TABLET,ORAL,20240102,,current,application_number
+fycompa_oral,696160276,69616-276,Fycompa,"Catalyst Pharmaceuticals, Inc.",NDA202834,TABLET,ORAL,20240102,,current,application_number
+fycompa_oral,696160278,69616-278,Fycompa,"Catalyst Pharmaceuticals, Inc.",NDA202834,TABLET,ORAL,20240102,,current,application_number
+fycompa_oral,696160280,69616-280,Fycompa,"Catalyst Pharmaceuticals, Inc.",NDA202834,TABLET,ORAL,20240102,,current,application_number
+fycompa_oral,696160282,69616-282,Fycompa,"Catalyst Pharmaceuticals, Inc.",NDA202834,TABLET,ORAL,20240102,,current,application_number
+fycompa_oral,696160290,69616-290,Fycompa,"Catalyst Pharmaceuticals, Inc.",NDA208277,SUSPENSION,ORAL,20240102,,current,application_number
+galafold_oral,719040100,71904-100,Galafold,"Amicus Therapeutics US, LLC",NDA208623,CAPSULE,ORAL,20180810,,current,application_number
+gattex_sc,688750101,68875-0101,Gattex,"Takeda Pharmaceuticals America, Inc.",NDA203441,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20121221,,current,application_number
+gattex_sc,688750102,68875-0102,Gattex,"Takeda Pharmaceuticals America, Inc.",NDA203441,KIT,,20121221,,current,application_number; route inferred
+gattex_sc,688750103,68875-0103,Gattex,"Takeda Pharmaceuticals America, Inc.",NDA203441,KIT,,20121221,,current,application_number; route inferred
+gavreto_oral,502420210,50242-210,Gavreto,"Genentech, Inc.",NDA213721,,,20210701,20260930,excluded,application_number; route inferred
+gavreto_oral,713320006,71332-006,Gavreto,"Rigel Pharmaceuticals, Inc.",NDA213721,CAPSULE,ORAL,20240624,,current,application_number
+gavreto_oral,720640210,72064-210,GAVRETO,Blueprint Medicines Corporation,NDA213721,,,20200904,20220430,excluded,application_number; route inferred
+gemtesa_oral,733360075,73336-075,GEMTESA,"Sumitomo Pharma America, Inc.",NDA213006,"TABLET, FILM COATED",ORAL,20201229,,current,application_number
+genvoya_oral,500902279,50090-2279,Genvoya,A-S Medication Solutions,NDA207561,,,20151105,20180731,excluded,application_number; route inferred
+genvoya_oral,619581901,61958-1901,Genvoya,"Gilead Sciences, Inc.",NDA207561,TABLET,ORAL,20151105,,current,application_number
+genvoya_oral,705180568,70518-0568,Genvoya,REMEDYREPACK INC.,NDA207561,,,20170606,20250416,excluded,application_number; route inferred
+gilenya_oral,000780607,0078-0607,Gilenya,Novartis Pharmaceuticals Corporation,NDA022527,CAPSULE,ORAL,20100921,,current,application_number
+gilenya_oral,000780965,0078-0965,Gilenya,Novartis Pharmaceuticals Corporation,NDA022527,CAPSULE,ORAL,20100921,,current,application_number
+gilotrif_oral,005970137,0597-0137,Gilotrif,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA201292,"TABLET, FILM COATED",ORAL,20130712,,current,application_number
+gilotrif_oral,005970138,0597-0138,Gilotrif,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA201292,"TABLET, FILM COATED",ORAL,20130712,,current,application_number
+gilotrif_oral,005970141,0597-0141,Gilotrif,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA201292,"TABLET, FILM COATED",ORAL,20130712,,current,application_number
+givlaari_sc,713361001,71336-1001,GIVLAARI,"Alnylam Pharmaceuticals, Inc.",NDA212194,"INJECTION, SOLUTION",SUBCUTANEOUS,20191212,,current,application_number
+gomekli_oral,824480130,82448-130,Gomekli,"SpringWorks Therapeutics, Inc.",NDA219389,CAPSULE,ORAL,20250211,,current,application_number
+gomekli_oral,824480134,82448-134,Gomekli,"SpringWorks Therapeutics, Inc.",NDA219379,"TABLET, FOR SUSPENSION",ORAL,20250211,,current,application_number
+gomekli_oral,824480260,82448-260,Gomekli,"SpringWorks Therapeutics, Inc.",NDA219389,CAPSULE,ORAL,20250211,,current,application_number
+granix_sc,634590910,63459-910,GRANIX,"Cephalon, LLC",BLA125294,"INJECTION, SOLUTION",SUBCUTANEOUS,20131111,,current,application_number
+granix_sc,634590912,63459-912,GRANIX,"Cephalon, LLC",BLA125294,"INJECTION, SOLUTION",SUBCUTANEOUS,20131111,,current,application_number
+granix_sc,634590918,63459-918,GRANIX,"Cephalon, LLC",BLA125294,"INJECTION, SOLUTION",SUBCUTANEOUS,20181107,,current,application_number
+granix_sc,634590920,63459-920,GRANIX,"Cephalon, LLC",BLA125294,"INJECTION, SOLUTION",SUBCUTANEOUS,20181107,,current,application_number
+harvoni_oral,619581801,61958-1801,Harvoni,"Gilead Sciences, Inc",NDA205834,"TABLET, FILM COATED",ORAL,20141010,,current,application_number
+harvoni_oral,619581803,61958-1803,Harvoni,"Gilead Sciences, Inc",NDA205834,"TABLET, FILM COATED",ORAL,20190828,,current,application_number
+harvoni_oral,726262601,72626-2601,Ledipasvir and Sofosbuvir,Asegua Therapeutics LLC,NDA205834,"TABLET, FILM COATED",ORAL,20190101,,current,application_number
+hemlibra_sc,502420920,50242-920,Hemlibra,"Genentech, Inc.",BLA761083,"INJECTION, SOLUTION",SUBCUTANEOUS,20171116,,current,application_number
+hemlibra_sc,502420921,50242-921,Hemlibra,"Genentech, Inc.",BLA761083,"INJECTION, SOLUTION",SUBCUTANEOUS,20171116,,current,application_number
+hemlibra_sc,502420922,50242-922,Hemlibra,"Genentech, Inc.",BLA761083,"INJECTION, SOLUTION",SUBCUTANEOUS,20171116,,current,application_number
+hemlibra_sc,502420923,50242-923,Hemlibra,"Genentech, Inc.",BLA761083,"INJECTION, SOLUTION",SUBCUTANEOUS,20171116,,current,application_number
+hemlibra_sc,502420927,50242-927,Hemlibra,"Genentech, Inc.",BLA761083,"INJECTION, SOLUTION",SUBCUTANEOUS,20240131,,current,application_number
+hemlibra_sc,502420930,50242-930,Hemlibra,"Genentech, Inc.",BLA761083,"INJECTION, SOLUTION",SUBCUTANEOUS,20230316,,current,application_number
+hernexeos_oral,005979257,0597-9257,HERNEXEOS,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA219042,"TABLET, FILM COATED",ORAL,20250808,,current,application_number
+hetlioz_oral,430680220,43068-220,Hetlioz,Vanda Pharmaceuticals Inc.,NDA205677,CAPSULE,ORAL,20140404,,current,application_number
+horizant_oral,001730806,0173-0806,HORIZANT,GlaxoSmithKline LLC,NDA022399,,,20110407,20140722,excluded,application_number; route inferred
+horizant_oral,001730832,0173-0832,HORIZANT,GlaxoSmithKline LLC,NDA022399,,,20111215,20141205,excluded,application_number; route inferred
+horizant_oral,534510101,53451-0101,Horizant,"Azurity Pharmaceuticals, Inc. (formerly Arbor Pharmaceuticals)",NDA022399,"TABLET, EXTENDED RELEASE",ORAL,20130501,,current,application_number
+horizant_oral,534510102,53451-0102,Horizant,XenoPort Inc.,NDA022399,,,20130501,20131017,excluded,application_number; route inferred
+horizant_oral,534510103,53451-0103,Horizant,"Azurity Pharmaceuticals, Inc. (formerly Arbor Pharmaceuticals)",NDA022399,"TABLET, EXTENDED RELEASE",ORAL,20130501,,current,application_number
+horizant_oral,617860858,61786-858,Horizant,REMEDYREPACK INC.,NDA022399,,,20160902,20170902,excluded,application_number; route inferred
+hympavzi_sc,000690775,0069-0775,HYMPAVZI,Pfizer Laboratories Div Pfizer Inc,BLA761369,"INJECTION, SOLUTION",SUBCUTANEOUS,20260622,,current,application_number
+hympavzi_sc,000691510,0069-1510,HYMPAVZI,Pfizer Laboratories Div Pfizer Inc,BLA761369,"INJECTION, SOLUTION",SUBCUTANEOUS,20251015,,current,application_number
+hympavzi_sc,000691575,0069-1575,HYMPAVZI,Pfizer Laboratories Div Pfizer Inc,BLA761369,,,20260605,20260605,excluded,application_number; route inferred
+hympavzi_sc,000692151,0069-2151,HYMPAVZI,Pfizer Laboratories Div Pfizer Inc,BLA761369,"INJECTION, SOLUTION",SUBCUTANEOUS,20241105,,current,application_number
+hyrnuo_oral,504190397,50419-397,HYRNUO,Bayer HealthCare Pharmaceuticals Inc.,NDA219972,"TABLET, FILM COATED",ORAL,20251119,,current,application_number
+ibrance_oral,000690187,0069-0187,Ibrance,Pfizer Laboratories Div Pfizer Inc,NDA207103,CAPSULE,ORAL,20150203,20290331,current,application_number
+ibrance_oral,000690188,0069-0188,Ibrance,Pfizer Laboratories Div Pfizer Inc,NDA207103,CAPSULE,ORAL,20150203,20290731,current,application_number
+ibrance_oral,000690189,0069-0189,Ibrance,Pfizer Laboratories Div Pfizer Inc,NDA207103,CAPSULE,ORAL,20150203,,current,application_number
+ibrance_oral,000690284,0069-0284,Ibrance,Pfizer Laboratories Div Pfizer Inc,NDA212436,"TABLET, FILM COATED",ORAL,20200330,,current,application_number
+ibrance_oral,000690486,0069-0486,Ibrance,Pfizer Laboratories Div Pfizer Inc,NDA212436,"TABLET, FILM COATED",ORAL,20200330,,current,application_number
+ibrance_oral,000690688,0069-0688,Ibrance,Pfizer Laboratories Div Pfizer Inc,NDA212436,"TABLET, FILM COATED",ORAL,20200330,,current,application_number
+ibrance_oral,635390187,63539-187,Ibrance,U.S. Pharmaceuticals,NDA207103,,,20170508,20200630,excluded,application_number; route inferred
+ibrance_oral,635390188,63539-188,Ibrance,U.S. Pharmaceuticals,NDA207103,,,20170508,20220831,excluded,application_number; route inferred
+ibrance_oral,635390189,63539-189,Ibrance,U.S. Pharmaceuticals,NDA207103,,,20150203,20200630,excluded,application_number; route inferred
+ibrance_oral,635390284,63539-284,Ibrance,U.S. Pharmaceuticals,NDA212436,"TABLET, FILM COATED",ORAL,20200330,,current,application_number
+ibrance_oral,635390486,63539-486,Ibrance,U.S. Pharmaceuticals,NDA212436,"TABLET, FILM COATED",ORAL,20200330,,current,application_number
+ibrance_oral,635390688,63539-688,Ibrance,U.S. Pharmaceuticals,NDA212436,"TABLET, FILM COATED",ORAL,20200330,,current,application_number
+ibsrela_oral,731540050,73154-050,IBSRELA,"Ardelyx, Inc.",NDA211801,TABLET,ORAL,20190912,,current,application_number
+ibtrozi_oral,846510200,84651-200,IBTROZI,Nuvation Bio Inc.,NDA219713,CAPSULE,ORAL,20250611,,current,application_number
+iclusig_oral,630200533,63020-533,Iclusig,"Takeda Pharmaceuticals America, Inc.",NDA203469,"TABLET, FILM COATED",ORAL,20150422,,current,application_number
+iclusig_oral,630200534,63020-534,Iclusig,"Takeda Pharmaceuticals America, Inc.",NDA203469,"TABLET, FILM COATED",ORAL,20121214,,current,application_number
+iclusig_oral,630200535,63020-535,Iclusig,"Takeda Pharmaceuticals America, Inc.",NDA203469,"TABLET, FILM COATED",ORAL,20121214,,current,application_number
+iclusig_oral,630200536,63020-536,Iclusig,"Takeda Pharmaceuticals America, Inc.",NDA203469,"TABLET, FILM COATED",ORAL,20210111,,current,application_number
+iclusig_oral,761890533,76189-533,Iclusig,"ARIAD Pharmaceuticals, Inc.",NDA203469,,,20150422,20200726,excluded,application_number; route inferred
+iclusig_oral,761890534,76189-534,Iclusig,"ARIAD Pharmaceuticals, Inc.",NDA203469,,,20121214,20200726,excluded,application_number; route inferred
+iclusig_oral,761890535,76189-535,Iclusig,"ARIAD Pharmaceuticals, Inc.",NDA203469,,,20121214,20200726,excluded,application_number; route inferred
+idhifa_oral,595720705,59572-705,Idhifa,Celgene Corporation,NDA209606,"TABLET, FILM COATED",ORAL,20170801,,current,application_number
+idhifa_oral,595720710,59572-710,Idhifa,Celgene Corporation,NDA209606,"TABLET, FILM COATED",ORAL,20170801,,current,application_number
+ilumya_sc,473350177,47335-177,ILUMYA,"Sun Pharmaceutical Industries, Inc.",BLA761067,"INJECTION, SOLUTION",SUBCUTANEOUS,20180806,,current,application_number
+imbruvica_oral,579620007,57962-007,Imbruvica,Pharmacyclics LLC,NDA217003,SUSPENSION,ORAL,20220824,,current,application_number
+imbruvica_oral,579620014,57962-014,Imbruvica,Pharmacyclics LLC,NDA210563,"TABLET, FILM COATED",ORAL,20180216,,current,application_number
+imbruvica_oral,579620070,57962-070,Imbruvica,Pharmacyclics LLC,NDA205552,CAPSULE,ORAL,20171220,,current,application_number
+imbruvica_oral,579620140,57962-140,Imbruvica,Pharmacyclics LLC,NDA205552,CAPSULE,ORAL,20131113,,current,application_number
+imbruvica_oral,579620280,57962-280,Imbruvica,Pharmacyclics LLC,NDA210563,"TABLET, FILM COATED",ORAL,20180216,,current,application_number
+imbruvica_oral,579620420,57962-420,Imbruvica,Pharmacyclics LLC,NDA210563,"TABLET, FILM COATED",ORAL,20180216,,current,application_number
+imbruvica_oral,579620560,57962-560,Imbruvica,Pharmacyclics LLC,NDA210563,,,20180216,20250306,excluded,application_number; route inferred
+imcivree_sc,728290010,72829-010,Imcivree,"Rhythm Pharmaceuticals, Inc",NDA213793,SOLUTION,SUBCUTANEOUS,20201214,,current,application_number
+impavido_oral,617440050,61744-050,IMPAVIDO,Paladin Therapeutics Inc.,NDA204684,,,20140919,20180122,excluded,application_number; route inferred
+impavido_oral,690510300,69051-300,IMPAVIDO,"Profounda, Inc.",NDA204684,CAPSULE,ORAL,20151029,20280131,current,application_number
+impavido_oral,718630135,71863-135,IMPAVIDO,"Eton Pharmaceuticals, Inc.",NDA204684,CAPSULE,ORAL,20260926,,current,application_number
+ingrezza_oral,703701040,70370-1040,INGREZZA,"Neurocrine Biosciences, Inc.",NDA209241,,,20170420,20210507,excluded,application_number; route inferred
+ingrezza_oral,703701048,70370-1048,INGREZZA,"Neurocrine Biosciences, Inc.",NDA209241,,,20180814,20210507,excluded,application_number; route inferred
+ingrezza_oral,703701060,70370-1060,INGREZZA,"Neurocrine Biosciences, Inc.",NDA209241,CAPSULE,ORAL,20210423,,current,application_number
+ingrezza_oral,703701080,70370-1080,INGREZZA,"Neurocrine Biosciences, Inc.",NDA209241,CAPSULE,ORAL,20171004,,current,application_number
+ingrezza_oral,703702040,70370-2040,INGREZZA,"Neurocrine Biosciences, Inc.",NDA209241,CAPSULE,ORAL,20181214,,current,application_number
+ingrezza_oral,703702046,70370-2046,INGREZZA,"Neurocrine Biosciences, Inc.",NDA209241,KIT,ORAL,20230818,,current,application_number
+ingrezza_oral,703702048,70370-2048,INGREZZA,"Neurocrine Biosciences, Inc.",NDA209241,KIT,ORAL,20181214,,current,application_number
+inluriyo_oral,000021717,0002-1717,Inluriyo,Eli Lilly and Company,NDA218881,"TABLET, FILM COATED",ORAL,20250925,,current,application_number
+inlyta_oral,000690145,0069-0145,INLYTA,Pfizer Laboratories Div Pfizer Inc,NDA202324,"TABLET, FILM COATED",ORAL,20120127,,current,application_number
+inlyta_oral,000690151,0069-0151,INLYTA,Pfizer Laboratories Div Pfizer Inc,NDA202324,"TABLET, FILM COATED",ORAL,20120127,,current,application_number
+inlyta_oral,635390026,63539-026,INLYTA,U.S. Pharmaceuticals,NDA202324,"TABLET, FILM COATED",ORAL,20120127,,current,application_number
+inlyta_oral,635390044,63539-044,INLYTA,U.S. Pharmaceuticals,NDA202324,"TABLET, FILM COATED",ORAL,20120127,,current,application_number
+inpefa_oral,701830220,70183-220,INPEFA,"Lexicon Pharmaceuticals, Inc.",NDA216203,,,20230526,20260128,excluded,application_number; route inferred
+inpefa_oral,701830221,70183-221,INPEFA,"Lexicon Pharmaceuticals, Inc.",NDA216203,TABLET,ORAL,20230526,,current,application_number
+inpefa_oral,701830240,70183-240,INPEFA,"Lexicon Pharmaceuticals, Inc.",NDA216203,,,20230526,20260820,excluded,application_number; route inferred
+inpefa_oral,701830241,70183-241,INPEFA,"Lexicon Pharmaceuticals, Inc.",NDA216203,TABLET,ORAL,20230526,,current,application_number
+inqovi_oral,648420727,64842-0727,INQOVI,"Taiho Pharmaceutical Co., Ltd.",NDA212576,"TABLET, FILM COATED",ORAL,20200707,,current,application_number
+inrebic_oral,595720720,59572-720,Inrebic,Celgene Corporation,NDA212327,CAPSULE,ORAL,20190816,,current,application_number
+invokana_oral,500904364,50090-4364,INVOKANA,A-S Medication Solutions,NDA204042,"TABLET, FILM COATED",ORAL,20130329,,current,application_number
+invokana_oral,500905029,50090-5029,INVOKANA,A-S Medication Solutions,NDA204042,"TABLET, FILM COATED",ORAL,20130329,,current,application_number
+invokana_oral,500905033,50090-5033,INVOKANA,A-S Medication Solutions,NDA204042,,,20130329,20241031,excluded,application_number; route inferred
+invokana_oral,500905034,50090-5034,INVOKANA,A-S Medication Solutions,NDA204042,"TABLET, FILM COATED",ORAL,20130329,,current,application_number
+invokana_oral,504580140,50458-140,INVOKANA,"Janssen Pharmaceuticals, Inc.",NDA204042,"TABLET, FILM COATED",ORAL,20130329,,current,application_number
+invokana_oral,504580141,50458-141,INVOKANA,"Janssen Pharmaceuticals, Inc.",NDA204042,"TABLET, FILM COATED",ORAL,20130329,,current,application_number
+invokana_oral,551541425,55154-1425,INVOKANA,"Cardinal Health 107, LLC",NDA204042,"TABLET, FILM COATED",ORAL,20130329,,current,application_number
+invokana_oral,551541426,55154-1426,INVOKANA,"Cardinal Health 107, LLC",NDA204042,"TABLET, FILM COATED",ORAL,20130329,,current,application_number
+iqirvo_oral,150540080,15054-0080,IQIRVO,"Ipsen Biopharmaceuticals, Inc.",NDA218860,"TABLET, FILM COATED",ORAL,20240610,,current,application_number
+isturisa_oral,552920320,55292-320,Isturisa,"Recordati Rare Diseases, Inc.",NDA212801,"TABLET, COATED",ORAL,20200331,20291231,current,application_number
+isturisa_oral,552920321,55292-321,Isturisa,"Recordati Rare Diseases, Inc.",NDA212801,"TABLET, COATED",ORAL,20200331,20291231,current,application_number
+isturisa_oral,552920322,55292-322,Isturisa,"Recordati Rare Diseases, Inc.",NDA212801,,,20200331,20230403,excluded,application_number; route inferred
+isturisa_oral,552920330,55292-330,Isturisa,"Recordati Rare Diseases, Inc.",NDA212801,"TABLET, COATED",ORAL,20200331,,current,application_number
+isturisa_oral,552920331,55292-331,Isturisa,"Recordati Rare Diseases, Inc.",NDA212801,"TABLET, COATED",ORAL,20200331,,current,application_number
+itovebi_oral,502420079,50242-079,Itovebi,"Genentech, Inc.",NDA219249,"TABLET, FILM COATED",ORAL,20241014,,current,application_number
+itovebi_oral,502420084,50242-084,Itovebi,"Genentech, Inc.",NDA219249,"TABLET, FILM COATED",ORAL,20241014,,current,application_number
+jakafi_oral,508810005,50881-005,JAKAFI,Incyte Corporation,NDA202192,TABLET,ORAL,20111116,,current,application_number
+jakafi_oral,508810010,50881-010,JAKAFI,Incyte Corporation,NDA202192,TABLET,ORAL,20111116,,current,application_number
+jakafi_oral,508810015,50881-015,JAKAFI,Incyte Corporation,NDA202192,TABLET,ORAL,20111116,,current,application_number
+jakafi_oral,508810020,50881-020,JAKAFI,Incyte Corporation,NDA202192,TABLET,ORAL,20111116,,current,application_number
+jakafi_oral,508810025,50881-025,JAKAFI,Incyte Corporation,NDA202192,TABLET,ORAL,20111116,,current,application_number
+jardiance_oral,005970152,0597-0152,Jardiance,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,005970153,0597-0153,Jardiance,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,500904384,50090-4384,Jardiance,A-S Medication Solutions,NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,500904492,50090-4492,JARDIANCE,A-S Medication Solutions,NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,500906452,50090-6452,JARDIANCE,A-S Medication Solutions,NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,500906457,50090-6457,JARDIANCE,A-S Medication Solutions,NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,551540411,55154-0411,Jardiance,"Cardinal Health 107, LLC",NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,551540412,55154-0412,Jardiance,"Cardinal Health 107, LLC",NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,672962324,67296-2324,Jardiance,Redpharm Drug,NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,705181986,70518-1986,Jardiance,REMEDYREPACK INC.,NDA204629,,,20190327,20210504,excluded,application_number; route inferred
+jardiance_oral,705182447,70518-2447,Jardiance,REMEDYREPACK INC.,NDA204629,,,20191122,20210503,excluded,application_number; route inferred
+jardiance_oral,716100177,71610-177,Jardiance,"Aphena Pharma Solutions - Tennessee, LLC",NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jardiance_oral,716100900,71610-900,Jardiance,"Aphena Pharma Solutions - Tennessee, LLC",NDA204629,"TABLET, FILM COATED",ORAL,20140801,,current,application_number
+jascayd_oral,005972465,0597-2465,JASCAYD,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA218764,"TABLET, FILM COATED",ORAL,20251007,,current,application_number
+jascayd_oral,005977313,0597-7313,JASCAYD,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA218764,"TABLET, FILM COATED",ORAL,20251007,,current,application_number
+jaypirca_oral,000026902,0002-6902,JAYPIRCA,Eli Lilly and Company,NDA216059,"TABLET, COATED",ORAL,20230127,,current,application_number
+jaypirca_oral,000027026,0002-7026,JAYPIRCA,Eli Lilly and Company,NDA216059,"TABLET, COATED",ORAL,20230127,,current,application_number
+jesduvroq_oral,001730897,0173-0897,Jesduvroq,GlaxoSmithKline LLC,NDA216951,"TABLET, FILM COATED",ORAL,20230201,20270131,current,application_number
+jesduvroq_oral,001730903,0173-0903,Jesduvroq,GlaxoSmithKline LLC,NDA216951,"TABLET, FILM COATED",ORAL,20230201,20270430,current,application_number
+jesduvroq_oral,001730906,0173-0906,Jesduvroq,GlaxoSmithKline LLC,NDA216951,"TABLET, FILM COATED",ORAL,20230201,20270430,current,application_number
+jesduvroq_oral,001730911,0173-0911,Jesduvroq,GlaxoSmithKline LLC,NDA216951,"TABLET, FILM COATED",ORAL,20230201,20261130,current,application_number
+jesduvroq_oral,001730914,0173-0914,Jesduvroq,GlaxoSmithKline LLC,NDA216951,"TABLET, FILM COATED",ORAL,20230201,20261130,current,application_number
+joenja_oral,712740140,71274-140,Joenja,Pharming Healthcare Inc.,NDA217759,"TABLET, FILM COATED",ORAL,20260911,,current,application_number
+joenja_oral,712740150,71274-150,Joenja,Pharming Healthcare Inc.,NDA217759,"TABLET, FILM COATED",ORAL,20260911,,current,application_number
+joenja_oral,712740170,71274-170,Joenja,Pharming Healthcare Inc.,NDA217759,"TABLET, FILM COATED",ORAL,20230329,,current,application_number
+journavx_oral,511670548,51167-548,JOURNAVX,Vertex Pharmaceuticals Incorporated,NDA219209,"TABLET, FILM COATED",ORAL,20250130,,current,application_number
+journavx_oral,857660243,85766-243,JOURNAVX,Sportpharm LLC,NDA219209,"TABLET, FILM COATED",ORAL,20250130,,current,application_number
+juxtapid_oral,101220402,10122-402,Juxtapid,"Chiesi USA, Inc.",NDA203858,CAPSULE,ORAL,20260225,,current,application_number
+juxtapid_oral,101220405,10122-405,Juxtapid,"Chiesi USA, Inc.",NDA203858,CAPSULE,ORAL,20130103,,current,application_number
+juxtapid_oral,101220410,10122-410,Juxtapid,"Chiesi USA, Inc.",NDA203858,CAPSULE,ORAL,20130103,,current,application_number
+juxtapid_oral,101220420,10122-420,Juxtapid,"Chiesi USA, Inc.",NDA203858,CAPSULE,ORAL,20130103,,current,application_number
+juxtapid_oral,101220430,10122-430,Juxtapid,"Chiesi USA, Inc.",NDA203858,CAPSULE,ORAL,20130103,,current,application_number
+juxtapid_oral,759290027,75929-027,Juxtapid,"Pharma Packaging Solutions, LLC dba Tjoapack LLC",NDA203858,,,20130103,20260803,excluded,application_number; route inferred
+juxtapid_oral,759290172,75929-172,Juxtapid,"Pharma Packaging Solutions, LLC dba Tjoapack LLC",NDA203858,,,20130103,20260803,excluded,application_number; route inferred
+juxtapid_oral,759290243,75929-243,Juxtapid,"Pharma Packaging Solutions, LLC dba Tjoapack LLC",NDA203858,,,20130103,20260803,excluded,application_number; route inferred
+juxtapid_oral,764310105,76431-105,Juxtapid,Amryt Pharmaceuticals DAC,NDA203858,,,20130103,20260427,excluded,application_number; route inferred
+juxtapid_oral,764310110,76431-110,Juxtapid,Amryt Pharmaceuticals DAC,NDA203858,CAPSULE,ORAL,20130103,20270103,current,application_number
+juxtapid_oral,764310120,76431-120,Juxtapid,Amryt Pharmaceuticals DAC,NDA203858,CAPSULE,ORAL,20130103,20261025,current,application_number
+juxtapid_oral,764310130,76431-130,Juxtapid,Amryt Pharmaceuticals DAC,NDA203858,,,20130103,20250729,excluded,application_number; route inferred
+juxtapid_oral,764310140,76431-140,Juxtapid,Amryt Pharmaceutcials DAC,NDA203858,,,20130103,20211202,excluded,application_number; route inferred
+juxtapid_oral,764310160,76431-160,Juxtapid,Amryt Pharmaceutcials DAC,NDA203858,,,20130103,20211202,excluded,application_number; route inferred
+kalydeco_oral,511670200,51167-200,Kalydeco,Vertex Pharmaceuticals Incorporated,NDA203188,"TABLET, FILM COATED",ORAL,20120131,,current,application_number
+kalydeco_oral,511670300,51167-300,Kalydeco,Vertex Pharmaceuticals Incorporated,NDA207925,GRANULE,ORAL,20150323,,current,application_number
+kalydeco_oral,511670400,51167-400,Kalydeco,Vertex Pharmaceuticals Incorporated,NDA207925,GRANULE,ORAL,20150323,,current,application_number
+kalydeco_oral,511670600,51167-600,Kalydeco,Vertex Pharmaceuticals Incorporated,NDA207925,GRANULE,ORAL,20190429,,current,application_number
+kalydeco_oral,511670770,51167-770,Kalydeco,Vertex Pharmaceuticals Incorporated,NDA207925,GRANULE,ORAL,20230503,,current,application_number
+kalydeco_oral,511670785,51167-785,Kalydeco,Vertex Pharmaceuticals Incorporated,NDA207925,GRANULE,ORAL,20230503,,current,application_number
+kerendia_oral,504190540,50419-540,Kerendia,Bayer HealthCare Pharmaceuticals Inc.,NDA215341,"TABLET, FILM COATED",ORAL,20210709,,current,application_number
+kerendia_oral,504190541,50419-541,Kerendia,Bayer HealthCare Pharmaceuticals Inc.,NDA215341,"TABLET, FILM COATED",ORAL,20210709,,current,application_number
+kerendia_oral,504190542,50419-542,Kerendia,Bayer HealthCare Pharmaceuticals Inc.,NDA215341,TABLET,ORAL,20210709,,current,application_number
+kevzara_sc,000245908,0024-5908,KEVZARA,Sanofi-Aventis U.S. LLC,BLA761037,"INJECTION, SOLUTION",SUBCUTANEOUS,20170522,,current,application_number
+kevzara_sc,000245910,0024-5910,KEVZARA,Sanofi-Aventis U.S. LLC,BLA761037,"INJECTION, SOLUTION",SUBCUTANEOUS,20170522,,current,application_number
+kevzara_sc,000245920,0024-5920,KEVZARA,Sanofi-Aventis U.S. LLC,BLA761037,"INJECTION, SOLUTION",SUBCUTANEOUS,20170522,,current,application_number
+kevzara_sc,000245922,0024-5922,KEVZARA,Sanofi-Aventis U.S. LLC,BLA761037,"INJECTION, SOLUTION",SUBCUTANEOUS,20170522,,current,application_number
+keytrudaqlex_sc,000063083,0006-3083,KEYTRUDA QLEX,Merck Sharp & Dohme LLC,BLA761467,"INJECTION, SOLUTION",SUBCUTANEOUS,20250919,,current,application_number
+keytrudaqlex_sc,000065083,0006-5083,KEYTRUDA QLEX,Merck Sharp & Dohme LLC,BLA761467,"INJECTION, SOLUTION",SUBCUTANEOUS,20250919,,current,application_number
+kisqali_oral,000780860,0078-0860,KISQALI,Novartis Pharmaceuticals Corporation,NDA209092,"TABLET, FILM COATED",ORAL,20170313,,current,application_number
+kisqali_oral,000780867,0078-0867,KISQALI,Novartis Pharmaceuticals Corporation,NDA209092,"TABLET, FILM COATED",ORAL,20170313,,current,application_number
+kisqali_oral,000780874,0078-0874,KISQALI,Novartis Pharmaceuticals Corporation,NDA209092,"TABLET, FILM COATED",ORAL,20170313,,current,application_number
+komzifti_oral,846960200,84696-200,Komzifti,"Kura Oncology, Inc.",NDA220305,CAPSULE,ORAL,20251113,,current,application_number
+koselugo_oral,003100610,0310-0610,KOSELUGO,AstraZeneca Pharmaceuticals LP,NDA213756,CAPSULE,ORAL,20200416,,current,application_number
+koselugo_oral,003100625,0310-0625,KOSELUGO,AstraZeneca Pharmaceuticals LP,NDA213756,CAPSULE,ORAL,20200416,,current,application_number
+koselugo_oral,003100635,0310-0635,KOSELUGO,AstraZeneca Pharmaceuticals LP,NDA219943,GRANULE,ORAL,20250910,,current,application_number
+koselugo_oral,003100640,0310-0640,KOSELUGO,AstraZeneca Pharmaceuticals LP,NDA219943,GRANULE,ORAL,20250910,,current,application_number
+krazati_oral,807390812,80739-812,KRAZATI,"Mirati Therapeutics, Inc",NDA216340,"TABLET, COATED",ORAL,20221212,,current,application_number
+krintafel_oral,001730889,0173-0889,Krintafel,GlaxoSmithKline LLC,NDA210795,"TABLET, FILM COATED",ORAL,20190122,,current,application_number
+kybella_sc,611680101,61168-101,KYBELLA,Kythera Biopharmaceuticals Inc.,NDA206333,"INJECTION, SOLUTION",SUBCUTANEOUS,20150608,,current,application_number
+kygevvi_oral,504740350,50474-350,KYGEVVI,"UCB, Inc.",NDA219792,"POWDER, FOR SOLUTION",ORAL,20260301,,current,application_number
+lampit_oral,504190750,50419-750,LAMPIT,Bayer HealthCare Pharmaceuticals Inc.,NDA213464,"TABLET, FILM COATED",ORAL,20201001,,current,application_number
+lampit_oral,504190751,50419-751,LAMPIT,Bayer HealthCare Pharmaceuticals Inc.,NDA213464,"TABLET, FILM COATED",ORAL,20201001,,current,application_number
+latuda_oral,634020302,63402-302,Latuda,"Sumitomo Pharma America, Inc.",NDA200603,"TABLET, FILM COATED",ORAL,20111207,,current,application_number
+latuda_oral,634020304,63402-304,Latuda,"Sumitomo Pharma America, Inc.",NDA200603,"TABLET, FILM COATED",ORAL,20101028,,current,application_number
+latuda_oral,634020306,63402-306,Latuda,"Sumitomo Pharma America, Inc.",NDA200603,"TABLET, FILM COATED",ORAL,20130712,,current,application_number
+latuda_oral,634020308,63402-308,Latuda,"Sumitomo Pharma America, Inc.",NDA200603,"TABLET, FILM COATED",ORAL,20101028,,current,application_number
+latuda_oral,634020312,63402-312,Latuda,"Sumitomo Pharma America, Inc.",NDA200603,"TABLET, FILM COATED",ORAL,20120426,,current,application_number
+latuda_oral,691890316,69189-0316,Latuda,Avera McKennan Hospital,NDA200603,,,20150302,20170524,excluded,application_number; route inferred
+latuda_oral,705181812,70518-1812,Latuda,REMEDYREPACK INC.,NDA200603,,,20190123,20210205,excluded,application_number; route inferred
+latuda_oral,705181824,70518-1824,Latuda,REMEDYREPACK INC.,NDA200603,,,20190124,20190221,excluded,application_number; route inferred
+latuda_oral,705181936,70518-1936,Latuda,REMEDYREPACK INC.,NDA200603,,,20190306,20210205,excluded,application_number; route inferred
+latuda_oral,705183010,70518-3010,Latuda,REMEDYREPACK INC.,NDA200603,,,20210202,20210205,excluded,application_number; route inferred
+lazcluze_oral,578940080,57894-080,LAZCLUZE,"Janssen Biotech, Inc.",NDA219008,"TABLET, FILM COATED",ORAL,20240820,,current,application_number
+lazcluze_oral,578940240,57894-240,LAZCLUZE,"Janssen Biotech, Inc.",NDA219008,"TABLET, FILM COATED",ORAL,20240820,,current,application_number
+lenvima_oral,628560704,62856-704,Lenvima,Eisai Inc.,NDA206947,CAPSULE,ORAL,20180815,,current,application_number
+lenvima_oral,628560708,62856-708,Lenvima,Eisai Inc.,NDA206947,CAPSULE,ORAL,20160513,,current,application_number
+lenvima_oral,628560710,62856-710,Lenvima,Eisai Inc.,NDA206947,CAPSULE,ORAL,20150213,,current,application_number
+lenvima_oral,628560712,62856-712,Lenvima,Eisai Inc.,NDA206947,CAPSULE,ORAL,20180815,,current,application_number
+lenvima_oral,628560714,62856-714,Lenvima,Eisai Inc.,NDA206947,KIT,,20150213,,current,application_number; route inferred
+lenvima_oral,628560718,62856-718,Lenvima,Eisai Inc.,NDA206947,KIT,,20160513,,current,application_number; route inferred
+lenvima_oral,628560720,62856-720,Lenvima,Eisai Inc.,NDA206947,CAPSULE,ORAL,20150213,,current,application_number
+lenvima_oral,628560724,62856-724,Lenvima,Eisai Inc.,NDA206947,KIT,,20150213,,current,application_number; route inferred
+leqselvi_oral,473350108,47335-108,LEQSELVI,"Sun Pharmaceutical Industries, Inc.",NDA217900,"TABLET, FILM COATED",ORAL,20250625,,current,application_number
+leqvio_sc,000781000,0078-1000,LEQVIO,Novartis Pharmaceuticals Corporation,NDA214012,"INJECTION, SOLUTION",SUBCUTANEOUS,20211222,,current,application_number
+lerochol_sc,846850300,84685-300,LEROCHOL,"LIB Therapeutics, Inc.",BLA761427,"INJECTION, SOLUTION",SUBCUTANEOUS,20251215,,current,application_number
+linzess_oral,004561201,0456-1201,Linzess,"Allergan, Inc.",NDA202811,"CAPSULE, GELATIN COATED",ORAL,20120908,,current,application_number
+linzess_oral,004561202,0456-1202,Linzess,"Allergan, Inc.",NDA202811,"CAPSULE, GELATIN COATED",ORAL,20120908,,current,application_number
+linzess_oral,004561203,0456-1203,Linzess,"Allergan, Inc.",NDA202811,"CAPSULE, GELATIN COATED",ORAL,20170130,,current,application_number
+linzess_oral,500908108,50090-8108,LINZESS,A-S Medication Solutions,NDA202811,"CAPSULE, GELATIN COATED",ORAL,20120908,,current,application_number
+linzess_oral,557000409,55700-409,Linzess,Lake Erie Medical DBA Quality Care Products LLC,NDA202811,,,20120830,20171102,excluded,application_number; route inferred
+linzess_oral,691891202,69189-1202,Linzess,Avera McKennan Hospital,NDA202811,,,20150604,20170524,excluded,application_number; route inferred
+litfulo_oral,000690334,0069-0334,Litfulo,Pfizer Laboratories Div Pfizer Inc,NDA215830,CAPSULE,ORAL,20230706,,current,application_number
+litfulo_oral,635390334,63539-334,Litfulo,U.S. Pharmaceuticals,NDA215830,CAPSULE,ORAL,20230706,,current,application_number
+livdelzi_oral,619583301,61958-3301,Livdelzi,"Gilead Sciences, Inc",NDA217899,CAPSULE,ORAL,20240814,,current,application_number
+livmarli_oral,793780110,79378-110,Livmarli,Mirum Pharmaceuticals Inc.,NDA214662,SOLUTION,ORAL,20210929,,current,application_number
+livmarli_oral,793780111,79378-111,Livmarli,Mirum Pharmaceuticals Inc.,NDA214662,SOLUTION,ORAL,20240724,,current,application_number
+livmarli_oral,793780210,79378-210,Livmarli,Mirum Pharmaceuticals Inc.,NDA219485,TABLET,ORAL,20250410,,current,application_number
+livmarli_oral,793780215,79378-215,Livmarli,Mirum Pharmaceuticals Inc.,NDA219485,TABLET,ORAL,20250410,,current,application_number
+livmarli_oral,793780220,79378-220,Livmarli,Mirum Pharmaceuticals Inc.,NDA219485,TABLET,ORAL,20250410,,current,application_number
+livmarli_oral,793780230,79378-230,Livmarli,Mirum Pharmaceuticals Inc.,NDA219485,TABLET,ORAL,20250410,,current,application_number
+livtencity_oral,647640800,64764-800,Livtencity,"Takeda Pharmaceuticals America, Inc.",NDA215596,"TABLET, COATED",ORAL,20211123,,current,application_number
+lokelma_oral,003101105,0310-1105,LOKELMA,AstraZeneca Pharmaceuticals LP,NDA207078,"POWDER, FOR SUSPENSION",ORAL,20180904,,current,application_number
+lokelma_oral,003101110,0310-1110,LOKELMA,AstraZeneca Pharmaceuticals LP,NDA207078,"POWDER, FOR SUSPENSION",ORAL,20180904,,current,application_number
+lokelma_oral,500906501,50090-6501,LOKELMA,A-S Medication Solutions,NDA207078,"POWDER, FOR SUSPENSION",ORAL,20180904,,current,application_number
+lokelma_oral,500906502,50090-6502,LOKELMA,A-S Medication Solutions,NDA207078,"POWDER, FOR SUSPENSION",ORAL,20180904,,current,application_number
+lonsurf_oral,648421020,64842-1020,LONSURF,"Taiho Pharmaceutical Co., Ltd.",NDA207981,"TABLET, FILM COATED",ORAL,20150922,,current,application_number
+lonsurf_oral,648421025,64842-1025,LONSURF,"Taiho Pharmaceutical Co., Ltd.",NDA207981,"TABLET, FILM COATED",ORAL,20150922,,current,application_number
+lorbrena_oral,000690227,0069-0227,Lorbrena,Pfizer Laboratories Div Pfizer Inc,NDA210868,"TABLET, FILM COATED",ORAL,20181119,,current,application_number
+lorbrena_oral,000690231,0069-0231,Lorbrena,Pfizer Laboratories Div Pfizer Inc,NDA210868,"TABLET, FILM COATED",ORAL,20181119,,current,application_number
+lorbrena_oral,635390927,63539-927,Lorbrena,U.S. Pharmaceuticals,NDA210868,"TABLET, FILM COATED",ORAL,20230103,,current,application_number
+lucemyra_oral,275050050,27505-050,Lucemyra,"US WorldMeds, LLC",NDA209229,,,20180618,20220304,excluded,application_number; route inferred
+lucemyra_oral,669930345,66993-345,Lofexidine hydrochloride,Prasco Laboratories,NDA209229,"TABLET, FILM COATED",ORAL,20240829,20270630,current,application_number
+lucemyra_oral,786700050,78670-050,Lucemyra,"USWM, LLC",NDA209229,"TABLET, FILM COATED",ORAL,20210209,20270630,current,application_number
+lucemyra_oral,857890801,85789-801,LUCEMYRA,BioCorRx Pharmaceuticals Inc,NDA209229,"TABLET, FILM COATED",ORAL,20260815,,current,application_number
+lucemyra_oral,857890901,85789-901,LOFEXIDINE,BioCorRx Pharmaceuticals Inc,NDA209229,"TABLET, FILM COATED",ORAL,20260815,,current,application_number
+lumakras_oral,555130488,55513-488,LUMAKRAS,Amgen Inc,NDA214665,"TABLET, COATED",ORAL,20210528,,current,application_number
+lumakras_oral,555130504,55513-504,LUMAKRAS,Amgen Inc,NDA214665,"TABLET, COATED",ORAL,20230202,,current,application_number
+lumakras_oral,555130512,55513-512,LUMAKRAS,Amgen Inc,NDA214665,"TABLET, COATED",ORAL,20240627,,current,application_number
+lunsumio_sc,502420177,50242-177,Lunsumio Velo,"Genentech, Inc.",BLA761263,INJECTION,SUBCUTANEOUS,20251219,,current,application_number
+lunsumio_sc,502420201,50242-201,Lunsumio Velo,"Genentech, Inc.",BLA761263,INJECTION,SUBCUTANEOUS,20251219,,current,application_number
+lupkynis_oral,756260001,75626-001,LUPKYNIS,"Aurinia Pharma U.S., Inc.",NDA213716,CAPSULE,ORAL,20210122,,current,application_number
+lybalvi_oral,657570651,65757-651,LYBALVI,"Alkermes, Inc.",NDA213378,"TABLET, FILM COATED",ORAL,20210920,,current,application_number
+lybalvi_oral,657570652,65757-652,LYBALVI,"Alkermes, Inc.",NDA213378,"TABLET, FILM COATED",ORAL,20210920,,current,application_number
+lybalvi_oral,657570653,65757-653,LYBALVI,"Alkermes, Inc.",NDA213378,"TABLET, FILM COATED",ORAL,20210920,,current,application_number
+lybalvi_oral,657570654,65757-654,LYBALVI,"Alkermes, Inc.",NDA213378,"TABLET, FILM COATED",ORAL,20210920,,current,application_number
+lynkuet_oral,504190475,50419-475,LYNKUET,Bayer HealthCare Pharmaceuticals Inc.,NDA219469,CAPSULE,ORAL,20251024,,current,application_number
+lynparza_oral,003100569,0310-0569,Lynparza,AstraZeneca Pharmaceuticals LP,NDA208558,"TABLET, FILM COATED",ORAL,20170817,,current,application_number
+lynparza_oral,003100578,0310-0578,Lynparza,AstraZeneca Pharmaceuticals LP,NDA208558,"TABLET, FILM COATED",ORAL,20170817,,current,application_number
+lynparza_oral,003100668,0310-0668,Lynparza,AstraZeneca Pharmaceuticals LP,NDA208558,"TABLET, FILM COATED",ORAL,20170817,,current,application_number
+lynparza_oral,003100679,0310-0679,Lynparza,AstraZeneca Pharmaceuticals LP,NDA208558,"TABLET, FILM COATED",ORAL,20170817,,current,application_number
+lytgobi_oral,648420120,64842-0120,LYTGOBI,"TAIHO PHARMACEUTICAL CO., LTD.",NDA214801,TABLET,ORAL,20230203,,current,application_number
+lytgobi_oral,648420127,64842-0127,LYTGOBI,"TAIHO PHARMACEUTICAL CO., LTD.",NDA214801,TABLET,ORAL,20260601,,current,application_number
+lytgobi_oral,648420128,64842-0128,LYTGOBI,"TAIHO PHARMACEUTICAL CO., LTD.",NDA214801,KIT,,20260601,,current,application_number; route inferred
+macrilen_oral,001691401,0169-1401,Macrilen,Novo Nordisk,NDA205598,"GRANULE, FOR SOLUTION",ORAL,20220131,20270228,current,application_number
+macrilen_oral,588440130,58844-130,Macrilen,Aeterna Zentaris GmbH,NDA205598,"GRANULE, FOR SOLUTION",ORAL,20180129,,current,application_number
+macrilen_oral,710900002,71090-002,Macrilen,Strongbridge U.S. Inc,NDA205598,,,20180129,20220430,excluded,application_number; route inferred
+mavyret_oral,000742625,0074-2625,Mavyret,AbbVie Inc.,NDA209394,"TABLET, FILM COATED",ORAL,20170803,,current,application_number
+mayzent_oral,000780979,0078-0979,MAYZENT,Novartis Pharmaceuticals Corporation,NDA209884,"TABLET, FILM COATED",ORAL,20190326,,current,application_number
+mayzent_oral,000780986,0078-0986,MAYZENT,Novartis Pharmaceuticals Corporation,NDA209884,"TABLET, FILM COATED",ORAL,20190326,,current,application_number
+mayzent_oral,000781014,0078-1014,MAYZENT,Novartis Pharmaceuticals Corporation,NDA209884,"TABLET, FILM COATED",ORAL,20190326,,current,application_number
+mekinist_oral,000780666,,MEKINIST T,,,,,,,sdud only,sdud labeler + name
+mekinist_oral,000780668,,MEKINIST T,,,,,,,sdud only,sdud labeler + name
+mekinist_oral,000781105,0078-1105,Mekinist,Novartis Pharmaceuticals Corporation,NDA204114,"TABLET, FILM COATED",ORAL,20160317,,current,application_number
+mekinist_oral,000781112,0078-1112,Mekinist,Novartis Pharmaceuticals Corporation,NDA204114,"TABLET, FILM COATED",ORAL,20160317,,current,application_number
+mekinist_oral,000781161,0078-1161,Mekinist,Novartis Pharmaceuticals Corporation,NDA217513,"POWDER, FOR SOLUTION",ORAL,20230316,,current,application_number
+mekinist_oral,001730848,0173-0848,Mekinist,GlaxoSmithKline LLC,NDA204114,,,20130617,20161231,excluded,application_number; route inferred
+mekinist_oral,001730849,0173-0849,Mekinist,GlaxoSmithKline LLC,NDA204114,,,20130617,20161231,excluded,application_number; route inferred
+mekinist_oral,001730858,0173-0858,Mekinist,GlaxoSmithKline LLC,NDA204114,,,20130617,20151209,excluded,application_number; route inferred
+mektovi_oral,702550010,70255-010,MEKTOVI,Array BioPharma Inc.,NDA210498,"TABLET, FILM COATED",ORAL,20180627,,current,application_number
+miplyffa_oral,725420124,72542-124,MIPLYFFA,Acer Therapeutics Inc.,NDA214927,CAPSULE,ORAL,20240920,,current,application_number
+miplyffa_oral,725420147,72542-147,MIPLYFFA,Acer Therapeutics Inc.,NDA214927,CAPSULE,ORAL,20240920,,current,application_number
+miplyffa_oral,725420162,72542-162,MIPLYFFA,Acer Therapeutics Inc.,NDA214927,CAPSULE,ORAL,20240920,,current,application_number
+miplyffa_oral,725420193,72542-193,MIPLYFFA,Acer Therapeutics Inc.,NDA214927,CAPSULE,ORAL,20240920,,current,application_number
+modeyso_oral,687270250,68727-250,MODEYSO,"Jazz Pharmaceuticals, Inc.",NDA219876,CAPSULE,ORAL,20250806,,current,application_number
+motegrity_oral,540920546,54092-546,MOTEGRITY,"Takeda Pharmaceuticals America, Inc.",NDA210166,"TABLET, FILM COATED",ORAL,20181214,,current,application_number
+motegrity_oral,540920547,54092-547,MOTEGRITY,"Takeda Pharmaceuticals America, Inc.",NDA210166,"TABLET, FILM COATED",ORAL,20181214,,current,application_number
+mounjaro_sc,000021152,0002-1152,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20230728,,current,application_number
+mounjaro_sc,000021243,0002-1243,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20230728,,current,application_number
+mounjaro_sc,000021457,0002-1457,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,000021460,0002-1460,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,000021471,0002-1471,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,000021484,0002-1484,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,000021495,0002-1495,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,000021506,0002-1506,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,000022214,0002-2214,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20230728,,current,application_number
+mounjaro_sc,000022340,0002-2340,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20230728,,current,application_number
+mounjaro_sc,000022423,0002-2423,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20230728,,current,application_number
+mounjaro_sc,000023002,0002-3002,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20230728,,current,application_number
+mounjaro_sc,000023411,0002-3411,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260120,,current,application_number
+mounjaro_sc,000023422,0002-3422,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260120,,current,application_number
+mounjaro_sc,000023433,0002-3433,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260120,,current,application_number
+mounjaro_sc,000023444,0002-3444,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260120,,current,application_number
+mounjaro_sc,000023455,0002-3455,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260120,,current,application_number
+mounjaro_sc,000023466,0002-3466,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260120,,current,application_number
+mounjaro_sc,000024052,0002-4052,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260107,,current,application_number
+mounjaro_sc,000024103,0002-4103,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260107,,current,application_number
+mounjaro_sc,000024210,0002-4210,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260107,,current,application_number
+mounjaro_sc,000024304,0002-4304,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260107,,current,application_number
+mounjaro_sc,000024523,0002-4523,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260107,,current,application_number
+mounjaro_sc,000024612,0002-4612,Mounjaro,Eli Lilly and Company,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20260107,,current,application_number
+mounjaro_sc,500908021,50090-8021,MOUNJARO,A-S Medication Solutions,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,500908022,50090-8022,MOUNJARO,A-S Medication Solutions,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,500908023,50090-8023,MOUNJARO,A-S Medication Solutions,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,500908024,50090-8024,MOUNJARO,A-S Medication Solutions,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,500908025,50090-8025,MOUNJARO,A-S Medication Solutions,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+mounjaro_sc,500908026,50090-8026,MOUNJARO,A-S Medication Solutions,NDA215866,"INJECTION, SOLUTION",SUBCUTANEOUS,20220513,,current,application_number
+movantik_oral,003101969,0310-1969,MOVANTIK,AstraZeneca Pharmaceuticals LP,NDA204760,,,20150306,20221231,excluded,application_number; route inferred
+movantik_oral,003101970,0310-1970,MOVANTIK,AstraZeneca Pharmaceuticals LP,NDA204760,,,20150306,20221231,excluded,application_number; route inferred
+movantik_oral,557000383,55700-383,MOVANTIK,"Quality Care Products, LLC",NDA204760,,,20150306,20221231,excluded,application_number; route inferred
+movantik_oral,557000988,55700-988,MOVANTIK,"Quality Care Products, LLC",NDA204760,,,20221122,20251031,excluded,application_number; route inferred
+movantik_oral,578411300,57841-1300,MOVANTIK,RedHill Biopharma Ltd,NDA204760,,,20201001,20250630,excluded,application_number; route inferred
+movantik_oral,578411301,57841-1301,MOVANTIK,RedHill Biopharma Ltd,NDA204760,"TABLET, FILM COATED",ORAL,20201001,20270131,current,application_number
+movantik_oral,691891970,69189-1970,MOVANTIK,Avera McKennan Hospital,NDA204760,,,20160322,20170524,excluded,application_number; route inferred
+movantik_oral,826258801,82625-8801,MOVANTIK,"Averitas Pharma, Inc.",NDA204760,"TABLET, FILM COATED",ORAL,20230328,,current,application_number
+movantik_oral,826258802,82625-8802,MOVANTIK,"Averitas Pharma, Inc.",NDA204760,"TABLET, FILM COATED",ORAL,20230328,,current,application_number
+moxidectin_oral,717050050,71705-050,Moxidectin,Medicines Development for Global Health,NDA210867,TABLET,ORAL,20191202,,current,application_number
+moxidectin_oral,717050051,71705-051,Moxidectin,Medicines Development for Global Health,NDA210867,,,20191202,20220114,excluded,application_number; route inferred
+mulpleta_oral,596300551,59630-551,Mulpleta,SHIONOGI INC.,NDA210923,"TABLET, FILM COATED",ORAL,20180827,,current,application_number
+mulpleta_oral,842300551,84230-551,Mulpleta,VANCOCIN ITALIA SRL,NDA210923,"TABLET, FILM COATED",ORAL,20251209,,current,application_number
+mulpleta_oral,853200551,85320-551,Mulpleta,Eddingpharm (U. S. ) Inc.,NDA210923,"TABLET, FILM COATED",ORAL,20251124,,current,application_number
+myalept_sc,101220210,10122-210,Myalept,"Chiesi USA, Inc.",BLA125390,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20150305,,current,application_number
+myalept_sc,667800310,66780-310,MYALEPT,"Amylin Pharmaceuticals, LLC",BLA125390,,,20140522,20180331,excluded,application_number; route inferred
+myalept_sc,764310210,76431-210,Myalept,Amryt Pharmaceuticals Designated Activity Company,BLA125390,,,20150305,20250925,excluded,application_number; route inferred
+myqorzo_oral,821120105,82112-105,MYQORZO,Cytokinetics Inc.,NDA219083,"TABLET, FILM COATED",ORAL,20260112,,current,application_number
+myqorzo_oral,821120110,82112-110,MYQORZO,Cytokinetics Inc.,NDA219083,"TABLET, FILM COATED",ORAL,20260112,,current,application_number
+myqorzo_oral,821120115,82112-115,MYQORZO,Cytokinetics Inc.,NDA219083,"TABLET, FILM COATED",ORAL,20260112,,current,application_number
+myqorzo_oral,821120120,82112-120,MYQORZO,Cytokinetics Inc.,NDA219083,"TABLET, FILM COATED",ORAL,20260112,,current,application_number
+myrbetriq_oral,004692601,0469-2601,Myrbetriq,"Astellas Pharma US, Inc.",NDA202611,"TABLET, FILM COATED, EXTENDED RELEASE",ORAL,20120628,,current,application_number
+myrbetriq_oral,004692602,0469-2602,Myrbetriq,"Astellas Pharma US, Inc.",NDA202611,"TABLET, FILM COATED, EXTENDED RELEASE",ORAL,20120628,,current,application_number
+myrbetriq_oral,551548712,55154-8712,Myrbetriq,"Cardinal Health 107, LLC",NDA202611,,,20120628,20260430,excluded,application_number; route inferred
+myrbetriq_oral,551548713,55154-8713,Myrbetriq,"Cardinal Health 107, LLC",NDA202611,,,20120628,20260430,excluded,application_number; route inferred
+myrbetriq_oral,691892601,69189-2601,Myrbetriq,Avera McKennan Hospital,NDA202611,,,20150323,20170524,excluded,application_number; route inferred
+myrbetriq_oral,705182435,70518-2435,Myrbetriq,REMEDYREPACK INC.,NDA202611,,,20191119,20250207,excluded,application_number; route inferred
+myrbetriq_oral,705183158,70518-3158,Myrbetriq,REMEDYREPACK INC.,NDA202611,,,20210715,20240317,excluded,application_number; route inferred
+nemluvio_sc,002996220,0299-6220,NEMLUVIO,"Galderma Laboratories, L.P.",BLA761390,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20240813,,current,application_number
+nereus_oral,430680585,43068-585,NEREUS,Vanda Pharmaceuticals Inc.,NDA220152,CAPSULE,ORAL,20260331,,current,application_number
+nerlynx_oral,704370240,70437-240,Nerlynx,"Puma Biotechnology, Inc.",NDA208051,TABLET,ORAL,20170717,,current,application_number
+nesina_oral,458020087,45802-087,Alogliptin,Padagis Israel Pharmaceuticals Ltd,NDA022271,"TABLET, FILM COATED",ORAL,20160408,,current,application_number
+nesina_oral,458020103,45802-103,Alogliptin,Padagis Israel Pharmaceuticals Ltd,NDA022271,"TABLET, FILM COATED",ORAL,20160408,,current,application_number
+nesina_oral,458020150,45802-150,Alogliptin,Padagis Israel Pharmaceuticals Ltd,NDA022271,"TABLET, FILM COATED",ORAL,20160408,,current,application_number
+nesina_oral,500905574,50090-5574,Alogliptin,A-S Medication Solutions,NDA022271,"TABLET, FILM COATED",ORAL,20160408,,current,application_number
+nesina_oral,636294946,63629-4946,Alogliptin,Bryant Ranch Prepack,NDA022271,"TABLET, FILM COATED",ORAL,20160408,,current,application_number
+nesina_oral,647640125,64764-125,Nesina,"Takeda Pharmaceuticals America, Inc.",NDA022271,"TABLET, FILM COATED",ORAL,20130125,,current,application_number
+nesina_oral,647640250,64764-250,Nesina,"Takeda Pharmaceuticals America, Inc.",NDA022271,"TABLET, FILM COATED",ORAL,20130125,,current,application_number
+nesina_oral,647640625,64764-625,Nesina,"Takeda Pharmaceuticals America, Inc.",NDA022271,"TABLET, FILM COATED",ORAL,20130125,,current,application_number
+nesina_oral,705183976,70518-3976,Alogliptin,REMEDYREPACK INC.,NDA022271,,,20240106,20240710,excluded,application_number; route inferred
+nesina_oral,716100300,71610-300,Alogliptin,"Aphena Pharma Solutions - Tennessee, LLC",NDA022271,"TABLET, FILM COATED",ORAL,20160408,,current,application_number
+nesina_oral,716100661,71610-661,Alogliptin,"Aphena Pharma Solutions - Tennessee, LLC",NDA022271,"TABLET, FILM COATED",ORAL,20160408,,current,application_number
+nexletol_oral,724260118,72426-118,Nexletol,"Esperion Therapeutics, Inc.",NDA211616,"TABLET, FILM COATED",ORAL,20200306,,current,application_number
+ngenla_sc,000690505,0069-0505,Ngenla,Pfizer Laboratories Div Pfizer Inc,BLA761184,"INJECTION, SOLUTION",SUBCUTANEOUS,20230731,,current,application_number
+ngenla_sc,000690520,0069-0520,Ngenla,Pfizer Laboratories Div Pfizer Inc,BLA761184,"INJECTION, SOLUTION",SUBCUTANEOUS,20230731,,current,application_number
+ninlaro_oral,630200078,63020-078,NINLARO,"Takeda Pharmaceuticals America, Inc.",NDA208462,,,20151120,20231031,excluded,application_number; route inferred
+ninlaro_oral,630200079,63020-079,NINLARO,"Takeda Pharmaceuticals America, Inc.",NDA208462,,,20151120,20231031,excluded,application_number; route inferred
+ninlaro_oral,630200080,63020-080,NINLARO,"Takeda Pharmaceuticals America, Inc.",NDA208462,,,20151120,20231031,excluded,application_number; route inferred
+ninlaro_oral,630200230,63020-230,NINLARO,"Takeda Pharmaceuticals America, Inc.",NDA208462,CAPSULE,ORAL,20151120,,current,application_number
+ninlaro_oral,630200390,63020-390,NINLARO,"Takeda Pharmaceuticals America, Inc.",NDA208462,CAPSULE,ORAL,20151120,,current,application_number
+ninlaro_oral,630200400,63020-400,NINLARO,"Takeda Pharmaceuticals America, Inc.",NDA208462,CAPSULE,ORAL,20151120,,current,application_number
+northera_oral,673860820,67386-820,Northera,Lundbeck Pharmaceuticals LLC,NDA203202,CAPSULE,ORAL,20140901,,current,application_number
+northera_oral,673860821,67386-821,Northera,Lundbeck Pharmaceuticals LLC,NDA203202,CAPSULE,ORAL,20140901,,current,application_number
+northera_oral,673860822,67386-822,Northera,Lundbeck Pharmaceuticals LLC,NDA203202,CAPSULE,ORAL,20140901,,current,application_number
+northera_oral,763200100,76320-100,Northera,Chelsea Therapeutics Inc,NDA203202,,,20140218,20140831,excluded,application_number; route inferred
+northera_oral,763200200,76320-200,Northera,Chelsea Therapeutics Inc,NDA203202,,,20140831,20140831,excluded,application_number; route inferred
+northera_oral,763200300,76320-300,Northera,Chelsea Therapeutics Inc,NDA203202,,,20140831,20140831,excluded,application_number; route inferred
+nourianz_oral,427470602,42747-602,NOURIANZ,"Kyowa Kirin, Inc.",NDA022075,"TABLET, FILM COATED",ORAL,20190827,,current,application_number
+nourianz_oral,427470604,42747-604,NOURIANZ,"Kyowa Kirin, Inc.",NDA022075,"TABLET, FILM COATED",ORAL,20190827,,current,application_number
+nubeqa_oral,504190395,50419-395,NUBEQA,Bayer HealthCare Pharmaceuticals Inc.,NDA212099,"TABLET, FILM COATED",ORAL,20190731,,current,application_number
+nucala_sc,001730881,0173-0881,Nucala,GlaxoSmithKline LLC,BLA125526,"INJECTION, POWDER, FOR SOLUTION",SUBCUTANEOUS,20151104,,current,application_number
+nucala_sc,001730892,0173-0892,Nucala,GlaxoSmithKline LLC,BLA761122,"INJECTION, SOLUTION",SUBCUTANEOUS,20190606,,current,application_number
+nucala_sc,001730904,0173-0904,Nucala,GlaxoSmithKline LLC,BLA761122,"INJECTION, SOLUTION",SUBCUTANEOUS,20220122,,current,application_number
+nuplazid_oral,630900100,63090-100,NUPLAZID,Acadia Pharmaceuticals Inc.,NDA207318,"TABLET, COATED",ORAL,20180628,,current,application_number
+nuplazid_oral,630900170,63090-170,NUPLAZID,ACADIA Pharmaceuticals Inc,NDA207318,,,20160429,20220621,excluded,application_number; route inferred
+nuplazid_oral,630900340,63090-340,NUPLAZID,Acadia Pharmaceuticals Inc.,NDA210793,CAPSULE,ORAL,20180628,,current,application_number
+nurtecodt_oral,726183000,72618-3000,NURTEC ODT,Pfizer Laboratories Div Pfizer Inc,NDA212728,"TABLET, ORALLY DISINTEGRATING",ORAL,20200305,,current,application_number
+nurtecodt_oral,726183001,72618-3001,NURTEC ODT,Pfizer Laboratories Div Pfizer Inc,NDA212728,"TABLET, ORALLY DISINTEGRATING",ORAL,20200305,,current,application_number
+nurtecodt_oral,857660096,85766-096,NURTEC ODT,Sportpharm LLC,NDA212728,"TABLET, ORALLY DISINTEGRATING",ORAL,20200305,,current,application_number
+nuzolvence_oral,685470915,68547-915,NUZOLVENCE,La Jolla Pharmaceutical Company,NDA219491,FOR SUSPENSION,ORAL,20260401,,current,application_number
+nuzyra_oral,717150002,71715-002,NUZYRA,"Paratek Pharmaceuticals, Inc.",NDA209816,"TABLET, FILM COATED",ORAL,20190201,,current,application_number
+odomzo_oral,000780645,0078-0645,Odomzo,Novartis Pharmaceuticals Corporation,NDA205266,,,20150724,20171231,excluded,application_number; route inferred
+odomzo_oral,473350303,47335-303,Odomzo,"Sun Pharmaceutical Industries, Inc.",NDA205266,CAPSULE,ORAL,20170921,,current,application_number
+ofev_oral,005970143,0597-0143,Ofev,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA205832,CAPSULE,ORAL,20141015,,current,application_number
+ofev_oral,005970145,0597-0145,Ofev,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA205832,CAPSULE,ORAL,20141015,,current,application_number
+ogsiveo_oral,824480050,82448-050,OGSIVEO,"SpringWorks Therapeutics, Inc.",NDA217677,,,20231127,20260324,excluded,application_number; route inferred
+ogsiveo_oral,824480100,82448-100,OGSIVEO,"SpringWorks Therapeutics, Inc.",NDA217677,"TABLET, FILM COATED",ORAL,20231127,,current,application_number
+ogsiveo_oral,824480150,82448-150,OGSIVEO,"SpringWorks Therapeutics, Inc.",NDA217677,"TABLET, FILM COATED",ORAL,20231127,,current,application_number
+ojemda_oral,829500001,82950-001,OJEMDA,"Day One Biopharmaceuticals, Inc.",NDA217700,"TABLET, FILM COATED",ORAL,20240430,,current,application_number
+ojjaara_oral,818640101,81864-101,Ojjaara,GlaxoSmithKline LLC,NDA216873,TABLET,ORAL,20230915,,current,application_number
+ojjaara_oral,818640102,81864-102,Ojjaara,GlaxoSmithKline LLC,NDA216873,TABLET,ORAL,20230915,,current,application_number
+ojjaara_oral,818640103,81864-103,Ojjaara,GlaxoSmithKline LLC,NDA216873,TABLET,ORAL,20230915,,current,application_number
+olumiant_oral,000024182,0002-4182,Olumiant,Eli Lilly and Company,NDA207924,"TABLET, FILM COATED",ORAL,20180531,,current,application_number
+olumiant_oral,000024479,0002-4479,Olumiant,Eli Lilly and Company,NDA207924,"TABLET, FILM COATED",ORAL,20220510,,current,application_number
+olumiant_oral,000024732,0002-4732,Olumiant,Eli Lilly and Company,NDA207924,"TABLET, FILM COATED",ORAL,20191008,,current,application_number
+omvoh_sc,000021442,0002-1442,Omvoh,Eli Lilly and Company,BLA761279,"INJECTION, SOLUTION",SUBCUTANEOUS,20251023,,current,application_number
+omvoh_sc,000023116,0002-3116,Omvoh,Eli Lilly and Company,BLA761279,"INJECTION, SOLUTION",SUBCUTANEOUS,20251023,,current,application_number
+omvoh_sc,000028011,0002-8011,Omvoh,Eli Lilly and Company,BLA761279,"INJECTION, SOLUTION",SUBCUTANEOUS,20231026,,current,application_number
+omvoh_sc,000028870,0002-8870,Omvoh,Eli Lilly and Company,BLA761279,"INJECTION, SOLUTION",SUBCUTANEOUS,20240429,,current,application_number
+onfi_oral,673860310,67386-310,Onfi,Lundbeck Pharmaceuticals LLC,NDA202067,,,20111021,20170210,excluded,application_number; route inferred
+onfi_oral,673860311,67386-311,Onfi,Lundbeck Pharmaceuticals LLC,NDA202067,,,20130812,20170210,excluded,application_number; route inferred
+onfi_oral,673860312,67386-312,Onfi,Lundbeck Pharmaceuticals LLC,NDA202067,,,20130812,20170210,excluded,application_number; route inferred
+onfi_oral,673860313,67386-313,Onfi,Lundbeck Pharmaceuticals LLC,NDA203993,SUSPENSION,ORAL,20121214,,current,application_number
+onfi_oral,673860314,67386-314,Onfi,Lundbeck Pharmaceuticals LLC,NDA202067,TABLET,ORAL,20131210,,current,application_number
+onfi_oral,673860315,67386-315,Onfi,Lundbeck Pharmaceuticals LLC,NDA202067,TABLET,ORAL,20131210,,current,application_number
+ongentys_oral,648960402,64896-402,ONGENTYS,Amneal Pharmaceuticals LLC,NDA212489,CAPSULE,ORAL,20240405,,current,application_number
+ongentys_oral,648960403,64896-403,ONGENTYS,Amneal Pharmaceuticals LLC,NDA212489,CAPSULE,ORAL,20240405,,current,application_number
+ongentys_oral,703703025,70370-3025,ONGENTYS,"Neurocrine Biosciences, Inc.",NDA212489,,,20200424,20240930,excluded,application_number; route inferred
+ongentys_oral,703703050,70370-3050,ONGENTYS,"Neurocrine Biosciences, Inc.",NDA212489,,,20200424,20240930,excluded,application_number; route inferred
+opsumit_oral,662150501,66215-501,OPSUMIT,"Actelion Pharmaceuticals US, Inc.",NDA204410,"TABLET, FILM COATED",ORAL,20131104,,current,application_number
+orgovyx_oral,729740120,72974-120,Orgovyx,"Sumitomo Pharma America, Inc.",NDA214621,"TABLET, FILM COATED",ORAL,20201218,,current,application_number
+orilissa_oral,000740038,0074-0038,Orilissa,AbbVie Inc.,NDA210450,"TABLET, FILM COATED",ORAL,20180723,,current,application_number
+orilissa_oral,000740039,0074-0039,Orilissa,AbbVie Inc.,NDA210450,"TABLET, FILM COATED",ORAL,20180723,,current,application_number
+orkambi_oral,511670700,51167-700,ORKAMBI,Vertex Pharmaceuticals Incorporated,NDA206038,"TABLET, FILM COATED",ORAL,20160928,,current,application_number
+orkambi_oral,511670809,51167-809,ORKAMBI,Vertex Pharmaceuticals Incorporated,NDA206038,"TABLET, FILM COATED",ORAL,20150702,,current,application_number
+orladeyo_oral,727690101,72769-101,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA214094,CAPSULE,ORAL,20201204,,current,application_number
+orladeyo_oral,727690102,72769-102,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA214094,CAPSULE,ORAL,20201204,,current,application_number
+orladeyo_oral,727690111,72769-111,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA219776,PELLET,ORAL,20251212,,current,application_number
+orladeyo_oral,727690112,72769-112,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA219776,PELLET,ORAL,20251212,,current,application_number
+orladeyo_oral,727690113,72769-113,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA219776,PELLET,ORAL,20251212,,current,application_number
+orladeyo_oral,727690114,72769-114,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA219776,PELLET,ORAL,20251212,,current,application_number
+orlynvah_oral,811530100,81153-100,ORLYNVAH,ITERUM THERAPEUTICS US LIMITED,NDA213972,"TABLET, FILM COATED",ORAL,20250701,,current,application_number
+orserdu_oral,721870101,72187-0101,ORSERDU,"Stemline Therapeutics, Inc.",NDA217639,"TABLET, FILM COATED",ORAL,20230127,,current,application_number
+orserdu_oral,721870102,72187-0102,ORSERDU,"Stemline Therapeutics, Inc.",NDA217639,"TABLET, FILM COATED",ORAL,20230127,,current,application_number
+osphena_oral,554940580,55494-580,Osphena,"Duchesnay USA, Inc.",NDA203505,"TABLET, FILM COATED",ORAL,20230401,,current,application_number
+osphena_oral,596300580,59630-580,Osphena,Shionogi Inc.,NDA203505,,,20130226,20250731,excluded,application_number; route inferred
+otezla_oral,555130137,55513-137,Otezla,"Amgen, Inc",NDA205437,"TABLET, FILM COATED",ORAL,20200226,,current,application_number
+otezla_oral,555130369,55513-369,Otezla,"Amgen, Inc",NDA205437,KIT,,20200226,,current,application_number; route inferred
+otezla_oral,555130485,55513-485,Otezla,"Amgen, Inc",NDA205437,KIT,,20200226,,current,application_number; route inferred
+otezla_oral,555130497,55513-497,Otezla,"Amgen, Inc",NDA205437,"TABLET, FILM COATED",ORAL,20240425,,current,application_number
+otezla_oral,555130508,55513-508,Otezla,"Amgen, Inc",NDA205437,KIT,,20240425,,current,application_number; route inferred
+otezla_oral,555130516,55513-516,Otezla,"Amgen, Inc",NDA210745,KIT,,20250829,,current,application_number; route inferred
+otezla_oral,555130519,55513-519,Otezla,"Amgen, Inc",NDA210745,"TABLET, FILM COATED",ORAL,20250829,,current,application_number
+otezla_oral,555130996,55513-996,Otezla,"Amgen, Inc",NDA205437,KIT,,20240425,,current,application_number; route inferred
+otezla_oral,595720630,59572-630,OTEZLA,Celgene Corporation,NDA205437,,,20140325,20190731,excluded,application_number; route inferred
+otezla_oral,595720631,59572-631,OTEZLA,Celgene Corporation,NDA205437,,,20140403,20221230,excluded,application_number; route inferred
+otezla_oral,595720632,59572-632,OTEZLA,Celgene Corporation,NDA205437,,,20150201,20220831,excluded,application_number; route inferred
+otezla_oral,705183155,70518-3155,Otezla,REMEDYREPACK INC.,NDA205437,,,20210714,20211013,excluded,application_number; route inferred
+oxbryta_oral,727860101,72786-101,OXBRYTA,"Global Blood Therapeutics, Inc, A subsidiary of Pfizer Inc.",NDA213137,"TABLET, FILM COATED",ORAL,20191125,,current,application_number
+oxbryta_oral,727860102,72786-102,OXBRYTA,"Global Blood Therapeutics, Inc, A subsidiary of Pfizer Inc.",NDA213137,"TABLET, FILM COATED",ORAL,20191125,,current,application_number
+oxbryta_oral,727860111,72786-111,OXBRYTA,"Global Blood Therapeutics, Inc, A subsidiary of Pfizer Inc.",NDA216157,"TABLET, FOR SUSPENSION",ORAL,20211217,,current,application_number
+oxlumo_sc,713361002,71336-1002,OXLUMO,"Alnylam Pharmaceuticals, Inc.",NDA214103,"INJECTION, SOLUTION",SUBCUTANEOUS,20201123,,current,application_number
+ozempic_oral,001691704,0169-1704,OZEMPIC,"Novo Nordisk Pharmaceutical Industries, LP",NDA213051,TABLET,ORAL,20260427,,current,application_number
+ozempic_oral,001691709,0169-1709,OZEMPIC,"Novo Nordisk Pharmaceutical Industries, LP",NDA213051,TABLET,ORAL,20260427,,current,application_number
+ozempic_oral,001691715,0169-1715,OZEMPIC,"Novo Nordisk Pharmaceutical Industries, LP",NDA213051,TABLET,ORAL,20260427,,current,application_number
+ozempic_sc,001694130,0169-4130,Ozempic,"Novo Nordisk Pharmaceutical Industries, LP",NDA209637,"INJECTION, SOLUTION",SUBCUTANEOUS,20200930,,current,application_number
+ozempic_sc,001694132,0169-4132,Ozempic,"Novo Nordisk Pharmaceutical Industries, LP",NDA209637,,,20171206,20250930,excluded,application_number; route inferred
+ozempic_sc,001694136,0169-4136,Ozempic,"Novo Nordisk Pharmaceutical Industries, LP",NDA209637,,,20171206,20231031,excluded,application_number; route inferred
+ozempic_sc,001694181,0169-4181,Ozempic,"Novo Nordisk Pharmaceutical Industries, LP",NDA209637,"INJECTION, SOLUTION",SUBCUTANEOUS,20221007,,current,application_number
+ozempic_sc,001694772,0169-4772,Ozempic,"Novo Nordisk Pharmaceutical Industries, LP",NDA209637,"INJECTION, SOLUTION",SUBCUTANEOUS,20220425,,current,application_number
+ozempic_sc,500905138,50090-5138,Ozempic,A-S Medication Solutions,NDA209637,,,20171206,,excluded,application_number; route inferred
+ozempic_sc,500905139,50090-5139,Ozempic,A-S Medication Solutions,NDA209637,,,20171206,,excluded,application_number; route inferred
+ozempic_sc,500905949,50090-5949,Ozempic,A-S Medication Solutions,NDA209637,"INJECTION, SOLUTION",SUBCUTANEOUS,20200930,,current,application_number
+ozempic_sc,500906051,50090-6051,OZEMPIC,A-S Medication Solutions,NDA209637,"INJECTION, SOLUTION",SUBCUTANEOUS,20220425,,current,application_number
+ozempic_sc,500908027,50090-8027,Ozempic,A-S Medication Solutions,NDA209637,"INJECTION, SOLUTION",SUBCUTANEOUS,20221007,,current,application_number
+ozempic_sc,705182143,70518-2143,Ozempic,REMEDYREPACK INC.,NDA209637,,,20190611,20210503,excluded,application_number; route inferred
+palsonify_oral,840150920,84015-920,PALSONIFY,"Crinetics Pharmaceuticals, Inc.",NDA219070,"TABLET, FILM COATED",ORAL,20250925,,current,application_number
+palsonify_oral,840150930,84015-930,PALSONIFY,"Crinetics Pharmaceuticals, Inc.",NDA219070,"TABLET, FILM COATED",ORAL,20250925,,current,application_number
+palynziq_sc,681350058,68135-058,Palynziq,BioMarin Pharmaceutical Inc.,BLA761079,"INJECTION, SOLUTION",SUBCUTANEOUS,20180524,,current,application_number
+palynziq_sc,681350673,68135-673,Palynziq,BioMarin Pharmaceutical Inc.,BLA761079,"INJECTION, SOLUTION",SUBCUTANEOUS,20180524,,current,application_number
+palynziq_sc,681350756,68135-756,Palynziq,BioMarin Pharmaceutical Inc.,BLA761079,"INJECTION, SOLUTION",SUBCUTANEOUS,20180524,,current,application_number
+pemazyre_oral,508810026,50881-026,PEMAZYRE,Incyte Corporation,NDA213736,TABLET,ORAL,20200417,,current,application_number
+pemazyre_oral,508810027,50881-027,PEMAZYRE,Incyte Corporation,NDA213736,TABLET,ORAL,20200417,,current,application_number
+pemazyre_oral,508810028,50881-028,PEMAZYRE,Incyte Corporation,NDA213736,TABLET,ORAL,20200417,,current,application_number
+piasky_sc,502420115,50242-115,Piasky,"Genentech, Inc.",BLA761388,"INJECTION, SOLUTION",SUBCUTANEOUS,20240620,,current,application_number
+pifeltro_oral,000063069,0006-3069,PIFELTRO,Merck Sharp & Dohme LLC,NDA210806,"TABLET, FILM COATED",ORAL,20180720,,current,application_number
+pifeltro_oral,500906237,50090-6237,PIFELTRO,A-S Medication Solutions,NDA210806,,,20180720,20240630,excluded,application_number; route inferred
+pifeltro_oral,500906268,50090-6268,PIFELTRO,A-S Medication Solutions,NDA210806,"TABLET, FILM COATED",ORAL,20180720,,current,application_number
+piqray_oral,000780701,0078-0701,PIQRAY,Novartis Pharmaceuticals Corporation,NDA212526,TABLET,ORAL,20190524,,current,application_number
+piqray_oral,000780708,0078-0708,PIQRAY,Novartis Pharmaceuticals Corporation,NDA212526,TABLET,ORAL,20190524,,current,application_number
+piqray_oral,000780715,0078-0715,PIQRAY,Novartis Pharmaceuticals Corporation,NDA212526,KIT,,20190524,,current,application_number; route inferred
+plegridy_sc,644060011,64406-011,Plegridy,Biogen Inc.,BLA125499,"INJECTION, SOLUTION",SUBCUTANEOUS,20140815,,current,application_number
+plegridy_sc,644060012,64406-012,Plegridy,Biogen Inc.,BLA125499,KIT,SUBCUTANEOUS,20140815,,current,application_number
+plegridy_sc,644060015,64406-015,Plegridy,Biogen Inc.,BLA125499,"INJECTION, SOLUTION",SUBCUTANEOUS,20140815,,current,application_number
+plegridy_sc,644060016,64406-016,Plegridy,Biogen Inc.,BLA125499,KIT,SUBCUTANEOUS,20140815,,current,application_number
+pomalyst_oral,595720501,59572-501,Pomalyst,Celgene Corporation,NDA204026,CAPSULE,ORAL,20130218,,current,application_number
+pomalyst_oral,595720502,59572-502,Pomalyst,Celgene Corporation,NDA204026,CAPSULE,ORAL,20130218,,current,application_number
+pomalyst_oral,595720503,59572-503,Pomalyst,Celgene Corporation,NDA204026,CAPSULE,ORAL,20130218,,current,application_number
+pomalyst_oral,595720504,59572-504,Pomalyst,Celgene Corporation,NDA204026,CAPSULE,ORAL,20130218,,current,application_number
+ponvory_oral,430680610,43068-610,PONVORY,Vanda Pharmaceuticals Inc.,NDA213498,KIT,,20210318,,current,application_number; route inferred
+ponvory_oral,430680620,43068-620,PONVORY,Vanda Pharmaceuticals Inc.,NDA213498,"TABLET, FILM COATED",ORAL,20210318,,current,application_number
+ponvory_oral,504580707,50458-707,PONVORY,"Janssen Pharmaceuticals, Inc",NDA213498,KIT,,20210318,20270331,current,application_number; route inferred
+ponvory_oral,504580720,50458-720,PONVORY,"Janssen Pharmaceuticals, Inc",NDA213498,"TABLET, FILM COATED",ORAL,20210318,20270331,current,application_number
+pradaxa_oral,005970107,0597-0107,Pradaxa,Boehringer Ingelheim Pharmaceuticals Inc.,NDA022512,,,20101108,20130920,excluded,application_number; route inferred
+pradaxa_oral,005970108,0597-0108,Pradaxa,Boehringer Ingelheim Pharmaceuticals Inc.,NDA022512,CAPSULE,ORAL,20151123,,current,application_number
+pradaxa_oral,005970135,0597-0135,Pradaxa,Boehringer Ingelheim Pharmaceuticals Inc.,NDA022512,,,20101026,20200608,excluded,application_number; route inferred
+pradaxa_oral,005970149,0597-0149,Pradaxa,Boehringer Ingelheim Pharmaceuticals Inc.,NDA022512,,,20110808,20200608,excluded,application_number; route inferred
+pradaxa_oral,005970355,0597-0355,Pradaxa,Boehringer Ingelheim Pharmaceuticals Inc.,NDA022512,CAPSULE,ORAL,20110808,,current,application_number
+pradaxa_oral,005970360,0597-0360,Pradaxa,Boehringer Ingelheim Pharmaceuticals Inc.,NDA022512,CAPSULE,ORAL,20170728,,current,application_number
+pradaxa_oral,005970425,0597-0425,Pradaxa,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA214358,PELLET,ORAL,20220316,,current,application_number
+pradaxa_oral,005970430,0597-0430,Pradaxa,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA214358,PELLET,ORAL,20220316,,current,application_number
+pradaxa_oral,005970435,0597-0435,Pradaxa,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA214358,PELLET,ORAL,20220316,,current,application_number
+pradaxa_oral,005970440,0597-0440,Pradaxa,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA214358,PELLET,ORAL,20220316,,current,application_number
+pradaxa_oral,005970445,0597-0445,Pradaxa,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA214358,PELLET,ORAL,20220316,,current,application_number
+pradaxa_oral,005970450,0597-0450,Pradaxa,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA214358,PELLET,ORAL,20220316,,current,application_number
+pradaxa_oral,216950899,21695-899,PRADAXA,Rebel Distributors Corp,NDA022512,,,20101026,,excluded,application_number; route inferred
+pradaxa_oral,500903617,50090-3617,Pradaxa,A-S Medication Solutions,NDA022512,,,20170728,,excluded,application_number; route inferred
+pradaxa_oral,500904480,50090-4480,Pradaxa,A-S Medication Solutions,NDA022512,,,20170728,20250106,excluded,application_number; route inferred
+pradaxa_oral,545696276,54569-6276,Pradaxa,A-S Medication Solutions,NDA022512,,,20101026,,excluded,application_number; route inferred
+pradaxa_oral,636298242,63629-8242,Pradaxa,Bryant Ranch Prepack,NDA022512,,,20170728,20260129,excluded,application_number; route inferred
+praluent_sc,000245901,0024-5901,Praluent,Sanofi-Aventis U.S. LLC,BLA125559,"INJECTION, SOLUTION",SUBCUTANEOUS,20150724,,current,application_number
+praluent_sc,000245902,0024-5902,Praluent,Sanofi-Aventis U.S. LLC,BLA125559,"INJECTION, SOLUTION",SUBCUTANEOUS,20150724,,current,application_number
+praluent_sc,000245903,0024-5903,Praluent,Sanofi-Aventis U.S. LLC,BLA125559,,,20150724,20170731,excluded,application_number; route inferred
+praluent_sc,000245904,0024-5904,Praluent,Sanofi-Aventis U.S. LLC,BLA125559,,,20150724,20160830,excluded,application_number; route inferred
+praluent_sc,617550020,61755-020,Praluent,"Regeneron Pharmaceuticals, Inc.",BLA125559,"INJECTION, SOLUTION",SUBCUTANEOUS,20201201,,current,application_number
+praluent_sc,617550021,61755-021,Praluent,"Regeneron Pharmaceuticals, Inc.",BLA125559,"INJECTION, SOLUTION",SUBCUTANEOUS,20201201,,current,application_number
+praluent_sc,727335901,72733-5901,Praluent,Sanofi US Corporation,BLA125559,,,20190215,20201229,excluded,application_number; route inferred
+praluent_sc,727335902,72733-5902,Praluent,Sanofi US Corporation,BLA125559,,,20190215,20201229,excluded,application_number; route inferred
+pretomanid_oral,495020476,49502-476,Pretomanid,Viatris Specialty LLC,NDA212862,TABLET,ORAL,20191107,,current,application_number
+prevymis_oral,000063075,0006-3075,PREVYMIS,Merck Sharp & Dohme LLC,NDA209939,"TABLET, FILM COATED",ORAL,20171108,,current,application_number
+prevymis_oral,000063076,0006-3076,PREVYMIS,Merck Sharp & Dohme LLC,NDA209939,"TABLET, FILM COATED",ORAL,20171108,,current,application_number
+prevymis_oral,000065085,0006-5085,PREVYMIS,Merck Sharp & Dohme LLC,NDA219104,PELLET,ORAL,20240830,,current,application_number
+prevymis_oral,000065086,0006-5086,PREVYMIS,Merck Sharp & Dohme LLC,NDA219104,PELLET,ORAL,20240830,,current,application_number
+prolia_sc,555130710,55513-710,Prolia,"Amgen, Inc",BLA125320,INJECTION,SUBCUTANEOUS,20100605,,current,application_number
+prolia_sc,555130730,55513-730,XGEVA,"Amgen, Inc",BLA125320,INJECTION,SUBCUTANEOUS,20101118,,current,application_number
+pyrukynd_oral,713340205,71334-205,PYRUKYND,"Agios Pharmaceuticals, Inc.",NDA216196,"TABLET, FILM COATED",ORAL,20220218,,current,application_number
+pyrukynd_oral,713340210,71334-210,PYRUKYND,"Agios Pharmaceuticals, Inc.",NDA216196,"TABLET, FILM COATED",ORAL,20220218,,current,application_number
+pyrukynd_oral,713340215,71334-215,PYRUKYND,"Agios Pharmaceuticals, Inc.",NDA216196,"TABLET, FILM COATED",ORAL,20220218,,current,application_number
+pyrukynd_oral,713340220,71334-220,PYRUKYND,"Agios Pharmaceuticals, Inc.",NDA216196,"TABLET, FILM COATED",ORAL,20220218,,current,application_number
+pyrukynd_oral,713340225,71334-225,PYRUKYND,"Agios Pharmaceuticals, Inc.",NDA216196,KIT,,20220218,,current,application_number; route inferred
+pyrukynd_oral,713340230,71334-230,PYRUKYND,"Agios Pharmaceuticals, Inc.",NDA216196,KIT,,20220218,,current,application_number; route inferred
+pyrukynd_oral,713340235,71334-235,AQVESME,"Agios Pharmaceuticals, Inc.",NDA216196,"TABLET, FILM COATED",ORAL,20251223,,current,application_number
+qelbree_oral,177720131,17772-131,QELBREE,"Supernus Pharmaceuticals, Inc",NDA211964,"CAPSULE, EXTENDED RELEASE",ORAL,20210402,,current,application_number
+qelbree_oral,177720132,17772-132,QELBREE,"Supernus Pharmaceuticals, Inc",NDA211964,"CAPSULE, EXTENDED RELEASE",ORAL,20210402,,current,application_number
+qelbree_oral,177720133,17772-133,QELBREE,"Supernus Pharmaceuticals, Inc",NDA211964,"CAPSULE, EXTENDED RELEASE",ORAL,20210402,,current,application_number
+qfitlia_sc,584680347,58468-0347,Qfitlia,Genzyme Corporation,NDA219019,"INJECTION, SOLUTION",SUBCUTANEOUS,20250328,,current,application_number
+qfitlia_sc,584680348,58468-0348,Qfitlia,Genzyme Corporation,NDA219019,"INJECTION, SOLUTION",SUBCUTANEOUS,20250328,,current,application_number
+qinlock_oral,732070101,73207-101,QINLOCK,"Deciphera Pharmaceuticals, LLC",NDA213973,TABLET,ORAL,20200515,,current,application_number
+qulipta_oral,000747094,0074-7094,Qulipta,AbbVie Inc.,NDA215206,TABLET,ORAL,20210930,,current,application_number
+qulipta_oral,000747095,0074-7095,Qulipta,AbbVie Inc.,NDA215206,TABLET,ORAL,20210930,,current,application_number
+qulipta_oral,000747096,0074-7096,Qulipta,AbbVie Inc.,NDA215206,TABLET,ORAL,20210930,,current,application_number
+quviviq_oral,804917825,80491-7825,QUVIVIQ,Idorsia Pharmaceuticals Ltd,NDA214985,"TABLET, FILM COATED",ORAL,20220407,,current,application_number
+quviviq_oral,804917850,80491-7850,QUVIVIQ,Idorsia Pharmaceuticals Ltd,NDA214985,"TABLET, FILM COATED",ORAL,20220407,,current,application_number
+reblozyl_sc,595720711,59572-711,Reblozyl,Celgene Corporation,BLA761136,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20191108,,current,application_number
+reblozyl_sc,595720775,59572-775,Reblozyl,Celgene Corporation,BLA761136,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20191108,,current,application_number
+redemplo_sc,841410025,84141-025,REDEMPLO,"Arrowhead Pharmaceuticals, Inc.",NDA219947,"INJECTION, SOLUTION",SUBCUTANEOUS,20251119,,current,application_number
+repatha_sc,555130750,55513-750,REPATHA,"Amgen, Inc",BLA125522,,,20150831,20240930,excluded,application_number; route inferred
+repatha_sc,555130760,55513-760,REPATHA,"Amgen, Inc",BLA125522,,,20150831,20240930,excluded,application_number; route inferred
+repatha_sc,555130770,55513-770,REPATHA,"Amgen, Inc",BLA125522,,,20160801,20240930,excluded,application_number; route inferred
+repatha_sc,725110143,72511-143,REPATHA,Amgen USA Inc.,BLA125522,"INJECTION, SOLUTION",SUBCUTANEOUS,20260713,,current,application_number
+repatha_sc,725110393,72511-393,REPATHA,Amgen USA Inc.,BLA125522,"INJECTION, SOLUTION",SUBCUTANEOUS,20241124,,current,application_number
+repatha_sc,725110501,72511-501,REPATHA,Amgen USA Inc.,BLA125522,"INJECTION, SOLUTION",SUBCUTANEOUS,20241124,,current,application_number
+repatha_sc,725110750,72511-750,REPATHA,Amgen USA Inc.,BLA125522,"INJECTION, SOLUTION",SUBCUTANEOUS,20181009,,current,application_number
+repatha_sc,725110760,72511-760,REPATHA,Amgen USA Inc.,BLA125522,"INJECTION, SOLUTION",SUBCUTANEOUS,20181009,,current,application_number
+repatha_sc,725110770,72511-770,REPATHA,Amgen USA Inc.,BLA125522,,,20181009,20260731,excluded,application_number; route inferred
+retevmo_oral,000022980,0002-2980,RETEVMO,Eli Lilly and Company,NDA213246,CAPSULE,ORAL,20200508,,current,application_number
+retevmo_oral,000023977,0002-3977,RETEVMO,Eli Lilly and Company,NDA213246,CAPSULE,ORAL,20200508,,current,application_number
+retevmo_oral,000025340,0002-5340,RETEVMO,Eli Lilly and Company,NDA218160,"TABLET, COATED",ORAL,20240410,,current,application_number
+retevmo_oral,000025562,0002-5562,RETEVMO,Eli Lilly and Company,NDA218160,"TABLET, COATED",ORAL,20240410,,current,application_number
+retevmo_oral,000026082,0002-6082,RETEVMO,Eli Lilly and Company,NDA218160,"TABLET, COATED",ORAL,20240410,,current,application_number
+retevmo_oral,000026120,0002-6120,RETEVMO,Eli Lilly and Company,NDA218160,"TABLET, COATED",ORAL,20240410,,current,application_number
+revuforj_oral,735550500,73555-500,Revuforj,"Syndax Pharmaceuticals, Inc.",NDA218944,"TABLET, FILM COATED",ORAL,20241115,,current,application_number
+revuforj_oral,735550501,73555-501,Revuforj,"Syndax Pharmaceuticals, Inc.",NDA218944,"TABLET, FILM COATED",ORAL,20241115,,current,application_number
+revuforj_oral,735550502,73555-502,Revuforj,"Syndax Pharmaceuticals, Inc.",NDA218944,"TABLET, FILM COATED",ORAL,20241115,,current,application_number
+rexulti_oral,591480035,59148-035,Rexulti,"Otsuka America Pharmaceutical, Inc.",NDA205422,TABLET,ORAL,20150710,,current,application_number
+rexulti_oral,591480036,59148-036,Rexulti,"Otsuka America Pharmaceutical, Inc.",NDA205422,TABLET,ORAL,20150710,,current,application_number
+rexulti_oral,591480037,59148-037,Rexulti,"Otsuka America Pharmaceutical, Inc.",NDA205422,TABLET,ORAL,20150710,,current,application_number
+rexulti_oral,591480038,59148-038,Rexulti,"Otsuka America Pharmaceutical, Inc.",NDA205422,TABLET,ORAL,20150710,,current,application_number
+rexulti_oral,591480039,59148-039,Rexulti,"Otsuka America Pharmaceutical, Inc.",NDA205422,TABLET,ORAL,20150710,,current,application_number
+rexulti_oral,591480040,59148-040,Rexulti,"Otsuka America Pharmaceutical, Inc.",NDA205422,TABLET,ORAL,20150710,,current,application_number
+rexulti_oral,591480042,59148-042,Rexulti,"Otsuka America Pharmaceutical, Inc.",NDA205422,KIT,,20150710,,current,application_number; route inferred
+rexulti_oral,591480044,59148-044,Rexulti,"Otsuka America Pharmaceutical, Inc.",NDA205422,KIT,,20150710,,current,application_number; route inferred
+rexulti_oral,691890642,69189-0642,REXULTI,Avera McKennan Hospital,NDA205422,,,20160617,20170524,excluded,application_number; route inferred
+rexulti_oral,705183548,70518-3548,Rexulti,REMEDYREPACK INC.,NDA205422,TABLET,ORAL,20221003,,current,application_number
+rexulti_oral,705184608,70518-4608,Rexulti,REMEDYREPACK INC.,NDA205422,TABLET,ORAL,20260422,,current,application_number
+rexulti_oral,759290273,75929-273,Rexulti,"Pharma Packaging Solutions, LLC dba Tjoapack LLC",NDA205422,,,20150710,20260724,excluded,application_number; route inferred
+reyvow_oral,000024312,0002-4312,Reyvow,Eli Lilly and Company,NDA211280,TABLET,ORAL,20191011,20280516,current,application_number
+reyvow_oral,000024491,0002-4491,Reyvow,Eli Lilly and Company,NDA211280,TABLET,ORAL,20191011,20270221,current,application_number
+reyvow_oral,000024736,0002-4736,Reyvow,Eli Lilly and Company,NDA211280,,,20201218,20220119,excluded,application_number; route inferred
+rezdiffra_oral,825760060,82576-060,REZDIFFRA,"Madrigal Pharmaceuticals, Inc.",NDA217785,"TABLET, COATED",ORAL,20240314,,current,application_number
+rezdiffra_oral,825760080,82576-080,REZDIFFRA,"Madrigal Pharmaceuticals, Inc.",NDA217785,"TABLET, COATED",ORAL,20240314,,current,application_number
+rezdiffra_oral,825760100,82576-100,REZDIFFRA,"Madrigal Pharmaceuticals, Inc.",NDA217785,"TABLET, COATED",ORAL,20240314,,current,application_number
+rezlidhia_oral,713320005,71332-005,REZLIDHIA,"Rigel Pharmaceuticals, Inc.",NDA215814,CAPSULE,ORAL,20221201,,current,application_number
+rezurock_oral,798020200,79802-200,Rezurock,"Kadmon Pharmaceuticals, LLC",NDA214783,TABLET,ORAL,20210716,,current,application_number
+rhapsido_oral,000781483,0078-1483,RHAPSIDO,Novartis Pharmaceuticals Corporation,NDA218436,TABLET,ORAL,20250930,,current,application_number
+rinvoq_oral,000741043,0074-1043,Rinvoq,AbbVie Inc.,NDA211675,"TABLET, EXTENDED RELEASE",ORAL,20190816,,current,application_number
+rinvoq_oral,000742306,0074-2306,Rinvoq,AbbVie Inc.,NDA211675,"TABLET, EXTENDED RELEASE",ORAL,20190816,,current,application_number
+rinvoq_oral,000742310,0074-2310,Rinvoq,AbbVie Inc.,NDA211675,"TABLET, EXTENDED RELEASE",ORAL,20190816,,current,application_number
+rivfloza_sc,001695306,0169-5306,RIVFLOZA,Novo Nordisk,NDA215842,"INJECTION, SOLUTION",SUBCUTANEOUS,20240219,,current,application_number
+rivfloza_sc,001695307,0169-5307,RIVFLOZA,Novo Nordisk,NDA215842,"INJECTION, SOLUTION",SUBCUTANEOUS,20240219,,current,application_number
+rivfloza_sc,001695308,0169-5308,RIVFLOZA,Novo Nordisk,NDA215842,"INJECTION, SOLUTION",SUBCUTANEOUS,20240219,,current,application_number
+rolvedon_sc,769610101,76961-101,Rolvedon,"Spectrum Pharmaceuticals, Inc.",BLA761148,"INJECTION, SOLUTION",SUBCUTANEOUS,20221018,20270831,current,application_number
+rolvedon_sc,824970132,82497-132,Rolvedon,"Assertio Specialty Pharmaceuticals, LLC",BLA761148,"INJECTION, SOLUTION",SUBCUTANEOUS,20251211,,current,application_number
+romvimza_oral,732070302,73207-302,ROMVIMZA,"Deciphera Pharmaceuticals, LLC",NDA219304,CAPSULE,ORAL,20250214,,current,application_number
+romvimza_oral,732070303,73207-303,ROMVIMZA,"Deciphera Pharmaceuticals, LLC",NDA219304,CAPSULE,ORAL,20250214,,current,application_number
+romvimza_oral,732070304,73207-304,ROMVIMZA,"Deciphera Pharmaceuticals, LLC",NDA219304,CAPSULE,ORAL,20250214,,current,application_number
+rozlytrek_oral,502420091,50242-091,Rozlytrek,"Genentech, Inc.",NDA212725,CAPSULE,ORAL,20190815,,current,application_number
+rozlytrek_oral,502420092,50242-092,Rozlytrek,Genentech Inc.,NDA212725,,,20190815,20190910,excluded,application_number; route inferred
+rozlytrek_oral,502420094,50242-094,Rozlytrek,"Genentech, Inc.",NDA212725,CAPSULE,ORAL,20190815,,current,application_number
+rozlytrek_oral,502420623,50242-623,Rozlytrek,"Genentech, Inc.",NDA218550,PELLET,ORAL,20231020,,current,application_number
+rubraca_oral,696600201,69660-201,Rubraca,"Clovis Oncology, Inc.",NDA209115,,,20161219,20251231,excluded,application_number; route inferred
+rubraca_oral,696600202,69660-202,Rubraca,"Clovis Oncology, Inc.",NDA209115,,,20170501,20250731,excluded,application_number; route inferred
+rubraca_oral,696600203,69660-203,Rubraca,"Clovis Oncology, Inc.",NDA209115,,,20161219,20250731,excluded,application_number; route inferred
+rubraca_oral,821540783,82154-0783,Rubraca,pharmaand GmbH,NDA209115,"TABLET, FILM COATED",ORAL,20161219,,current,application_number
+rubraca_oral,821540784,82154-0784,Rubraca,pharmaand GmbH,NDA209115,"TABLET, FILM COATED",ORAL,20170501,,current,application_number
+rubraca_oral,821540785,82154-0785,Rubraca,pharmaand GmbH,NDA209115,"TABLET, FILM COATED",ORAL,20161219,,current,application_number
+rukobia_oral,497020250,49702-250,Rukobia,ViiV Healthcare Company,NDA212950,"TABLET, FILM COATED, EXTENDED RELEASE",ORAL,20200702,,current,application_number
+rydapt_oral,000780698,0078-0698,RYDAPT,Novartis Pharmaceuticals Corporation,NDA207997,"CAPSULE, LIQUID FILLED",ORAL,20170428,,current,application_number
+rystiggo_sc,504740980,50474-980,RYSTIGGO,"UCB, Inc.",BLA761286,"INJECTION, SOLUTION",SUBCUTANEOUS,20230626,,current,application_number
+rystiggo_sc,504740981,50474-981,RYSTIGGO,"UCB, Inc.",BLA761286,"INJECTION, SOLUTION",SUBCUTANEOUS,20240614,,current,application_number
+rystiggo_sc,504740982,50474-982,RYSTIGGO,"UCB, Inc.",BLA761286,"INJECTION, SOLUTION",SUBCUTANEOUS,20240614,,current,application_number
+rystiggo_sc,504740983,50474-983,RYSTIGGO,"UCB, Inc.",BLA761286,"INJECTION, SOLUTION",SUBCUTANEOUS,20240614,,current,application_number
+ryzneuta_sc,728930016,72893-016,RYZNEUTA,Acrotech Biopharma Inc,BLA761134,INJECTION,SUBCUTANEOUS,20231123,,current,application_number
+ryzneuta_sc,734910627,73491-627,RYZNEUTA,Evive Biotechnology Singapore PTE. LTD.,BLA761134,,,20231123,20250220,excluded,application_number; route inferred
+saphnelo_sc,003103080,0310-3080,SAPHNELO,AstraZeneca Pharmaceuticals LP,BLA761451,"INJECTION, SOLUTION",SUBCUTANEOUS,20260424,,current,application_number
+savaysa_oral,655970201,65597-201,SAVAYSA,Daiichi Sankyo Inc.,NDA206316,"TABLET, FILM COATED",ORAL,20150112,,current,application_number
+savaysa_oral,655970202,65597-202,SAVAYSA,Daiichi Sankyo Inc.,NDA206316,"TABLET, FILM COATED",ORAL,20150112,,current,application_number
+savaysa_oral,655970203,65597-203,SAVAYSA,Daiichi Sankyo Inc.,NDA206316,"TABLET, FILM COATED",ORAL,20150112,,current,application_number
+scemblix_oral,000781091,0078-1091,SCEMBLIX,Novartis Pharmaceuticals Corporation,NDA215358,"TABLET, FILM COATED",ORAL,20211029,,current,application_number
+scemblix_oral,000781098,0078-1098,SCEMBLIX,Novartis Pharmaceuticals Corporation,NDA215358,"TABLET, FILM COATED",ORAL,20211029,,current,application_number
+scemblix_oral,000781196,0078-1196,SCEMBLIX,Novartis Pharmaceuticals Corporation,NDA215358,"TABLET, FILM COATED",ORAL,20211029,,current,application_number
+scenesse_sc,733720116,73372-0116,SCENESSE,CLINUVEL INC.,NDA210797,IMPLANT,SUBCUTANEOUS,20191231,,current,application_number
+sephience_oral,528560201,52856-201,Sephience,PTC Therapeutics Inc.,NDA219666,POWDER,ORAL,20250728,,current,application_number
+sephience_oral,528560301,52856-301,Sephience,PTC Therapeutics Inc.,NDA219666,POWDER,ORAL,20250728,,current,application_number
+sephience_oral,604680006,60468-006,Sephience,allphamed Pharbil Arzneimittel GmbH,NDA219666,POWDER,ORAL,20250728,,current,application_number
+sephience_oral,604680007,60468-007,Sephience,allphamed Pharbil Arzneimittel GmbH,NDA219666,POWDER,ORAL,20250728,,current,application_number
+seysara_oral,000236245,0023-6245,SEYSARA,"Allergan, Inc.",NDA209521,,,20180801,20180801,excluded,application_number; route inferred
+seysara_oral,000236246,0023-6246,SEYSARA,"Allergan, Inc.",NDA209521,,,20180801,20180801,excluded,application_number; route inferred
+seysara_oral,000236247,0023-6247,SEYSARA,"Allergan, Inc.",NDA209521,,,20180801,20180801,excluded,application_number; route inferred
+seysara_oral,161100245,16110-245,Seysara,"Almirall, LLC",NDA209521,"TABLET, COATED",ORAL,20190104,,current,application_number
+seysara_oral,161100246,16110-246,Seysara,"Almirall, LLC",NDA209521,"TABLET, COATED",ORAL,20190104,,current,application_number
+seysara_oral,161100247,16110-247,Seysara,"Almirall, LLC",NDA209521,"TABLET, COATED",ORAL,20190104,,current,application_number
+signifor_sc,000780633,0078-0633,Signifor,Novartis Pharmaceuticals Corporation,NDA200677,,,20121214,20220930,excluded,application_number; route inferred
+signifor_sc,000780634,0078-0634,Signifor,Novartis Pharmaceuticals Corporation,NDA200677,,,20121214,20220930,excluded,application_number; route inferred
+signifor_sc,000780635,0078-0635,Signifor,Novartis Pharmaceuticals Corporation,NDA200677,,,20121214,20220930,excluded,application_number; route inferred
+signifor_sc,552920131,55292-131,Signifor,"Recordati Rare Diseases, Inc.",NDA200677,INJECTION,SUBCUTANEOUS,20121214,,current,application_number
+signifor_sc,552920132,55292-132,Signifor,"Recordati Rare Diseases, Inc.",NDA200677,INJECTION,SUBCUTANEOUS,20121214,,current,application_number
+signifor_sc,552920133,55292-133,Signifor,"Recordati Rare Diseases, Inc.",NDA200677,INJECTION,SUBCUTANEOUS,20121214,,current,application_number
+siliq_sc,001870004,0187-0004,Siliq,Bausch Health US LLC,BLA761032,INJECTION,SUBCUTANEOUS,20170215,,current,application_number
+sirturo_oral,596760701,59676-701,SIRTURO,"Janssen Products, LP",NDA204384,TABLET,ORAL,20121228,,current,application_number
+sirturo_oral,596760702,59676-702,SIRTURO,"Janssen Products, LP",NDA204384,TABLET,ORAL,20200527,,current,application_number
+sivextro_oral,679190041,67919-041,SIVEXTRO,Merck Sharp & Dohme LLC,NDA205435,"TABLET, FILM COATED",ORAL,20140620,,current,application_number
+sivextro_oral,720000310,72000-310,SIVEXTRO,"Nabriva Therapeutics US, Inc.",NDA205435,,,20140620,,excluded,application_number; route inferred
+skyclarys_oral,644060250,64406-250,SKYCLARYS,Biogen,NDA216718,CAPSULE,ORAL,20230228,,current,application_number
+skyclarys_oral,731790250,73179-250,SKYCLARYS,"Reata Pharmaceuticals, Inc.",NDA216718,,,20230228,,excluded,application_number; route inferred
+skyrizi_sc,000741050,0074-1050,Skyrizi,AbbVie Inc.,BLA761105,INJECTION,SUBCUTANEOUS,20210426,,current,application_number
+skyrizi_sc,000742042,0074-2042,Skyrizi,AbbVie Inc.,BLA761105,,,20190423,20230131,excluded,application_number; route inferred
+skyrizi_sc,000742100,0074-2100,Skyrizi,AbbVie Inc.,BLA761105,INJECTION,SUBCUTANEOUS,20210426,,current,application_number
+skyrizi_sc,000744059,0074-4059,Skyrizi,AbbVie Inc.,BLA761105,"INJECTION, SOLUTION",SUBCUTANEOUS,20260612,,current,application_number
+skyrizi_sc,000747034,0074-7034,Skyrizi,AbbVie Inc.,BLA761105,,,20230322,20240621,excluded,application_number; route inferred
+skyrizi_sc,000747036,0074-7036,Skyrizi,AbbVie Inc.,BLA761105,,,20230322,20240621,excluded,application_number; route inferred
+skyrizi_sc,000747040,0074-7040,Skyrizi,AbbVie Inc.,BLA761105,KIT,,20240304,,current,application_number; route inferred
+skyrizi_sc,000747042,0074-7042,Skyrizi,AbbVie Inc.,BLA761105,KIT,,20240304,,current,application_number; route inferred
+skyrizi_sc,000748300,0074-8300,Skyrizi,AbbVie Inc.,BLA761105,INJECTION,SUBCUTANEOUS,20250903,,current,application_number
+skyrizi_sc,000748350,0074-8350,Skyrizi,AbbVie Inc.,BLA761105,INJECTION,SUBCUTANEOUS,20250903,,current,application_number
+skytrofa_sc,733620003,73362-003,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20210825,,current,application_number
+skytrofa_sc,733620004,73362-004,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20210825,,current,application_number
+skytrofa_sc,733620005,73362-005,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20210825,,current,application_number
+skytrofa_sc,733620006,73362-006,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20210825,,current,application_number
+skytrofa_sc,733620007,73362-007,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20210825,,current,application_number
+skytrofa_sc,733620008,73362-008,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20210825,,current,application_number
+skytrofa_sc,733620009,73362-009,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20210825,,current,application_number
+skytrofa_sc,733620010,73362-010,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20210825,,current,application_number
+skytrofa_sc,733620011,73362-011,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20210825,,current,application_number
+skytrofa_sc,733620012,73362-012,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20250725,,current,application_number
+skytrofa_sc,733620013,73362-013,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20250725,,current,application_number
+skytrofa_sc,733620014,73362-014,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20250725,,current,application_number
+skytrofa_sc,733620015,73362-015,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20250725,,current,application_number
+skytrofa_sc,733620016,73362-016,Skytrofa,"Ascendis Pharma Endocrinology, Inc.",BLA761177,"INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION",SUBCUTANEOUS,20250725,,current,application_number
+sogroya_sc,001692030,0169-2030,SOGROYA,Novo Nordisk,BLA761156,"INJECTION, SOLUTION",SUBCUTANEOUS,20230501,,current,application_number
+sogroya_sc,001692035,0169-2035,SOGROYA,Novo Nordisk,BLA761156,"INJECTION, SOLUTION",SUBCUTANEOUS,20230501,,current,application_number
+sogroya_sc,001692037,0169-2037,SOGROYA,Novo Nordisk,BLA761156,"INJECTION, SOLUTION",SUBCUTANEOUS,20230501,,current,application_number
+sohonos_oral,150540010,15054-0010,SOHONOS,"Ipsen Biopharmaceuticals, Inc.",NDA215559,CAPSULE,ORAL,20230816,,current,application_number
+sohonos_oral,150540015,15054-0015,SOHONOS,"Ipsen Biopharmaceuticals, Inc.",NDA215559,CAPSULE,ORAL,20230816,,current,application_number
+sohonos_oral,150540025,15054-0025,SOHONOS,"Ipsen Biopharmaceuticals, Inc.",NDA215559,CAPSULE,ORAL,20230816,20270430,current,application_number
+sohonos_oral,150540050,15054-0050,SOHONOS,"Ipsen Biopharmaceuticals, Inc.",NDA215559,CAPSULE,ORAL,20230816,,current,application_number
+sohonos_oral,150540100,15054-0100,SOHONOS,"Ipsen Biopharmaceuticals, Inc.",NDA215559,CAPSULE,ORAL,20230816,,current,application_number
+solosec_oral,274370051,27437-051,SOLOSEC,"Lupin Pharmaceuticals, Inc.",NDA209363,,,20171030,20260228,excluded,application_number; route inferred
+solosec_oral,697510400,69751-400,Solosec,Evofem Inc.,NDA209363,GRANULE,ORAL,20180531,,current,application_number
+solosec_oral,710000102,71000-102,solosec,Symbiomix Therapeutics,NDA209363,,,20170929,20171030,excluded,application_number; route inferred
+sotyktu_oral,000030895,0003-0895,SOTYKTU,"E.R. Squibb & Sons, L.L.C.",NDA214958,"TABLET, FILM COATED",ORAL,20220909,,current,application_number
+sovaldi_oral,619581501,61958-1501,Sovaldi,"Gilead Sciences, Inc.",NDA204671,"TABLET, FILM COATED",ORAL,20131206,,current,application_number
+sovaldi_oral,619581503,61958-1503,Sovaldi,"Gilead Sciences, Inc.",NDA204671,"TABLET, FILM COATED",ORAL,20190828,,current,application_number
+sovaldi_oral,619581504,61958-1504,Sovaldi,"Gilead Sciences, Inc.",NDA212480,PELLET,ORAL,20190828,,current,application_number
+sovaldi_oral,619581505,61958-1505,Sovaldi,"Gilead Sciences, Inc.",NDA212480,PELLET,ORAL,20190828,,current,application_number
+spevigo_sc,502220360,50222-360,SPEVIGO,LEO Pharma Inc.,BLA761244,INJECTION,SUBCUTANEOUS,20260309,,current,application_number
+spevigo_sc,502220361,50222-361,SPEVIGO,LEO Pharma Inc.,BLA761244,INJECTION,SUBCUTANEOUS,20260309,,current,application_number
+spevigo_sc,502220362,50222-362,SPEVIGO,LEO Pharma Inc.,BLA761244,INJECTION,SUBCUTANEOUS,20260309,,current,application_number
+steglatro_oral,000065363,0006-5363,STEGLATRO,Merck Sharp & Dohme LLC,NDA209803,"TABLET, FILM COATED",ORAL,20171219,,current,application_number
+steglatro_oral,000065364,0006-5364,STEGLATRO,Merck Sharp & Dohme LLC,NDA209803,"TABLET, FILM COATED",ORAL,20171219,,current,application_number
+steglatro_oral,500906182,50090-6182,STEGLATRO,A-S Medication Solutions,NDA209803,,,20171219,20250106,excluded,application_number; route inferred
+steglatro_oral,500906183,50090-6183,STEGLATRO,A-S Medication Solutions,NDA209803,,,20171219,20240414,excluded,application_number; route inferred
+stivarga_oral,504190171,50419-171,Stivarga,Bayer HealthCare Pharmaceuticals Inc.,NDA203085,"TABLET, FILM COATED",ORAL,20120927,,current,application_number
+strensiq_sc,256820010,25682-010,STRENSIQ,"Alexion Pharmaceuticals, Inc.",BLA125513,SOLUTION,SUBCUTANEOUS,20151023,,current,application_number
+strensiq_sc,256820013,25682-013,STRENSIQ,"Alexion Pharmaceuticals, Inc.",BLA125513,SOLUTION,SUBCUTANEOUS,20151023,,current,application_number
+strensiq_sc,256820016,25682-016,STRENSIQ,"Alexion Pharmaceuticals, Inc.",BLA125513,SOLUTION,SUBCUTANEOUS,20151023,,current,application_number
+strensiq_sc,256820019,25682-019,STRENSIQ,"Alexion Pharmaceuticals, Inc.",BLA125513,SOLUTION,SUBCUTANEOUS,20151023,,current,application_number
+stribild_oral,500901318,50090-1318,Stribild,A-S Medication Solutions,NDA203100,,,20120827,20190630,excluded,application_number; route inferred
+stribild_oral,538080887,53808-0887,Stribild,State of Florida DOH Central Pharmacy,NDA203100,,,20140101,,excluded,application_number; route inferred
+stribild_oral,619581201,61958-1201,Stribild,"Gilead Sciences, Inc.",NDA203100,"TABLET, FILM COATED",ORAL,20120827,,current,application_number
+stribild_oral,691891201,69189-1201,Stribild,Avera McKennan Hospital,NDA203100,,,20151028,,excluded,application_number; route inferred
+stribild_oral,705180674,70518-0674,Stribild,REMEDYREPACK INC.,NDA203100,,,20170816,20200501,excluded,application_number; route inferred
+sunlenca_oral,619583001,61958-3001,Sunlenca,"Gilead Sciences, Inc.",NDA215974,"TABLET, FILM COATED",ORAL,20221222,,current,application_number
+sunosi_oral,687270350,68727-350,SUNOSI,"Jazz Pharmaceuticals, Inc.",NDA211230,,,20190618,20231130,excluded,application_number; route inferred
+sunosi_oral,687270351,68727-351,SUNOSI,"Jazz Pharmaceuticals, Inc.",NDA211230,,,20190618,20240331,excluded,application_number; route inferred
+sunosi_oral,819680350,81968-350,SUNOSI,"Axsome Therapeutics, Inc.",NDA211230,"TABLET, FILM COATED",ORAL,20190618,,current,application_number
+sunosi_oral,819680351,81968-351,SUNOSI,"Axsome Therapeutics, Inc.",NDA211230,"TABLET, FILM COATED",ORAL,20190618,,current,application_number
+symproic_oral,590110523,59011-523,Symproic,Purdue Pharma LP,NDA208854,,,20170323,20201231,excluded,application_number; route inferred
+symproic_oral,593850041,59385-041,SYMPROIC,BioDelivery Sciences International Inc,NDA208854,TABLET,ORAL,20190614,,current,application_number
+symproic_oral,596300222,59630-222,SYMPROIC,Shionogi Inc.,NDA208854,,,20180705,20201231,excluded,application_number; route inferred
+tabrecta_oral,000780709,0078-0709,TABRECTA,Novartis Pharmaceuticals Corporation,NDA213591,"TABLET, FILM COATED",ORAL,20200506,,current,application_number
+tabrecta_oral,000780716,0078-0716,TABRECTA,Novartis Pharmaceuticals Corporation,NDA213591,"TABLET, FILM COATED",ORAL,20200506,,current,application_number
+tafinlar_oral,000780681,0078-0681,Tafinlar,Novartis Pharmaceuticals Corporation,NDA202806,CAPSULE,ORAL,20160401,,current,application_number
+tafinlar_oral,000780682,0078-0682,Tafinlar,Novartis Pharmaceuticals Corporation,NDA202806,CAPSULE,ORAL,20160412,,current,application_number
+tafinlar_oral,000781154,0078-1154,Tafinlar,Novartis Pharmaceuticals Corporation,NDA217514,"TABLET, FOR SUSPENSION",ORAL,20230316,,current,application_number
+tafinlar_oral,001730846,0173-0846,Tafinlar,GlaxoSmithKline LLC,NDA202806,,,20130610,20180831,excluded,application_number; route inferred
+tafinlar_oral,001730847,0173-0847,Tafinlar,GlaxoSmithKline LLC,NDA202806,,,20130610,20180531,excluded,application_number; route inferred
+tagrisso_oral,003101248,0310-1248,TAGRISSO,AstraZeneca Pharmaceuticals LP,NDA208065,"TABLET, FILM COATED",ORAL,20151113,,current,application_number
+tagrisso_oral,003101251,0310-1251,TAGRISSO,AstraZeneca Pharmaceuticals LP,NDA208065,"TABLET, FILM COATED",ORAL,20151113,,current,application_number
+tagrisso_oral,003101349,0310-1349,TAGRISSO,AstraZeneca Pharmaceuticals LP,NDA208065,"TABLET, FILM COATED",ORAL,20151113,,current,application_number
+tagrisso_oral,003101350,0310-1350,TAGRISSO,AstraZeneca Pharmaceuticals LP,NDA208065,"TABLET, FILM COATED",ORAL,20151113,,current,application_number
+takhzyro_sc,477830644,47783-644,TAKHZYRO,"Takeda Pharmaceuticals America, Inc.",BLA761090,,,20180824,20260821,excluded,application_number; route inferred
+takhzyro_sc,477830645,47783-645,TAKHZYRO,"Takeda Pharmaceuticals America, Inc.",BLA761090,SOLUTION,SUBCUTANEOUS,20230203,,current,application_number
+takhzyro_sc,477830646,47783-646,TAKHZYRO,"Takeda Pharmaceuticals America, Inc.",BLA761090,SOLUTION,SUBCUTANEOUS,20220208,,current,application_number
+taltz_sc,000021445,0002-1445,TALTZ,Eli Lilly and Company,BLA125521,"INJECTION, SOLUTION",SUBCUTANEOUS,20160322,,current,application_number
+taltz_sc,000027724,0002-7724,TALTZ,Eli Lilly and Company,BLA125521,"INJECTION, SOLUTION",SUBCUTANEOUS,20160322,,current,application_number
+taltz_sc,000028900,0002-8900,TALTZ,Eli Lilly and Company,BLA125521,"INJECTION, SOLUTION",SUBCUTANEOUS,20240202,,current,application_number
+taltz_sc,000028905,0002-8905,TALTZ,Eli Lilly and Company,BLA125521,"INJECTION, SOLUTION",SUBCUTANEOUS,20240202,,current,application_number
+talvey_sc,578940469,57894-469,TALVEY,"Janssen Biotech, Inc.",BLA761342,INJECTION,SUBCUTANEOUS,20230809,,current,application_number
+talvey_sc,578940470,57894-470,TALVEY,"Janssen Biotech, Inc.",BLA761342,INJECTION,SUBCUTANEOUS,20230809,,current,application_number
+talzenna_oral,000690252,0069-0252,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA217439,"CAPSULE, LIQUID FILLED",ORAL,20240417,,current,application_number
+talzenna_oral,000690296,0069-0296,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA211651,CAPSULE,ORAL,20181026,20270131,current,application_number
+talzenna_oral,000690353,0069-0353,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA217439,"CAPSULE, LIQUID FILLED",ORAL,20240417,,current,application_number
+talzenna_oral,000690454,0069-0454,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA217439,"CAPSULE, LIQUID FILLED",ORAL,20240417,,current,application_number
+talzenna_oral,000690546,0069-0546,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA217439,"CAPSULE, LIQUID FILLED",ORAL,20240417,,current,application_number
+talzenna_oral,000690655,0069-0655,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA217439,"CAPSULE, LIQUID FILLED",ORAL,20240417,,current,application_number
+talzenna_oral,000690757,0069-0757,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA217439,"CAPSULE, LIQUID FILLED",ORAL,20240417,,current,application_number
+talzenna_oral,000691031,0069-1031,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA211651,,,20230621,20251231,excluded,application_number; route inferred
+talzenna_oral,000691195,0069-1195,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA211651,CAPSULE,ORAL,20181026,20270831,current,application_number
+talzenna_oral,000691235,0069-1235,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA211651,,,20230621,20251031,excluded,application_number; route inferred
+talzenna_oral,000691501,0069-1501,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA211651,CAPSULE,ORAL,20220131,20270331,current,application_number
+talzenna_oral,000691751,0069-1751,Talzenna,Pfizer Laboratories Div Pfizer Inc,NDA211651,,,20220131,20251130,excluded,application_number; route inferred
+talzenna_oral,635390025,63539-025,Talzenna,U.S. Pharmaceuticals,NDA217439,"CAPSULE, LIQUID FILLED",ORAL,20240709,,current,application_number
+talzenna_oral,635390031,63539-031,Talzenna,U.S. Pharmaceuticals,NDA217439,"CAPSULE, LIQUID FILLED",ORAL,20240709,,current,application_number
+talzenna_oral,635390051,63539-051,Talzenna,U.S. Pharmaceuticals,NDA211651,,,20230621,20260630,excluded,application_number; route inferred
+talzenna_oral,635390295,63539-295,Talzenna,U.S. Pharmaceuticals,NDA211651,CAPSULE,ORAL,20181210,20270131,current,application_number
+tavalisse_oral,713320001,71332-001,TAVALISSE,"Rigel Pharmaceuticals, Inc.",NDA209299,TABLET,ORAL,20180509,,current,application_number
+tavalisse_oral,713320002,71332-002,TAVALISSE,"Rigel Pharmaceuticals, Inc.",NDA209299,TABLET,ORAL,20180509,,current,application_number
+tavneos_oral,735560168,73556-168,TAVNEOS,"ChemoCentryx, Inc.",NDA214487,CAPSULE,ORAL,20211018,,current,application_number
+tazverik_oral,726070100,72607-100,TAZVERIK,"Epizyme, Inc.",NDA211723,"TABLET, FILM COATED",ORAL,20200123,20290430,current,application_number
+tecfidera_oral,000939218,0093-9218,dimethyl fumarate,"TEVA PHARMACEUTICALS USA, INC.",NDA204063,,,20200928,20230331,excluded,application_number; route inferred
+tecfidera_oral,000939219,0093-9219,dimethyl fumarate,"TEVA PHARMACEUTICALS USA, INC.",NDA204063,,,20200928,20240430,excluded,application_number; route inferred
+tecfidera_oral,644060005,64406-005,TECFIDERA,Biogen Inc.,NDA204063,CAPSULE,ORAL,20130327,,current,application_number
+tecfidera_oral,644060006,64406-006,TECFIDERA,Biogen Inc.,NDA204063,CAPSULE,ORAL,20130327,,current,application_number
+tecfidera_oral,644060007,64406-007,Tecfidera,Biogen Inc.,NDA204063,KIT,,20130327,,current,application_number; route inferred
+tecvayli_sc,578940449,57894-449,TECVAYLI,"Janssen Biotech, Inc.",BLA761291,INJECTION,SUBCUTANEOUS,20221025,,current,application_number
+tecvayli_sc,578940450,57894-450,TECVAYLI,"Janssen Biotech, Inc.",BLA761291,INJECTION,SUBCUTANEOUS,20221025,,current,application_number
+tepmetko_oral,440875000,44087-5000,TEPMETKO,"EMD Serono, Inc.",NDA214096,TABLET,ORAL,20210203,,current,application_number
+tezspire_sc,555130100,55513-100,TEZSPIRE,Amgen Inc,BLA761224,,,20211217,20211218,excluded,application_number; route inferred
+tezspire_sc,555130112,55513-112,TEZSPIRE,Amgen Inc,BLA761224,"INJECTION, SOLUTION",SUBCUTANEOUS,20211217,,current,application_number
+tezspire_sc,555130123,55513-123,TEZSPIRE,Amgen Inc,BLA761224,"INJECTION, SOLUTION",SUBCUTANEOUS,20211217,,current,application_number
+tibsovo_oral,713340100,71334-100,Tibsovo,"Agios Pharmaceuticals, Inc.",NDA211192,,,20180720,20241130,excluded,application_number; route inferred
+tibsovo_oral,726940617,72694-617,TIBSOVO,Servier Pharmaceutical LLC,NDA211192,"TABLET, FILM COATED",ORAL,20211019,,current,application_number
+tivicay_oral,497020226,49702-226,Tivicay,ViiV Healthcare Company,NDA204790,"TABLET, FILM COATED",ORAL,20160609,20270831,current,application_number
+tivicay_oral,497020227,49702-227,Tivicay,ViiV Healthcare Company,NDA204790,"TABLET, FILM COATED",ORAL,20160609,20270531,current,application_number
+tivicay_oral,497020228,49702-228,Tivicay,ViiV Healthcare Company,NDA204790,"TABLET, FILM COATED",ORAL,20130813,,current,application_number
+tivicay_oral,500901355,50090-1355,Tivicay,A-S Medication Solutions,NDA204790,,,20130813,20180831,excluded,application_number; route inferred
+tivicay_oral,530021810,53002-1810,Tivicay,"RPK Pharmaceuticals, Inc.",NDA204790,,,20130813,,excluded,application_number; route inferred
+tivicay_oral,538081130,53808-1130,Tivicay,DOH CENTRAL PHARMACY,NDA204790,,,20170710,,excluded,application_number; route inferred
+tivicay_oral,607600748,60760-748,Tivicay,ST. MARY'S MEDICAL PARK PHARMACY,NDA204790,"TABLET, FILM COATED",ORAL,20130813,,current,application_number
+tivicay_oral,617860771,61786-771,Tivicay,REMEDYREPACK INC.,NDA204790,,,20160713,20180920,excluded,application_number; route inferred
+tivicay_oral,672961818,67296-1818,Tivicay,"RedPharm Drug, Inc.",NDA204790,,,20130813,,excluded,application_number; route inferred
+tivicay_oral,705181487,70518-1487,Tivicay,REMEDYREPACK INC.,NDA204790,,,20181006,20220607,excluded,application_number; route inferred
+tpoxx_oral,500720200,50072-200,TPOXX,"SIGA Technologies, Inc.",NDA208627,CAPSULE,ORAL,20180831,,current,application_number
+tradjenta_oral,005970140,0597-0140,Tradjenta,"Boehringer Ingelheim Pharmaceuticals, Inc.",NDA201280,"TABLET, FILM COATED",ORAL,20110509,,current,application_number
+tradjenta_oral,500904383,50090-4383,Tradjenta,A-S Medication Solutions,NDA201280,"TABLET, FILM COATED",ORAL,20110509,,current,application_number
+tradjenta_oral,551540410,55154-0410,Tradjenta,"Cardinal Health 107, LLC",NDA201280,"TABLET, FILM COATED",ORAL,20110509,,current,application_number
+tremfya_sc,578940640,57894-640,TREMFYA,"Janssen Biotech, Inc.",BLA761061,INJECTION,SUBCUTANEOUS,20170713,,current,application_number
+tremfya_sc,578940651,57894-651,TREMFYA,"Janssen Biotech, Inc.",BLA761061,INJECTION,SUBCUTANEOUS,20240911,,current,application_number
+tresiba_sc,001692550,0169-2550,Tresiba,Novo Nordisk,BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20150925,,current,application_number
+tresiba_sc,001692660,0169-2660,Tresiba,Novo Nordisk,BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20150925,,current,application_number
+tresiba_sc,001692662,0169-2662,Tresiba,Novo Nordisk,BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20181121,,current,application_number
+tresiba_sc,500903491,50090-3491,Tresiba,A-S Medication Solutions,BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20150925,,current,application_number
+tresiba_sc,500907077,50090-7077,TRESIBA,A-S Medication Solutions,BLA203314,,,20150925,20250630,excluded,application_number; route inferred
+tresiba_sc,500907094,50090-7094,TRESIBA,A-S Medication Solutions,BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20150925,,current,application_number
+tresiba_sc,500907175,50090-7175,Insulin Degludec,A-S Medication Solutions,BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20220701,,current,application_number
+tresiba_sc,500907176,50090-7176,Insulin Degludec,A-S Medication Solutions,BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20220701,,current,application_number
+tresiba_sc,730700400,73070-400,Insulin Degludec,"Novo Nordisk Pharma, Inc.",BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20220701,20270831,current,application_number
+tresiba_sc,730700403,73070-403,Insulin Degludec,"Novo Nordisk Pharma, Inc.",BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20220701,20271231,current,application_number
+tresiba_sc,730700503,73070-503,Insulin Degludec,"Novo Nordisk Pharma, Inc.",BLA203314,"INJECTION, SOLUTION",SUBCUTANEOUS,20220701,20271031,current,application_number
+trulance_oral,656490003,65649-003,Trulance,Salix Pharmaceuticals Inc.,NDA208745,TABLET,ORAL,20170221,,current,application_number
+trulance_oral,701940003,70194-003,Trulance,Synergy Pharmaceuticals Inc.,NDA208745,,,20170221,20201231,excluded,application_number; route inferred
+trulicity_sc,000021433,0002-1433,Trulicity,Eli Lilly and Company,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20140918,,current,application_number
+trulicity_sc,000021434,0002-1434,Trulicity,Eli Lilly and Company,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20140918,,current,application_number
+trulicity_sc,000022236,0002-2236,Trulicity,Eli Lilly and Company,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20200903,,current,application_number
+trulicity_sc,000023182,0002-3182,Trulicity,Eli Lilly and Company,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20200903,,current,application_number
+trulicity_sc,500903483,50090-3483,Trulicity,A-S Medication Solutions,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20140918,,current,application_number
+trulicity_sc,500903484,50090-3484,Trulicity,A-S Medication Solutions,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20140918,,current,application_number
+trulicity_sc,500905467,50090-5467,Trulicity,A-S Medication Solutions,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20200903,,current,application_number
+trulicity_sc,500906453,50090-6453,TRULICITY,A-S Medication Solutions,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20140918,,current,application_number
+trulicity_sc,500906456,50090-6456,TRULICITY,A-S Medication Solutions,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20140918,,current,application_number
+trulicity_sc,500906571,50090-6571,TRULICITY,A-S Medication Solutions,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20200903,,current,application_number
+trulicity_sc,500907589,50090-7589,TRULICITY,A-S Medication Solutions,BLA125469,"INJECTION, SOLUTION",SUBCUTANEOUS,20200903,,current,application_number
+truqap_oral,003109500,0310-9500,TRUQAP,AstraZeneca Pharmaceuticals LP,NDA218197,"TABLET, FILM COATED",ORAL,20231116,,current,application_number
+truqap_oral,003109501,0310-9501,TRUQAP,AstraZeneca Pharmaceuticals LP,NDA218197,"TABLET, FILM COATED",ORAL,20231116,,current,application_number
+tryngolza_sc,718600101,71860-101,TRYNGOLZA,"Ionis Pharmaceuticals, Inc.",NDA218614,"INJECTION, SOLUTION",SUBCUTANEOUS,20241219,,current,application_number
+tryngolza_sc,718600102,71860-102,TRYNGOLZA,"Ionis Pharmaceuticals, Inc.",NDA218614,"INJECTION, SOLUTION",SUBCUTANEOUS,20260624,,current,application_number
+tryvio_oral,804910812,80491-0812,TRYVIO,Idorsia Pharmaceuticals Ltd,NDA217686,,,20240320,20240610,excluded,application_number; route inferred
+tryvio_oral,804918012,80491-8012,TRYVIO,Idorsia Pharmaceuticals Ltd,NDA217686,"TABLET, FILM COATED",ORAL,20240320,,current,application_number
+tukysa_oral,511440001,51144-001,TUKYSA,SEAGEN INC.,NDA213411,TABLET,ORAL,20200417,,current,application_number
+tukysa_oral,511440002,51144-002,TUKYSA,SEAGEN INC.,NDA213411,TABLET,ORAL,20200417,,current,application_number
+turalio_oral,655970402,65597-402,Turalio,Daiichi Sankyo Inc.,NDA211810,,,20190802,20240131,excluded,application_number; route inferred
+turalio_oral,655970407,65597-407,Turalio,Daiichi Sankyo Inc.,NDA211810,CAPSULE,ORAL,20230201,,current,application_number
+tymlos_sc,705390001,70539-001,Tymlos,"Radius Health, Inc.",NDA208743,"INJECTION, SOLUTION",SUBCUTANEOUS,20170501,,current,application_number
+ubrelvy_oral,000236498,0023-6498,UBRELVY,"Allergan, Inc.",NDA211765,TABLET,ORAL,20191223,,current,application_number
+ubrelvy_oral,000236501,0023-6501,UBRELVY,"Allergan, Inc.",NDA211765,TABLET,ORAL,20191223,,current,application_number
+ubrelvy_oral,857660280,85766-280,UBRELVY,Sportpharm LLC,NDA211765,TABLET,ORAL,20191223,,current,application_number
+ubrelvy_oral,857660281,85766-281,UBRELVY,Sportpharm LLC,NDA211765,TABLET,ORAL,20191223,,current,application_number
+uptravi_oral,662150602,66215-602,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, COATED",ORAL,20151221,,current,application_number
+uptravi_oral,662150604,66215-604,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, COATED",ORAL,20151221,,current,application_number
+uptravi_oral,662150606,66215-606,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, COATED",ORAL,20151221,,current,application_number
+uptravi_oral,662150608,66215-608,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, COATED",ORAL,20151221,,current,application_number
+uptravi_oral,662150610,66215-610,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, COATED",ORAL,20151221,,current,application_number
+uptravi_oral,662150612,66215-612,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, COATED",ORAL,20151221,,current,application_number
+uptravi_oral,662150614,66215-614,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, COATED",ORAL,20151221,,current,application_number
+uptravi_oral,662150616,66215-616,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, COATED",ORAL,20151221,,current,application_number
+uptravi_oral,662150628,66215-628,UPTRAVI Titration Pack,"Actelion Pharmaceuticals US, Inc.",NDA207947,KIT,,20151221,,current,application_number; route inferred
+uptravi_oral,662150910,66215-910,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, FILM COATED",ORAL,20260523,,current,application_number
+uptravi_oral,662150915,66215-915,UPTRAVI,"Actelion Pharmaceuticals US, Inc.",NDA207947,"TABLET, FILM COATED",ORAL,20260523,,current,application_number
+vafseo_oral,599220641,59922-641,VAFSEO,"Akebia Therapeutics, Inc.",NDA215192,"TABLET, FILM COATED",ORAL,20240328,,current,application_number
+vafseo_oral,599220642,59922-642,VAFSEO,"Akebia Therapeutics, Inc.",NDA215192,"TABLET, FILM COATED",ORAL,20240328,,current,application_number
+vafseo_oral,599220643,59922-643,VAFSEO,"Akebia Therapeutics, Inc.",NDA215192,"TABLET, FILM COATED",ORAL,20240328,,current,application_number
+vanflyta_oral,655970504,65597-504,VANFLYTA,Daiichi Sankyo Inc.,NDA216993,"TABLET, FILM COATED",ORAL,20230720,,current,application_number
+vanflyta_oral,655970511,65597-511,VANFLYTA,Daiichi Sankyo Inc.,NDA216993,"TABLET, FILM COATED",ORAL,20230720,,current,application_number
+vanrafia_oral,000781420,0078-1420,VANRAFIA,Novartis Pharmaceuticals Corporation,NDA219208,"TABLET, FILM COATED",ORAL,20250402,,current,application_number
+varubi_oral,696560101,69656-101,Varubi,GlaxoSmithLine LLC,NDA206500,,,20151007,20211031,excluded,application_number; route inferred
+varubi_oral,707200101,70720-101,Varubi,TerSera Therapeutics LLC,NDA206500,TABLET,ORAL,20151007,,current,application_number
+varubi_oral,876280101,87628-101,Varubi,Luria Therapeutics LLC,NDA206500,TABLET,ORAL,20260820,,current,application_number
+velsipity_oral,000690274,0069-0274,Velsipity,Pfizer Laboratories Div Pfizer Inc,NDA216956,"TABLET, FILM COATED",ORAL,20231019,,current,application_number
+velsipity_oral,635390274,63539-274,Velsipity,U.S. Pharmaceuticals,NDA216956,,,20231109,20250331,excluded,application_number; route inferred
+veltassa_oral,534360010,53436-010,VELTASSA,"Vifor Pharma, Inc.",NDA205739,"POWDER, FOR SUSPENSION",ORAL,20241002,,current,application_number
+veltassa_oral,534360084,53436-084,VELTASSA,"Vifor Pharma, Inc.",NDA205739,"POWDER, FOR SUSPENSION",ORAL,20151023,,current,application_number
+veltassa_oral,534360168,53436-168,VELTASSA,"Vifor Pharma, Inc.",NDA205739,"POWDER, FOR SUSPENSION",ORAL,20151023,,current,application_number
+veltassa_oral,534360252,53436-252,VELTASSA,"Vifor Pharma, Inc.",NDA205739,"POWDER, FOR SUSPENSION",ORAL,20151023,,current,application_number
+venclexta_oral,000740561,0074-0561,Venclexta,AbbVie Inc.,NDA208573,"TABLET, FILM COATED",ORAL,20160411,,current,application_number
+venclexta_oral,000740566,0074-0566,Venclexta,AbbVie Inc.,NDA208573,"TABLET, FILM COATED",ORAL,20160411,,current,application_number
+venclexta_oral,000740576,0074-0576,Venclexta,AbbVie Inc.,NDA208573,"TABLET, FILM COATED",ORAL,20160411,,current,application_number
+venclexta_oral,000740579,0074-0579,Venclexta,AbbVie Inc.,NDA208573,KIT,,20160411,,current,application_number; route inferred
+veozah_oral,004692460,0469-2460,VEOZAH,"Astellas Pharma US, Inc.",NDA216578,"TABLET, FILM COATED",ORAL,20230516,,current,application_number
+veozah_oral,004692660,0469-2660,VEOZAH,"Astellas Pharma US, Inc.",NDA216578,"TABLET, FILM COATED",ORAL,20230512,,current,application_number
+veozah_oral,004692760,0469-2760,VEOZAH,"Astellas Pharma US, Inc.",NDA216578,"TABLET, FILM COATED",ORAL,20230512,,current,application_number
+verquvo_oral,000065028,0006-5028,VERQUVO,Merck Sharp & Dohme LLC,NDA214377,"TABLET, FILM COATED",ORAL,20210201,,current,application_number
+verquvo_oral,000065029,0006-5029,VERQUVO,Merck Sharp & Dohme LLC,NDA214377,"TABLET, FILM COATED",ORAL,20210201,,current,application_number
+verquvo_oral,000065030,0006-5030,VERQUVO,Merck Sharp & Dohme LLC,NDA214377,"TABLET, FILM COATED",ORAL,20210201,,current,application_number
+verzenio_oral,000024483,0002-4483,Verzenio,Eli Lilly and Company,NDA208716,TABLET,ORAL,20170928,,current,application_number
+verzenio_oral,000024815,0002-4815,Verzenio,Eli Lilly and Company,NDA208716,TABLET,ORAL,20170928,,current,application_number
+verzenio_oral,000025337,0002-5337,Verzenio,Eli Lilly and Company,NDA208716,TABLET,ORAL,20170928,,current,application_number
+verzenio_oral,000026216,0002-6216,Verzenio,Eli Lilly and Company,NDA208716,TABLET,ORAL,20170928,,current,application_number
+viberzi_oral,618740075,61874-075,Viberzi,"Allergan, Inc.",NDA206940,"TABLET, FILM COATED",ORAL,20151001,,current,application_number
+viberzi_oral,618740100,61874-100,Viberzi,"Allergan, Inc.",NDA206940,"TABLET, FILM COATED",ORAL,20151001,,current,application_number
+victoza_sc,001694060,0169-4060,Victoza,Novo Nordisk,NDA022341,INJECTION,SUBCUTANEOUS,20100125,,current,application_number
+victoza_sc,004803667,0480-3667,Liraglutide,"Teva Pharmaceuticals USA, Inc.",NDA022341,INJECTION,SUBCUTANEOUS,20240624,,current,application_number
+victoza_sc,500902853,50090-2853,Victoza,A-S Medication Solutions,NDA022341,INJECTION,SUBCUTANEOUS,20100125,,current,application_number
+victoza_sc,500904503,50090-4503,Victoza,A-S Medication Solutions,NDA022341,INJECTION,SUBCUTANEOUS,20100125,,current,application_number
+victoza_sc,500907501,50090-7501,Liraglutide,A-S Medication Solutions,NDA022341,INJECTION,SUBCUTANEOUS,20240624,,current,application_number
+viibryd_oral,004561100,0456-1100,VIIBRYD,"Allergan, Inc.",NDA022567,,,20110429,20160831,excluded,application_number; route inferred
+viibryd_oral,004561101,0456-1101,VIIBRYD,"Allergan, Inc.",NDA022567,,,20110429,20231031,excluded,application_number; route inferred
+viibryd_oral,004561110,0456-1110,VIIBRYD,"Allergan, Inc.",NDA022567,TABLET,ORAL,20110429,,current,application_number
+viibryd_oral,004561120,0456-1120,VIIBRYD,"Allergan, Inc.",NDA022567,TABLET,ORAL,20110429,,current,application_number
+viibryd_oral,004561140,0456-1140,VIIBRYD,"Allergan, Inc.",NDA022567,TABLET,ORAL,20110429,,current,application_number
+viibryd_oral,422910948,42291-948,vilazodone,AvKARE,NDA022567,,,20240605,20260430,excluded,application_number; route inferred
+viibryd_oral,422910949,42291-949,Vilazodone,AvKARE,NDA022567,,,20240605,20260430,excluded,application_number; route inferred
+viibryd_oral,422910950,42291-950,Vilazodone,AvKARE,NDA022567,,,20240605,20260430,excluded,application_number; route inferred
+viibryd_oral,514070691,51407-691,vilazodone,"Golden State Medical Supply, Inc.",NDA022567,,,20210121,20240229,excluded,application_number; route inferred
+viibryd_oral,514070692,51407-692,Vilazodone,"Golden State Medical Supply, Inc.",NDA022567,,,20210121,20240531,excluded,application_number; route inferred
+viibryd_oral,514070693,51407-693,Vilazodone,"Golden State Medical Supply, Inc.",NDA022567,,,20210121,20240731,excluded,application_number; route inferred
+viibryd_oral,551544624,55154-4624,VIIBRYD,"Cardinal Health 107, LLC",NDA022567,,,20110429,20240430,excluded,application_number; route inferred
+viibryd_oral,551544627,55154-4627,VIIBRYD,"Cardinal Health 107, LLC",NDA022567,,,20110429,20240229,excluded,application_number; route inferred
+viibryd_oral,605054772,60505-4772,vilazodone,Apotex Corp,NDA022567,,,20220604,20260430,excluded,application_number; route inferred
+viibryd_oral,605054773,60505-4773,Vilazodone,Apotex Corp,NDA022567,,,20220604,20260430,excluded,application_number; route inferred
+viibryd_oral,605054774,60505-4774,Vilazodone,Apotex Corp,NDA022567,,,20220604,20260430,excluded,application_number; route inferred
+viibryd_oral,691891110,69189-1110,VIIBRYD,Avera McKennan Hospital,NDA022567,,,20150303,20170524,excluded,application_number; route inferred
+viibryd_oral,691891140,69189-1140,VIIBRYD,Avera McKennan Hospital,NDA022567,,,20150310,20170524,excluded,application_number; route inferred
+viibryd_oral,758380110,75838-110,VIIBRYD,Trovis Pharmaceuticals LLC,NDA022567,,,20110418,20110418,excluded,application_number; route inferred
+viibryd_oral,758380120,75838-120,VIIBRYD,Trovis Pharmaceuticals LLC,NDA022567,,,20110418,20110418,excluded,application_number; route inferred
+viibryd_oral,758380140,75838-140,VIIBRYD,Trovis Pharmaceuticals LLC,NDA022567,,,20110418,20110418,excluded,application_number; route inferred
+viibryd_oral,758380179,75838-179,VIIBRYD,Trovis Pharmaceuticals LLC,NDA022567,,,20110418,20110418,excluded,application_number; route inferred
+viibryd_oral,758380189,75838-189,VIIBRYD,Trovis Pharmaceuticals LLC,NDA022567,,,20110418,20110418,excluded,application_number; route inferred
+vitrakvi_oral,504190390,50419-390,VITRAKVI,Bayer HealthCare Pharmaceuticals Inc.,NDA210861,CAPSULE,ORAL,20190726,,current,application_number
+vitrakvi_oral,504190391,50419-391,VITRAKVI,Bayer HealthCare Pharmaceuticals Inc.,NDA210861,CAPSULE,ORAL,20190726,,current,application_number
+vitrakvi_oral,717770390,71777-390,VITRAKVI,"Loxo Oncology, Inc.",NDA210861,CAPSULE,ORAL,20181126,,current,application_number
+vitrakvi_oral,717770391,71777-391,VITRAKVI,"Loxo Oncology, Inc.",NDA210861,CAPSULE,ORAL,20181126,,current,application_number
+vitrakvi_oral,717770392,71777-392,VITRAKVI,"Loxo Oncology, Inc.",NDA211710,SOLUTION,ORAL,20181126,,current,application_number
+vivjoa_oral,746950823,74695-823,VIVJOA,"Mycovia Pharmaceuticals, Inc.",NDA215888,CAPSULE,ORAL,20220711,,current,application_number
+vizimpro_oral,000690197,0069-0197,Vizimpro,Pfizer Laboratories Div Pfizer Inc,NDA211288,"TABLET, FILM COATED",ORAL,20181004,20291231,current,application_number
+vizimpro_oral,000691198,0069-1198,Vizimpro,Pfizer Laboratories Div Pfizer Inc,NDA211288,"TABLET, FILM COATED",ORAL,20181004,20280930,current,application_number
+vizimpro_oral,000692299,0069-2299,Vizimpro,Pfizer Laboratories Div Pfizer Inc,NDA211288,"TABLET, FILM COATED",ORAL,20181004,20281031,current,application_number
+vizimpro_oral,635390197,63539-197,Vizimpro,U.S. Pharmaceuticals,NDA211288,,,20190201,20220228,excluded,application_number; route inferred
+vonjo_oral,724820100,72482-100,Vonjo,"Sobi, Inc.",NDA208712,CAPSULE,ORAL,20220228,,current,application_number
+voranigo_oral,726940728,72694-728,VORANIGO,Servier Pharmaceuticals LLC,NDA218784,"TABLET, FILM COATED",ORAL,20240807,,current,application_number
+voranigo_oral,726940879,72694-879,VORANIGO,Servier Pharmaceuticals LLC,NDA218784,"TABLET, FILM COATED",ORAL,20240807,,current,application_number
+vosevi_oral,619582401,61958-2401,Vosevi,"Gilead Sciences, Inc.",NDA209195,"TABLET, FILM COATED",ORAL,20170718,,current,application_number
+voydeya_oral,256820043,25682-043,Voydeya,Alexion Pharmaceuticals Inc.,NDA218037,"TABLET, FILM COATED",ORAL,20240329,,current,application_number
+voydeya_oral,256820046,25682-046,Voydeya,Alexion Pharmaceuticals Inc.,NDA218037,KIT,,20240329,,current,application_number; route inferred
+voydeya_oral,256820049,25682-049,Voydeya,Alexion Pharmaceuticals Inc.,NDA218037,,,20240329,20260514,excluded,application_number; route inferred
+voyxact_sc,591480400,59148-400,VOYXACT,"Otsuka America Pharmaceutical, Inc.",BLA761434,INJECTION,SUBCUTANEOUS,20251125,,current,application_number
+vraylar_oral,618740115,61874-115,Vraylar,"Allergan, Inc.",NDA204370,"CAPSULE, GELATIN COATED",ORAL,20150917,,current,application_number
+vraylar_oral,618740130,61874-130,Vraylar,"Allergan, Inc.",NDA204370,"CAPSULE, GELATIN COATED",ORAL,20150917,,current,application_number
+vraylar_oral,618740145,61874-145,Vraylar,"Allergan, Inc.",NDA204370,"CAPSULE, GELATIN COATED",ORAL,20150917,,current,application_number
+vraylar_oral,618740160,61874-160,Vraylar,"Allergan, Inc.",NDA204370,"CAPSULE, GELATIN COATED",ORAL,20150917,,current,application_number
+vraylar_oral,618740170,61874-170,Vraylar,"Allergan, Inc.",NDA204370,KIT,ORAL,20150917,,current,application_number
+vraylar_oral,618740250,61874-250,Vraylar,"Allergan, Inc.",NDA204370,"CAPSULE, GELATIN COATED",ORAL,20251218,,current,application_number
+vraylar_oral,618740275,61874-275,Vraylar,"Allergan, Inc.",NDA204370,"CAPSULE, GELATIN COATED",ORAL,20251218,,current,application_number
+vraylar_oral,705183157,70518-3157,Vraylar,REMEDYREPACK INC.,NDA204370,,,20210715,20240131,excluded,application_number; route inferred
+vyleesi_sc,007130897,0713-0897,Vyleesi,"Cosette Pharmaceuticals, Inc.",NDA210557,INJECTION,SUBCUTANEOUS,20251112,,current,application_number
+vyleesi_sc,640110701,64011-701,Vyleesi,"AMAG Pharmaceuticals, Inc.",NDA210557,,,20190621,20241230,excluded,application_number; route inferred
+vyleesi_sc,800640141,80064-141,Vyleesi,Palatin Technologies,NDA210557,,,20190621,20260701,excluded,application_number; route inferred
+vyndaqel_oral,000691975,0069-1975,Vyndaqel,Pfizer Laboratories Div Pfizer Inc,NDA211996,"CAPSULE, LIQUID FILLED",ORAL,20190516,20270731,current,application_number
+wainua_sc,003109400,0310-9400,WAINUA,AstraZeneca Pharmaceuticals LP,NDA217388,"INJECTION, SOLUTION",SUBCUTANEOUS,20231221,,current,application_number
+wainua_sc,003109420,0310-9420,WAINUA,AstraZeneca Pharmaceuticals LP,NDA217388,"INJECTION, SOLUTION",SUBCUTANEOUS,20260430,,current,application_number
+wakix_oral,720280045,72028-045,Wakix,"Harmony Biosciences, LLC",NDA211150,"TABLET, FILM COATED",ORAL,20190814,,current,application_number
+wakix_oral,720280178,72028-178,Wakix,"Harmony Biosciences, LLC",NDA211150,"TABLET, FILM COATED",ORAL,20190814,,current,application_number
+wayrilz_oral,584680251,58468-0251,WAYRILZ,Genzyme Corporation,NDA219685,"TABLET, FILM COATED",ORAL,20250829,,current,application_number
+welireg_oral,000065331,0006-5331,WELIREG,Merck Sharp & Dohme LLC,NDA215383,"TABLET, FILM COATED",ORAL,20210813,,current,application_number
+xadago_oral,275050110,27505-110,Xadago,"MDD US Operations LLC, a subsidiary of Supernus Pharmaceuticals, Inc.",NDA207145,"TABLET, FILM COATED",ORAL,20170508,,current,application_number
+xadago_oral,275050111,27505-111,Xadago,"MDD US Operations LLC, a subsidiary of Supernus Pharmaceuticals, Inc.",NDA207145,"TABLET, FILM COATED",ORAL,20170508,,current,application_number
+xalkori_oral,000690251,0069-0251,Xalkori,Pfizer Laboratories Div Pfizer Inc,NDA217581,"CAPSULE, COATED PELLETS",ORAL,20231120,,current,application_number
+xalkori_oral,000690507,0069-0507,Xalkori,Pfizer Laboratories Div Pfizer Inc,NDA217581,"CAPSULE, COATED PELLETS",ORAL,20231120,,current,application_number
+xalkori_oral,000691500,0069-1500,Xalkori,Pfizer Laboratories Div Pfizer Inc,NDA217581,"CAPSULE, COATED PELLETS",ORAL,20231120,,current,application_number
+xalkori_oral,000698140,0069-8140,Xalkori,Pfizer Laboratories Div Pfizer Inc,NDA202570,CAPSULE,ORAL,20110826,,current,application_number
+xalkori_oral,000698141,0069-8141,Xalkori,Pfizer Laboratories Div Pfizer Inc,NDA202570,CAPSULE,ORAL,20110826,,current,application_number
+xarelto_oral,500903625,50090-3625,Xarelto,A-S Medication Solutions,NDA022406,"TABLET, FILM COATED",ORAL,20110701,,current,application_number
+xarelto_oral,500903639,50090-3639,XARELTO,A-S Medication Solutions,NDA022406,"TABLET, FILM COATED",ORAL,20111105,,current,application_number
+xarelto_oral,500904468,50090-4468,Xarelto,A-S Medication Solutions,NDA022406,"TABLET, FILM COATED",ORAL,20111105,,current,application_number
+xarelto_oral,500904469,50090-4469,Xarelto,A-S Medication Solutions,NDA022406,"TABLET, FILM COATED",ORAL,20110701,,current,application_number
+xarelto_oral,504580575,50458-575,Xarelto,"Janssen Pharmaceuticals, Inc.",NDA215859,"GRANULE, FOR SUSPENSION",ORAL,20211201,,current,application_number
+xarelto_oral,504580577,50458-577,XARELTO,"Janssen Pharmaceuticals, Inc.",NDA022406,"TABLET, FILM COATED",ORAL,20181009,,current,application_number
+xarelto_oral,504580578,50458-578,Xarelto,"Janssen Pharmaceuticals, Inc.",NDA022406,"TABLET, FILM COATED",ORAL,20111104,,current,application_number
+xarelto_oral,504580579,50458-579,Xarelto,"Janssen Pharmaceuticals, Inc.",NDA022406,"TABLET, FILM COATED",ORAL,20111105,,current,application_number
+xarelto_oral,504580580,50458-580,Xarelto,"Janssen Pharmaceuticals, Inc.",NDA022406,"TABLET, FILM COATED",ORAL,20110701,,current,application_number
+xarelto_oral,504580584,50458-584,XARELTO,"Janssen Pharmaceuticals, Inc.",NDA022406,KIT,,20140916,,current,application_number; route inferred
+xarelto_oral,551541422,55154-1422,Xarelto,"Cardinal Health 107, LLC",NDA022406,,,20110701,20240229,excluded,application_number; route inferred
+xarelto_oral,551541423,55154-1423,Xarelto,"Cardinal Health 107, LLC",NDA022406,"TABLET, FILM COATED",ORAL,20111105,,current,application_number
+xarelto_oral,551541424,55154-1424,Xarelto,"Cardinal Health 107, LLC",NDA022406,"TABLET, FILM COATED",ORAL,20111104,,current,application_number
+xarelto_oral,716100690,71610-690,Xarelto,"Aphena Pharma Solutions - Tennessee, LLC",NDA022406,"TABLET, FILM COATED",ORAL,20110701,,current,application_number
+xcopri_oral,716990025,71699-025,Xcopri,"SK Life Science, Inc.",NDA212839,"TABLET, FILM COATED",ORAL,20240406,,current,application_number
+xcopri_oral,716990050,71699-050,Xcopri,"SK Life Science, Inc.",NDA212839,"TABLET, FILM COATED",ORAL,20210430,,current,application_number
+xcopri_oral,716990100,71699-100,Xcopri,"SK Life Science, Inc.",NDA212839,"TABLET, FILM COATED",ORAL,20200312,,current,application_number
+xcopri_oral,716990102,71699-102,Xcopri,"SK Life Science, Inc.",NDA212839,,,20200312,20231025,excluded,application_number; route inferred
+xcopri_oral,716990103,71699-103,Xcopri,"SK Life Science, Inc.",NDA212839,KIT,ORAL,20200312,,current,application_number
+xcopri_oral,716990104,71699-104,Xcopri,"SK Life Science, Inc.",NDA212839,KIT,ORAL,20210430,,current,application_number
+xcopri_oral,716990150,71699-150,Xcopri,"SK Life Science, Inc.",NDA212839,"TABLET, FILM COATED",ORAL,20200312,,current,application_number
+xcopri_oral,716990200,71699-200,Xcopri,"SK Life Science, Inc.",NDA212839,"TABLET, FILM COATED",ORAL,20200312,,current,application_number
+xcopri_oral,716990201,71699-201,Xcopri,"SK Life Science, Inc.",NDA212839,KIT,ORAL,20200312,,current,application_number
+xcopri_oral,716990202,71699-202,Xcopri,"SK Life Science, Inc.",NDA212839,KIT,ORAL,20200312,,current,application_number
+xcopri_oral,716990203,71699-203,Xcopri,"SK Life Science, Inc.",NDA212839,KIT,ORAL,20200312,,current,application_number
+xcopri_oral,716990204,71699-204,Xcopri,"SK Life Science, Inc.",NDA212839,TABLET,ORAL,20250829,,current,application_number
+xcopri_oral,716990999,71699-999,Xcopri,"SK Life Science, Inc.",NDA212839,,,20200312,20250508,excluded,application_number; route inferred
+xcopri_oral,831140101,83114-101,"XCOPRI MAINTENANCE PACK 100 mg, 150 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xcopri_oral,831140102,83114-102,"XCOPRI MAINTENANCE PACK 150 mg, 200 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xcopri_oral,831140103,83114-103,"XCOPRI MAINTENANCE PACK 150 mg, 200 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xcopri_oral,831140104,83114-104,"XCOPRI MAINTENANCE PACK 100 mg, 150 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xcopri_oral,831140201,83114-201,"XCOPRI TITRATION PACK 12.5 mg, 25 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xcopri_oral,831140202,83114-202,"XCOPRI TITRATION PACK 12.5 mg, 25 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xcopri_oral,831140203,83114-203,"XCOPRI TITRATION PACK 50 mg, 100 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xcopri_oral,831140204,83114-204,"XCOPRI TITRATION PACK 50 mg, 100 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xcopri_oral,831140205,83114-205,"XCOPRI TITRATION PACK 150 mg, 200 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xcopri_oral,831140206,83114-206,"XCOPRI TITRATION PACK 150 mg, 200 mg","PCI Pharma Services Canada, Inc.",NDA212839,,,20200312,20200312,excluded,application_number; route inferred
+xeljanz_oral,000691001,0069-1001,XELJANZ,Pfizer Laboratories Div Pfizer Inc,NDA203214,"TABLET, FILM COATED",ORAL,20121109,,current,application_number
+xeljanz_oral,000691002,0069-1002,XELJANZ,Pfizer Laboratories Div Pfizer Inc,NDA203214,"TABLET, FILM COATED",ORAL,20180702,,current,application_number
+xeljanz_oral,000691029,0069-1029,XELJANZ,Pfizer Laboratories Div Pfizer Inc,NDA213082,SOLUTION,ORAL,20210208,,current,application_number
+xeljanz_oral,635390012,63539-012,XELJANZ,U.S. Pharmaceuticals,NDA203214,"TABLET, FILM COATED",ORAL,20121108,,current,application_number
+xeljanz_oral,635390016,63539-016,XELJANZ,U.S. Pharmaceuticals,NDA203214,"TABLET, FILM COATED",ORAL,20180702,,current,application_number
+xeljanz_oral,635390029,63539-029,XELJANZ,U.S. Pharmaceuticals,NDA213082,SOLUTION,ORAL,20210208,,current,application_number
+xenleta_oral,712880037,71288-037,Xenleta,Meitheal Pharmaceuticals Inc.,NDA211672,"TABLET, COATED",ORAL,20190909,,current,application_number
+xenleta_oral,720000110,72000-110,Xenleta,"Nabriva Therapeutics US, Inc.",NDA211672,,,20190909,,excluded,application_number; route inferred
+xermelo_oral,701830125,70183-125,Xermelo,"Lexicon Pharmaceuticals, Inc.",NDA208794,TABLET,ORAL,20170301,,current,application_number
+xermelo_oral,707200125,70720-125,Xermelo,TerSera Therapeutics LLC,NDA208794,TABLET,ORAL,20201005,,current,application_number
+xofluza_oral,500904102,50090-4102,Xofluza,A-S Medication Solutions,NDA210854,,,20181024,,excluded,application_number; route inferred
+xofluza_oral,500904104,50090-4104,Xofluza,A-S Medication Solutions,NDA210854,,,20181024,,excluded,application_number; route inferred
+xofluza_oral,502420583,50242-583,Xofluza,"Genentech, Inc.",NDA214410,"GRANULE, FOR SOLUTION",ORAL,20181024,,current,application_number
+xofluza_oral,502420599,50242-599,Xofluza,"Genentech, Inc.",NDA214410,"GRANULE, FOR SUSPENSION",ORAL,20250530,,current,application_number
+xofluza_oral,502420617,50242-617,Xofluza,"Genentech, Inc.",NDA214410,"GRANULE, FOR SUSPENSION",ORAL,20250530,,current,application_number
+xofluza_oral,502420828,50242-828,Xofluza,"Genentech, Inc.",NDA210854,,,20181024,20220818,excluded,application_number; route inferred
+xofluza_oral,502420860,50242-860,Xofluza,"Genentech, Inc.",NDA210854,"TABLET, FILM COATED",ORAL,20181024,,current,application_number
+xofluza_oral,502420877,50242-877,Xofluza,"Genentech, Inc.",NDA210854,"TABLET, FILM COATED",ORAL,20181024,,current,application_number
+xofluza_oral,857660058,85766-058,Xofluza,Sportpharm LLC,NDA210854,"TABLET, FILM COATED",ORAL,20181024,,current,application_number
+xolremdi_oral,832960100,83296-100,XOLREMDI,"X4 Pharmaceuticals, Inc.",NDA218709,"CAPSULE, GELATIN COATED",ORAL,20240521,,current,application_number
+xospata_oral,004691425,0469-1425,Xospata,"Astellas Pharma US, Inc.",NDA211349,TABLET,ORAL,20181129,,current,application_number
+xpovio_oral,722370101,72237-101,XPOVIO,Karyopharm Therapeutics Inc.,NDA212306,"TABLET, FILM COATED",ORAL,20190710,,current,application_number
+xpovio_oral,722370102,72237-102,XPOVIO,Karyopharm Therapeutics Inc.,NDA212306,"TABLET, FILM COATED",ORAL,20210519,,current,application_number
+xpovio_oral,722370103,72237-103,XPOVIO,Karyopharm Therapeutics Inc.,NDA212306,"TABLET, FILM COATED",ORAL,20210519,,current,application_number
+xpovio_oral,722370104,72237-104,XPOVIO,Karyopharm Therapeutics Inc.,NDA212306,"TABLET, FILM COATED",ORAL,20210519,,current,application_number
+xpovio_oral,722370105,72237-105,XPOVIO,Karyopharm Therapeutics Inc.,NDA212306,"TABLET, FILM COATED",ORAL,20260105,,current,application_number
+xpovio_oral,722370106,72237-106,XPOVIO,Karyopharm Therapeutics Inc.,NDA212306,"TABLET, FILM COATED",ORAL,20250310,,current,application_number
+xtandi_oral,004690125,0469-0125,Xtandi,"Astellas Pharma US, Inc.",NDA203415,CAPSULE,ORAL,20120831,,current,application_number
+xtandi_oral,004690625,0469-0625,Xtandi,"Astellas Pharma US, Inc.",NDA213674,TABLET,ORAL,20200804,,current,application_number
+xtandi_oral,004690725,0469-0725,Xtandi,"Astellas Pharma US, Inc.",NDA213674,TABLET,ORAL,20200804,,current,application_number
+xtandi_oral,004691125,0469-1125,Xtandi,"Astellas Pharma US, Inc.",NDA203415,CAPSULE,ORAL,20120831,,current,application_number
+xtandi_oral,004691725,0469-1725,Xtandi,"Astellas Pharma US, Inc.",NDA213674,TABLET,ORAL,20200804,,current,application_number
+xuriden_oral,506330330,50633-330,XURIDEN,BTG International Inc,NDA208169,GRANULE,ORAL,20240531,,current,application_number
+xuriden_oral,694680152,69468-152,XURIDEN,Wellstat Therapeutics Corporation,NDA208169,,,20150908,20240827,excluded,application_number; route inferred
+yorvipath_sc,733620100,73362-100,Yorvipath,"Ascendis Pharma, Endocrinology, Inc.",NDA216490,"INJECTION, SOLUTION",SUBCUTANEOUS,20240809,,current,application_number
+yorvipath_sc,733620101,73362-101,Yorvipath,"Ascendis Pharma, Endocrinology, Inc.",NDA216490,"INJECTION, SOLUTION",SUBCUTANEOUS,20240809,,current,application_number
+yorvipath_sc,733620102,73362-102,Yorvipath,"Ascendis Pharma, Endocrinology, Inc.",NDA216490,"INJECTION, SOLUTION",SUBCUTANEOUS,20240809,,current,application_number
+zegalogue_sc,001691912,0169-1912,Zegalogue,Novo Nordisk,NDA214231,"INJECTION, SOLUTION",SUBCUTANEOUS,20230626,20270831,current,application_number
+zegalogue_sc,001691913,0169-1913,Zegalogue,Novo Nordisk,NDA214231,"INJECTION, SOLUTION",SUBCUTANEOUS,20230626,20270831,current,application_number
+zegalogue_sc,806440012,80644-0012,Zegalogue,"Zealand Pharma US, Inc",NDA214231,,,20210405,20260109,excluded,application_number; route inferred
+zegalogue_sc,806440013,80644-0013,Zegalogue,"Zealand Pharma US, Inc",NDA214231,,,20210405,20260109,excluded,application_number; route inferred
+zejula_oral,001730909,0173-0909,ZEJULA,GlaxoSmithKline LLC,NDA214876,"TABLET, FILM COATED",ORAL,20230627,,current,application_number
+zejula_oral,001730912,0173-0912,ZEJULA,GlaxoSmithKline LLC,NDA214876,"TABLET, FILM COATED",ORAL,20230627,,current,application_number
+zejula_oral,001730915,0173-0915,ZEJULA,GlaxoSmithKline LLC,NDA214876,"TABLET, FILM COATED",ORAL,20230627,,current,application_number
+zelboraf_oral,502420090,50242-090,ZELBORAF,"Genentech, Inc.",NDA202429,"TABLET, FILM COATED",ORAL,20110817,,current,application_number
+zepatier_oral,000063074,0006-3074,ZEPATIER,Merck Sharp & Dohme LLC,NDA208261,"TABLET, FILM COATED",ORAL,20160128,,current,application_number
+zeposia_oral,595720810,59572-810,ZEPOSIA,Celgene Corporation,NDA209899,KIT,,20200327,,current,application_number; route inferred
+zeposia_oral,595720820,59572-820,ZEPOSIA,Celgene Corporation,NDA209899,CAPSULE,ORAL,20200327,,current,application_number
+zeposia_oral,595720890,59572-890,ZEPOSIA,Celgene Corporation,NDA209899,KIT,,20200327,,current,application_number; route inferred
+zilbrysq_sc,504740990,50474-990,ZILBRYSQ,"UCB, Inc.",NDA216834,"INJECTION, SOLUTION",SUBCUTANEOUS,20240103,,current,application_number
+zilbrysq_sc,504740991,50474-991,ZILBRYSQ,"UCB, Inc.",NDA216834,"INJECTION, SOLUTION",SUBCUTANEOUS,20240103,,current,application_number
+zilbrysq_sc,504740992,50474-992,ZILBRYSQ,"UCB, Inc.",NDA216834,"INJECTION, SOLUTION",SUBCUTANEOUS,20240103,,current,application_number
+zokinvy_oral,423580450,42358-450,Zokinvy,"Sentynl Therapeutics, Inc.",NDA213969,CAPSULE,ORAL,20250702,,current,application_number
+zokinvy_oral,423580475,42358-475,Zokinvy,"Sentynl Therapeutics, Inc.",NDA213969,CAPSULE,ORAL,20250702,,current,application_number
+zokinvy_oral,730790050,73079-050,Zokinvy,"Eiger BioPharmaceuticals, Inc.",NDA213969,,,20201120,,excluded,application_number; route inferred
+zokinvy_oral,730790075,73079-075,Zokinvy,"Eiger BioPharmaceuticals, Inc.",NDA213969,,,20201120,,excluded,application_number; route inferred
+ztalmy_oral,815830100,81583-100,ZTALMY,Immedica Pharma US Inc,NDA215904,SUSPENSION,ORAL,20220606,,current,application_number
+zurzuvae_oral,644060029,64406-029,ZURZUVAE,Biogen MA Inc.,NDA217369,CAPSULE,ORAL,20231031,,current,application_number
+zurzuvae_oral,644060030,64406-030,ZURZUVAE,Biogen MA Inc.,NDA217369,CAPSULE,ORAL,20231031,,current,application_number
+zurzuvae_oral,644060031,64406-031,ZURZUVAE,Biogen MA Inc.,NDA217369,CAPSULE,ORAL,20231031,,current,application_number
+zydelig_oral,619581701,61958-1701,Zydelig,"Gilead Sciences, Inc.",NDA205858,"TABLET, FILM COATED",ORAL,20140723,20280229,current,application_number
+zydelig_oral,619581702,61958-1702,Zydelig,"Gilead Sciences, Inc.",NDA205858,"TABLET, FILM COATED",ORAL,20140723,20280229,current,application_number
+zykadia_oral,000780694,0078-0694,ZYKADIA,Novartis Pharmaceuticals Corporation,NDA211225,"TABLET, FILM COATED",ORAL,20190318,,current,application_number
+zytiga_oral,578940150,57894-150,Zytiga,"Janssen Biotech, Inc.",NDA202379,TABLET,ORAL,20110428,,current,application_number
+zytiga_oral,578940155,57894-155,Abiraterone acetate,"Janssen Biotech, Inc.",NDA202379,,,20180209,20220131,excluded,application_number; route inferred
+zytiga_oral,578940184,57894-184,Zytiga,"Janssen Biotech, Inc.",NDA202379,,,20170417,20200508,excluded,application_number; route inferred
+zytiga_oral,578940195,57894-195,Zytiga,"Janssen Biotech, Inc.",NDA202379,"TABLET, FILM COATED",ORAL,20170417,,current,application_number
+zytiga_oral,578940199,57894-199,Abiraterone acetate,"Janssen Biotech, Inc.",NDA202379,,,20180305,20180306,excluded,application_number; route inferred
