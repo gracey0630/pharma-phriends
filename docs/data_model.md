@@ -1,6 +1,6 @@
 # Data Model & Workstreams
 
-Tables, columns, sources, dependencies and owners, following the user journey: (1) define the drug → (2) find analogs → (3) size the market → (4) review uptake → (5) illustrative curve. Source details: [data_sources.md](data_sources.md).
+Tables, columns, sources, dependencies and owners, following the [user journey](user_journey.md): (1) define the drug → (2) find analogs → (3) size the market → (4) review uptake → (5) illustrative curve. Source details: [data_sources.md](data_sources.md). Decisions and open questions: [decisions.md](decisions.md).
 
 **Conventions**
 - **One analog = brand × route group.** Key: `analog_id` = `brand_key` + `route_group` (e.g. `skyrizi_sc`).
@@ -36,6 +36,30 @@ Raw pulls (day 1)
 Query time:  target_drug + analog_features ─► analog_recommendations ─► (approved 3–5) ─► bass_fits ─► analog_weights ─► illustrative curve
 ```
 Critical path: FDA files → `candidate_pool` → `ndc_map` → `sdud_quarterly` → `analog_features`. Longest task: `analog_evidence` review.
+
+## Build status
+
+Update in the PR that changes a table. Status: not started / in progress / built (matches this spec).
+
+| Table | Workstream | Journey step | Status |
+|---|---|---|---|
+| Download/cache module + manifest | 0 | — | not started |
+| `candidate_pool` | A | 2 | not started |
+| `indication_history` | A | 2 | not started |
+| `exclusivity` | A | 2 | not started |
+| `drug_master` | A | 2 | not started |
+| `ndc_map` | B | 2 | not started |
+| `sdud_quarterly` | B | 2, 4 | not started |
+| `medicaid_enrollment` | B | 2 | not started |
+| `launch_curves` | B | 4 | not started |
+| `analog_evidence` | C | 2 | not started |
+| `analog_features` | D | 2 | not started |
+| `analog_recommendations` | D | 2 | not started |
+| `target_drug` | E | 1 | not started |
+| `market_size` | E | 3 | not started |
+| `epi_funnel` | E | 3 | not started (prototype for Ibrance 1L mBC in `6e92c63`) |
+| `bass_fits` | E | 4 | not started |
+| `analog_weights` | E | 4 | not started |
 
 ---
 
@@ -162,3 +186,35 @@ Includes **same-class competitors** (needed to check peak share against analog p
 - Units per Rx far from label days supply
 - Unapproved evidence fields in `analog_features`
 - ⚠️ Any raw file older than the source's latest release
+
+---
+
+## Crosswalk: original analog schema → tables
+
+Where each column of the first analog schema (Google Sheet "data schema for analogs") lives in this model. The tables above are the source of truth; the sheet can be retired once the open items in [decisions.md](decisions.md#open-questions) are settled.
+
+| Sheet column | Table.column | Note |
+|---|---|---|
+| ndc | `ndc_map.ndc9` | |
+| route of administration | `candidate_pool.route_group`, `ndc_map.route` | |
+| manufacturer/sponsor/company at approval | `candidate_pool.sponsor` (+ `ndc_map.labeler_name`) | |
+| Rx | `sdud_quarterly` (`trx`), `launch_curves.trx` | Medicaid SDUD only; Part D is a cross-check |
+| generic name | `candidate_pool.generic_name` | |
+| application number | `candidate_pool.application_numbers` | |
+| submission classification | `candidate_pool.submission_class` | |
+| line of therapy | `analog_evidence` → `drug_master.line_of_therapy` | Agent-extracted, human-approved |
+| approval date | `candidate_pool.approval_date` | |
+| cost per unit | — | **Open:** pricing is out of scope |
+| market size | `epi_funnel`, `market_size` | **Open:** CT.gov not currently used for this |
+| brand name | `candidate_pool.brand_name` | |
+| start marketing date | `ndc_map.start_marketing_date` → `analog_features.days_approval_to_launch` | |
+| market category | `candidate_pool.market_category` | |
+| dosage form | `candidate_pool.dosage_form`, `ndc_map.dosage_form` | |
+| indication | `candidate_pool.first_indication`, `analog_evidence` (indication / target patients) | ORIG label, not DailyMed |
+| # competitors at launch | `analog_evidence` → `drug_master.n_competitors_at_launch` | |
+| novel drugs | `candidate_pool` filter (NME compilation); `first_in_class` from Novel Drug Approvals | |
+| launch date | `analog_evidence` → `drug_master.launch_date` | |
+| class (narrow) | `analog_evidence` → `drug_master.class_narrow`, checked against `atc_narrow` | **Open:** sheet says DailyMed MoA |
+| dosing frequency | `analog_evidence` → `drug_master.dosing_frequency`; `sdud_quarterly.units_per_rx` check | |
+| fills per patient | — | **Open:** not in any table (fills conversion out of scope) |
+| generic / exclusivity date | `exclusivity` | |
