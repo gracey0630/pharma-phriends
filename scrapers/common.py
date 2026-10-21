@@ -19,16 +19,8 @@ MIN_INTERVAL = 0.5  # seconds between live requests
 _last_call = 0.0
 
 
-def get_json(url, params=None, source="misc", refresh=False):
-    """GET a JSON endpoint, caching the response under data/raw/<source>/.
-
-    Re-runs read from the cache, so we only hit an API once per unique query.
-    """
-    key = hashlib.sha1(json.dumps([url, params], sort_keys=True).encode()).hexdigest()[:16]
-    cache = RAW / source / f"{key}.json"
-    if cache.exists() and not refresh:
-        return json.loads(cache.read_text())
-
+def _fetch(url, params, source):
+    """Throttled GET with retries on 429/5xx. Returns the Response (404 left to the caller)."""
     global _last_call
     wait = MIN_INTERVAL - (time.time() - _last_call)
     if wait > 0:
@@ -36,22 +28,51 @@ def get_json(url, params=None, source="misc", refresh=False):
     for attempt in range(4):
         resp = requests.get(url, params=params, headers={"User-Agent": USER_AGENT}, timeout=120)
         _last_call = time.time()
-        if resp.status_code == 404 and source == "openfda":
-            data = {"results": []}  # openFDA returns 404 for "no matches"
-            break
         if resp.status_code in (429, 500, 502, 503, 504):
             time.sleep(2 ** attempt * 2)
             continue
-        resp.raise_for_status()
-        data = resp.json()
-        break
+        return resp
+    resp.raise_for_status()
+
+
+def _cache_path(url, params, source, suffix):
+    key = hashlib.sha1(json.dumps([url, params], sort_keys=True).encode()).hexdigest()[:16]
+    return RAW / source / f"{key}{suffix}"
+
+
+def get_json(url, params=None, source="misc", refresh=False):
+    """GET a JSON endpoint, caching the response under data/raw/<source>/.
+
+    Re-runs read from the cache, so we only hit an API once per unique query.
+    """
+    cache = _cache_path(url, params, source, ".json")
+    if cache.exists() and not refresh:
+        return json.loads(cache.read_text())
+
+    resp = _fetch(url, params, source)
+    if resp.status_code == 404 and source == "openfda":
+        data = {"results": []}  # openFDA returns 404 for "no matches"
     else:
         resp.raise_for_status()
+        data = resp.json()
 
     cache.parent.mkdir(parents=True, exist_ok=True)
     cache.write_text(json.dumps(data))
     log_pull(source, url, params, data)
     return data
+
+
+def get_text(url, params=None, source="misc", suffix=".txt", refresh=False):
+    """Like get_json, for non-JSON responses (e.g. DailyMed SPL XML)."""
+    cache = _cache_path(url, params, source, suffix)
+    if cache.exists() and not refresh:
+        return cache.read_text()
+    resp = _fetch(url, params, source)
+    resp.raise_for_status()
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_text(resp.text)
+    log_pull(source, url, params, [resp.text])
+    return resp.text
 
 
 def log_pull(source, url, params, data):
@@ -85,3 +106,26 @@ def env(name, default=None):
             if line.startswith(f"{name}="):
                 return line.split("=", 1)[1].strip()
     return default
+
+
+def select_brands(master, brands):
+    """Filter drug_master rows to --brands (comma-separated brand_keys); all rows if none given."""
+    if not brands:
+        return master
+    keys = [b.strip().lower() for b in brands.split(",")]
+    missing = set(keys) - set(master.brand_key)
+    if missing:
+        raise SystemExit(f"unknown brand_key (add it to seed_drugs.csv and build drug_master first): {', '.join(sorted(missing))}")
+    return master[master.brand_key.isin(keys)]
+
+
+def write_brand_rows(path, df, brand_keys=None):
+    """Write df to path. With brand_keys, replace only those brands' rows and keep everyone else's,
+    so adding one analog doesn't mean re-pulling (and re-caching) every other brand."""
+    import pandas as pd
+
+    if brand_keys is not None and path.exists():
+        old = pd.read_csv(path, dtype=str)
+        df = pd.concat([old[~old.brand_key.isin(brand_keys)], df.astype(str)], ignore_index=True)
+        df = df.replace("nan", "")
+    df.to_csv(path, index=False)

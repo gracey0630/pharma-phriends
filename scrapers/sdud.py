@@ -9,14 +9,15 @@ Output: data/processed/sdud_quarterly.csv in the shared long format
         brand_key, source, payer, period, metric, value, pulled_at
         plus data/processed/sdud_ndc_audit.csv for checking NDC coverage.
 
-Usage: python -m scrapers.sdud [--start-year 2011] [--end-year 2026]
+Usage: python -m scrapers.sdud [--brands ibrance] [--start-year 2011] [--end-year 2026]
+       --brands updates only those brands' rows in the output files and keeps the rest.
 """
 import argparse
 from datetime import date
 
 import pandas as pd
 
-from scrapers.common import PROCESSED, REFERENCE, get_json
+from scrapers.common import PROCESSED, REFERENCE, get_json, select_brands, write_brand_rows
 
 CATALOG = "https://data.medicaid.gov/api/1/search"
 QUERY = "https://data.medicaid.gov/api/1/datastore/query/{id}/0"
@@ -64,11 +65,12 @@ def pull_brand(brand, ids, start_year, end_year):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--brands", help="comma-separated brand_keys (default: all in drug_master.csv)")
     ap.add_argument("--start-year", type=int, default=None, help="default: each brand's approval year")
     ap.add_argument("--end-year", type=int, default=date.today().year)
     args = ap.parse_args()
 
-    master = pd.read_csv(REFERENCE / "drug_master.csv", dtype=str)
+    master = select_brands(pd.read_csv(REFERENCE / "drug_master.csv", dtype=str), args.brands)
     ids = dataset_ids()
     print(f"SDUD years available: {min(ids)}-{max(ids)}")
 
@@ -106,8 +108,9 @@ def main():
         print(f"{d.brand_key}: {len(df)} rows, {df.ndc9.nunique()} NDC9s, {len(q)} quarters, peak TRx/qtr {q.number_of_prescriptions.max():,.0f}")
 
     out = pd.DataFrame(long_rows).sort_values(["brand_key", "period", "metric"])
-    out.to_csv(PROCESSED / "sdud_quarterly.csv", index=False)
-    pd.DataFrame(audit_rows).to_csv(PROCESSED / "sdud_ndc_audit.csv", index=False)
+    keys = list(master.brand_key) if args.brands else None
+    write_brand_rows(PROCESSED / "sdud_quarterly.csv", out, keys)
+    write_brand_rows(PROCESSED / "sdud_ndc_audit.csv", pd.DataFrame(audit_rows), keys)
     print(f"wrote {len(out)} rows -> data/processed/sdud_quarterly.csv")
 
 
