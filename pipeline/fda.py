@@ -175,6 +175,7 @@ def build(t):
             continue
         ndc_frames.append(ndc)
         generic_frames.append(generic_ndcs(t, appls, b))
+        n_routes = ndc.route_group.nunique()  # incl. out-of-scope routes (IV etc.)
         for rg, g in ndc.groupby("route_group"):
             if rg not in ROUTE_GROUPS.values():
                 continue
@@ -194,6 +195,7 @@ def build(t):
                 "dosage_form": "; ".join(sorted(set(g.DOSAGEFORMNAME) - {""})),
                 "indication": " ".join(b["Approved Use(s)"].split()),
                 "novel_drug": True,
+                "n_route_groups": n_routes,
             })
     ndc_all = pd.concat(ndc_frames, ignore_index=True)
     ndc_all = ndc_all[ndc_all.route_group.isin(ROUTE_GROUPS.values())]

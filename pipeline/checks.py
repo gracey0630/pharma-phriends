@@ -30,7 +30,8 @@ def run(analogs, ndc_map, quarterly, evidence):
     a = analogs.set_index("analog_id")
     trx = quarterly[quarterly.metric == "trx"].copy()
     trx["value"] = pd.to_numeric(trx.value, errors="coerce")
-    first_rx = trx[trx.value > 0].groupby("analog_id").period.min()
+    # first quarter with any SDUD row: a suppressed (blank) quarter still means 1-10 Rx were dispensed
+    first_rx = trx.groupby("analog_id").period.min()
     n_quarters = trx.groupby("analog_id").period.nunique()
 
     lines = ["# Validation report", "",

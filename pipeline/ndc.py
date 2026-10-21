@@ -5,7 +5,8 @@ Rule (docs/data_model.md, Brand -> NDC): application number in the NDC Directory
 both FDA files but still have Medicaid claims. An SDUD-only NDC is added when:
   - its labeler code is one of the analog's labelers in ndc_map
   - its SDUD product_name matches the first 10 characters of the brand name (SDUD truncates names)
-  - the brand has a single in-scope route group (otherwise the route can't be told from SDUD)
+  - the brand has a single route group in the FDA files, counting IV etc. (otherwise the route can't
+    be told from SDUD: "SKYRIZI IN..." could be the SC injection or the IV vial)
   - it isn't listed in the FDA files under any application (those were routed by pipeline.fda)
 
 Usage: python -m pipeline.ndc   (needs pipeline.fda and pipeline.sdud --pull-only first)
@@ -20,7 +21,7 @@ from pipeline.sdud import load_national
 def sdud_matches(ndc_map, pool, national, fda_ndc9s):
     seen = national.drop_duplicates("ndc9")[["ndc9", "labeler_code", "product_name"]]
     seen = seen[~seen.ndc9.isin(fda_ndc9s)]
-    single_route = pool.groupby("brand_key").analog_id.transform("count") == 1
+    single_route = pool.n_route_groups.astype(int) == 1
     rows = []
     for a in pool[single_route].itertuples():
         labelers = set(ndc_map[ndc_map.analog_id == a.analog_id].ndc9.str[:5])
