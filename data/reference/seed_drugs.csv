@@ -1,9 +1,0 @@
-brand_key,brand_name,therapeutic_area,notes,line_of_therapy,first_in_class
-otezla,OTEZLA,immunology,oral PDE4; first indication PsA (verify),,
-cosentyx,COSENTYX,immunology,IL-17A; self-injected,,
-taltz,TALTZ,immunology,IL-17A; self-injected,,
-siliq,SILIQ,immunology,IL-17RA; self-injected; REMS,,
-tremfya,TREMFYA,immunology,IL-23; self-injected,,
-skyrizi,SKYRIZI,immunology,IL-23; self-injected,,
-sotyktu,SOTYKTU,immunology,oral TYK2,,
-ibrance,IBRANCE,oncology,oral CDK4/6; first indication 1L ER+/HER2- mBC with letrozole; specialty pharmacy,"1L metastatic (initial endocrine-based therapy, with letrozole)",yes
