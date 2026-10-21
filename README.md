@@ -19,6 +19,14 @@ python3 -m venv .venv && source .venv/bin/activate   # or: conda create -n pharm
 pip install -r requirements.txt
 cp .env.example .env                                  # fill in API keys
 ```
+If `python3 --version` is older than 3.12 (macOS ships 3.9), install a newer one first, e.g. `brew install python@3.13`, and create the venv with `python3.13 -m venv .venv`.
+
+## Build the data
+```bash
+python -m pipeline.build            # everything: FDA files, SDUD, RxClass -> data/processed/analogs.csv
+python -m pipeline.build --refresh  # re-download every source first (do this before a final build)
+```
+The first run downloads ~1 GB and takes about an hour, mostly SDUD at ~3.5 min per year. Later runs reuse `data/raw/` and take a few minutes. `data/processed/` is committed, so you only need to rebuild to refresh or change the data. Output tables and columns: [data_model.md](docs/data_model.md#v1-analog-table-current-spec). Current status and next steps: [CLAUDE.md](CLAUDE.md#status--handoff).
 
 ## Working together
 - Workstreams (0, A–E) and what each owns: [data_model.md](docs/data_model.md#workstreams).
@@ -31,6 +39,7 @@ cp .env.example .env                                  # fill in API keys
 data/
 ├── raw/<source>/   downloads, unchanged, + manifest (gitignored)
 ├── reference/      approved / manual tables (analog_evidence, target_drug, epi_funnel)
-└── processed/      tables built by code
+└── processed/      tables built by code (committed): analogs.csv, sdud_quarterly.csv, ndc_map.csv, checks.md
 docs/               user journey, sources, data model, decisions
+pipeline/           build code: fda, sdud, ndc, rxclass, labels, build, checks
 ```

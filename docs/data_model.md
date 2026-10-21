@@ -8,6 +8,46 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 - Manual / approved tables live in `data/reference/`; built tables in `data/processed/`, overwritten every run.
 - ⚠️ = check the input is current before building (see [data_sources.md](data_sources.md)).
 
+## v1 analog table (current spec)
+
+**Decision 2026-10-21:** v1 keeps only the 23 columns of the team's analog schema (Google Sheet "data schema for analogs"). The larger set of tables further down is the longer-term design. Tables marked *deferred* in the build status aren't being built for v1.
+
+`data/processed/analogs.csv` has one row per `analog_id` (the key) followed by exactly these 23 columns, with the sheet's names and order. Build it with `python -m pipeline.build`.
+
+| # | Column | Filled from | Coverage |
+|---|---|---|---|
+| 1 | ndc | All 9-digit NDCs (labeler + product) in the route group, `; `-separated. Detail is in `ndc_map.csv` | all |
+| 2 | route of administration | Route group from NDC Directory `ROUTENAME`: `oral` or `sc` | all |
+| 3 | manufacturer/sponsor/company at approval | Drugs@FDA `SponsorName` of the original application | all |
+| 4 | Rx | Total Medicaid TRx to date (SDUD, national, FFSU + MCOU). The quarterly series is in `sdud_quarterly.csv` | all with SDUD |
+| 5 | generic name | NME compilation `Active Ingredient/Moiety` | all |
+| 6 | application number | NDA/BLA numbers whose NDCs are in this route group | all |
+| 7 | submission classification | Drugs@FDA submission class of the ORIG approval | all |
+| 8 | line of therapy | ORIG label indication (label read) | seed 8 |
+| 9 | approval date | Earliest ORIG + AP submission in Drugs@FDA | all |
+| 10 | cost per unit | Empty; open question | none |
+| 11 | market size | Empty; open question (workstream E epi funnel) | none |
+| 12 | brand name | NME compilation `Proprietary Name` | all |
+| 13 | start marketing date | Earliest `STARTMARKETINGDATE` across the route group's NDCs | all |
+| 14 | market category | NDC Directory `MARKETINGCATEGORYNAME` | all |
+| 15 | dosage form | NDC Directory `DOSAGEFORMNAME` values | all |
+| 16 | indication | NME compilation `Approved Use(s)` (indication at original approval) | all |
+| 17 | # competitors at launch | Label read. Branded advanced systemic therapies (biologic or novel oral) approved for the same first indication before launch; excludes biosimilars and withdrawn drugs | seed 8 |
+| 18 | novel drugs | `True` for every row: the pool comes from the NME compilation | all |
+| 19 | launch date | Label read: first commercial availability (press release / trade press). `YYYY-MM` when only the month is known | seed 7 (Cosentyx not found) |
+| 20 | class (narrow) | RxClass ATC level 4, e.g. `L04AC Interleukin inhibitors` | all RxClass knows |
+| 21 | dosing frequency | Label read (ORIG label, dosage and administration) | seed 8 |
+| 22 | fills per patient | Empty; open question | none |
+| 23 | generic / exclusivity date | First quarter (`YYYYQn`) in which a generic (ANDA, same active ingredient) or biosimilar (351(k) referencing the brand) NDC is dispensed in Medicaid SDUD; blank = none yet. Approval and NDC listing aren't used because generics are often approved and listed years before patents let them launch | all |
+
+"Seed 8" are the prototype brands: Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu, Ibrance. Label-read values live in `data/reference/analog_evidence.csv` with a quote and link. They are copied into `analogs.csv` even before approval, and `checks.md` lists every analog with unapproved values.
+
+**Supporting files** (`data/processed/`, rebuilt every run):
+- `sdud_quarterly.csv`: analog × quarter, long format; metrics `trx`, `units`, `reimbursed_usd`, `suppressed_rows`
+- `ndc_map.csv`: analog × NDC, with `listing` (current / excluded / sdud only) and `match_method`
+- `candidate_pool.csv`, `generic_ndcs.csv`: intermediates
+- `checks.md`: validation report
+
 ## Rules (agree before building)
 
 | Rule | Definition |
@@ -43,16 +83,17 @@ Update in the PR that changes a table. Status: not started / in progress / built
 
 | Table | Workstream | Journey step | Status |
 |---|---|---|---|
-| Download/cache module + manifest | 0 | — | not started |
-| `candidate_pool` | A | 2 | not started |
-| `indication_history` | A | 2 | not started |
-| `exclusivity` | A | 2 | not started |
-| `drug_master` | A | 2 | not started |
-| `ndc_map` | B | 2 | not started |
-| `sdud_quarterly` | B | 2, 4 | not started |
-| `medicaid_enrollment` | B | 2 | not started |
+| Download/cache module + manifest | 0 | — | built (`pipeline/common.py`) |
+| **`analogs` (v1 analog table, 23 sheet columns)** | A–C | 2 | **built**; label-read columns for seed 8 only |
+| `candidate_pool` | A | 2 | built (`pipeline/fda.py`); pool rule above, oral + sc |
+| `indication_history` | A | 2 | deferred (v1) |
+| `exclusivity` | A | 2 | replaced in v1 by the generic / exclusivity date column |
+| `drug_master` | A | 2 | deferred (v1: `analogs` plays this role) |
+| `ndc_map` | B | 2 | built (`pipeline/fda.py` + `pipeline/ndc.py`) |
+| `sdud_quarterly` | B | 2, 4 | built for pool analogs (`pipeline/sdud.py`); same-class competitors not yet added |
+| `medicaid_enrollment` | B | 2 | deferred (v1) |
 | `launch_curves` | B | 4 | not started |
-| `analog_evidence` | C | 2 | not started |
+| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, none approved yet |
 | `analog_features` | D | 2 | not started |
 | `analog_recommendations` | D | 2 | not started |
 | `target_drug` | E | 1 | not started |
@@ -191,7 +232,7 @@ Includes **same-class competitors** (needed to check peak share against analog p
 
 ## Crosswalk: original analog schema → tables
 
-Where each column of the first analog schema (Google Sheet "data schema for analogs") lives in this model. The tables above are the source of truth; the sheet can be retired once the open items in [decisions.md](decisions.md#open-questions) are settled.
+Where each column of the first analog schema (Google Sheet "data schema for analogs") lives in the longer-term model. **For v1 the sheet columns are used directly**; see [v1 analog table](#v1-analog-table-current-spec). This crosswalk is kept for when the larger tables are built.
 
 | Sheet column | Table.column | Note |
 |---|---|---|
