@@ -59,7 +59,25 @@ def funnel(lines, features, fits):
              f"R^2 < 0.9 or a parameter on its bound; {len(fits)} analogs fitted.")
 
 
-def run(analogs, ndc_map, quarterly, evidence, features, fits):
+def not_in_pool_section(lines, not_in_pool):
+    """NME brands (2010+) left out of the pool, by reason, so nothing drops out silently."""
+    lines.append("\n## NME brands not in the pool")
+    lines.append(f"{len(not_in_pool)} brands from the NME compilation (2010+) have no oral or sc route group.\n")
+    lines.append("| Reason | Brands |")
+    lines.append("|---|---|")
+    for reason, g in not_in_pool.groupby("reason"):
+        lines.append(f"| {reason} | {len(g)} |")
+    other = not_in_pool[not_in_pool.reason == "other route"].route_groups.str.split(" | ", regex=False).explode()
+    lines.append("\nOther routes: " + ", ".join(f"{r} {n}" for r, n in other.value_counts().items()) + ".")
+    _section(lines, "Injection, route not stated", not_in_pool.brand_key[not_in_pool.reason == "injection, route not stated"],
+             "Drugs@FDA lists them only as 'INJECTABLE;INJECTION' (sc, IV or IM?). The original label states the "
+             "route; not resolved yet, so they're out of the pool.")
+    _section(lines, "No route found", not_in_pool.brand_key[not_in_pool.reason == "no route found"],
+             "Neither the NDC Directory nor Drugs@FDA Products gives a route.")
+    _section(lines, "No NDC listings", not_in_pool.brand_key[not_in_pool.reason == "no NDC listings"])
+
+
+def run(analogs, ndc_map, quarterly, evidence, features, fits, not_in_pool):
     a = analogs.set_index("analog_id")
     trx = quarterly[quarterly.metric == "trx"].copy()
     trx["value"] = pd.to_numeric(trx.value, errors="coerce")
@@ -80,6 +98,7 @@ def run(analogs, ndc_map, quarterly, evidence, features, fits):
         lines.append(f"| {m.parent.name} | {df.iloc[:, 1].nunique()} | {df.pulled_at.max()[:10]} |")
 
     funnel(lines, features, fits)
+    not_in_pool_section(lines, not_in_pool)
 
     lines.append("\n## Rows to look at")
     _section(lines, "No Medicaid Rx at all", a.index[a["Rx"] == ""],

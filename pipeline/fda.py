@@ -57,6 +57,7 @@ def load_tables():
     nme.columns = [" ".join(str(c).split()) for c in nme.columns]  # headers have double spaces
     t["nme"] = nme
     t["purple"] = load_purple_book()
+    t["product_routes"] = product_routes(t["Products"])
     return t
 
 
@@ -73,7 +74,20 @@ def brand_key(name):
 
 
 def route_group(routename):
-    return ROUTE_GROUPS.get(routename.strip().upper(), routename.strip().lower() or "")
+    """'ORAL' -> 'oral'; repeated routes collapse ('SUBCUTANEOUS; SUBCUTANEOUS' -> 'sc'); other routes stay
+    as written, lowercased ('intravenous; subcutaneous' is out of scope: the route can't be told per NDC)."""
+    parts = sorted({r.strip().upper() for r in routename.split(";")} - {""})
+    if len(parts) == 1:
+        return ROUTE_GROUPS.get(parts[0], parts[0].lower())
+    return "; ".join(parts).lower()
+
+
+def product_routes(products):
+    """Drugs@FDA Products -> ApplNo: route group of its products ('TABLET;ORAL' -> 'oral'), '; '-joined if several.
+    FDA lists most biologics as 'INJECTABLE;INJECTION', which doesn't say sc, IV or IM: those map to 'injection'."""
+    form = products.Form.where(products.Form.str.contains(";"), "")
+    route = form.str.split(";").str[-1].str.replace(r"-\d+$", "", regex=True).map(route_group)  # ORAL-28 -> oral
+    return route.groupby(products.ApplNo).agg(lambda r: "; ".join(sorted(set(r) - {""})))
 
 
 def orig_approvals(t):
@@ -122,7 +136,8 @@ def fda_ndcs(t, brand, appls):
 
     Delisted NDCs in the excluded file have no route. They get the route group of the earliest
     listed NDC under the same application (e.g. Skyrizi's 2019 launch NDC -> sc, because the
-    IV kits under the same BLA came later); match_method records that it was inferred.
+    IV kits under the same BLA came later); match_method records that it was inferred. If no NDC under the
+    application has a route (kits, fully delisted applications), the route comes from Drugs@FDA Products.
     """
     ndc = t["ndc"][t["ndc"].APPLICATIONNUMBER.isin(appls)].copy()
     # Under a later application, keep only NDCs sold under this brand name: NDA213051 carries both
@@ -137,8 +152,16 @@ def fda_ndcs(t, brand, appls):
     known = ndc[ndc.route_group != ""].sort_values("STARTMARKETINGDATE")
     first_route = known.drop_duplicates("APPLICATIONNUMBER").set_index("APPLICATIONNUMBER").route_group
     missing = ndc.route_group == ""
-    ndc.loc[missing, "route_group"] = ndc.loc[missing, "APPLICATIONNUMBER"].map(first_route).fillna("unknown")
+    ndc.loc[missing, "route_group"] = ndc.loc[missing, "APPLICATIONNUMBER"].map(first_route).fillna("")
     ndc.loc[missing, "match_method"] = "application_number; route inferred"
+    # no NDC under the application has a route: kits (Trikafta's co-packaged tablets list a blank route) and
+    # fully delisted applications (Ocaliva). Fall back to the route in Drugs@FDA Products.
+    still = ndc.route_group == ""
+    ndc.loc[still, "route_group"] = ndc.loc[still, "APPLICATIONNUMBER"].str[3:].map(t["product_routes"]).fillna("")
+    ndc.loc[still, "match_method"] = "application_number; route from Drugs@FDA"
+    none = ndc.route_group == ""
+    ndc.loc[none, "route_group"] = "unknown"
+    ndc.loc[none, "match_method"] = "application_number; no route found"
     ndc["ndc9"] = ndc.PRODUCTNDC.map(ndc9)
     ndc["brand_key"] = brand.brand_key
     return ndc
@@ -215,11 +238,21 @@ def indication_history(t, pool, launch):
     return h[cols].sort_values(["analog_id", "approval_date", "application_number"], ignore_index=True)
 
 
+def not_in_pool_reason(route_groups):
+    """Why a brand with NDCs has no in-scope route group."""
+    if route_groups <= {"unknown"}:
+        return "no route found"
+    if any("injection" in rg for rg in route_groups):
+        return "injection, route not stated"
+    return "other route"
+
+
 def build(t):
-    """Returns (pool, ndc_map, generics): pool has one row per in-scope analog_id; ndc_map one row per
-    analog_id x ndc9; generics one row per brand x possible generic/biosimilar NDC."""
+    """Returns (pool, ndc_map, generics, not_in_pool): pool has one row per in-scope analog_id; ndc_map one row
+    per analog_id x ndc9; generics one row per brand x possible generic/biosimilar NDC; not_in_pool one row per
+    NME brand with no oral or sc route group, and why (reported in checks.md)."""
     approvals = orig_approvals(t)
-    pool_rows, ndc_frames, generic_frames = [], [], []
+    pool_rows, ndc_frames, generic_frames, dropped = [], [], [], []
     for _, b in nme_brands(t).iterrows():
         appls = brand_applications(t, b)
         ndc = fda_ndcs(t, b, appls)
@@ -227,7 +260,12 @@ def build(t):
         first = orig.iloc[0] if len(orig) else None
         if ndc.empty:
             print(f"{b.brand_key}: no NDC listings, skipped")
+            dropped.append({"brand_key": b.brand_key, "route_groups": "", "reason": "no NDC listings"})
             continue
+        routes = set(ndc.route_group)
+        if not routes & set(ROUTE_GROUPS.values()):
+            dropped.append({"brand_key": b.brand_key, "route_groups": " | ".join(sorted(routes)),
+                            "reason": not_in_pool_reason(routes)})
         ndc_frames.append(ndc)
         generic_frames.append(generic_ndcs(t, appls, b))
         n_routes = ndc.route_group.nunique()  # incl. out-of-scope routes (IV etc.)
@@ -263,7 +301,8 @@ def build(t):
             "dosage_form", "route", "start_marketing_date", "end_marketing_date", "listing", "match_method"]
     # the same product NDC can appear in both files or under several SPL versions
     ndc_map = ndc_map[cols].sort_values(["analog_id", "ndc9", "listing"]).drop_duplicates(["analog_id", "ndc9"])
-    return pd.DataFrame(pool_rows), ndc_map.reset_index(drop=True), pd.concat(generic_frames, ignore_index=True)
+    return (pd.DataFrame(pool_rows), ndc_map.reset_index(drop=True), pd.concat(generic_frames, ignore_index=True),
+            pd.DataFrame(dropped, columns=["brand_key", "route_groups", "reason"]))
 
 
 def main():
@@ -271,7 +310,7 @@ def main():
     ap.add_argument("--refresh", action="store_true", help="re-download the FDA bulk files")
     args = ap.parse_args()
     download_all(args.refresh)
-    pool, ndc_map, generics = build(load_tables())
+    pool, ndc_map, generics, _ = build(load_tables())
     PROCESSED.mkdir(parents=True, exist_ok=True)
     pool.to_csv(PROCESSED / "candidate_pool.csv", index=False)
     ndc_map.to_csv(PROCESSED / "ndc_map.csv", index=False)

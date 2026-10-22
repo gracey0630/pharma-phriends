@@ -28,63 +28,51 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - Secrets in `.env` (gitignored); see `.env.example`
 
 ## Status & handoff
-**Last update: 2026-10-22, tables for EDA (Grace, branch `b/launch-curves`, stacked on `a/analog-table-v1`).** Newest entry first; add yours on top when you hand off.
+**Last update: 2026-10-22 (Grace, branch `a/route-fallback`).** Keep "Current state" current; add a dated line to the log when you hand off.
 
-### 2026-10-22: tables for EDA (Grace)
-- **New tables** in `data/processed/` (specs in [data_model.md](docs/data_model.md); rules in the 2026-10-22 rows of [decisions.md](docs/decisions.md)):
-  - `launch_curves`: TRx and share of peak, Q0–Q20.
-  - `analog_features`: launch, data quality, distortion flags, `enough_data`.
-  - `bass_fits`: p, q, m for analogs with enough data.
-  - `indication_history`: possible label expansions from Drugs@FDA.
-  - `medicaid_enrollment`: by quarter, with shock windows.
-- **Pool after the rules code can apply** (`checks.md`): 392 → 373 with SDUD → 354 launched within a year of approval → 354 no generic in Q0–Q12 → **235 with enough data** (190 oral, 45 sc). 243 Bass fits, 94 weak.
-- **Launch quarter** is the first SDUD quarter for all 373 analogs (no launch dates approved yet).
-- **Watch:**
-  - 89 of the 201 full-window curves peak at Q20 (open question in decisions.md).
-  - `label_expansion_in_window` over-flags (counts every efficacy supplement).
-  - `multi_route` counts IV forms added later.
-- **Fixed:** same-day ORIG approvals were picked arbitrarily, so `submission classification` flipped for 10 analogs between builds.
-- **Rebuild:** ~2 min from `data/raw/`.
+### Current state
+**What exists** (`data/processed/`, specs in [data_model.md](docs/data_model.md)):
+- `analogs.csv`: the v1 analog table, 426 analogs (332 oral, 94 sc) × the 23 schema-sheet columns. The pool is every NME / new BLA in the FDA NME compilation approved 2010–2025, split by route group.
+- `sdud_quarterly.csv`: Medicaid TRx by quarter, 2010Q1–2026Q1 (378 analogs have Rx). `ndc_map.csv`: 1,511 NDCs and how each was matched.
+- `launch_curves.csv`: TRx and share of peak, Q0–Q20. `analog_features.csv`: launch quarter, data quality, distortion flags, `enough_data`. `bass_fits.csv`: p, q, m for the 256 analogs with enough data.
+- `indication_history.csv`: possible label expansions. `medicaid_enrollment.csv`: enrollment by quarter with shock windows.
+- `checks.md`: validation report. **250 analogs** pass the rules code can apply (202 oral, 48 sc); it also lists every NME brand left out of the pool, with the reason.
+- `data/reference/analog_evidence.csv`: label reads (line of therapy, dosing, launch date, # competitors) for the 8 seed brands (Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu, Ibrance). 31 values with quotes and links, **none approved yet**.
+- Code: `pipeline/` (`fda`, `sdud`, `ndc`, `rxclass`, `enrollment`, `curves`, `features`, `bass`, `labels`, `build`, `checks`).
 
-### 2026-10-21: first data build (Jmazher12, `a/analog-table-v1`)
-
-#### What exists
-- **v1 analog table:** `data/processed/analogs.csv`, one row per `analog_id` with exactly the 23 columns of the team's analog schema sheet (names and order unchanged). Column sources: [data_model.md → v1 analog table](docs/data_model.md#v1-analog-table-current-spec). Decision: v1 uses **only** these columns.
-- **Pool:** 391 analogs (303 oral, 88 sc) = every NME / new BLA in the FDA NME compilation approved 2010–2025, split by route group. 350 have Medicaid Rx.
-- **Rx by quarter:** `data/processed/sdud_quarterly.csv` (long format, SDUD 2010Q1–2026Q1, national, FFSU + MCOU). Suppressed quarters are blank.
-- **NDCs:** `data/processed/ndc_map.csv`, 1,414 NDCs, each with how it was matched.
-- **Label reads:** `data/reference/analog_evidence.csv` covers line of therapy, dosing frequency, launch date and # competitors at launch for the 8 seed brands (Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu, Ibrance). There are 31 values, each with a quote and link, and **none approved yet**.
-- **Validation report:** `data/processed/checks.md`.
-- **Code:** `pipeline/` (`fda`, `sdud`, `ndc`, `rxclass`, `labels`, `build`, `checks`).
-
-#### How to run
+**How to run**
 - Setup: Python 3.12+ (`python3.13 -m venv .venv && .venv/bin/pip install -r requirements.txt`).
-- `python -m pipeline.build` rebuilds everything. The first run downloads ~600 MB (mostly SDUD) and takes about an hour; later runs take ~30 s from `data/raw/`.
+- `python -m pipeline.build` rebuilds everything. The first run downloads ~600 MB (mostly SDUD) and takes about an hour; later runs take ~2 min from `data/raw/`.
 - `--refresh` re-downloads every source; do this before any final build.
 - `data/processed/` is committed, so you only need to rebuild to change or refresh the data.
 - Label helper: `python -m pipeline.labels <ApplNo>` downloads the ORIG label and extracts its text.
 
-#### Empty on purpose
-`cost per unit`, `market size` and `fills per patient` are empty columns. Market size and fills per patient are dropped; cost per unit is empty for now (decisions.md, 2026-10-22). Whether to remove the dropped columns is an open question.
-
-#### Known issues (details in `checks.md`)
-- **Label-read columns** are filled for the 8 seed brands only; blank for the other 383.
-- **Cosentyx launch date not found:** sources disagree (Jan vs Mar 2015). Its first SDUD row is 2015Q1.
-- **Launch date quotes:** some come from trade-press excerpts (marked `[excerpt, verify]`). Check them against the original release before approving.
-- **Ibrance** has one suppressed SDUD row in 2014Q2, before its 2015 approval.
-- **SC pool includes clinic-administered products** (e.g. Prolia, Evenity, Leqvio). No flag yet for self-administered vs clinic.
-- **Not first-indication launches (16 analogs):** the route came > 1 year after approval (e.g. `entyvio_sc`, `ozempic_oral`, `actemra_sc`).
-- **Enough-data rule:** 87 analogs have < 12 SDUD quarters; 65 have suppressed quarters after Q2.
-- **No ATC class:** 21 analogs.
+**Known issues** (details in `checks.md`)
+- **Label-read columns** are filled for the 8 seed brands only (blank for the other 418), and none are approved. Launch quarter is therefore the first SDUD quarter for every analog.
+- **Seed launch dates:** Cosentyx's wasn't found (sources say Jan or Mar 2015); some quotes come from trade-press excerpts (marked `[excerpt, verify]`) and need checking against the original release. Ibrance has one suppressed SDUD row in 2014Q2, before its 2015 approval.
+- **SC pool includes clinic-administered products** (e.g. Prolia, Evenity, Leqvio). No flag yet.
+- **Out of the pool for now:** 16 injectables Drugs@FDA lists only as `INJECTABLE;INJECTION` (e.g. Tanzeum, Winrevair), until their labels are read; Belviq (withdrawn, no route anywhere).
+- **Late launches:** `late_launch` flags 19 analogs whose first Medicaid quarter is > 1 year after approval: the route came later (e.g. `entyvio_sc`, `actemra_sc`) or Medicaid uptake started late (e.g. `fycompa_oral`). `checks.md` lists 15 by start marketing date instead.
+- **Enough-data rule:** 96 analogs have < 12 SDUD quarters; 85 have blank quarters after Q2. It leaves out drugs that faded fast (e.g. the first-wave HCV orals), so the usable pool leans towards launches that lasted.
+- **`label_expansion_in_window` over-flags:** it counts every efficacy supplement. Approval letters say which ones added an indication.
+- **Peak inside Q0–Q20:** many curves peak at Q20, some possibly from the COVID enrollment growth (open question in decisions.md).
+- **No ATC class:** 26 analogs.
 - **Coverage gaps:** the NME compilation ends at 2025, so 2026 approvals aren't in the pool. The Purple Book URL is per month (update it in `pipeline/fda.py`).
+- **Empty on purpose:** `cost per unit` (empty for now), `market size` and `fills per patient` (dropped). Whether to remove the dropped columns is an open question.
 
-#### Pick up here (updated 2026-10-22)
+**Pick up here**
 1. **C, review:** approve or fix the 31 seed values in `analog_evidence.csv` (set `approved=true`, `approved_by=<name>`), then rebuild.
-2. **C, extend:** label reads for the rest of the pool, starting with the 235 analogs left in the `checks.md` funnel. Add `analog_id`, `field`, `value`, `quote`, `source_url` rows with `approved=false`.
+2. **C, extend:** label reads for the rest of the pool, starting with the 250 analogs left in the `checks.md` funnel. Add `analog_id`, `field`, `value`, `quote`, `source_url` rows with `approved=false`.
 3. **B:** add same-class competitors and `units_per_rx` to SDUD.
-4. **A/D:** add a self-administered flag (or exclude clinic-administered SC drugs). Decide what to do with the 21 missing ATC classes.
+4. **A/D:** add a self-administered flag (or exclude clinic-administered SC drugs). Decide what to do with the missing ATC classes. Read the route of the 16 injectables to bring the sc ones into the pool.
 5. **EDA:** pool and therapeutic-area comparison on the new tables, including the Q0–Q20 peak question.
 6. **Team:** remove the dropped columns from `analogs.csv`, or keep them empty (open question in decisions.md).
+
+### Log
+Newest first.
+- **2026-10-22, route fallback (Grace, `a/route-fallback`):** brands whose NDCs give no route now take it from Drugs@FDA, adding 34 analogs (e.g. Trikafta, Symdeko, Ocaliva). 7 existing analogs corrected: Lynparza, Esbriet, Zejula and Zykadia now launch from their original capsules. `checks.md` lists every brand left out of the pool.
+- **2026-10-22, tables for EDA (Grace, `b/launch-curves`):** added `launch_curves`, `analog_features`, `bass_fits`, `indication_history` and `medicaid_enrollment`, plus the pool funnel in `checks.md`. Fixed arbitrary picks between same-day approvals (submission classification) and tied peak quarters.
+- **2026-10-21, first data build (Jmazher12, `a/analog-table-v1`):** the pipeline and the v1 analog table (23 schema columns), SDUD by quarter, the NDC map, and label reads for the 8 seed brands.
 
 ## Workflow
 - Branch per task: `<workstream>/<topic>` (e.g. `b/sdud-ndc-map`); merge to `main` via PR

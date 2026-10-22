@@ -48,7 +48,9 @@ def build(pool, analogs, ndc_map, quarterly, curves, launch, history, evidence, 
     final = curves[~curves.provisional]
     g = final.groupby("analog_id")
     out["peak_trx"] = g.trx.max()
-    out["peak_q"] = final.loc[final.trx.notna()].sort_values("trx").groupby("analog_id").q_since_launch.last()
+    # first quarter that reaches the peak, so ties (Iclusig, Lonsurf) resolve the same way every run
+    out["peak_q"] = final.loc[final.trx.notna()].sort_values(["analog_id", "q_since_launch"]).set_index(
+        "q_since_launch").groupby("analog_id").trx.idxmax()
     last_q = out.index.map(g.q_since_launch.max())
     out["peak_at_last_quarter"] = (out.peak_q == last_q).fillna(False).astype(bool)
     out["suppressed_quarters"] = g.suppressed_rows.apply(lambda s: int((s > 0).sum()))
