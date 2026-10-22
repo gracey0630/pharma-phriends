@@ -112,6 +112,21 @@ def ndc9(product_ndc):
     return labeler.zfill(5) + product.zfill(4)
 
 
+def qnum(period):
+    """'2019Q2' -> 2019*4 + 1, so quarters can be subtracted."""
+    return int(period[:4]) * 4 + int(period[-1]) - 1
+
+
+def qstr(n):
+    """Inverse of qnum: 8077 -> '2019Q2'."""
+    return f"{n // 4}Q{n % 4 + 1}"
+
+
+def date_qnum(iso):
+    """'2019-04-23' or '2019-04' -> qnum of that date's quarter."""
+    return int(iso[:4]) * 4 + (int(iso[5:7]) - 1) // 3
+
+
 def env(name, default=None):
     """Read a setting from the environment or a local .env file."""
     if name in os.environ:

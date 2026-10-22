@@ -19,7 +19,7 @@ What to pull. Tables built from these are in [data_model.md](data_model.md).
 | 9 | [Novel Drug Approvals reports](https://www.fda.gov/drugs/development-approval-process-drugs/novel-drug-approvals-fda) | web / PDF | First-in-class | Core | Yearly |
 | 10 | [FDA REMS list](https://www.accessdata.fda.gov/scripts/cder/rems/) | web | REMS at launch (distortion flag) | Flags | As updated |
 | 11 | [Orange Book](https://www.fda.gov/drugs/drug-approvals-and-databases/orange-book-data-files) + [Purple Book](https://purplebooksearch.fda.gov/) | tab-separated / CSV | Generic/biosimilar entry (distortion flag). v1 uses Purple Book (351(k) products) + Drugs@FDA ANDAs to find generic NDCs, then SDUD for the entry quarter; Orange Book not used yet | Flags | Monthly: re-download; Purple Book URL is per month (update it in `pipeline/fda.py`) |
-| 12 | Medicaid & CHIP enrollment (data.medicaid.gov) | CSV | Enrollment-shock flag; optional curve normalization | Flags | Monthly |
+| 12 | Medicaid & CHIP enrollment (data.medicaid.gov, "State Medicaid and CHIP Applications, Eligibility Determinations, and Enrollment Data") | API | Enrollment-shock flag (no curve normalization in v1) | Flags | Monthly; record last-modified |
 | 13 | [Medicare Part D Spending by Drug](https://data.cms.gov/summary-statistics-on-use-and-payments/medicare-medicaid-spending-by-drug/medicare-part-d-spending-by-drug) | CSV per release | Days-supply cross-check (units per claim) | Optional | New release yearly |
 | 14 | SEER, CDC (NHANES, BRFSS, WONDER), GBD, literature | web / tables / papers | Full epi funnel (optional ceiling path) | Optional | SEER updates each April; save a copy |
 | 15 | Treatment guidelines (e.g. NCCN) | read manually | Line-of-therapy definitions | Reference | Check version cited |
@@ -31,10 +31,11 @@ What to pull. Tables built from these are in [data_model.md](data_model.md).
 | Source | Rule |
 |---|---|
 | NME compilation | `Approved Use(s)` = indication at original approval. Normalize double-spaced headers. |
-| Drugs@FDA | Original approval = earliest `ORIG` + `AP`. Later indications = `EFFICACY` supplements. Match on application number. |
+| Drugs@FDA | Original approval = earliest `ORIG` + `AP`; same-day ties go to the Type 1 (NME) submission, then the lowest number (Savaysa ORIG-1, Rydapt ORIG-2). Later indications = `EFFICACY` supplements and type 6/9/10 applications, but an efficacy supplement can also be new clinical data, so treat them as *possible* expansions. Match on application number. |
 | NDC Directory | Current listings only: add the excluded file + NDCs seen in SDUD. `0069-0187` → `000690187`. Keep NDA/BLA. Route group from `ROUTENAME` (oral, subcutaneous, IV…). Excluded-file rows have no route: use the earliest listed NDC under the same application. Under a later application, keep only NDCs with the brand's name (NDA213051 carries Rybelsus and Ozempic tablets). |
 | SDUD | National rows (`state = XX`); sum FFSU + MCOU; join on 9-digit NDC, not `product_name` (truncated); suppressed rows (< 11 Rx) stay blank, not 0. Pull whole years: all `XX` rows of each year from the datastore API (8,000 rows/page, ~3.5 min/year), saved to `data/raw/sdud/national_<year>.csv`. |
-| RxClass | Narrow = ATC level 4 (e.g. CDK inhibitors); broad = ATC level 3 or a manual family (e.g. JAK family). FDA's pharmacologic class can be too broad. |
+| Medicaid & CHIP enrollment | Updated rows only (`final_report = Y`); sum `total_medicaid_and_chip_enrollment` over states, average the months of each quarter. Covers 2013-09, then 2017-06 on: no baseline for the 2014 expansion. Saved to `data/raw/enrollment/enrollment.csv` |
+| RxClass | Narrow = ATC level 4 (e.g. CDK inhibitors); broad = ATC level 3 (looked up by id, e.g. `L04A IMMUNOSUPPRESSANTS`) or a manual family (e.g. JAK family); therapeutic area = ATC level 1. FDA's pharmacologic class can be too broad. |
 | Labels | ORIG label only. DailyMed is the *current* label. URL: Drugs@FDA `ApplicationDocs` (type 2 = Label, `ORIG`); `python -m pipeline.labels <ApplNo>` downloads it and extracts text. |
 | ClinicalTrials.gov | Phase 3 + Phase 2 started before approval. "Adjuvant" in metastatic trials usually means *prior* therapy. |
 | Press releases / SEC | Launch date = first commercial availability. Cross-check with first SDUD quarter. |

@@ -39,7 +39,9 @@ The first run downloads ~1 GB and takes about an hour, mostly SDUD at ~3.5 min p
 data/
 ├── raw/<source>/   downloads, unchanged, + manifest (gitignored)
 ├── reference/      approved / manual tables (analog_evidence, target_drug, epi_funnel)
-└── processed/      tables built by code (committed): analogs.csv, sdud_quarterly.csv, ndc_map.csv, checks.md
+└── processed/      tables built by code (committed): analogs.csv, sdud_quarterly.csv, ndc_map.csv,
+                    launch_curves.csv, analog_features.csv, bass_fits.csv, indication_history.csv,
+                    medicaid_enrollment.csv, checks.md
 docs/               user journey, sources, data model, decisions
-pipeline/           build code: fda, sdud, ndc, rxclass, labels, build, checks
+pipeline/           build code: fda, sdud, ndc, rxclass, enrollment, curves, features, bass, labels, build, checks
 ```

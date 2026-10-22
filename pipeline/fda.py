@@ -18,7 +18,7 @@ import zipfile
 
 import pandas as pd
 
-from pipeline.common import PROCESSED, RAW, download, ndc9
+from pipeline.common import PROCESSED, RAW, date_qnum, download, ndc9, qnum
 
 FIRST_YEAR = 2010
 ROUTE_GROUPS = {"ORAL": "oral", "SUBCUTANEOUS": "sc"}  # in scope; everything else is out (IV, IM, topical...)
@@ -79,7 +79,12 @@ def route_group(routename):
 def orig_approvals(t):
     """One row per application: its original approval (earliest ORIG + AP) with submission class."""
     s = t["Submissions"].merge(t["SubmissionClass_Lookup"], on="SubmissionClassCodeID", how="left")
-    s = s[(s.SubmissionType == "ORIG") & (s.SubmissionStatus == "AP")].sort_values("SubmissionStatusDate")
+    s = s[(s.SubmissionType == "ORIG") & (s.SubmissionStatus == "AP")].copy()
+    # same-day ORIG approvals exist (Savaysa: ORIG-1 = NME, ORIG-2 = efficacy; Rydapt: the reverse). The pool
+    # comes from the NME compilation, so the Type 1 submission wins, then the lowest number, every run
+    s["_not_nme"] = ~s.SubmissionClassCode.fillna("").str.startswith("TYPE 1")
+    s["_no"] = pd.to_numeric(s.SubmissionNo, errors="coerce")
+    s = s.sort_values(["SubmissionStatusDate", "_not_nme", "_no"], kind="stable").drop(columns=["_not_nme", "_no"])
     s = s.drop_duplicates("ApplNo").merge(t["Applications"], on="ApplNo", how="left")
     return s.set_index("ApplNo")
 
@@ -160,6 +165,56 @@ def generic_ndcs(t, appls, brand):
                          "application_number": ndc.APPLICATIONNUMBER, "labeler_name": ndc.LABELERNAME}).drop_duplicates("ndc9")
 
 
+INDICATION_CLASSES = {"EFFICACY": "efficacy supplement", "TYPE 6": "new indication application",
+                      "TYPE 9": "new indication application", "TYPE 9- BLA": "new indication application",
+                      "TYPE 10": "new indication application", "TYPE 10- BLA": "new indication application"}
+
+
+def indication_history(t, pool, launch):
+    """One row per analog x approval that set or may have changed its indications: each ORIG approval under
+    the route group's applications, plus EFFICACY supplements and new-indication applications (types 6, 9, 10).
+    New-indication applications often have no NDCs of their own (Otezla's psoriasis NDA206088), so they're
+    taken from all the brand's applications, not just the route group's.
+
+    kind: anything approved on the first approval date is "original" (Rydapt: two indications the same day);
+    later "new indication application" rows are expansions; "efficacy supplement" rows are only *possible*
+    expansions, since Drugs@FDA doesn't say whether one adds an indication or only new clinical data (Skyrizi
+    has 12). indication and line_of_therapy need label reads and stay blank.
+    launch: analog_id -> launch quarter ('2019Q2'), for q_since_launch.
+    """
+    s = t["Submissions"].merge(t["SubmissionClass_Lookup"], on="SubmissionClassCodeID", how="left")
+    s = s[s.SubmissionStatus == "AP"]
+    s = s[(s.SubmissionType == "ORIG") | s.SubmissionClassCode.isin(INDICATION_CLASSES)]
+    new_indication = set(s[(s.SubmissionType == "ORIG") & s.SubmissionClassCode.isin(INDICATION_CLASSES)].ApplNo)
+    brands = nme_brands(t).set_index("brand_key")
+    frames = []
+    for a in pool.itertuples():
+        nos = {n[3:] for n in a.application_number.split("; ")}
+        nos |= {n[3:] for n in brand_applications(t, brands.loc[a.brand_key])} & new_indication
+        g = s[s.ApplNo.isin(nos)].copy()
+        g["kind"] = g.SubmissionClassCode.map(INDICATION_CLASSES).fillna("original")
+        # an ORIG classed as efficacy is its own submission for an indication, not a supplement
+        g.loc[(g.SubmissionType == "ORIG") & (g.SubmissionClassCode == "EFFICACY"), "kind"] = "new indication application"
+        # anything approved with the first approval (Rydapt: AML and mastocytosis the same day) is the original label
+        g.loc[g.SubmissionStatusDate <= g.SubmissionStatusDate.min(), "kind"] = "original"
+        g["analog_id"] = a.analog_id
+        frames.append(g)
+    h = pd.concat(frames, ignore_index=True)
+    types = t["Applications"].set_index("ApplNo").ApplType
+    h["application_number"] = h.ApplNo.map(types) + h.ApplNo
+    h["approval_date"] = h.SubmissionStatusDate.str[:10]
+    h["q_since_launch"] = [date_qnum(d) - qnum(launch[i]) if i in launch.index else pd.NA
+                           for i, d in zip(h.analog_id, h.approval_date)]
+    h["q_since_launch"] = h.q_since_launch.astype("Int64")
+    h = h.rename(columns={"SubmissionType": "submission_type", "SubmissionNo": "submission_no",
+                          "SubmissionClassCodeDescription": "submission_class"})
+    h["indication"] = ""
+    h["line_of_therapy"] = ""
+    cols = ["analog_id", "application_number", "submission_type", "submission_no", "submission_class", "kind",
+            "approval_date", "q_since_launch", "indication", "line_of_therapy"]
+    return h[cols].sort_values(["analog_id", "approval_date", "application_number"], ignore_index=True)
+
+
 def build(t):
     """Returns (pool, ndc_map, generics): pool has one row per in-scope analog_id; ndc_map one row per
     analog_id x ndc9; generics one row per brand x possible generic/biosimilar NDC."""
@@ -168,7 +223,7 @@ def build(t):
     for _, b in nme_brands(t).iterrows():
         appls = brand_applications(t, b)
         ndc = fda_ndcs(t, b, appls)
-        orig = approvals.loc[approvals.index.intersection(b.appl_nos)].sort_values("SubmissionStatusDate")
+        orig = approvals.loc[approvals.index.intersection(b.appl_nos)].sort_values("SubmissionStatusDate", kind="stable")
         first = orig.iloc[0] if len(orig) else None
         if ndc.empty:
             print(f"{b.brand_key}: no NDC listings, skipped")

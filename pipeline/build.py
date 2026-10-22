@@ -2,11 +2,18 @@
 team's analog schema (Google Sheet "data schema for analogs"), in the sheet's order.
 
 Steps: FDA files -> candidate pool + ndc_map -> SDUD national rows -> SDUD-only NDCs -> quarterly Rx
-       -> generic entry (SDUD) -> ATC class (RxClass) -> label-read values (analog_evidence.csv) -> checks
+       -> generic entry (SDUD) -> ATC class (RxClass) -> label-read values (analog_evidence.csv)
+       -> enrollment -> launch quarter -> indication history -> launch curves -> analog features -> Bass fits
+       -> checks
 
 Outputs (data/processed/, committed):
   analogs.csv          the analog table (analog_id + 23 sheet columns)
   sdud_quarterly.csv   Rx by quarter, long format (the "Rx" column is its total)
+  launch_curves.csv    TRx and share of peak by quarter since launch (Q0-Q20)
+  analog_features.csv  one row per analog: launch, data quality, distortion flags, enough_data
+  bass_fits.csv        Bass p, q, m per analog with enough data
+  indication_history.csv  original approvals + possible label expansions (Drugs@FDA)
+  medicaid_enrollment.csv Medicaid & CHIP enrollment by quarter + shock windows
   ndc_map.csv          analog_id x ndc9, with how each NDC was matched
   candidate_pool.csv   FDA-side pool before SDUD (intermediate)
   generic_ndcs.csv     possible generic/biosimilar NDCs per brand (for generic / exclusivity date)
@@ -18,7 +25,8 @@ import argparse
 
 import pandas as pd
 
-from pipeline import checks, fda, ndc, rxclass, sdud
+from pipeline import bass, checks, curves, enrollment, fda, ndc, rxclass, sdud
+from pipeline import features as analog_features
 from pipeline.common import PROCESSED, REFERENCE
 
 # Sheet column -> how it's filled. Order is the sheet's order; names are used verbatim as headers.
@@ -92,8 +100,8 @@ def assemble(pool, ndc_map, quarterly, generic_q, classes, evidence):
         "application number": out.analog_id.map(p.application_number),
         "submission classification": out.analog_id.map(p.submission_class),
         "approval date": out.analog_id.map(p.approval_date),
-        "cost per unit": "",  # open question (decisions.md)
-        "market size": "",  # open question; workstream E (epi funnel)
+        "cost per unit": "",  # empty for now; add with cost per Rx if ever filled (decisions.md 2026-10-22)
+        "market size": "",  # dropped (decisions.md 2026-10-22); sizing is per forecast
         "brand name": out.analog_id.map(p.brand_name),
         "start marketing date": out.analog_id.map(p.start_marketing_date),
         "market category": out.analog_id.map(p.market_category),
@@ -101,7 +109,7 @@ def assemble(pool, ndc_map, quarterly, generic_q, classes, evidence):
         "indication": out.analog_id.map(p.indication),
         "novel drugs": out.analog_id.map(p.novel_drug),
         "class (narrow)": out.analog_id.map(p.generic_name).map(classes),
-        "fills per patient": "",  # open question (decisions.md)
+        "fills per patient": "",  # dropped (decisions.md 2026-10-22)
         "generic / exclusivity date": generic_q.values,
     }
     for field, sheet_col in EVIDENCE_FIELDS.items():
@@ -118,8 +126,10 @@ def main():
     PROCESSED.mkdir(parents=True, exist_ok=True)
 
     fda.download_all(args.refresh)
-    pool, ndc_map, generics = fda.build(fda.load_tables())
+    tables = fda.load_tables()
+    pool, ndc_map, generics = fda.build(tables)
     sdud.pull(refresh=args.refresh)
+    enrollment.pull(args.refresh)
     labelers = set(ndc_map.ndc9.str[:5]) | set(generics.ndc9.str[:5])
     national = sdud.load_national(labelers)
 
@@ -130,14 +140,31 @@ def main():
     evidence = load_evidence()
     analogs = assemble(pool, ndc_map, quarterly, generic_q, classes, evidence)
 
+    enrolled = enrollment.build()
+    launch = curves.launch_quarters(pool, quarterly, evidence)
+    history = fda.indication_history(tables, pool, launch.launch_quarter)
+    launch_curves = curves.build(quarterly, launch, history)
+    atc4 = set(analogs["class (narrow)"])
+    features = analog_features.build(pool, analogs, ndc_map, quarterly, launch_curves, launch, history, evidence,
+                                     class_broad={c: rxclass.broader(c, 3) for c in atc4},
+                                     area={c: rxclass.broader(c, 1) for c in atc4})
+    fits = bass.build(launch_curves, features)
+
     pool.to_csv(PROCESSED / "candidate_pool.csv", index=False)
     ndc_map.to_csv(PROCESSED / "ndc_map.csv", index=False)
     generics.to_csv(PROCESSED / "generic_ndcs.csv", index=False)
     quarterly.to_csv(PROCESSED / "sdud_quarterly.csv", index=False)
     analogs.to_csv(PROCESSED / "analogs.csv", index=False)
-    print(f"analogs.csv: {len(analogs)} analogs x {len(SCHEMA)} schema columns")
+    enrolled.to_csv(PROCESSED / "medicaid_enrollment.csv", index=False)
+    history.to_csv(PROCESSED / "indication_history.csv", index=False)
+    launch_curves.to_csv(PROCESSED / "launch_curves.csv", index=False)
+    features.to_csv(PROCESSED / "analog_features.csv", index=False)
+    fits.to_csv(PROCESSED / "bass_fits.csv", index=False)
+    print(f"analogs.csv: {len(analogs)} analogs x {len(SCHEMA)} schema columns; "
+          f"launch_curves: {launch_curves.analog_id.nunique()} analogs; enough_data: {features.enough_data.sum()}; "
+          f"bass_fits: {len(fits)}")
 
-    report = checks.run(analogs, ndc_map, quarterly, evidence)
+    report = checks.run(analogs, ndc_map, quarterly, evidence, features, fits)
     (PROCESSED / "checks.md").write_text(report)
     print(report)
 

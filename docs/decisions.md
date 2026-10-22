@@ -8,6 +8,12 @@ Newest first.
 
 | Date | Decision | Why | Who |
 |---|---|---|---|
+| 2026-10-22 | Launch quarter = approved `launch_date` evidence; until then, the first SDUD quarter with any row (a suppressed row still means 1–10 Rx), never before the approval quarter. `launch_source` records which | Label reads cover 8 analogs and none are approved; SDUD exists for 373. Ibrance has a stray SDUD row before approval | Grace |
+| 2026-10-22 | Peak for `share_of_peak` = max TRx over Q0–Q20, excluding provisional quarters | Matches the curve window, so later label expansions or generics don't move it. Curves still climbing at Q20 end at 1.0 (`peak_at_last_quarter`) | Grace |
+| 2026-10-22 | The latest 2 SDUD quarters are provisional: kept in curves, left out of the peak, the fits and `quarters_of_data` | CMS publishes the latest quarters incomplete | Grace |
+| 2026-10-22 | No enrollment normalization in v1: `medicaid_enrollment` is built, but curves are only flagged for fixed shock windows (2014 expansion 2014Q1–2015Q4, COVID continuous coverage 2020Q2–2023Q1, unwinding 2023Q2–2024Q4) | The enrollment dataset has one month before 2017-06 (2013-09), so there's no baseline for the 2014 expansion | Grace |
+| 2026-10-22 | Bass is fitted as cumulative m·F(t) to `share_of_peak` (TRx ÷ peak read as share of eventual adopters), for every analog with enough data | Simple and stable; strictly, Bass models new adopters and TRx counts everyone on therapy, so this is stated wherever fits are shown | Grace |
+| 2026-10-22 | "In window" for distortion flags = Q0–Q12 | Same 3 years as the "no generic entry in the first 3 years" scope | Grace |
 | 2026-10-22 | Fills per patient is dropped: not filled in v1 and not planned | SDUD has no patient counts; Part D is Medicare (never mixed with Medicaid curves) and the current API covers 2020–2024 only, missing most launch years. Fills conversion is out of scope | Grace |
 | 2026-10-22 | Market size per analog is dropped: not filled in v1 and not planned. Market sizing stays per forecast (`market_size`, `epi_funnel`) | Trial enrollment on ClinicalTrials.gov is a sample size, not a market; a per-analog size would need epi work for each analog's first indication | Grace |
 | 2026-10-22 | Cost per unit stays empty for now. If cost is added later, add cost per Rx (`reimbursed_usd ÷ trx`) and cost per unit (`reimbursed_usd ÷ units`) together, with `units_per_rx` alongside | Each misleads alone: cost per Rx depends on days per fill (a 90-day fill looks 3× a 30-day fill), and cost per unit depends on what a unit is (tablet, mL, pen), so it only compares within one product form. Cost per Rx = cost per unit × units per Rx shows which one drives a difference. Both are gross SDUD reimbursement (before rebates), not prices | Grace |
@@ -30,7 +36,7 @@ Newest first.
 - **Dropped columns:** fills per patient and market size are dropped (decision log, 2026-10-22). Remove them from `analogs.csv` and the schema sheet, or keep them as empty columns so the table still matches the sheet's 23 columns?
 
 **Data**
-- Normalize SDUD TRx by Medicaid enrollment (`trx_per_1k_enrollees`), or only flag enrollment shocks (2014 expansion, COVID, 2023–24 unwinding)?
+- **Peak inside Q0–Q20:** 89 of the 201 analogs with a full window peak at Q20. Some may be enrollment-driven: Taltz and Tremfya speed up late, and their Q20 falls in the COVID enrollment growth (Medicaid +33%, 2020–23). Keep the Q0–Q20 peak, use the all-time peak, or adjust for enrollment from 2017 on? (EDA first)
 - Do we need archived Part D releases (pre-2020)? The current API covers 2020–2024 only, and Part D is a cross-check, but in oncology Medicare volume is ~7× Medicaid (Ibrance 2024).
 
 **Scope**

@@ -26,7 +26,40 @@ def _section(lines, title, ids, note=""):
         lines.append(", ".join(f"`{i}`" for i in sorted(ids)))
 
 
-def run(analogs, ndc_map, quarterly, evidence):
+def funnel(lines, features, fits):
+    """How many analogs are left after each rule code can apply today, in order."""
+    f = features
+    steps = [
+        ("All analogs (NME / new BLA, approved 2010+, oral or sc)", pd.Series(True, index=f.index)),
+        ("Has a launch quarter (any SDUD row)", f.launch_quarter.notna()),
+        ("Launch within 1 year of approval (not `late_launch`)", ~f.late_launch.fillna(False).astype(bool)),
+        ("No generic / biosimilar in Q0-Q12", ~f.generic_entry_in_window.astype(bool)),
+        ("Enough data (>= 12 quarters, no blank quarter after Q2)", f.enough_data.astype(bool)),
+    ]
+    lines.append("\n## Pool after each rule")
+    lines.append("Applied in order. Not applied here (flags only): `multi_route` (counts IV forms added later), "
+                 "`label_expansion_in_window` (counts every efficacy supplement), `enrollment_shock_in_window`, "
+                 "and clinic-administered SC products (no flag yet).\n")
+    lines.append("| Rule | Analogs left | oral | sc |")
+    lines.append("|---|---|---|---|")
+    keep = pd.Series(True, index=f.index)
+    for name, rule in steps:
+        keep &= rule
+        left = f[keep]
+        lines.append(f"| {name} | {len(left)} | {(left.route_group == 'oral').sum()} | {(left.route_group == 'sc').sum()} |")
+    left = f[keep]
+    lines.append(f"\nOf those {len(left)}: {left.multi_route.sum()} `multi_route`, "
+                 f"{left.label_expansion_in_window.sum()} `label_expansion_in_window`, "
+                 f"{(left.enrollment_shock_in_window != '').sum()} with an enrollment shock in Q0-Q12.")
+    lines.append(f"\nLaunch quarter source: {f.launch_source.value_counts().to_dict()}.")
+    _section(lines, "Peak at the last quarter of data (still climbing)", left.analog_id[left.peak_at_last_quarter],
+             "Among analogs with enough data. Their share_of_peak ends at 1.0 and the fitted m is above 1.")
+    weak = fits[fits.weak_fit_flag]
+    _section(lines, "Weak Bass fits", weak.analog_id,
+             f"R^2 < 0.9 or a parameter on its bound; {len(fits)} analogs fitted.")
+
+
+def run(analogs, ndc_map, quarterly, evidence, features, fits):
     a = analogs.set_index("analog_id")
     trx = quarterly[quarterly.metric == "trx"].copy()
     trx["value"] = pd.to_numeric(trx.value, errors="coerce")
@@ -45,6 +78,8 @@ def run(analogs, ndc_map, quarterly, evidence):
     for m in sorted(RAW.glob("*/manifest.csv")):
         df = pd.read_csv(m, dtype=str)
         lines.append(f"| {m.parent.name} | {df.iloc[:, 1].nunique()} | {df.pulled_at.max()[:10]} |")
+
+    funnel(lines, features, fits)
 
     lines.append("\n## Rows to look at")
     _section(lines, "No Medicaid Rx at all", a.index[a["Rx"] == ""],
