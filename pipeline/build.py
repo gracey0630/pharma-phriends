@@ -127,7 +127,7 @@ def main():
 
     fda.download_all(args.refresh)
     tables = fda.load_tables()
-    pool, ndc_map, generics = fda.build(tables)
+    pool, ndc_map, generics, not_in_pool = fda.build(tables)
     sdud.pull(refresh=args.refresh)
     enrollment.pull(args.refresh)
     labelers = set(ndc_map.ndc9.str[:5]) | set(generics.ndc9.str[:5])
@@ -164,7 +164,7 @@ def main():
           f"launch_curves: {launch_curves.analog_id.nunique()} analogs; enough_data: {features.enough_data.sum()}; "
           f"bass_fits: {len(fits)}")
 
-    report = checks.run(analogs, ndc_map, quarterly, evidence, features, fits)
+    report = checks.run(analogs, ndc_map, quarterly, evidence, features, fits, not_in_pool)
     (PROCESSED / "checks.md").write_text(report)
     print(report)
 

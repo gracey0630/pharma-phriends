@@ -28,7 +28,16 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - Secrets in `.env` (gitignored); see `.env.example`
 
 ## Status & handoff
-**Last update: 2026-10-22, tables for EDA (Grace, branch `b/launch-curves`, stacked on `a/analog-table-v1`).** Newest entry first; add yours on top when you hand off.
+**Last update: 2026-10-22, route fallback (Grace, branch `a/route-fallback`).** Newest entry first; add yours on top when you hand off.
+
+### 2026-10-22: route fallback (Grace)
+- **34 analogs added** (28 oral, 6 sc): brands whose NDCs give no route now take it from Drugs@FDA Products. Examples: Trikafta (a kit with a blank route), Symdeko, Ocaliva, and the first-wave HCV orals. Pool is 426 analogs; **250 left** after the `checks.md` rules (202 oral, 48 sc). 256 Bass fits, 104 weak.
+- **7 existing analogs corrected:** their launch-era NDCs had no route and sat in an "unknown" group. Lynparza, Esbriet, Zejula and Zykadia (original capsules) now launch 2–6 years earlier and are no longer `late_launch` or `multi_route`; Zejula and Zykadia now have enough data. Xarelto, Omvoh and Ojemda pick up an application or kit NDC.
+- **New `checks.md` section, "NME brands not in the pool":** every NME brand left out, with the reason.
+- **Still out (note):**
+  - 16 injectables that Drugs@FDA lists only as `INJECTABLE;INJECTION` (e.g. Tanzeum, Winrevair, Natpara). Their original labels state sc or IV; reading them is deferred.
+  - Belviq: withdrawn, no route anywhere.
+- **Survivorship:** only 11 of the 34 have enough data. The HCV orals fail because their volume dropped into suppression after Harvoni/Epclusa replaced them, so the enough-data rule still leaves out drugs that faded fast.
 
 ### 2026-10-22: tables for EDA (Grace)
 - **New tables** in `data/processed/` (specs in [data_model.md](docs/data_model.md); rules in the 2026-10-22 rows of [decisions.md](docs/decisions.md)):
@@ -80,9 +89,9 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 
 #### Pick up here (updated 2026-10-22)
 1. **C, review:** approve or fix the 31 seed values in `analog_evidence.csv` (set `approved=true`, `approved_by=<name>`), then rebuild.
-2. **C, extend:** label reads for the rest of the pool, starting with the 235 analogs left in the `checks.md` funnel. Add `analog_id`, `field`, `value`, `quote`, `source_url` rows with `approved=false`.
+2. **C, extend:** label reads for the rest of the pool, starting with the 250 analogs left in the `checks.md` funnel. Add `analog_id`, `field`, `value`, `quote`, `source_url` rows with `approved=false`.
 3. **B:** add same-class competitors and `units_per_rx` to SDUD.
-4. **A/D:** add a self-administered flag (or exclude clinic-administered SC drugs). Decide what to do with the 21 missing ATC classes.
+4. **A/D:** add a self-administered flag (or exclude clinic-administered SC drugs). Decide what to do with the missing ATC classes. Read the route of the 16 injectables in `checks.md` ("Injection, route not stated") to bring the sc ones into the pool.
 5. **EDA:** pool and therapeutic-area comparison on the new tables, including the Q0–Q20 peak question.
 6. **Team:** remove the dropped columns from `analogs.csv`, or keep them empty (open question in decisions.md).
 

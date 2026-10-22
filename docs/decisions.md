@@ -8,6 +8,7 @@ Newest first.
 
 | Date | Decision | Why | Who |
 |---|---|---|---|
+| 2026-10-22 | Route fallback: when no NDC under an application has a route, use Drugs@FDA Products. Adds 34 analogs (28 oral, 6 sc; 11 with enough data), e.g. Trikafta, Symdeko, Ocaliva, the first-wave HCV orals. The 16 brands Drugs@FDA lists only as `INJECTABLE;INJECTION` stay out for now (listed in `checks.md`) | Kits (Trikafta) list a blank route and fully delisted applications have none, so these brands were dropped silently. Resolving the injectables needs a label read per brand, deferred | Grace |
 | 2026-10-22 | Launch quarter = approved `launch_date` evidence; until then, the first SDUD quarter with any row (a suppressed row still means 1–10 Rx), never before the approval quarter. `launch_source` records which | Label reads cover 8 analogs and none are approved; SDUD exists for 373. Ibrance has a stray SDUD row before approval | Grace |
 | 2026-10-22 | Peak for `share_of_peak` = max TRx over Q0–Q20, excluding provisional quarters | Matches the curve window, so later label expansions or generics don't move it. Curves still climbing at Q20 end at 1.0 (`peak_at_last_quarter`) | Grace |
 | 2026-10-22 | The latest 2 SDUD quarters are provisional: kept in curves, left out of the peak, the fits and `quarters_of_data` | CMS publishes the latest quarters incomplete | Grace |

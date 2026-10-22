@@ -19,7 +19,7 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 | # | Column | Filled from | Coverage |
 |---|---|---|---|
 | 1 | ndc | All 9-digit NDCs (labeler + product) in the route group, `; `-separated. Detail is in `ndc_map.csv` | all |
-| 2 | route of administration | Route group from NDC Directory `ROUTENAME`: `oral` or `sc` | all |
+| 2 | route of administration | Route group from NDC Directory `ROUTENAME`: `oral` or `sc`; Drugs@FDA Products route when no NDC under the application has one ([data_sources.md](data_sources.md)) | all |
 | 3 | manufacturer/sponsor/company at approval | Drugs@FDA `SponsorName` of the original application | all |
 | 4 | Rx | Total Medicaid TRx to date (SDUD, national, FFSU + MCOU). The quarterly series is in `sdud_quarterly.csv` | all with SDUD |
 | 5 | generic name | NME compilation `Active Ingredient/Moiety` | all |
@@ -50,7 +50,7 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 - `launch_curves.csv`, `analog_features.csv`, `bass_fits.csv`, `indication_history.csv`, `medicaid_enrollment.csv`: built tables, specs below
 - `candidate_pool.csv`: intermediate, spec below
 - `generic_ndcs.csv`: brand × possible generic / biosimilar NDC. Why it matters: it finds when generic competition started, so curves it distorts can be excluded
-- `checks.md`: validation report. Why it matters: it lists the data problems and shows how many analogs survive each rule
+- `checks.md`: validation report. Why it matters: it lists the data problems, shows how many analogs survive each rule, and lists every NME brand left out of the pool with the reason
 
 ## Rules (agree before building)
 
@@ -90,7 +90,7 @@ Update in the PR that changes a table. Status: not started / in progress / built
 |---|---|---|---|
 | Download/cache module + manifest | 0 | — | built (`pipeline/common.py`) |
 | **`analogs` (v1 analog table, 23 sheet columns)** | A–C | 2 | **built**; label-read columns for seed 8 only |
-| `candidate_pool` | A | 2 | built (`pipeline/fda.py`); pool rule above, oral + sc |
+| `candidate_pool` | A | 2 | built (`pipeline/fda.py`); pool rule above, oral + sc (426 analogs); 16 injectables with no stated route are out until their labels are read |
 | `indication_history` | A | 2 | built (`pipeline/fda.py`): approvals from Drugs@FDA; indication and line of therapy blank (need label reads) |
 | `exclusivity` | A | 2 | replaced in v1 by the generic / exclusivity date column |
 | `drug_master` | A | 2 | deferred (v1: `analogs` + `analog_features` play this role) |
