@@ -8,6 +8,9 @@ Newest first.
 
 | Date | Decision | Why | Who |
 |---|---|---|---|
+| 2026-10-22 | Fills per patient is dropped: not filled in v1 and not planned | SDUD has no patient counts; Part D is Medicare (never mixed with Medicaid curves) and the current API covers 2020–2024 only, missing most launch years. Fills conversion is out of scope | Grace |
+| 2026-10-22 | Market size per analog is dropped: not filled in v1 and not planned. Market sizing stays per forecast (`market_size`, `epi_funnel`) | Trial enrollment on ClinicalTrials.gov is a sample size, not a market; a per-analog size would need epi work for each analog's first indication | Grace |
+| 2026-10-22 | Cost per unit stays empty for now. If cost is added later, add cost per Rx (`reimbursed_usd ÷ trx`) and cost per unit (`reimbursed_usd ÷ units`) together, with `units_per_rx` alongside | Each misleads alone: cost per Rx depends on days per fill (a 90-day fill looks 3× a 30-day fill), and cost per unit depends on what a unit is (tablet, mL, pen), so it only compares within one product form. Cost per Rx = cost per unit × units per Rx shows which one drives a difference. Both are gross SDUD reimbursement (before rebates), not prices | Grace |
 | 2026-10-21 | v1 analog table uses only the 23 columns of the analog schema sheet, with the sheet's names and order (`data/processed/analogs.csv`, key `analog_id`) | Keep v1 simple enough for the whole team to follow; larger tables in data_model.md are deferred | Jmazher12 |
 | 2026-10-21 | Commit `data/processed/`; `data/raw/` stays gitignored and is rebuilt with `python -m pipeline.build` | Teammates can pick up the data without a ~1 hour SDUD download | Jmazher12 |
 | 2026-10-21 | Cost per unit, fills per patient and market size are kept as empty columns for now | They're in the sheet but pricing, fills conversion and epi are out of scope or owned elsewhere (see open questions) | Jmazher12 |
@@ -23,10 +26,8 @@ Newest first.
 **Owners and process**
 - Who owns workstreams A–E ([data_model.md](data_model.md#workstreams))?
 
-**Empty columns in the v1 analog table** (kept as columns, not filled yet; see [v1 analog table](data_model.md#v1-analog-table-current-spec))
-- **Cost per unit:** the sheet lists it (Medicaid Spending by Drug, Part D), but pricing is out of scope. Drop it, or keep `reimbursed_usd ÷ units` from SDUD as a descriptive field?
-- **Fills per patient:** the sheet lists it (Part D claims ÷ beneficiaries), but fills conversion is out of scope and no table has it. Keep it as an analog feature (dosing check) or drop it?
-- **Market size from ClinicalTrials.gov:** the sheet lists trial reports as a market-size source; the docs use CT.gov only for line of therapy and competitors. Use trial enrollment or eligibility for the "eligible" funnel stage?
+**Empty columns in the v1 analog table** (see [v1 analog table](data_model.md#v1-analog-table-current-spec))
+- **Dropped columns:** fills per patient and market size are dropped (decision log, 2026-10-22). Remove them from `analogs.csv` and the schema sheet, or keep them as empty columns so the table still matches the sheet's 23 columns?
 
 **Data**
 - Normalize SDUD TRx by Medicaid enrollment (`trx_per_1k_enrollees`), or only flag enrollment shocks (2014 expansion, COVID, 2023–24 unwinding)?

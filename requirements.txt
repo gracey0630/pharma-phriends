@@ -5,3 +5,4 @@ pandas==3.0.6
 matplotlib==3.11.2
 openpyxl==3.1.5
 pypdf==6.20.1
+scipy==1.18.1
