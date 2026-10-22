@@ -931,7 +931,7 @@ repatha_sc,725110393,72511-393,REPATHA,Amgen USA Inc.,BLA125522,"INJECTION, SOLU
 repatha_sc,725110501,72511-501,REPATHA,Amgen USA Inc.,BLA125522,"INJECTION, SOLUTION",SUBCUTANEOUS,20241124,,current,application_number
 repatha_sc,725110750,72511-750,REPATHA,Amgen USA Inc.,BLA125522,"INJECTION, SOLUTION",SUBCUTANEOUS,20181009,,current,application_number
 repatha_sc,725110760,72511-760,REPATHA,Amgen USA Inc.,BLA125522,"INJECTION, SOLUTION",SUBCUTANEOUS,20181009,,current,application_number
-repatha_sc,725110770,72511-770,REPATHA,Amgen USA Inc.,BLA125522,,,20181009,20260731,excluded,application_number; route inferred
+repatha_sc,725110770,72511-770,REPATHA,Amgen USA Inc.,BLA125522,,,20181009,20261021,excluded,application_number; route inferred
 retevmo_oral,000022980,0002-2980,RETEVMO,Eli Lilly and Company,NDA213246,CAPSULE,ORAL,20200508,,current,application_number
 retevmo_oral,000023977,0002-3977,RETEVMO,Eli Lilly and Company,NDA213246,CAPSULE,ORAL,20200508,,current,application_number
 retevmo_oral,000025340,0002-5340,RETEVMO,Eli Lilly and Company,NDA218160,"TABLET, COATED",ORAL,20240410,,current,application_number
@@ -1386,6 +1386,8 @@ zegalogue_sc,001691912,0169-1912,Zegalogue,Novo Nordisk,NDA214231,"INJECTION, SO
 zegalogue_sc,001691913,0169-1913,Zegalogue,Novo Nordisk,NDA214231,"INJECTION, SOLUTION",SUBCUTANEOUS,20230626,20270831,current,application_number
 zegalogue_sc,806440012,80644-0012,Zegalogue,"Zealand Pharma US, Inc",NDA214231,,,20210405,20260109,excluded,application_number; route inferred
 zegalogue_sc,806440013,80644-0013,Zegalogue,"Zealand Pharma US, Inc",NDA214231,,,20210405,20260109,excluded,application_number; route inferred
+zegfrovy_oral,846940101,84694-101,ZEGFROVY,"Dizal Pharmaceutical Co., Ltd.",NDA219839,"TABLET, FILM COATED",ORAL,20261022,,current,application_number
+zegfrovy_oral,846940102,84694-102,ZEGFROVY,"Dizal Pharmaceutical Co., Ltd.",NDA219839,"TABLET, FILM COATED",ORAL,20261022,,current,application_number
 zejula_oral,001730909,0173-0909,ZEJULA,GlaxoSmithKline LLC,NDA214876,"TABLET, FILM COATED",ORAL,20230627,,current,application_number
 zejula_oral,001730912,0173-0912,ZEJULA,GlaxoSmithKline LLC,NDA214876,"TABLET, FILM COATED",ORAL,20230627,,current,application_number
 zejula_oral,001730915,0173-0915,ZEJULA,GlaxoSmithKline LLC,NDA214876,"TABLET, FILM COATED",ORAL,20230627,,current,application_number
