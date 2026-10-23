@@ -37,7 +37,7 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 | 17 | # competitors at launch | Label read. Branded advanced systemic therapies (biologic or novel oral) approved for the same first indication before launch; excludes biosimilars and withdrawn drugs | seed 8 |
 | 18 | novel drugs | `True` for every row: the pool comes from the NME compilation | all |
 | 19 | launch date | Label read: first commercial availability (press release / trade press). `YYYY-MM` when only the month is known | seed 7 (Cosentyx not found) |
-| 20 | class (narrow) | RxClass ATC level 4, e.g. `L04AC Interleukin inhibitors` | all RxClass knows |
+| 20 | class (narrow) | RxClass ATC level 4, e.g. `L04AC Interleukin inhibitors`; the brand's own class, not those of combination products or topical forms ([data_sources.md](data_sources.md)) | all RxClass knows |
 | 21 | dosing frequency | Label read (ORIG label, dosage and administration) | seed 8 |
 | 22 | fills per patient | Empty; dropped ([decisions](decisions.md)) | none |
 | 23 | generic / exclusivity date | First quarter (`YYYYQn`) in which a generic (ANDA, same active ingredient) or biosimilar (351(k) referencing the brand) NDC is dispensed in Medicaid SDUD; blank = none yet. Approval and NDC listing aren't used because generics are often approved and listed years before patents let them launch | all |

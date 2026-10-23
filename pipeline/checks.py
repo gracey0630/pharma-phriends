@@ -120,6 +120,9 @@ def run(analogs, ndc_map, quarterly, evidence, features, fits, not_in_pool):
     early = [i for i in a.index if gen[i] and i in first_rx and _q(gen[i]) - _q(first_rx[i]) < 12]
     _section(lines, "Generic / biosimilar dispensed within 3 years of first Rx", early, "Out of scope (no generic entry in the first 3 years).")
     _section(lines, "No ATC class (narrow)", a.index[a["class (narrow)"] == ""], "RxClass has no ATC code yet (often recent approvals); fill by hand.")
+    _section(lines, "Several ATC classes (narrow)", a.index[a["class (narrow)"].str.contains("; ")],
+             "Still more than one class after dropping combination-product and topical / eye classes (pipeline/rxclass.py). "
+             "Analyses that need one class should check these.")
     multi = a.groupby(a["brand name"]).filter(lambda g: len(g) > 1).index
     _section(lines, "Brands with two route groups", multi, "Each route group is its own analog; check which one launched first.")
 

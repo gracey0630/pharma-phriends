@@ -15,20 +15,41 @@ from pipeline.common import PROCESSED, RAW, get_json, today
 BY_DRUG = "https://rxnav.nlm.nih.gov/REST/rxclass/class/byDrugName.json"
 BY_ID = "https://rxnav.nlm.nih.gov/REST/rxclass/class/byId.json"
 VERSION = "https://rxnav.nlm.nih.gov/REST/version.json"
+INGREDIENT_SEP = r";| and |,|/"
+LOCAL_ROUTE_GROUPS = ("D", "S")  # dermatologicals, sensory organs: topical and eye/ear forms
 
 
 def ingredient(generic_name):
     """'risankizumab-rzaa' -> 'risankizumab'; combinations ('a and b', 'a; b') -> first ingredient."""
-    first = re.split(r";| and |,|/", generic_name.lower())[0].strip()
+    first = re.split(INGREDIENT_SEP, generic_name.lower())[0].strip()
     return re.sub(r"-[a-z]{4}$", "", first)  # biologic 4-letter suffix
 
 
+def is_combination(generic_name):
+    """'ledipasvir, sofosbuvir' -> True; 'risankizumab-rzaa' -> False."""
+    return len(re.split(INGREDIENT_SEP, generic_name.lower())) > 1
+
+
 def atc4(generic_name):
-    """'L04AC Interleukin inhibitors' (several joined with '; '), or '' if RxClass has no ATC class."""
+    """'L04AC Interleukin inhibitors' (several joined with '; '), or '' if RxClass has no ATC class.
+
+    RxClass returns the classes of every product with the ingredient. Two rules keep the analog's own class:
+      - single-ingredient brands: only classes found on the ingredient itself (tty IN), not on combination
+        products (MIN): empagliflozin is A10BK SGLT2, not A10BD "combinations" (Synjardy); liraglutide is A10BJ
+        GLP-1, not A10AE insulin (Xultophy). Combination brands (Natazia, Harvoni) keep their combination classes.
+      - the pool is oral and sc, so topical / eye classes (ATC D, S) go when another class remains:
+        ruxolitinib is L01EJ JAK, not D11AH (Opzelura cream); dupilumab keeps its only class, D11AH
+    Classes still several after that are kept, '; '-joined, and listed in checks.md.
+    """
     data = get_json(BY_DRUG, {"drugName": ingredient(generic_name), "relaSource": "ATC"}, source="rxclass")
     items = data.get("rxclassDrugInfoList", {}).get("rxclassDrugInfo", [])
+    if not is_combination(generic_name):
+        single = [i for i in items if i["minConcept"]["tty"] == "IN"]
+        items = single or items  # no single-ingredient class: keep what there is
     classes = {(i["rxclassMinConceptItem"]["classId"], i["rxclassMinConceptItem"]["className"]) for i in items}
-    return "; ".join(f"{cid} {name}" for cid, name in sorted(classes) if len(cid) == 5)
+    classes = {(cid, name) for cid, name in classes if len(cid) == 5}
+    systemic = {(cid, name) for cid, name in classes if not cid.startswith(LOCAL_ROUTE_GROUPS)}
+    return "; ".join(f"{cid} {name}" for cid, name in sorted(systemic or classes))
 
 
 def class_name(class_id):
