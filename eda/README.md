@@ -61,6 +61,8 @@ One row per topic. A topic covered by a section of a bigger notebook names the s
 | `launch_cohorts` | Did launch shapes change across 2010–13, 2014–17, 2018–21? | | | open |
 | `seed_brands` | Do the 8 seed brands' curves and fits look as expected? | Christina | `launch_eda` §6 | in progress |
 | `volume_vs_shape` | Does Medicaid volume affect curve shape and fit quality? | Joshua | [volume_vs_shape_joshua.ipynb](volume_vs_shape_joshua.ipynb) | in progress |
+| `peak_window` | Does the Q0–Q20 peak understate the real peak, and which peak and fit window best describe the first 3 years (Q0–Q12)? Overlaps `launch_eda` §3, which asks whether the Q20 climb is COVID | Grace | [peak_window_grace.ipynb](peak_window_grace.ipynb) | in progress |
+| `analog_similarity` | Are curves in the same class (ATC 4 / ATC 3), area, route or volume band more alike than random pairs? Does a group median predict a held-out analog's Q0–Q12? | Grace | [analog_similarity_grace.ipynb](analog_similarity_grace.ipynb) | in progress |
 
 ## Combining
 
