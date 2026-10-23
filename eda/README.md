@@ -60,7 +60,7 @@ One row per topic. A topic covered by a section of a bigger notebook names the s
 | `label_expansion` | Does a flagged efficacy supplement change the curve? How noisy is the flag? | Christina | `launch_eda` §5 | in progress |
 | `launch_cohorts` | Did launch shapes change across 2010–13, 2014–17, 2018–21? | | | open |
 | `seed_brands` | Do the 8 seed brands' curves and fits look as expected? | Christina | `launch_eda` §6 | in progress |
-| `volume_vs_shape` | Does Medicaid volume affect curve shape and fit quality? | | | open |
+| `volume_vs_shape` | Does Medicaid volume affect curve shape and fit quality? | Joshua | [volume_vs_shape_joshua.ipynb](volume_vs_shape_joshua.ipynb) | in progress |
 
 ## Combining
 
