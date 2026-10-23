@@ -70,6 +70,7 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 
 ### Log
 Newest first.
+- **2026-10-23, volume vs shape EDA (Joshua, `eda`):** `eda/volume_vs_shape_joshua.ipynb`, summarised in `eda/eda_joshua.md`. Bass fit quality is mostly a Medicaid-volume effect (counting noise reproduces it), including oncology's weak fits; small drugs also start faster and peak sooner. Proposes a low-volume flag and volume as a similarity feature.
 - **2026-10-23, first EDAs (Christina and Gabrielle, `eda`):** Christina's broad first pass in `eda/launch_eda_christina.ipynb`; `eda/` with naming rules, write-up format and a topic registry ([eda/README.md](eda/README.md)); notebooks on the pool funnel, Medicaid gaps (suppression) and late launches, summarised in `eda/eda_gabrielle.md`. Added `jupyterlab` to requirements.
 - **2026-10-22, route fallback (Grace, `a/route-fallback`):** brands whose NDCs give no route now take it from Drugs@FDA, adding 34 analogs (e.g. Trikafta, Symdeko, Ocaliva). 7 existing analogs corrected: Lynparza, Esbriet, Zejula and Zykadia now launch from their original capsules. `checks.md` lists every brand left out of the pool.
 - **2026-10-22, tables for EDA (Grace, `b/launch-curves`):** added `launch_curves`, `analog_features`, `bass_fits`, `indication_history` and `medicaid_enrollment`, plus the pool funnel in `checks.md`. Fixed arbitrary picks between same-day approvals (submission classification) and tied peak quarters.
