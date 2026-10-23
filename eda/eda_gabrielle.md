@@ -35,8 +35,8 @@ Follows the write-up format in [README.md](README.md). Each EDA below uses the s
 - **426 → 250 usable** (oral 202 of 332, 61%; sc 48 of 94, 51%). The generic-entry rule removes none.
 - **The enough-data rule does almost all the work: it drops 137.** 94 have < 12 quarters (88 of them approved 2023 or later); 43 have a blank quarter after Q2.
 - **By era:** 80% usable for 2010–13, 85% for 2014–17, 73% for 2018–21, **8% for 2022–25**.
-- **By area:** nervous system 79% usable, cardio 68%, alimentary/metabolic 67%, onc/immuno 58%, blood 58%, anti-infective 51%, no ATC class 23%. Missing ATC classes are mostly recent approvals that would drop anyway.
-- **Weakest group: sc onc/immuno, 13 of 33 usable (39%).** Late sc versions of older drugs and recent clinic-administered bispecifics (Tecvayli, Talvey, Elrexfio, Epkinly).
+- **By area** (ATC 1, with L split into oncology and immunology, as in `launch_eda`): nervous system 79% usable, respiratory 78%, cardiovascular 68%, alimentary & metabolism 67%, oncology 59% (61 of 103), blood 58%, dermatology 56%, immunology 55% (28 of 51), anti-infectives 51%, systemic hormones 46%, no ATC class 23%. Missing ATC classes are mostly recent approvals that would drop anyway.
+- **Weakest groups: sc oncology (1 of 7 usable) and sc immunology (12 of 26).** sc oncology is recent clinic-administered bispecifics (Tecvayli, Talvey, Elrexfio, Epkinly) and Lunsumio. sc immunology loses late sc versions of older drugs (Actemra, Entyvio, Benlysta) and Granix, six recent launches (e.g. Bimzelx, Omvoh) and four with no Medicaid data (e.g. Spevigo, Saphnelo).
 - **Dropped analogs are small:** among 2010–2021 approvals, median lifetime Medicaid Rx is 442 for dropped vs 37,556 for usable. Dropped for blank quarters: the HCV orals (Sovaldi, Incivek, Victrelis, Olysio, Daklinza, Viekira Pak) and niche oncology / rare-disease orals (e.g. Farydak, Tepmetko, Exkivity).
 
 **What it means for the tool.** The pool leans towards older launches that lasted and had Medicaid volume. A target drug in rare-disease oncology, or a curative short course, will find its closest analogs missing.
