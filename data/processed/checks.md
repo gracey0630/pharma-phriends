@@ -12,7 +12,7 @@ Re-download FDA and CMS files right before any final build (`python -m pipeline.
 | ndc | 2 | 2026-10-22 |
 | nme | 1 | 2026-10-22 |
 | purple_book | 1 | 2026-10-22 |
-| rxclass | 1 | 2026-10-22 |
+| rxclass | 1 | 2026-10-23 |
 | sdud | 17 | 2026-10-22 |
 
 ## Pool after each rule
@@ -87,6 +87,10 @@ Out of scope (no generic entry in the first 3 years).
 ### No ATC class (narrow) (26)
 RxClass has no ATC code yet (often recent approvals); fill by hand.
 `aemcolo_oral`, `akynzeo_oral`, `avmapkifakzynjacopack_oral`, `brinsupri_oral`, `crenessity_oral`, `cresemba_oral`, `ensacove_oral`, `forzinity_sc`, `gattex_sc`, `ibtrozi_oral`, `inluriyo_oral`, `journavx_oral`, `komzifti_oral`, `modeyso_oral`, `myqorzo_oral`, `nereus_oral`, `nuzolvence_oral`, `paxlovid_oral`, `redemplo_sc`, `tavalisse_oral`, `tryngolza_sc`, `vanrafia_oral`, `veltassa_oral`, `wayrilz_oral`, `xermelo_oral`, `zegfrovy_oral`
+
+### Several ATC classes (narrow) (9)
+Still more than one class after dropping combination-product and topical / eye classes (pipeline/rxclass.py). Analyses that need one class should check these.
+`duavee_oral`, `ella_oral`, `genvoya_oral`, `natazia_oral`, `nextstellis_oral`, `rystiggo_sc`, `stribild_oral`, `tabrecta_oral`, `tepmetko_oral`
 
 ### Brands with two route groups (4)
 Each route group is its own analog; check which one launched first.

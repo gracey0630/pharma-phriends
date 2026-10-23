@@ -28,7 +28,7 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - Secrets in `.env` (gitignored); see `.env.example`
 
 ## Status & handoff
-**Last update: 2026-10-23 (Gabrielle, branch `eda`).** Keep "Current state" current; add a dated line to the log when you hand off.
+**Last update: 2026-10-23 (Grace, `main`).** Keep "Current state" current; add a dated line to the log when you hand off.
 
 ### Current state
 **What exists** (`data/processed/`, specs in [data_model.md](docs/data_model.md)):
@@ -56,7 +56,7 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - **Enough-data rule:** 96 analogs have < 12 SDUD quarters; 85 have blank quarters after Q2. It leaves out drugs that faded fast (e.g. the first-wave HCV orals), so the usable pool leans towards launches that lasted.
 - **`label_expansion_in_window` over-flags:** it counts every efficacy supplement. Approval letters say which ones added an indication.
 - **Peak inside Q0–Q20:** many curves peak at Q20, some possibly from the COVID enrollment growth (open question in decisions.md).
-- **No ATC class:** 26 analogs.
+- **No ATC class:** 26 analogs. 9 still have several classes after the ATC fix, mostly combination products (listed in `checks.md`).
 - **Coverage gaps:** the NME compilation ends at 2025, so 2026 approvals aren't in the pool. The Purple Book URL is per month (update it in `pipeline/fda.py`).
 - **Empty on purpose:** `cost per unit` (empty for now), `market size` and `fills per patient` (dropped). Whether to remove the dropped columns is an open question.
 
@@ -70,6 +70,7 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 
 ### Log
 Newest first.
+- **2026-10-23, ATC class fix (Grace, `main`):** each analog's ATC class is now its own, not one from a combination product or a topical form. 16 analogs corrected, e.g. the SGLT2 and DPP-4 drugs (were "combinations"), Victoza and Adlyxin (were insulins), Jakafi and Daliresp (were dermatology, so their area changes).
 - **2026-10-23, volume vs shape EDA (Joshua, `eda`):** `eda/volume_vs_shape_joshua.ipynb`, summarised in `eda/eda_joshua.md`. Bass fit quality is mostly a Medicaid-volume effect (counting noise reproduces it), including oncology's weak fits; small drugs also start faster and peak sooner. Proposes a low-volume flag and volume as a similarity feature.
 - **2026-10-23, first EDAs (Christina and Gabrielle, `eda`):** Christina's broad first pass in `eda/launch_eda_christina.ipynb`; `eda/` with naming rules, write-up format and a topic registry ([eda/README.md](eda/README.md)); notebooks on the pool funnel, Medicaid gaps (suppression) and late launches, summarised in `eda/eda_gabrielle.md`. Added `jupyterlab` to requirements.
 - **2026-10-22, route fallback (Grace, `a/route-fallback`):** brands whose NDCs give no route now take it from Drugs@FDA, adding 34 analogs (e.g. Trikafta, Symdeko, Ocaliva). 7 existing analogs corrected: Lynparza, Esbriet, Zejula and Zykadia now launch from their original capsules. `checks.md` lists every brand left out of the pool.
