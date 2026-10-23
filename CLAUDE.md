@@ -24,11 +24,11 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - Suppressed SDUD values stay blank, never 0
 - Indication, dosing and class come from the **original** approval label (Drugs@FDA ORIG), never DailyMed (current label)
 - Agent-extracted values are saved with quote + source link and need human approval before use
-- Folders: `data/raw/<source>/` downloads, unchanged, plus a manifest (gitignored); `data/reference/` manual / approved tables; `data/processed/` tables built by code
+- Folders: `data/raw/<source>/` downloads, unchanged, plus a manifest (gitignored); `data/reference/` manual / approved tables; `data/processed/` tables built by code; `eda/` notebooks and write-ups (rules in [eda/README.md](eda/README.md))
 - Secrets in `.env` (gitignored); see `.env.example`
 
 ## Status & handoff
-**Last update: 2026-10-22 (Grace, branch `a/route-fallback`).** Keep "Current state" current; add a dated line to the log when you hand off.
+**Last update: 2026-10-23 (Gabrielle, branch `eda`).** Keep "Current state" current; add a dated line to the log when you hand off.
 
 ### Current state
 **What exists** (`data/processed/`, specs in [data_model.md](docs/data_model.md)):
@@ -65,11 +65,12 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 2. **C, extend:** label reads for the rest of the pool, starting with the 250 analogs left in the `checks.md` funnel. Add `analog_id`, `field`, `value`, `quote`, `source_url` rows with `approved=false`.
 3. **B:** add same-class competitors and `units_per_rx` to SDUD.
 4. **A/D:** add a self-administered flag (or exclude clinic-administered SC drugs). Decide what to do with the missing ATC classes. Read the route of the 16 injectables to bring the sc ones into the pool.
-5. **EDA:** pool and therapeutic-area comparison on the new tables, including the Q0–Q20 peak question.
+5. **EDA:** pick an `open` topic from the registry in [eda/README.md](eda/README.md) (e.g. the Q0–Q20 peak question, Bass fit quality), claim it there, and follow its naming and write-up format.
 6. **Team:** remove the dropped columns from `analogs.csv`, or keep them empty (open question in decisions.md).
 
 ### Log
 Newest first.
+- **2026-10-23, first EDAs (Christina and Gabrielle, `eda`):** Christina's broad first pass in `eda/launch_eda_christina.ipynb`; `eda/` with naming rules, write-up format and a topic registry ([eda/README.md](eda/README.md)); notebooks on the pool funnel, Medicaid gaps (suppression) and late launches, summarised in `eda/eda_gabrielle.md`. Added `jupyterlab` to requirements.
 - **2026-10-22, route fallback (Grace, `a/route-fallback`):** brands whose NDCs give no route now take it from Drugs@FDA, adding 34 analogs (e.g. Trikafta, Symdeko, Ocaliva). 7 existing analogs corrected: Lynparza, Esbriet, Zejula and Zykadia now launch from their original capsules. `checks.md` lists every brand left out of the pool.
 - **2026-10-22, tables for EDA (Grace, `b/launch-curves`):** added `launch_curves`, `analog_features`, `bass_fits`, `indication_history` and `medicaid_enrollment`, plus the pool funnel in `checks.md`. Fixed arbitrary picks between same-day approvals (submission classification) and tied peak quarters.
 - **2026-10-21, first data build (Jmazher12, `a/analog-table-v1`):** the pipeline and the v1 analog table (23 schema columns), SDUD by quarter, the NDC map, and label reads for the 8 seed brands.
@@ -78,3 +79,4 @@ Newest first.
 - Branch per task: `<workstream>/<topic>` (e.g. `b/sdud-ndc-map`); merge to `main` via PR
 - A PR that adds or changes a table updates its row in the data_model.md build status
 - A PR that settles an open question adds a row to the decisions.md log and removes the question
+- **EDA:** before starting one, read [eda/README.md](eda/README.md) and work on the shared `eda` branch (pull first) and check its registry so no topic is done twice; claim the topic in the registry and push the claim before starting. Name files `eda/<topic>_<name>.ipynb` plus one `eda/eda_<name>.md` write-up per person in the shared format, since everyone's EDAs get combined
