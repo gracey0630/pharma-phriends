@@ -98,7 +98,7 @@ Update in the PR that changes a table. Status: not started / in progress / built
 | `sdud_quarterly` | B | 2, 4 | built for pool analogs (`pipeline/sdud.py`); same-class competitors and `units_per_rx` not yet added |
 | `medicaid_enrollment` | B | 2 | built (`pipeline/enrollment.py`); no data 2013-10 to 2017-05, used for shock flags only |
 | `launch_curves` | B | 4 | built (`pipeline/curves.py`); no `trx_per_1k_enrollees` (no normalization in v1) |
-| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, none approved yet |
+| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved; plan below |
 | `analog_features` | D | 2 | built (`pipeline/features.py`) for the columns code can fill; label-read match fields, `rems`, `limited_distribution` wait on approved evidence |
 | `analog_recommendations` | D | 2 | not started |
 | `target_drug` | E | 1 | not started |
@@ -132,6 +132,23 @@ Fields: indication / target patients, line_of_therapy, dosing_frequency, days_su
 | quote, source_url, source_type | Original label, ClinicalTrials.gov, press release / SEC filing, Novel Drug Approvals, REMS list |
 | extracted_by, extracted_at | Agent / person |
 | approved, approved_by | Human review |
+
+#### Label-reads plan
+**Why it's next:** analog matching (journey step 2) compares the target drug with analogs on these fields. The EDA ([eda/](../eda/README.md)) found that ATC class and therapeutic area alone don't predict an analog's first 3 years, so line of therapy, competition and dosing have to carry the matching, and they only exist where labels have been read.
+
+| Step | What | Unblocks | Status |
+|---|---|---|---|
+| 1 | Seed 8: 4 fields each, checked against source | the review process, end to end | 27 of 31 approved; 4 launch dates rest on pre-launch statements; Cosentyx launch date not found |
+| 2 | Rebuild so approved values reach `analog_features` | anything that reads approved fields | not done |
+| 3 | The example drug's therapeutic area: 4 fields for its usable analogs | testing whether matching on these fields beats class matching (`analog_similarity` EDA) | waits on the area choice |
+| 4 | The rest of the 250 usable analogs | `analog_recommendations` | not started |
+| 5 | Self-injected vs clinic-given, from each sc label's dosage section | the self-administered flag | not started |
+| 6 | Route of the 16 brands Drugs@FDA lists only as `INJECTABLE;INJECTION` | bringing the sc ones into the pool | not started |
+| 7 | Approval letters for efficacy supplements: which added an indication | a precise `label_expansion_in_window` | not started |
+
+**Where each field comes from:** line of therapy and dosing frequency from the ORIG label (indication; dosage and administration); launch date from a press release or SEC filing (first commercial availability, not approval); # competitors at launch derived from FDA approval history (definition in the v1 table above).
+
+**Review:** rows go in with `approved=false`, a quote and a link. `python -m pipeline.labels --check` reports whether each label quote is verbatim in the label at its `source_url`; the reviewer then only judges whether the value fits the quote. Launch dates and competitor counts aren't label quotes: the reviewer checks the source itself. A forecast ("expected to be available in May") isn't a launch date.
 
 ### `ndc_map`: one row per analog_id × NDC ⚠️
 **Why it matters:** it links each analog to all its product codes, since Medicaid reports by NDC rather than by brand.
