@@ -6,7 +6,7 @@ Follows the write-up format in [README.md](README.md): **Question → Data → M
 
 **Shared definitions** (as in `launch_eda`). *Usable* = the end of the `checks.md` funnel, 250 of 426 analogs. *Area* = ATC level 1, with L split into **Oncology** (L01, L02) and **Immunology** (L03, L04). Provisional quarters (the latest 2) are left out of everything.
 
-**ATC classes corrected for 11 analogs.** RxClass returns codes for every product with the ingredient, so 25 analogs have several ATC codes, and the EDAs use the first. For 11 usable analogs the first code comes from a combination pill or another route: the SGLT2 inhibitors (Farxiga, Jardiance, Invokana, Steglatro) and DPP-4 inhibitors (Tradjenta, Nesina) read as "combinations", the GLP-1s Victoza and Adlyxin as insulins, Jakafi and Daliresp as dermatology (so their *area* is Dermatology in every EDA), and Zytiga as a PARP inhibitor. Both notebooks set these 11 to their own class; the pipeline should do the same (see decision 6).
+**ATC classes.** RxClass returned codes for every product with the ingredient, so some analogs carried a class from a combination pill or a topical form: the SGLT2 and DPP-4 inhibitors read as "combinations", Victoza and Adlyxin as insulins, Jakafi and Daliresp as dermatology, Zytiga as a PARP inhibitor. Found in this EDA and fixed in the pipeline on 2026-10-23 (`main`, decision log); the notebooks now read the corrected classes.
 
 ## Summary
 
@@ -22,7 +22,6 @@ Follows the write-up format in [README.md](README.md): **Question → Data → M
 3. **Don't give ATC class, area or route much weight in the similarity score as they stand.** As group medians they don't predict a held-out analog's first 3 years; ATC 4 makes it worse. Re-test once label-read features (line of therapy, competitors, dosing) are approved.
 4. **Show the analogs' spread on the analog card and in step 4, not one borrowed curve.** First-3-year shapes differ by 0.22 of peak between two analogs on median.
 5. **If volume becomes a similarity feature (`volume_vs_shape` decision 2), use a pre-launch proxy** such as the expected patient population, since a target drug's Medicaid volume isn't known before launch.
-6. **Fix multi-code ATC classes in the pipeline** (`class_narrow`, `class_broad`): keep the analog's own class, not codes from combination products or other routes. Until then, every EDA's class and area columns are wrong for the 11 analogs above, including Jakafi and Daliresp counted as Dermatology.
 
 ---
 
