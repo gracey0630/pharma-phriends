@@ -28,7 +28,7 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - Secrets in `.env` (gitignored); see `.env.example`
 
 ## Status & handoff
-**Last update: 2026-10-23 (Grace, `main`).** Keep "Current state" current; add a dated line to the log when you hand off.
+**Last update: 2026-10-27 (Christina, `main`).** Keep "Current state" current; add a dated line to the log when you hand off.
 
 ### Current state
 **What exists** (`data/processed/`, specs in [data_model.md](docs/data_model.md)):
@@ -70,6 +70,7 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 
 ### Log
 Newest first.
+- **2026-10-27, example drug (Christina, `main`):** the team agreed on the demo's example drug, Torevia (velapiprazole): a fictional oral antipsychotic for adult schizophrenia, 7th branded entrant, launching 2027-01. Profile, expected analogs (Latuda, Rexulti, Vraylar, Caplyta, Lybalvi), illustrative ceiling inputs and caveats in [docs/example_drug.md](docs/example_drug.md). Settles "one area or two" (decisions.md): one area, nervous system. Next: label reads for those 5 analogs.
 - **2026-10-23, ATC class fix (Grace, `main`):** each analog's ATC class is now its own, not one from a combination product or a topical form. 16 analogs corrected, e.g. the SGLT2 and DPP-4 drugs (were "combinations"), Victoza and Adlyxin (were insulins), Jakafi and Daliresp (were dermatology, so their area changes).
 - **2026-10-22, route fallback (Grace, `a/route-fallback`):** brands whose NDCs give no route now take it from Drugs@FDA, adding 34 analogs (e.g. Trikafta, Symdeko, Ocaliva). 7 existing analogs corrected: Lynparza, Esbriet, Zejula and Zykadia now launch from their original capsules. `checks.md` lists every brand left out of the pool.
 - **2026-10-22, tables for EDA (Grace, `b/launch-curves`):** added `launch_curves`, `analog_features`, `bass_fits`, `indication_history` and `medicaid_enrollment`, plus the pool funnel in `checks.md`. Fixed arbitrary picks between same-day approvals (submission classification) and tied peak quarters.
