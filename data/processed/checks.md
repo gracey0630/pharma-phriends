@@ -7,13 +7,13 @@ Re-download FDA and CMS files right before any final build (`python -m pipeline.
 
 | Source | Files | Last pulled |
 |---|---|---|
-| drugsfda | 1 | 2026-10-22 |
-| enrollment | 1 | 2026-10-22 |
-| ndc | 2 | 2026-10-22 |
-| nme | 1 | 2026-10-22 |
-| purple_book | 1 | 2026-10-22 |
-| rxclass | 1 | 2026-10-23 |
-| sdud | 17 | 2026-10-22 |
+| drugsfda | 1 | 2026-10-26 |
+| enrollment | 1 | 2026-10-26 |
+| ndc | 2 | 2026-10-26 |
+| nme | 1 | 2026-10-26 |
+| purple_book | 1 | 2026-10-26 |
+| rxclass | 1 | 2026-10-26 |
+| sdud | 17 | 2026-10-26 |
 
 ## Pool after each rule
 Applied in order. Not applied here (flags only): `multi_route` (counts IV forms added later), `label_expansion_in_window` (counts every efficacy supplement), `enrollment_shock_in_window`, and clinic-administered SC products (no flag yet).
@@ -28,7 +28,7 @@ Applied in order. Not applied here (flags only): `multi_route` (counts IV forms 
 
 Of those 250: 14 `multi_route`, 137 `label_expansion_in_window`, 227 with an enrollment shock in Q0-Q12.
 
-Launch quarter source: {'first sdud quarter': 406}.
+Launch quarter source: {'first sdud quarter': 403, 'evidence': 3}.
 
 ### Peak at the last quarter of data (still climbing) (119)
 Among analogs with enough data. Their share_of_peak ends at 1.0 and the fitted m is above 1.
@@ -97,16 +97,16 @@ Each route group is its own analog; check which one launched first.
 `ozempic_oral`, `ozempic_sc`, `sunlenca_oral`, `sunlenca_sc`
 
 ## NDC matching
-- application_number: 1096
-- application_number; route inferred: 320
+- application_number: 1095
+- application_number; route inferred: 321
 - application_number; route from Drugs@FDA: 93
 - sdud labeler + name: 2
 
 ## Label-read values (data/reference/analog_evidence.csv)
-31 values for 8 analogs; 0 approved, 31 waiting for review.
+31 values for 8 analogs; 27 approved, 4 waiting for review.
 
-### Analogs with unapproved values (8)
-`cosentyx_sc`, `ibrance_oral`, `otezla_oral`, `siliq_sc`, `skyrizi_sc`, `sotyktu_oral`, `taltz_sc`, `tremfya_sc`
+### Analogs with unapproved values (4)
+`otezla_oral`, `skyrizi_sc`, `sotyktu_oral`, `tremfya_sc`
 
 ### Launch date vs first SDUD Rx quarter differ by > 1 quarter (1)
 `ibrance_oral`
