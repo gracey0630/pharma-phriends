@@ -1,6 +1,6 @@
 # EDA: launch curves, Q20 peak, Bass fits and flags (Christina)
 
-**Author:** Christina · **Date:** 2026-10-23 · **Branch:** `eda` · **Data:** `data/processed/` as committed on `main` at `2dec2a2` (built 2026-10-22; no rebuild needed)
+**Author:** Christina · **Date:** 2026-10-23 · **Branch:** `eda` · **Data:** `data/processed/` as committed on `main` at `1bc6134` (built 2026-10-23, after the ATC class fix; no rebuild needed)
 
 Follows the write-up format in [README.md](README.md): **Question → Data → Method → Findings → What it means for the tool → Open checks**. All six EDAs are sections of one notebook, [launch_eda_christina.ipynb](launch_eda_christina.ipynb), so each section below is one registry topic (`launch_eda` §1–§6) and names its notebook section.
 
@@ -62,7 +62,7 @@ Follows the write-up format in [README.md](README.md): **Question → Data → M
 **Method.** Small multiples for the 8 areas with ≥ 8 usable analogs: every curve in gray, the median and interquartile band in color. Median curves for oncology vs immunology and oral vs sc. Speed to peak = first quarter a curve reaches 50% and 80% of its peak.
 
 **Findings.**
-- **Time to 50% of peak is similar everywhere:** median Q5 (anti-infectives) to Q8 (blood, cardiovascular, immunology). Time to 80% is Q12–Q16.
+- **Time to 50% of peak is similar everywhere:** median Q5 (anti-infectives) to Q8 (blood, cardiovascular, immunology). Time to 80% is Q11 (respiratory) to Q16.
 - **Oncology vs immunology:** oncology starts faster (median 0.25 of peak at Q2 vs 0.14) and is level with immunology by Q10 (0.66 vs 0.69). At Q20 oncology's median is 0.93, because many curves peak earlier and decline; immunology's is 1.0, still climbing.
 - **Oral vs sc:** sc starts slower (0.30 of peak at Q5 vs 0.44) and catches up by Q16 (0.83 vs 0.82).
 - **Anti-infectives are the most spread out:** short courses and cures give rise-and-fall curves (median about 0.76 at Q20, wide band).
