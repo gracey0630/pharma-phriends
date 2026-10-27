@@ -1,6 +1,6 @@
 # EDA: launch curves, Q20 peak, Bass fits and flags (Christina)
 
-**Author:** Christina · **Date:** 2026-10-23 · **Branch:** `eda` · **Data:** `data/processed/` as committed on `main` at `1bc6134` (built 2026-10-23, after the ATC class fix; no rebuild needed)
+**Author:** Christina · **Date:** 2026-10-23 (decisions 1–2, §3, §4 updated 2026-10-27 to agree with `peak_window` and `volume_vs_shape`) · **Branch:** `eda` · **Data:** `data/processed/` as committed on `main` at `1bc6134` (built 2026-10-23, after the ATC class fix; no rebuild needed)
 
 Follows the write-up format in [README.md](README.md): **Question → Data → Method → Findings → What it means for the tool → Open checks**. All six EDAs are sections of one notebook, [launch_eda_christina.ipynb](launch_eda_christina.ipynb), so each section below is one registry topic (`launch_eda` §1–§6) and names its notebook section.
 
@@ -12,15 +12,15 @@ Follows the write-up format in [README.md](README.md): **Question → Data → M
 |---|---|---|---|---|
 | Pool and survivorship | [launch_eda_christina.ipynb](launch_eda_christina.ipynb) §1 | What's in the usable pool, and who does it leave out? | 250 of 426 usable. Analogs dropped for blank quarters are tiny (median 442 lifetime Rx vs 34,367 usable). Oncology is the largest usable area (62) | Analog pool rule; scope question |
 | Curves by area | §2 | Do launch shapes differ by area and route? | Every large area reaches 50% of peak at a median Q5–Q8. Oncology starts faster and flattens; immunology and sc start slower, then catch up | Scope question (one area or two); analog weighting |
-| Q20 peak | §3 | Is the Q20 peak real, or COVID enrollment growth? | No COVID signal overall (43% peak at Q20 whether Q16–Q20 overlaps COVID or not). Immunology may be the exception (5 of 6), too few to tell | Open question: Q0–Q20 peak |
-| Bass fit quality | §4 | Which Bass fits can be trusted? | 100 of 250 usable fits are weak. Oncology is worst (41 of 62 weak): cumulative Bass can't follow rise-plateau-decline | `bass_fits`; step-4 review |
+| Q20 peak | §3 | Is the Q20 peak real, or COVID enrollment growth? | No COVID signal overall (43% peak at Q20 whether Q16–Q20 overlaps COVID or not). Immunology may be the exception (5 of 6), too few to tell. Those curves keep rising past Q20 (`peak_window`), so the Q0–Q20 peak understates the ceiling | Open question: Q0–Q20 peak |
+| Bass fit quality | §4 | Which Bass fits can be trusted? | 100 of 250 usable fits are weak. Oncology has the most (41 of 62), but mostly because it's small in Medicaid (`volume_vs_shape`), not because Bass can't follow its shape | `bass_fits`; step-4 review |
 | Label expansion and flags | §5 | How common are the distortion flags, and does an expansion change the curve? | Enrollment-shock flag on for 91%, expansion flag for 55%. Curves without an expansion are front-loaded (0.47 of peak at Q5 vs 0.35 with one) | Distortion flags as filters |
 | Seed brands | §6 | Do the 8 seed brands' curves and fits look as expected? | Otezla, Cosentyx, Taltz, Tremfya peak at Q20. Taltz and Tremfya have m at the cap (p, q not identified). Siliq peaks at Q11 on tiny volume | Seed-brand evidence review |
 
 ## Decisions these suggest (for the team)
 
-1. **Keep the Q0–Q20 peak for now.** Across the pool, curves whose last quarters fall in the COVID enrollment growth don't climb more at the end than others. Revisit only if the immunology check (§3) holds up.
-2. **Don't use oncology Bass p and q as they are.** Two-thirds of oncology fits are weak. Either fit a curve that can decline (or Bass on new adopters), or leave weak fits out of the p, q spread shown in step 4.
+1. **Don't use the Q0–Q20 peak as the ceiling; keep Q0–Q20 as the Bass fit window** (same as `peak_window` decisions 1–2). The Q20 climb isn't COVID enrollment growth (§3), so it's real uptake that the window cuts off: Grace found 95% of Q20-peak curves keep rising, to a median 1.44× the Q0–Q20 peak. Read share of peak against a fixed longer horizon (e.g. Q0–Q28), not the all-time peak.
+2. **Flag low-volume fits instead of discounting oncology as an area** (same as `volume_vs_shape` decisions 1 and 3). Oncology's weak fits are mostly small-volume curves, where counting noise alone gives R² < 0.9; mid-volume oncology fits as well as other areas. Show the weak-fit and low-volume flags next to each analog in step 4. A curve that can decline is still worth trying for the rise-and-fall curves (HCV cures, some oncology).
 3. **Don't make `enrollment_shock_in_window` a filter.** At 91% it would empty the pool. Keep it as a note on the analog card.
 4. **Keep `label_expansion_in_window` as a flag until the approval-letter read.** Efficacy-supplement curves look like confirmed-expansion curves, so many supplements may be real expansions, but the flag can't tell which.
 5. **If the demo covers two areas, compare them on the late curve, not on time to 50%.** Oncology and immunology reach half their peak at a similar pace; they differ in whether they're still climbing at Q20.
@@ -91,11 +91,11 @@ Follows the write-up format in [README.md](README.md): **Question → Data → M
 - **Immunology may differ:** 5 of 6 analogs overlapping COVID peak at Q20 (median climb 0.37), vs 4 of 9 before COVID (0.12). This fits Taltz and Tremfya speeding up late, but n = 6.
 - Enrollment rose from about 72M (2019) to 94M (early 2023), then fell to about 74M by 2026. There's no data from Oct 2013 to May 2017, so curves can't be adjusted for the 2014 expansion.
 
-**What it means for the tool.** The COVID enrollment growth doesn't explain the Q20 peaks in general; many curves are still climbing at five years. Keep the Q0–Q20 peak (decision 1), and say in the app that the ceiling isn't observed for curves still climbing.
+**What it means for the tool.** The COVID enrollment growth doesn't explain the Q20 peaks in general, so the climb at Q20 is real uptake and the Q0–Q20 peak cuts it off. Grace's `peak_window` follows the same curves past Q20 and confirms it: they keep rising, also without COVID (1.33× before vs 1.35× during), and reading year 3 against a longer peak drops share of peak at Q12 from 0.66 to 0.55 (Q0–Q28 peak). So the Q0–Q20 peak shouldn't be the ceiling (decision 1).
 
 **Open checks.**
 - The groups are confounded by launch year (the COVID group launched 2015–2018) and area mix.
-- Test the immunology result with enrollment-adjusted curves from 2017Q2 on (TRx per enrollee).
+- Test the immunology result with enrollment-adjusted curves from 2017Q2 on (TRx per enrollee). It's the one place COVID may still matter.
 
 ---
 
@@ -111,16 +111,17 @@ Follows the write-up format in [README.md](README.md): **Question → Data → M
 
 **Findings.**
 - **100 of 250 weak:** 77 with R² < 0.9, 23 with a parameter on a bound. 27 have m at the 5.0 cap (still climbing, so m isn't identified).
-- **Oncology is the problem:** 41 of 62 weak, median R² 0.89. Immunology 9 of 28 weak (median R² 0.97), nervous system 7 of 41 (0.98), anti-infectives 11 of 18 (0.83).
+- **Oncology has the most weak fits:** 41 of 62, median R² 0.89. Immunology 9 of 28 weak (median R² 0.97), nervous system 7 of 41 (0.98), anti-infectives 11 of 18 (0.83).
+- **That's mostly volume, not shape** (Joshua's `volume_vs_shape`): oncology is the smallest area in Medicaid (median peak 397 TRx a quarter). Mid-volume oncology has R² < 0.9 in 1 of 19 fits (5%) vs 32 of 43 (74%) small oncology, and adding counting noise to large curves reproduces the weak-fit rates.
 - **The worst fits are rise-and-fall curves,** with R² near or below 0: Zepatier, Harvoni (HCV cures), Xofluza (flu), Caprelsa, Cotellic, Zydelig (oncology).
 - **Median q** ranges from 0.12 (respiratory, 8 analogs) to 0.27 (alimentary & metabolism); respiratory has the highest median p (0.078), then oncology (0.047).
 - Good fits spread widely: p from about 0.002 to 0.2 and q from 0 to 1.2, with no clean separation between areas.
 
-**What it means for the tool.** A cumulative Bass curve fits curves that keep climbing, but not those that decline. For oncology, p and q from these fits would understate the spread (decision 2). The step-4 review should show the weak-fit flag next to every analog.
+**What it means for the tool.** Most weak fits say more about Medicaid volume than about the analog's shape, so a low R² shouldn't rule out an area (decision 2). The step-4 review should show the weak-fit and low-volume flags next to every analog. The real shape problem is the minority of curves that rise and fall, which a cumulative Bass curve can't follow.
 
 **Open checks.**
-- Refit oncology with Bass on new adopters (quarterly increments) or a curve that can decline, and compare R².
-- Whether fitting only to the rising part (up to the peak quarter) fixes most weak fits.
+- For rise-and-fall curves only: refit with Bass on new adopters (quarterly increments) or a curve that can decline, and compare R².
+- Whether fitting only to the rising part (up to the peak quarter) fixes those fits.
 
 ---
 
@@ -170,7 +171,7 @@ Follows the write-up format in [README.md](README.md): **Question → Data → M
 | Ibrance | 2015Q1 | 0.049 | 0.30 | 0.99 | 0.997 | Q19 | Plateaus from about Q12 (oncology shape) |
 
 - Launch quarters are the first SDUD quarter. They match the unapproved label-read launch dates within a quarter (e.g. Otezla 2014-03, Ibrance 2015-02).
-- **Taltz and Tremfya's p and q aren't identified from Q0–Q20:** both climb steeply in their last quarters (2020–2022, the COVID enrollment growth; see §3).
+- **Taltz and Tremfya's p and q aren't identified from Q0–Q20:** both climb steeply in their last quarters (2020–2022, during the COVID enrollment growth). §3 finds no COVID effect overall, but immunology is the open exception, and these two are part of it.
 
 **What it means for the tool.** The psoriasis brands mostly behave as expected and fit well. Two of six can't give a p and q, and Siliq (small, launched with a REMS) is a poor analog for a mainstream biologic.
 
