@@ -76,6 +76,7 @@ Newest first.
 - **2026-10-21, first data build (Jmazher12, `a/analog-table-v1`):** the pipeline and the v1 analog table (23 schema columns), SDUD by quarter, the NDC map, and label reads for the 8 seed brands.
 
 ## Workflow
-- Branch per task: `<workstream>/<topic>` (e.g. `b/sdud-ndc-map`); merge to `main` via PR
-- A PR that adds or changes a table updates its row in the data_model.md build status
-- A PR that settles an open question adds a row to the decisions.md log and removes the question
+- **Small tasks go straight to `main`:** doc edits, open questions, approving or fixing a few `analog_evidence` rows, a small bug fix in one module. `git pull` first, keep the commit small, push right away.
+- **Use a branch + PR** (`<workstream>/<topic>`, e.g. `b/sdud-ndc-map`) for work that takes more than a day, adds or reworks a `pipeline/` module, changes a rule in the docs, or rebuilds `data/processed/` (big diffs that collide easily).
+- Either way, add a dated line to the Status & handoff log for anything a teammate should know about, so the log is the one place to see what changed.
+- When you add or change a table, update its data_model.md build status; when you settle an open question, log it in decisions.md and remove the question. Same commit or PR.
