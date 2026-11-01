@@ -7,10 +7,14 @@ download to ~300k rows/year instead of the ~8 GB state-level CSVs (decision 2026
 Build rules (docs/data_sources.md):
   - sum FFSU + MCOU
   - join on 9-digit NDC (labeler + product), never on the truncated product_name
-  - suppressed values stay blank, never 0
+  - a suppressed row (< 11 Rx) is imputed at HIDDEN_LOW / HIDDEN_MID / HIDDEN_HIGH Rx (decision 2026-10-30);
+    trx = reported rows + HIDDEN_MID per suppressed row, and trx_reported keeps the visible sum (blank if every
+    row is suppressed). HIGH is not a strict ceiling: CMS's secondary suppression can hide a value of 11 or more.
+  - units and reimbursed_usd are the reported rows only (not imputed)
 
 Output: data/processed/sdud_quarterly.csv in the shared long format
         analog_id, source, payer, period, metric, value, pulled_at
+        metrics: trx, trx_low, trx_high, trx_reported, suppressed_rows, imputed_share, units, reimbursed_usd
 
 Usage: python -m pipeline.sdud [--pull-only] [--refresh] [--start-year 2010]
 """
@@ -27,6 +31,8 @@ QUERY = "https://data.medicaid.gov/api/1/datastore/query/{id}/0"
 PAGE = 8000  # API maximum
 FIRST_YEAR = 2010  # managed-care (MCOU) records start in 2010
 SDUD = RAW / "sdud"
+# Rx imputed per suppressed row (CMS suppresses counts < 11); trx uses the mid value
+HIDDEN_LOW, HIDDEN_MID, HIDDEN_HIGH = 1, 5, 10
 COLS = ["utilization_type", "state", "ndc", "labeler_code", "product_code", "package_size", "year", "quarter",
         "suppression_used", "product_name", "units_reimbursed", "number_of_prescriptions", "total_amount_reimbursed"]
 
@@ -107,19 +113,25 @@ def load_national(labelers=None):
 
 
 def build(ndc_map, national=None):
-    """Quarterly trx / units / reimbursed_usd / suppressed_rows per analog, long format."""
+    """Quarterly TRx (reported, and low / mid / high with suppressed rows imputed), suppressed rows, imputed share,
+    units and reimbursed_usd per analog, long format."""
     df = national if national is not None else load_national()
     df = df.merge(ndc_map[["analog_id", "ndc9"]], on="ndc9")
     num = ["number_of_prescriptions", "units_reimbursed", "total_amount_reimbursed"]
     df[num] = df[num].apply(pd.to_numeric, errors="coerce")
     df["period"] = df.year + "Q" + df.quarter
     df["suppressed"] = df.suppression_used.str.lower() == "true"
-    # min_count=1: a quarter where every row is suppressed stays NaN instead of becoming 0
+    # min_count=1: a quarter where every row is suppressed has no reported value (NaN), not 0
     g = df.groupby(["analog_id", "period"])
     q = g[num].sum(min_count=1)
     q["suppressed_rows"] = g.suppressed.sum()
-    q = q.rename(columns={"number_of_prescriptions": "trx", "units_reimbursed": "units",
+    q = q.rename(columns={"number_of_prescriptions": "trx_reported", "units_reimbursed": "units",
                           "total_amount_reimbursed": "reimbursed_usd"})
+    reported = q.trx_reported.fillna(0)
+    q["trx_low"] = reported + HIDDEN_LOW * q.suppressed_rows
+    q["trx"] = reported + HIDDEN_MID * q.suppressed_rows
+    q["trx_high"] = reported + HIDDEN_HIGH * q.suppressed_rows
+    q["imputed_share"] = (HIDDEN_MID * q.suppressed_rows / q.trx).round(4)
     out = q.reset_index().melt(["analog_id", "period"], var_name="metric", value_name="value")
     out.insert(1, "source", "sdud")
     out.insert(2, "payer", "medicaid")

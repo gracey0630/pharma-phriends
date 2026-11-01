@@ -3,8 +3,12 @@
 Only columns code can fill today. Match fields from label reads (line of therapy, dosing, competitors) are
 copied only once approved in analog_evidence.csv; rems and limited_distribution wait on label reads (blank).
 
-Rules (docs/data_model.md; decisions 2026-10-22):
-  - enough_data: >= 12 complete (non-provisional) quarters since launch and no blank quarter after Q2 in Q0-Q20
+Rules (docs/data_model.md; decisions 2026-10-22, 2026-10-30):
+  - enough_data: >= 12 complete (non-provisional) quarters since launch, and at most MAX_IMPUTED_SHARE of the
+    analog's Q3-Q20 TRx imputed (mid estimate; suppressed rows, pipeline.sdud). imputed_share_low / _high store
+    the same share under the low and high imputation
+  - low_volume: peak TRx (mid) below LOW_VOLUME a quarter, where counting noise alone weakens Bass fits
+    (EDA volume_vs_shape). A flag, not a filter
   - "in window" for distortion flags = Q0-Q12 (the first 3 years)
   - label_expansion_in_window counts every EFFICACY supplement, so it over-flags (see indication_history)
   - enrollment_shock_in_window names the shocks (medicaid_enrollment.SHOCKS) overlapping Q0-Q12
@@ -15,8 +19,11 @@ import pandas as pd
 
 from pipeline.common import date_qnum, qnum
 from pipeline.enrollment import SHOCKS
+from pipeline.sdud import HIDDEN_HIGH, HIDDEN_LOW, HIDDEN_MID
 
 ENOUGH_QUARTERS = 12
+MAX_IMPUTED_SHARE = 0.20  # of Q3-Q20 TRx (mid); above it the curve is mostly imputation
+LOW_VOLUME = 300  # peak TRx a quarter
 FLAG_WINDOW = 12  # Q0-Q12
 LATE_LAUNCH = 4  # quarters from approval to launch; more = route added later or delayed launch
 EVIDENCE_MATCH = ["line_of_therapy", "dosing_frequency", "n_competitors_at_launch"]
@@ -53,13 +60,22 @@ def build(pool, analogs, ndc_map, quarterly, curves, launch, history, evidence, 
         "q_since_launch").groupby("analog_id").trx.idxmax()
     last_q = out.index.map(g.q_since_launch.max())
     out["peak_at_last_quarter"] = (out.peak_q == last_q).fillna(False).astype(bool)
+    out["low_volume"] = (out.peak_trx < LOW_VOLUME).fillna(False).astype(bool)
     out["suppressed_quarters"] = g.suppressed_rows.apply(lambda s: int((s > 0).sum()))
-    out["blank_quarters_after_q2"] = final[final.q_since_launch > 2].groupby("analog_id").trx.apply(
-        lambda s: int(s.isna().sum()))
+    # rule window Q3-Q20: the launch quarter is often partial, so Q0-Q2 are left out
+    rule = final[final.q_since_launch > 2]
+    rg = rule.groupby("analog_id")
+    out["hidden_quarters_after_q2"] = rg.apply(
+        lambda d: int((d.trx_reported.isna() & (d.suppressed_rows > 0)).sum()), include_groups=False)
+    out["no_row_quarters_after_q2"] = rg.no_sdud_row.sum()
+    hidden = rg.suppressed_rows.sum()
+    out["imputed_share"] = (HIDDEN_MID * hidden / rg.trx.sum()).round(4)
+    out["imputed_share_low"] = (HIDDEN_LOW * hidden / rg.trx_low.sum()).round(4)
+    out["imputed_share_high"] = (HIDDEN_HIGH * hidden / rg.trx_high.sum()).round(4)
     out["provisional_quarters"] = curves[curves.provisional].groupby("analog_id").size()
     out["ndc_match_issues"] = ndc_map[ndc_map.match_method != "application_number"].groupby("analog_id").size()
     out["fields_not_approved"] = ev[~ev.approved].groupby("analog_id").size()
-    for c in ["peak_trx", "peak_q", "suppressed_quarters", "blank_quarters_after_q2"]:
+    for c in ["peak_trx", "peak_q", "suppressed_quarters", "hidden_quarters_after_q2", "no_row_quarters_after_q2"]:
         out[c] = out[c].astype("Int64")
     for c in ["provisional_quarters", "ndc_match_issues", "fields_not_approved"]:
         out[c] = out[c].fillna(0).astype(int)
@@ -77,5 +93,7 @@ def build(pool, analogs, ndc_map, quarterly, curves, launch, history, evidence, 
     out["multi_route"] = p.n_route_groups.astype(int) > 1
     out["rems"] = ""
     out["limited_distribution"] = ""
-    out["enough_data"] = ((out.quarters_of_data >= ENOUGH_QUARTERS) & (out.blank_quarters_after_q2 == 0)).fillna(False)
+    # an analog with no TRx in Q3-Q20 (imputed_share blank) doesn't have enough data
+    out["enough_data"] = ((out.quarters_of_data >= ENOUGH_QUARTERS)
+                          & (out.imputed_share <= MAX_IMPUTED_SHARE)).fillna(False).astype(bool)
     return out.reset_index()

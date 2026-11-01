@@ -6,12 +6,15 @@ with the cumulative Bass curve m * F(t), t = quarters since launch + 1 (end of q
 Strictly, Bass models new adopters and TRx counts everyone on therapy; state this wherever the fits are shown.
 m (share of the Q0-Q20 peak at saturation) is fitted too, so curves still climbing at Q20 can end above 1.
 
-Fitted for analogs with enough_data, on non-provisional, non-blank quarters. weak_fit_flag: R^2 < WEAK_R2
-(often curves that rise and fall, e.g. HCV cures) or a parameter on an arbitrary bound (see on_bound; often
-curves still climbing at Q20, where m is unidentified). dropped is for the step-4 review (always False here).
+Fitted for analogs with enough_data, on non-provisional quarters: trx is the mid estimate, with suppressed rows
+imputed and quarters with no SDUD row at 0 (pipeline.curves). weak_fit_flag: R^2 < WEAK_R2 (often curves that
+rise and fall, e.g. HCV cures) or a parameter on an arbitrary bound (see on_bound; often curves still climbing at
+Q20, where m is unidentified). low_volume (from analog_features): peak TRx below LOW_VOLUME a quarter, where
+counting noise alone gives a low R^2, so a weak fit says little about the shape. dropped is for the step-4 review
+(always False here).
 
 Output: data/processed/bass_fits.csv, one row per fitted analog: analog_id, p, q, m, n_points, fit_quality (R^2),
-        weak_fit_flag, dropped
+        weak_fit_flag, low_volume, dropped
 """
 import warnings
 
@@ -69,5 +72,7 @@ def build(curves, features):
         rows.append({"analog_id": a, "p": round(p, 5), "q": round(q, 4), "m": round(m, 3), "n_points": len(c),
                      "fit_quality": round(r2, 4), "weak_fit_flag": bool(r2 < WEAK_R2 or on_bound((p, q, m))),
                      "dropped": False})
-    cols = ["analog_id", "p", "q", "m", "n_points", "fit_quality", "weak_fit_flag", "dropped"]
-    return pd.DataFrame(rows, columns=cols)
+    out = pd.DataFrame(rows)
+    out["low_volume"] = out.analog_id.map(features.set_index("analog_id").low_volume).astype(bool)
+    cols = ["analog_id", "p", "q", "m", "n_points", "fit_quality", "weak_fit_flag", "low_volume", "dropped"]
+    return out.reindex(columns=cols)
