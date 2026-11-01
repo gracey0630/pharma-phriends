@@ -21,7 +21,7 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 | 1 | ndc | All 9-digit NDCs (labeler + product) in the route group, `; `-separated. Detail is in `ndc_map.csv` | all |
 | 2 | route of administration | Route group from NDC Directory `ROUTENAME`: `oral` or `sc`; Drugs@FDA Products route when no NDC under the application has one ([data_sources.md](data_sources.md)) | all |
 | 3 | manufacturer/sponsor/company at approval | Drugs@FDA `SponsorName` of the original application | all |
-| 4 | Rx | Total Medicaid TRx to date (SDUD, national, FFSU + MCOU). The quarterly series is in `sdud_quarterly.csv` | all with SDUD |
+| 4 | Rx | Total Medicaid TRx to date (SDUD, national, FFSU + MCOU), mid estimate (suppressed rows at 5 Rx). The quarterly series is in `sdud_quarterly.csv` | all with SDUD |
 | 5 | generic name | NME compilation `Active Ingredient/Moiety` | all |
 | 6 | application number | NDA/BLA numbers whose NDCs are in this route group | all |
 | 7 | submission classification | Drugs@FDA submission class of the ORIG approval | all |
@@ -45,7 +45,7 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 "Seed 8" are the prototype brands: Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu, Ibrance. Label-read values live in `data/reference/analog_evidence.csv` with a quote and link. They are copied into `analogs.csv` even before approval, and `checks.md` lists every analog with unapproved values.
 
 **Supporting files** (`data/processed/`, rebuilt every run):
-- `sdud_quarterly.csv`: analog × quarter, long format; metrics `trx`, `units`, `reimbursed_usd`, `suppressed_rows`
+- `sdud_quarterly.csv`: analog × quarter, long format; metrics `trx` (mid estimate), `trx_low`, `trx_high`, `trx_reported`, `suppressed_rows`, `imputed_share`, `units`, `reimbursed_usd`
 - `ndc_map.csv`: analog × NDC, with `listing` (current / excluded / sdud only) and `match_method`
 - `launch_curves.csv`, `analog_features.csv`, `bass_fits.csv`, `indication_history.csv`, `medicaid_enrollment.csv`: built tables, specs below
 - `candidate_pool.csv`: intermediate, spec below
@@ -57,9 +57,10 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 | Rule | Definition |
 |---|---|
 | Analog pool | Novel NDA/BLA, first indication, pharmacy-dispensed route group, launched 2010 onward |
-| Enough data | ≥ 12 complete (non-provisional) quarters of SDUD since launch; no blank (suppressed or missing) quarter after Q2 within Q0–Q20 |
+| Enough data | ≥ 12 complete (non-provisional) quarters of SDUD since launch, and ≤ 20% of the analog's Q3–Q20 TRx imputed (mid estimate; `MAX_IMPUTED_SHARE` in `pipeline/features.py`) |
+| Low volume | Peak TRx (mid) < 300 a quarter (`LOW_VOLUME`). A flag, not a filter: counting noise alone weakens Bass fits at this size (EDA `volume_vs_shape`) |
 | Brand → NDC | Application number in NDC Directory + excluded file, plus SDUD NDCs with same labeler + name; split by route group; audited in `ndc_map` |
-| TRx | SDUD prescriptions, all NDCs in the route group, national, FFSU + MCOU, per quarter |
+| TRx | SDUD prescriptions, all NDCs in the route group, national, FFSU + MCOU, per quarter. Suppressed rows (< 11 Rx) imputed at 5 (low 1, high 10); a quarter with no SDUD row = 0. Both readings are model assumptions, not confirmed with CMS (decisions.md, 2026-11-01) |
 | Launch date | Press release / SEC filing (approved evidence). Until approved, launch quarter = first SDUD quarter with any row (a suppressed row means 1–10 Rx), never before the approval quarter |
 | Uptake curve | TRx ÷ peak TRx, by quarter since launch, Q0–Q20. Peak = max over Q0–Q20, excluding provisional quarters (the latest 2 SDUD quarters) |
 | In window | Distortion flags (label expansion, generic entry, enrollment shock) look at Q0–Q12, the first 3 years |
@@ -95,7 +96,7 @@ Update in the PR that changes a table. Status: not started / in progress / built
 | `exclusivity` | A | 2 | replaced in v1 by the generic / exclusivity date column |
 | `drug_master` | A | 2 | deferred (v1: `analogs` + `analog_features` play this role) |
 | `ndc_map` | B | 2 | built (`pipeline/fda.py` + `pipeline/ndc.py`) |
-| `sdud_quarterly` | B | 2, 4 | built for pool analogs (`pipeline/sdud.py`); same-class competitors and `units_per_rx` not yet added |
+| `sdud_quarterly` | B | 2, 4 | built for pool analogs (`pipeline/sdud.py`), suppressed rows imputed (low / mid / high); same-class competitors and `units_per_rx` not yet added |
 | `medicaid_enrollment` | B | 2 | built (`pipeline/enrollment.py`); no data 2013-10 to 2017-05, used for shock flags only |
 | `launch_curves` | B | 4 | built (`pipeline/curves.py`); no `trx_per_1k_enrollees` (no normalization in v1) |
 | `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, none approved yet |
@@ -150,7 +151,9 @@ Includes **same-class competitors** (needed to check peak share against analog p
 
 | Metric | Source |
 |---|---|
-| trx, units, reimbursed_usd, suppressed_rows | SDUD |
+| trx_reported, units, reimbursed_usd, suppressed_rows | SDUD (sum of reported rows; `trx_reported` blank when every row is suppressed) |
+| trx, trx_low, trx_high | Derived: `trx_reported` + 5 / 1 / 10 Rx per suppressed row. `trx` (mid) is the one every table uses |
+| imputed_share | Derived: share of `trx` that is imputed (5 × suppressed rows ÷ trx) |
 | units_per_rx | Derived (days-supply check) |
 
 ### `indication_history`: one row per analog_id × approval that set or may have changed its indications ⚠️
@@ -197,7 +200,8 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 
 | Column | Source |
 |---|---|
-| q_since_launch (0–20), period, trx, suppressed_rows | sdud_quarterly + launch quarter. Suppressed quarters have trx blank; a quarter with no SDUD row has trx and suppressed_rows blank |
+| q_since_launch (0–20), period, trx, trx_low, trx_high, trx_reported, suppressed_rows, imputed_share | sdud_quarterly + launch quarter. `trx` is the mid estimate; `imputed_share` documents how much of each quarter is imputed |
+| no_sdud_row | True when no NDC of the analog has an SDUD row that quarter; all TRx columns are then 0 |
 | provisional | Latest 2 SDUD quarters (incomplete); kept, but left out of the peak |
 | share_of_peak | trx ÷ max trx over Q0–Q20 (non-provisional) |
 | label_expansion_flag | indication_history: on from the first possible label expansion |
@@ -211,7 +215,7 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 | route_group, therapeutic_area (ATC 1), class_broad (ATC 3), class_narrow (ATC 4) | candidate_pool, RxClass |
 | line_of_therapy, dosing_frequency, n_competitors_at_launch | analog_evidence, **approved values only**; blank until reviewed |
 | launch_quarter, launch_source, quarters_approval_to_launch, quarters_of_data, peak_trx, peak_q, peak_at_last_quarter | sdud_quarterly, launch_curves |
-| **Data quality:** suppressed_quarters, blank_quarters_after_q2, provisional_quarters, ndc_match_issues, fields_not_approved | launch_curves, ndc_map, analog_evidence |
+| **Data quality:** low_volume (peak < 300 TRx a quarter), suppressed_quarters, hidden_quarters_after_q2 (every row suppressed), no_row_quarters_after_q2, imputed_share (Q3–Q20, mid; the enough-data rule) with imputed_share_low / imputed_share_high, provisional_quarters, ndc_match_issues, fields_not_approved | launch_curves, ndc_map, analog_evidence |
 | **Distortion flags:** label_expansion_in_window (over-flags: counts every efficacy supplement), generic_entry_in_window, enrollment_shock_in_window (names the shocks), late_launch (> 4 quarters from approval: route added later or delayed launch), multi_route (counts out-of-scope routes such as IV), rems, limited_distribution (blank until label reads) | indication_history, analogs, medicaid_enrollment, candidate_pool, analog_evidence |
 | enough_data | Derived (rule above) |
 
@@ -233,7 +237,7 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 | `analog_recommendations` | scenario × analog | filter_pass, similarity_score, agent_rank, reasoning, evidence_links, approved | Code filters + scores; agent re-ranks; forecaster approves 3–5 (step 2) |
 | `market_size` | scenario | entry_order, n_entrants_low/high, alpha_low/high, peak_share_low/base/high, differentiation_adj + reason, M_low/base/high | Forecaster inputs + Zipf code (step 3) |
 | `epi_funnel` (optional) | indication × step | stage, low/base/high, source_url, source_file, source_type | Manual from SEER / CDC / literature (step 3) |
-| `bass_fits` | analog | p, q, m, n_points, fit_quality (R²), weak_fit_flag, dropped | Code from launch_curves (step 4). Built ahead for every analog with enough data: cumulative Bass m·F(t) fitted to share_of_peak; weak = R² < 0.9 or p, q or m on an arbitrary bound |
+| `bass_fits` | analog | p, q, m, n_points, fit_quality (R²), weak_fit_flag, low_volume, dropped | Code from launch_curves (step 4). Built ahead for every analog with enough data: cumulative Bass m·F(t) fitted to share_of_peak (mid estimate); weak = R² < 0.9 or p, q or m on an arbitrary bound; low_volume shown next to the fit, since a weak fit at low volume is mostly counting noise |
 | `analog_weights` | scenario × analog | weight, reasoning | Agent recommends, code computes (step 4) |
 
 ---

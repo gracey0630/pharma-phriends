@@ -5,8 +5,8 @@ Nothing here changes the data: it lists rows to look at. Written to data/process
 import pandas as pd
 
 from pipeline.common import RAW
-
-ENOUGH_QUARTERS = 12  # rule: >= 12 quarters of SDUD TRx after launch
+from pipeline.features import ENOUGH_QUARTERS, LOW_VOLUME, MAX_IMPUTED_SHARE
+from pipeline.sdud import HIDDEN_HIGH, HIDDEN_LOW, HIDDEN_MID
 
 
 def _q(period):
@@ -34,11 +34,12 @@ def funnel(lines, features, fits):
         ("Has a launch quarter (any SDUD row)", f.launch_quarter.notna()),
         ("Launch within 1 year of approval (not `late_launch`)", ~f.late_launch.fillna(False).astype(bool)),
         ("No generic / biosimilar in Q0-Q12", ~f.generic_entry_in_window.astype(bool)),
-        ("Enough data (>= 12 quarters, no blank quarter after Q2)", f.enough_data.astype(bool)),
+        (f"Enough data (>= {ENOUGH_QUARTERS} quarters, <= {MAX_IMPUTED_SHARE:.0%} of Q3-Q20 TRx imputed)",
+         f.enough_data.astype(bool)),
     ]
     lines.append("\n## Pool after each rule")
-    lines.append("Applied in order. Not applied here (flags only): `multi_route` (counts IV forms added later), "
-                 "`label_expansion_in_window` (counts every efficacy supplement), `enrollment_shock_in_window`, "
+    lines.append("Applied in order. Not applied here (flags only): `low_volume`, `multi_route` (counts IV forms added "
+                 "later), `label_expansion_in_window` (counts every efficacy supplement), `enrollment_shock_in_window`, "
                  "and clinic-administered SC products (no flag yet).\n")
     lines.append("| Rule | Analogs left | oral | sc |")
     lines.append("|---|---|---|---|")
@@ -48,7 +49,8 @@ def funnel(lines, features, fits):
         left = f[keep]
         lines.append(f"| {name} | {len(left)} | {(left.route_group == 'oral').sum()} | {(left.route_group == 'sc').sum()} |")
     left = f[keep]
-    lines.append(f"\nOf those {len(left)}: {left.multi_route.sum()} `multi_route`, "
+    lines.append(f"\nOf those {len(left)}: {left.low_volume.sum()} `low_volume` (peak < {LOW_VOLUME} TRx a quarter), "
+                 f"{left.multi_route.sum()} `multi_route`, "
                  f"{left.label_expansion_in_window.sum()} `label_expansion_in_window`, "
                  f"{(left.enrollment_shock_in_window != '').sum()} with an enrollment shock in Q0-Q12.")
     lines.append(f"\nLaunch quarter source: {f.launch_source.value_counts().to_dict()}.")
@@ -56,7 +58,11 @@ def funnel(lines, features, fits):
              "Among analogs with enough data. Their share_of_peak ends at 1.0 and the fitted m is above 1.")
     weak = fits[fits.weak_fit_flag]
     _section(lines, "Weak Bass fits", weak.analog_id,
-             f"R^2 < 0.9 or a parameter on its bound; {len(fits)} analogs fitted.")
+             f"R^2 < 0.9 or a parameter on its bound; {len(fits)} analogs fitted, "
+             f"{(weak.low_volume).sum()} of the weak fits are `low_volume`.")
+    _section(lines, "Low Medicaid volume", left.analog_id[left.low_volume],
+             f"Among analogs with enough data: peak < {LOW_VOLUME} TRx a quarter (mid estimate). Counting noise alone "
+             "gives weak Bass fits at this size, so show the flag next to the fit.")
 
 
 def not_in_pool_section(lines, not_in_pool):
@@ -84,10 +90,19 @@ def run(analogs, ndc_map, quarterly, evidence, features, fits, not_in_pool):
     # first quarter with any SDUD row: a suppressed (blank) quarter still means 1-10 Rx were dispensed
     first_rx = trx.groupby("analog_id").period.min()
     n_quarters = trx.groupby("analog_id").period.nunique()
+    rep = quarterly[quarterly.metric == "trx_reported"].copy()
+    has_reported = pd.to_numeric(rep.value, errors="coerce").notna().groupby(rep.analog_id).any()
+    hidden_only = has_reported.index[~has_reported]
 
     lines = ["# Validation report", "",
              f"{len(a)} analogs: {a['route of administration'].value_counts().to_dict()}. "
-             f"{a['Rx'].ne('').sum()} have Medicaid Rx; {ndc_map.ndc9.nunique()} NDCs mapped."]
+             f"{a['Rx'].ne('').sum()} have Medicaid Rx ({len(hidden_only)} of them only in suppressed rows); "
+             f"{ndc_map.ndc9.nunique()} NDCs mapped.",
+             f"\nTRx = reported rows + {HIDDEN_MID} per suppressed row (low {HIDDEN_LOW}, high {HIDDEN_HIGH}; "
+             f"`trx_low` / `trx_high`). A quarter with no SDUD row is 0 TRx. Medicaid TRx to date: "
+             f"{pd.to_numeric(trx.value).sum():,.0f}, of which "
+             f"{pd.to_numeric(quarterly.loc[quarterly.metric == 'suppressed_rows', 'value']).sum() * HIDDEN_MID:,.0f} "
+             "imputed."]
 
     lines.append("\n## Source freshness (data/raw/*/manifest.csv)")
     lines.append("Re-download FDA and CMS files right before any final build (`python -m pipeline.build --refresh`).\n")
@@ -103,6 +118,8 @@ def run(analogs, ndc_map, quarterly, evidence, features, fits, not_in_pool):
     lines.append("\n## Rows to look at")
     _section(lines, "No Medicaid Rx at all", a.index[a["Rx"] == ""],
              "No SDUD rows for any mapped NDC: often clinic-administered SC products, very recent launches, or NDCs missing from ndc_map.")
+    _section(lines, "Medicaid Rx only in suppressed rows", hidden_only,
+             "Every SDUD row is suppressed (< 11 Rx), so all their TRx is imputed.")
     approval = a["approval date"]
     start = a["start marketing date"]
     _section(lines, "Start marketing date before approval date", a.index[start < approval],
@@ -112,10 +129,15 @@ def run(analogs, ndc_map, quarterly, evidence, features, fits, not_in_pool):
              "Route added later (e.g. an oral form of an injectable), or a delayed launch. Not a first-indication launch curve.")
     short = [i for i in a.index if i in first_rx and n_quarters.get(i, 0) < ENOUGH_QUARTERS]
     _section(lines, f"Fewer than {ENOUGH_QUARTERS} quarters of SDUD data", short, "Fails the 'enough data' rule for analogs.")
-    blank = trx[trx.value.isna()].merge(first_rx.rename("first"), left_on="analog_id", right_index=True)
-    blank = blank[blank.period.map(_q) - blank["first"].map(_q) >= 2]
-    _section(lines, "Suppressed (blank) Rx quarters after launch quarter Q2", blank.analog_id.unique(),
-             "Values stay blank, never 0. Fails the 'no suppressed quarters after Q2' rule.")
+    f = features.set_index("analog_id")
+    long_enough = f.quarters_of_data >= ENOUGH_QUARTERS
+    _section(lines, f"More than {MAX_IMPUTED_SHARE:.0%} of Q3-Q20 TRx imputed",
+             f.index[long_enough & ~(f.imputed_share <= MAX_IMPUTED_SHARE)],
+             "Fails the 'enough data' rule: the curve would be mostly imputed suppressed rows.")
+    flips = (f.imputed_share_low <= MAX_IMPUTED_SHARE) != (f.imputed_share_high <= MAX_IMPUTED_SHARE)
+    _section(lines, "Enough-data status depends on the imputation", f.index[long_enough & flips],
+             f"Pass the {MAX_IMPUTED_SHARE:.0%} cap at {HIDDEN_LOW} Rx per suppressed row but not at {HIDDEN_HIGH}; "
+             f"the rule uses {HIDDEN_MID}.")
     gen = a["generic / exclusivity date"]
     early = [i for i in a.index if gen[i] and i in first_rx and _q(gen[i]) - _q(first_rx[i]) < 12]
     _section(lines, "Generic / biosimilar dispensed within 3 years of first Rx", early, "Out of scope (no generic entry in the first 3 years).")
