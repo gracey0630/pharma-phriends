@@ -306,6 +306,7 @@ emgality_sc,000023115,0002-3115,EMGALITY,Eli Lilly and Company,BLA761063,"INJECT
 empaveli_sc,736060010,73606-010,Empaveli,"Apellis Pharmaceuticals, Inc.",NDA215014,"INJECTION, SOLUTION",SUBCUTANEOUS,20210514,,current,application_number
 ensacove_oral,830761025,83076-1025,ENSACOVE,"Xcovery Holdings, Inc.",NDA218171,CAPSULE,ORAL,20250430,,current,application_number
 ensacove_oral,830761100,83076-1100,ENSACOVE,"Xcovery Holdings, Inc.",NDA218171,CAPSULE,ORAL,20250430,,current,application_number
+enspryng_sc,502420005,50242-005,Enspryng,"Genentech, Inc.",BLA761149,"INJECTION, SOLUTION",SUBCUTANEOUS,20261015,,current,application_number
 enspryng_sc,502420007,50242-007,Enspryng,"Genentech, Inc.",BLA761149,"INJECTION, SOLUTION",SUBCUTANEOUS,20200814,,current,application_number
 entresto_oral,000780659,0078-0659,ENTRESTO,Novartis Pharmaceuticals Corporation,NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
 entresto_oral,000780696,0078-0696,ENTRESTO,Novartis Pharmaceuticals Corporation,NDA207620,"TABLET, FILM COATED",ORAL,20150707,,current,application_number
@@ -566,7 +567,7 @@ juxtapid_oral,759290172,75929-172,Juxtapid,"Pharma Packaging Solutions, LLC dba 
 juxtapid_oral,759290243,75929-243,Juxtapid,"Pharma Packaging Solutions, LLC dba Tjoapack LLC",NDA203858,,,20130103,20260803,excluded,application_number; route inferred
 juxtapid_oral,764310105,76431-105,Juxtapid,Amryt Pharmaceuticals DAC,NDA203858,,,20130103,20260427,excluded,application_number; route inferred
 juxtapid_oral,764310110,76431-110,Juxtapid,Amryt Pharmaceuticals DAC,NDA203858,CAPSULE,ORAL,20130103,20270103,current,application_number
-juxtapid_oral,764310120,76431-120,Juxtapid,Amryt Pharmaceuticals DAC,NDA203858,CAPSULE,ORAL,20130103,20261025,current,application_number
+juxtapid_oral,764310120,76431-120,Juxtapid,Amryt Pharmaceuticals DAC,NDA203858,,,20130103,20261025,excluded,application_number; route inferred
 juxtapid_oral,764310130,76431-130,Juxtapid,Amryt Pharmaceuticals DAC,NDA203858,,,20130103,20250729,excluded,application_number; route inferred
 juxtapid_oral,764310140,76431-140,Juxtapid,Amryt Pharmaceutcials DAC,NDA203858,,,20130103,20211202,excluded,application_number; route inferred
 juxtapid_oral,764310160,76431-160,Juxtapid,Amryt Pharmaceutcials DAC,NDA203858,,,20130103,20211202,excluded,application_number; route inferred
@@ -800,7 +801,7 @@ nuplazid_oral,630900340,63090-340,NUPLAZID,Acadia Pharmaceuticals Inc.,NDA210793
 nurtecodt_oral,726183000,72618-3000,NURTEC ODT,Pfizer Laboratories Div Pfizer Inc,NDA212728,"TABLET, ORALLY DISINTEGRATING",ORAL,20200305,,current,application_number
 nurtecodt_oral,726183001,72618-3001,NURTEC ODT,Pfizer Laboratories Div Pfizer Inc,NDA212728,"TABLET, ORALLY DISINTEGRATING",ORAL,20200305,,current,application_number
 nurtecodt_oral,857660096,85766-096,NURTEC ODT,Sportpharm LLC,NDA212728,"TABLET, ORALLY DISINTEGRATING",ORAL,20200305,,current,application_number
-nuzolvence_oral,685470915,68547-915,NUZOLVENCE,La Jolla Pharmaceutical Company,NDA219491,FOR SUSPENSION,ORAL,20260401,,current,application_number
+nuzolvence_oral,685470915,68547-915,NUZOLVENCE,La Jolla Pharmaceutical Company,NDA219491,FOR SUSPENSION,ORAL,20261009,,current,application_number
 nuzyra_oral,717150002,71715-002,NUZYRA,"Paratek Pharmaceuticals, Inc.",NDA209816,"TABLET, FILM COATED",ORAL,20190201,,current,application_number
 ocaliva_oral,695160005,69516-005,Ocaliva,Intercept Pharmaceuticals Inc,NDA207999,,,20160527,20251114,excluded,application_number; route from Drugs@FDA
 ocaliva_oral,695160010,69516-010,Ocaliva,Intercept Pharmaceuticals Inc,NDA207999,,,20160527,20251114,excluded,application_number; route from Drugs@FDA
@@ -842,12 +843,13 @@ orilissa_oral,000740038,0074-0038,Orilissa,AbbVie Inc.,NDA210450,"TABLET, FILM C
 orilissa_oral,000740039,0074-0039,Orilissa,AbbVie Inc.,NDA210450,"TABLET, FILM COATED",ORAL,20180723,,current,application_number
 orkambi_oral,511670700,51167-700,ORKAMBI,Vertex Pharmaceuticals Incorporated,NDA206038,"TABLET, FILM COATED",ORAL,20160928,,current,application_number
 orkambi_oral,511670809,51167-809,ORKAMBI,Vertex Pharmaceuticals Incorporated,NDA206038,"TABLET, FILM COATED",ORAL,20150702,,current,application_number
-orladeyo_oral,727690101,72769-101,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA214094,CAPSULE,ORAL,20201204,,current,application_number
-orladeyo_oral,727690102,72769-102,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA214094,CAPSULE,ORAL,20201204,,current,application_number
-orladeyo_oral,727690111,72769-111,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA219776,PELLET,ORAL,20251212,,current,application_number
-orladeyo_oral,727690112,72769-112,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA219776,PELLET,ORAL,20251212,,current,application_number
-orladeyo_oral,727690113,72769-113,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA219776,PELLET,ORAL,20251212,,current,application_number
-orladeyo_oral,727690114,72769-114,Orladeyo,"BioCryst Pharmaceuticals, Inc.",NDA219776,PELLET,ORAL,20251212,,current,application_number
+orladeyo_oral,727690101,72769-101,Orladeyo,BioCryst Pharmaceuticals Inc.,NDA214094,CAPSULE,ORAL,20201204,,current,application_number
+orladeyo_oral,727690102,72769-102,Orladeyo,BioCryst Pharmaceuticals Inc.,NDA214094,CAPSULE,ORAL,20201204,,current,application_number
+orladeyo_oral,727690111,72769-111,Orladeyo,BioCryst Pharmaceuticals Inc.,NDA219776,PELLET,ORAL,20251212,,current,application_number
+orladeyo_oral,727690112,72769-112,Orladeyo,BioCryst Pharmaceuticals Inc.,NDA219776,PELLET,ORAL,20251212,,current,application_number
+orladeyo_oral,727690113,72769-113,Orladeyo,BioCryst Pharmaceuticals Inc.,NDA219776,PELLET,ORAL,20251212,,current,application_number
+orladeyo_oral,727690114,72769-114,Orladeyo,BioCryst Pharmaceuticals Inc.,NDA219776,PELLET,ORAL,20251212,,current,application_number
+orladeyo_oral,727690115,72769-115,Orladeyo,BioCryst Pharmaceuticals Inc.,NDA219776,PELLET,ORAL,20261015,,current,application_number
 orlynvah_oral,811530100,81153-100,ORLYNVAH,ITERUM THERAPEUTICS US LIMITED,NDA213972,"TABLET, FILM COATED",ORAL,20250701,,current,application_number
 orserdu_oral,721870101,72187-0101,ORSERDU,"Stemline Therapeutics, Inc.",NDA217639,"TABLET, FILM COATED",ORAL,20230127,,current,application_number
 orserdu_oral,721870102,72187-0102,ORSERDU,"Stemline Therapeutics, Inc.",NDA217639,"TABLET, FILM COATED",ORAL,20230127,,current,application_number
