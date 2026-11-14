@@ -54,17 +54,17 @@ Fields follow the `target_drug` table ([data_model.md](data_model.md#scenario-an
 
 ## Expected analogs
 
-From `launch_curves.csv` and `analog_features.csv`. Share of peak is against the Q0–Q20 peak.
+From `launch_curves.csv` and `analog_features.csv`. Share of peak is against the Q0–Q28 peak (decision 2026-11-14). Caplyta and Lybalvi don't have 7 years of data yet, so their peak is the highest quarter so far and their shares are upper bounds (≤).
 
-| Analog | Approved | Launch quarter | Share of peak Q4 / Q8 / Q12 | Peak quarter | Peak TRx a quarter | Possible expansion in Q0–Q12 |
+| Analog | Approved | Launch quarter | Share of peak Q4 / Q8 / Q12 | Peak quarter (Q0–Q28) | Peak TRx a quarter | Possible expansion in Q0–Q12 |
 |---|---|---|---|---|---|---|
-| Latuda | 2010-10 | 2011Q1 | 0.15 / 0.24 / 0.44 | Q20 | 206,071 | Q5, Q9 |
-| Rexulti | 2015-07 | 2015Q3 | 0.34 / 0.57 / 0.74 | Q20 | 63,588 | Q4 |
-| Vraylar | 2015-09 | 2016Q1 | 0.13 / 0.23 / 0.39 | Q20 | 126,982 | Q7 |
-| Caplyta | 2019-12 | 2020Q2 | 0.10 / 0.28 / 0.59 | Q20 | 60,938 | Q6 |
-| Lybalvi | 2021-05 | 2021Q4 | 0.36 / 0.61 / 0.80 | Q15 | 33,885 | none |
+| Latuda | 2010-10 | 2011Q1 | 0.12 / 0.20 / 0.37 | Q25 | 249,328 | Q5, Q9 |
+| Rexulti | 2015-07 | 2015Q3 | 0.27 / 0.45 / 0.59 | Q28 | 79,932 | Q4 |
+| Vraylar | 2015-09 | 2016Q1 | 0.06 / 0.11 / 0.19 | Q26 | 265,358 | Q7 |
+| Caplyta | 2019-12 | 2020Q2 | ≤ 0.09 / 0.26 / 0.54 | Q21 (latest, not confirmed) | 66,867 | Q6 |
+| Lybalvi | 2021-05 | 2021Q4 | ≤ 0.36 / 0.61 / 0.80 | Q15 (latest, not confirmed) | 33,885 | none |
 
-- **Wide spread at year 3: 0.39 to 0.80 of peak.** That fits the EDA's recommendation to show the analogs' range, not one borrowed curve (`analog_similarity`).
+- **Wide spread at year 3: 0.19 to 0.59 of peak for the three with a confirmed peak, ≤ 0.54 and ≤ 0.80 for the two without.** That fits the EDA's recommendation to show the analogs' range, not one borrowed curve (`analog_similarity`).
 - **Part of the spread is probably indications.** Rexulti launched with MDD (adjunct) as well as schizophrenia, and Lybalvi with bipolar I. Latuda (bipolar depression) and Caplyta (bipolar depression) added indications within 3 years. These are leads until the approval letters are read.
 - **Wider pool for comparison:** the 41 usable nervous-system analogs (7 of 41 weak fits, median R² 0.98), and the large Medicaid-volume band (`volume_vs_shape`).
 
@@ -83,7 +83,7 @@ Decide whether the Zipf share applies to all treated patients or only the brande
 
 ## Caveats to state with the forecast
 
-1. **The Q0–Q20 peak understates the ceiling.** 4 of the 5 analogs are still climbing at Q20, and curves like these keep rising (median 1.44× later, `peak_window`). Year-3 progress depends on the peak-definition decision.
+1. **Peaks:** shares are against the Q0–Q28 peak (decision 2026-11-14). Caplyta and Lybalvi are still at their highest quarter, so their year-3 shares are upper bounds. Vraylar's peak (Q26) comes after later indications, so its 0.19 at Q12 partly reflects growth from new indications, not first-indication uptake.
 2. **Label expansions:** 4 of the 5 analogs carry `label_expansion_in_window`. Read the approval letters to separate new indications from new clinical data.
 3. **Launch indications differ:** Rexulti and Vraylar launched with a second indication, which breaks the first-indication assumption. Drop them or show them separately.
 4. **Medicaid shapes:** the most representative payer for this disease, but still Medicaid, not the whole market.

@@ -9,7 +9,7 @@ Steps: FDA files -> candidate pool + ndc_map -> SDUD national rows -> SDUD-only 
 Outputs (data/processed/, committed):
   analogs.csv          the analog table (analog_id + 23 sheet columns)
   sdud_quarterly.csv   Rx by quarter, long format (the "Rx" column is its total)
-  launch_curves.csv    TRx and share of peak by quarter since launch (Q0-Q20)
+  launch_curves.csv    TRx and share of peak (Q0-Q28 peak) by quarter since launch (Q0-Q20)
   analog_features.csv  one row per analog: launch, data quality, distortion flags, enough_data
   bass_fits.csv        Bass p, q, m per analog with enough data
   indication_history.csv  original approvals + possible label expansions (Drugs@FDA)
@@ -143,9 +143,10 @@ def main():
     enrolled = enrollment.build()
     launch = curves.launch_quarters(pool, quarterly, evidence)
     history = fda.indication_history(tables, pool, launch.launch_quarter)
-    launch_curves = curves.build(quarterly, launch, history)
+    peak = curves.peaks(quarterly, launch)
+    launch_curves = curves.build(quarterly, launch, history, peak)
     atc4 = set(analogs["class (narrow)"])
-    features = analog_features.build(pool, analogs, ndc_map, quarterly, launch_curves, launch, history, evidence,
+    features = analog_features.build(pool, analogs, ndc_map, quarterly, launch_curves, launch, peak, history, evidence,
                                      class_broad={c: rxclass.broader(c, 3) for c in atc4},
                                      area={c: rxclass.broader(c, 1) for c in atc4})
     fits = bass.build(launch_curves, features)
