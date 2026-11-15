@@ -7,8 +7,10 @@ Rules (docs/data_model.md; decisions 2026-10-22, 2026-10-30):
   - enough_data: >= 12 complete (non-provisional) quarters since launch, and at most MAX_IMPUTED_SHARE of the
     analog's Q3-Q20 TRx imputed (mid estimate; suppressed rows, pipeline.sdud). imputed_share_low / _high store
     the same share under the low and high imputation
-  - low_volume: peak TRx (mid) below LOW_VOLUME a quarter, where counting noise alone weakens Bass fits
-    (EDA volume_vs_shape). A flag, not a filter
+  - peak_trx, peak_q, peak_confirmed: the Q0-Q28 peak share_of_peak divides by (pipeline.curves.peaks; decision
+    2026-11-14). peak_at_last_quarter = the peak is the last complete quarter of that window (still climbing)
+  - low_volume: highest TRx (mid) in the Q0-Q20 fit window below LOW_VOLUME a quarter, where counting noise alone
+    weakens Bass fits (EDA volume_vs_shape). A flag, not a filter
   - "in window" for distortion flags = Q0-Q12 (the first 3 years)
   - label_expansion_in_window counts every EFFICACY supplement, so it over-flags (see indication_history)
   - enrollment_shock_in_window names the shocks (medicaid_enrollment.SHOCKS) overlapping Q0-Q12
@@ -29,7 +31,7 @@ LATE_LAUNCH = 4  # quarters from approval to launch; more = route added later or
 EVIDENCE_MATCH = ["line_of_therapy", "dosing_frequency", "n_competitors_at_launch"]
 
 
-def build(pool, analogs, ndc_map, quarterly, curves, launch, history, evidence, class_broad, area):
+def build(pool, analogs, ndc_map, quarterly, curves, launch, peak, history, evidence, class_broad, area):
     a = analogs.set_index("analog_id")
     p = pool.set_index("analog_id")
     out = pd.DataFrame(index=pool.analog_id)
@@ -54,13 +56,12 @@ def build(pool, analogs, ndc_map, quarterly, curves, launch, history, evidence, 
     out["quarters_of_data"] = (latest_final - lq + 1).clip(lower=0).astype("Int64")
     final = curves[~curves.provisional]
     g = final.groupby("analog_id")
-    out["peak_trx"] = g.trx.max()
-    # first quarter that reaches the peak, so ties (Iclusig, Lonsurf) resolve the same way every run
-    out["peak_q"] = final.loc[final.trx.notna()].sort_values(["analog_id", "q_since_launch"]).set_index(
-        "q_since_launch").groupby("analog_id").trx.idxmax()
-    last_q = out.index.map(g.q_since_launch.max())
-    out["peak_at_last_quarter"] = (out.peak_q == last_q).fillna(False).astype(bool)
-    out["low_volume"] = (out.peak_trx < LOW_VOLUME).fillna(False).astype(bool)
+    # peak_q is the first quarter that reaches the peak, so ties (Iclusig, Lonsurf) resolve the same way every run
+    out["peak_trx"] = peak.peak_trx
+    out["peak_q"] = peak.peak_q
+    out["peak_confirmed"] = peak.peak_confirmed.reindex(out.index).fillna(False).astype(bool)
+    out["peak_at_last_quarter"] = (out.peak_q == peak.peak_window_end.reindex(out.index)).fillna(False).astype(bool)
+    out["low_volume"] = (g.trx.max().reindex(out.index) < LOW_VOLUME).fillna(False).astype(bool)
     out["suppressed_quarters"] = g.suppressed_rows.apply(lambda s: int((s > 0).sum()))
     # rule window Q3-Q20: the launch quarter is often partial, so Q0-Q2 are left out
     rule = final[final.q_since_launch > 2]

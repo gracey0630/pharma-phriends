@@ -203,7 +203,7 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 | q_since_launch (0–20), period, trx, trx_low, trx_high, trx_reported, suppressed_rows, imputed_share | sdud_quarterly + launch quarter. `trx` is the mid estimate; `imputed_share` documents how much of each quarter is imputed |
 | no_sdud_row | True when no NDC of the analog has an SDUD row that quarter; all TRx columns are then 0 |
 | provisional | Latest 2 SDUD quarters (incomplete); kept, but left out of the peak |
-| share_of_peak | trx ÷ max trx over Q0–Q20 (non-provisional) |
+| share_of_peak | trx ÷ the analog's **Q0–Q28 peak** (max trx over complete quarters Q0–Q28, read from every SDUD quarter, not only these rows; decision 2026-11-14). Without the full Q0–Q28 window (`peak_confirmed` false in analog_features) the peak is the highest quarter so far, so share_of_peak is an upper bound: show it as "≤ X, peak not confirmed" |
 | label_expansion_flag | indication_history: on from the first possible label expansion |
 | trx_per_1k_enrollees | Not built: v1 flags enrollment shocks instead of normalizing |
 
@@ -214,8 +214,9 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 |---|---|
 | route_group, therapeutic_area (ATC 1), class_broad (ATC 3), class_narrow (ATC 4) | candidate_pool, RxClass |
 | line_of_therapy, dosing_frequency, n_competitors_at_launch | analog_evidence, **approved values only**; blank until reviewed |
-| launch_quarter, launch_source, quarters_approval_to_launch, quarters_of_data, peak_trx, peak_q, peak_at_last_quarter | sdud_quarterly, launch_curves |
-| **Data quality:** low_volume (peak < 300 TRx a quarter), suppressed_quarters, hidden_quarters_after_q2 (every row suppressed), no_row_quarters_after_q2, imputed_share (Q3–Q20, mid; the enough-data rule) with imputed_share_low / imputed_share_high, provisional_quarters, ndc_match_issues, fields_not_approved | launch_curves, ndc_map, analog_evidence |
+| launch_quarter, launch_source, quarters_approval_to_launch, quarters_of_data | sdud_quarterly, launch_curves |
+| peak_trx, peak_q, peak_confirmed, peak_at_last_quarter | sdud_quarterly: the Q0–Q28 peak share_of_peak divides by (first quarter reaching it); `peak_confirmed` = the full Q0–Q28 window is in the data; `peak_at_last_quarter` = the peak is Q28, or the latest complete quarter if the window isn't full (still climbing) |
+| **Data quality:** low_volume (highest TRx in the Q0–Q20 fit window < 300 a quarter), suppressed_quarters, hidden_quarters_after_q2 (every row suppressed), no_row_quarters_after_q2, imputed_share (Q3–Q20, mid; the enough-data rule) with imputed_share_low / imputed_share_high, provisional_quarters, ndc_match_issues, fields_not_approved | launch_curves, ndc_map, analog_evidence |
 | **Distortion flags:** label_expansion_in_window (over-flags: counts every efficacy supplement), generic_entry_in_window, enrollment_shock_in_window (names the shocks), late_launch (> 4 quarters from approval: route added later or delayed launch), multi_route (counts out-of-scope routes such as IV), rems, limited_distribution (blank until label reads) | indication_history, analogs, medicaid_enrollment, candidate_pool, analog_evidence |
 | enough_data | Derived (rule above) |
 
@@ -237,7 +238,7 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 | `analog_recommendations` | scenario × analog | filter_pass, similarity_score, agent_rank, reasoning, evidence_links, approved | Code filters + scores; agent re-ranks; forecaster approves 3–5 (step 2) |
 | `market_size` | scenario | entry_order, n_entrants_low/high, alpha_low/high, peak_share_low/base/high, differentiation_adj + reason, M_low/base/high | Forecaster inputs + Zipf code (step 3) |
 | `epi_funnel` (optional) | indication × step | stage, low/base/high, source_url, source_file, source_type | Manual from SEER / CDC / literature (step 3) |
-| `bass_fits` | analog | p, q, m, n_points, fit_quality (R²), weak_fit_flag, low_volume, dropped | Code from launch_curves (step 4). Built ahead for every analog with enough data: cumulative Bass m·F(t) fitted to share_of_peak (mid estimate); weak = R² < 0.9 or p, q or m on an arbitrary bound; low_volume shown next to the fit, since a weak fit at low volume is mostly counting noise |
+| `bass_fits` | analog | p, q, m, n_points, fit_quality (R²), weak_fit_flag, low_volume, dropped | Code from launch_curves (step 4). Built ahead for every analog with enough data: cumulative Bass m·F(t) fitted to share_of_peak (mid estimate) on Q0–Q20, so m is the share of the Q0–Q28 peak at saturation (bounds 0.1–5); weak = R² < 0.9 or p, q or m on an arbitrary bound; low_volume shown next to the fit, since a weak fit at low volume is mostly counting noise |
 | `analog_weights` | scenario × analog | weight, reasoning | Agent recommends, code computes (step 4) |
 
 ---

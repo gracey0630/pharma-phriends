@@ -54,8 +54,15 @@ def funnel(lines, features, fits):
                  f"{left.label_expansion_in_window.sum()} `label_expansion_in_window`, "
                  f"{(left.enrollment_shock_in_window != '').sum()} with an enrollment shock in Q0-Q12.")
     lines.append(f"\nLaunch quarter source: {f.launch_source.value_counts().to_dict()}.")
-    _section(lines, "Peak at the last quarter of data (still climbing)", left.analog_id[left.peak_at_last_quarter],
-             "Among analogs with enough data. Their share_of_peak ends at 1.0 and the fitted m is above 1.")
+    lines.append(f"\nPeak for share_of_peak = Q0-Q28: {left.peak_confirmed.sum()} of {len(left)} have the full window "
+                 f"(`peak_confirmed`); for the other {(~left.peak_confirmed).sum()} it's the peak so far, so their "
+                 "share_of_peak is an upper bound.")
+    _section(lines, "Peak not confirmed (less than the full Q0-Q28 window)", left.analog_id[~left.peak_confirmed],
+             "Among analogs with enough data. Use their shape (p, q); show share of peak as '<= X'.")
+    _section(lines, "Peak at the last quarter of the peak window (still climbing)",
+             left.analog_id[left.peak_at_last_quarter],
+             "Among analogs with enough data: the highest quarter is Q28, or the latest complete quarter for analogs "
+             "without the full window.")
     weak = fits[fits.weak_fit_flag]
     _section(lines, "Weak Bass fits", weak.analog_id,
              f"R^2 < 0.9 or a parameter on its bound; {len(fits)} analogs fitted, "

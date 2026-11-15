@@ -4,7 +4,8 @@ Convention (decision 2026-10-22): share_of_peak is treated as the share of event
 with the cumulative Bass curve m * F(t), t = quarters since launch + 1 (end of quarter):
     F(t) = (1 - exp(-(p + q) t)) / (1 + (q / p) exp(-(p + q) t))
 Strictly, Bass models new adopters and TRx counts everyone on therapy; state this wherever the fits are shown.
-m (share of the Q0-Q20 peak at saturation) is fitted too, so curves still climbing at Q20 can end above 1.
+m (share of the Q0-Q28 peak at saturation, decision 2026-11-14) is fitted too: below 1 when the curve keeps rising
+after Q20, above 1 when it is still climbing at the end of the peak window.
 
 Fitted for analogs with enough_data, on non-provisional quarters: trx is the mid estimate, with suppressed rows
 imputed and quarters with no SDUD row at 0 (pipeline.curves). weak_fit_flag: R^2 < WEAK_R2 (often curves that
@@ -22,7 +23,7 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import curve_fit
 
-BOUNDS = ([1e-4, 0.0, 0.5], [0.5, 2.0, 5.0])  # p, q, m
+BOUNDS = ([1e-4, 0.0, 0.1], [0.5, 2.0, 5.0])  # p, q, m; m's floor is low because the Q0-Q28 peak can be well above Q0-Q20
 STARTS = [(0.01, 0.1), (0.01, 0.5), (0.05, 0.3), (0.1, 0.1)]
 WEAK_R2 = 0.9
 
