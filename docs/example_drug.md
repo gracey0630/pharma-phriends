@@ -3,7 +3,7 @@
 > **Status: agreed by the team** · 2026-10-27 · Christina · logged in [decisions.md](decisions.md)
 > The example drug for the demo: a fictional drug to run the tool end to end (user journey steps 1–5). The name and molecule are invented; check that neither matches a real product before using them in slides.
 
-**Data:** `data/processed/` on `main` at `1bc6134` (ATC class fix). EDA references are the write-ups on the `eda` branch (`eda/eda_*.md`).
+**Data:** `data/processed/` on `main` at `062a1d7` (Q0–Q28 peak, 2026-11-14). EDA references are the write-ups on the `eda` branch (`eda/eda_*.md`).
 
 ## Summary
 
