@@ -41,9 +41,16 @@ python -m analog_finder.io --scenario torevia          # merged config + what lo
 Without `GEMINI_API_KEY` in `.env` the finder uses a fake model and still runs. With a key, also set `GEMINI_MODEL`.
 On Apple silicon, build the venv from a native Python: `.venv/bin/python -c "import platform; print(platform.machine())"` should print `arm64`. An Intel Anaconda install prints `x86_64`, and then some packages (e.g. `cryptography`, needed by google-genai) try to build from source and fail.
 
+Run the finder (steps 2–7; offline, no API key):
+```bash
+python -m analog_finder.finder --scenario torevia                 # interactive: confirm / reject the top 5
+python -m analog_finder.finder --scenario torevia --auto-confirm  # take the top 5 as ranked
+python -m analog_finder.finder --scenario torevia --holdout latuda_oral --auto-confirm   # evaluation-style run
+```
+Outputs: `data/scenarios/torevia/` (`analog_recommendations.csv`, `analog_weights.csv`, `uptake_curve.csv`); `--until filters|embed|score|loop` stops early; `--resume` continues a saved session.
+
 Planned commands, as the steps land:
 ```bash
-python -m analog_finder.finder --scenario torevia      # finder (CLI), outputs in data/scenarios/torevia/
 python -m analog_finder.research --analogs latuda_oral # label research agent
 streamlit run analog_finder/app/Home.py                # review page + finder page
 ```

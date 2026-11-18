@@ -77,3 +77,18 @@ def test_holdout_writes_to_its_own_folder(run_cli):
     log = pd.read_csv(out / "torevia-holdout-o01_oral" / "analog_recommendations.csv")
     assert "o01_oral" not in set(log.analog_id)
     assert not (out / "torevia").exists()
+
+
+def test_full_run_writes_weights_and_curve(run_cli):
+    state, text, out = run_cli("--auto-confirm")
+    w = pd.read_csv(out / "torevia" / "analog_weights.csv")
+    u = pd.read_csv(out / "torevia" / "uptake_curve.csv")
+    assert list(w.analog_id) == state["queue"].confirmed and w.weight.sum() == pytest.approx(1)
+    assert list(u.quarter) == list(range(21))
+    assert ((u.band_min <= u.weighted_share_of_peak + 1e-9) & (u.weighted_share_of_peak <= u.band_max + 1e-9)).all()
+    assert "Caveats:" in text and "Bass fits of the confirmed analogs" in text
+
+
+def test_until_loop_skips_the_curve(run_cli):
+    state, _, out = run_cli("--auto-confirm", "--until", "loop")
+    assert "weights" not in state and not (out / "torevia" / "analog_weights.csv").exists()
