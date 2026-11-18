@@ -14,7 +14,7 @@ Re-download FDA and CMS files right before any final build (`python -m pipeline.
 | ndc | 2 | 2026-10-30 |
 | nme | 1 | 2026-10-30 |
 | purple_book | 1 | 2026-10-30 |
-| rxclass | 1 | 2026-10-31 |
+| rxclass | 1 | 2026-11-17 |
 | sdud | 17 | 2026-10-31 |
 
 ## Pool after each rule
@@ -30,7 +30,7 @@ Applied in order. Not applied here (flags only): `low_volume`, `multi_route` (co
 
 Of those 261: 50 `low_volume` (peak < 300 TRx a quarter), 14 `multi_route`, 145 `label_expansion_in_window`, 237 with an enrollment shock in Q0-Q12.
 
-Launch quarter source: {'first sdud quarter': 406}.
+Launch quarter source: {'first sdud quarter': 403, 'evidence': 3}.
 
 Peak for share_of_peak = Q0-Q28: 164 of 261 have the full window (`peak_confirmed`); for the other 97 it's the peak so far, so their share_of_peak is an upper bound.
 
@@ -123,10 +123,10 @@ Each route group is its own analog; check which one launched first.
 - sdud labeler + name: 2
 
 ## Label-read values (data/reference/analog_evidence.csv)
-31 values for 8 analogs; 0 approved, 31 waiting for review.
+31 values for 8 analogs; 27 approved, 4 waiting for review.
 
-### Analogs with unapproved values (8)
-`cosentyx_sc`, `ibrance_oral`, `otezla_oral`, `siliq_sc`, `skyrizi_sc`, `sotyktu_oral`, `taltz_sc`, `tremfya_sc`
+### Analogs with unapproved values (4)
+`otezla_oral`, `skyrizi_sc`, `sotyktu_oral`, `tremfya_sc`
 
 ### Launch date vs first SDUD Rx quarter differ by > 1 quarter (1)
 `ibrance_oral`

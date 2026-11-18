@@ -28,7 +28,7 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - Secrets in `.env` (gitignored); see `.env.example`
 
 ## Status & handoff
-**Last update: 2026-11-14 (Grace, `main`).** Keep "Current state" current; add a dated line to the log when you hand off.
+**Last update: 2026-11-17 (Christina, branch `c/seed-review`).** Keep "Current state" current; add a dated line to the log when you hand off.
 
 ### Current state
 **What exists** (`data/processed/`, specs in [data_model.md](docs/data_model.md)):
@@ -37,7 +37,7 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - `launch_curves.csv`: TRx and share of peak, Q0–Q20; share of the Q0–Q28 peak. `analog_features.csv`: launch quarter, peak (`peak_confirmed`), data quality, distortion flags, `enough_data`. `bass_fits.csv`: p, q, m for the 268 analogs with enough data.
 - `indication_history.csv`: possible label expansions. `medicaid_enrollment.csv`: enrollment by quarter with shock windows.
 - `checks.md`: validation report. **261 analogs** pass the rules code can apply (213 oral, 48 sc); it also lists every NME brand left out of the pool, with the reason.
-- `data/reference/analog_evidence.csv`: label reads (line of therapy, dosing, launch date, # competitors) for the 8 seed brands (Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu, Ibrance). 31 values with quotes and links, **none approved yet**.
+- `data/reference/analog_evidence.csv`: label reads (line of therapy, dosing, launch date, # competitors) for the 8 seed brands (Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu, Ibrance). 31 values with quotes and links; **27 approved** (Gabrielle, 2026-10-26), 4 launch dates waiting (below). `python -m pipeline.labels --check` checks every label quote against its label.
 - Code: `pipeline/` (`fda`, `sdud`, `ndc`, `rxclass`, `enrollment`, `curves`, `features`, `bass`, `labels`, `build`, `checks`).
 
 **How to run**
@@ -48,8 +48,8 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - Label helper: `python -m pipeline.labels <ApplNo>` downloads the ORIG label and extracts its text.
 
 **Known issues** (details in `checks.md`)
-- **Label-read columns** are filled for the 8 seed brands only (blank for the other 418), and none are approved. Launch quarter is therefore the first SDUD quarter for every analog.
-- **Seed launch dates:** Cosentyx's wasn't found (sources say Jan or Mar 2015); some quotes come from trade-press excerpts (marked `[excerpt, verify]`) and need checking against the original release. Ibrance has one suppressed SDUD row in 2014Q2, before its 2015 approval.
+- **Label-read columns** are filled for the 8 seed brands only (blank for the other 418); 27 of their 31 values are approved and in `analog_features`. Launch quarter is the approved launch date for Taltz, Siliq and Ibrance (same quarter as before) and the first SDUD quarter for every other analog.
+- **Seed launch dates:** Cosentyx's wasn't found (sources say Jan or Mar 2015). Otezla, Tremfya, Skyrizi and Sotyktu rest on pre-launch statements ("expected to be available", marked `[excerpt, verify]`); Medicaid data agrees within a quarter, but they stay unapproved until an actual launch announcement is found. Ibrance has one suppressed SDUD row in 2014Q2, before its 2015 approval (`checks.md` flags its launch date vs. first SDUD quarter).
 - **SC pool includes clinic-administered products** (e.g. Prolia, Evenity, Leqvio). No flag yet.
 - **Out of the pool for now:** 16 injectables Drugs@FDA lists only as `INJECTABLE;INJECTION` (e.g. Tanzeum, Winrevair), until their labels are read; Belviq (withdrawn, no route anywhere).
 - **Late launches:** `late_launch` flags 19 analogs whose first Medicaid quarter is > 1 year after approval: the route came later (e.g. `entyvio_sc`, `actemra_sc`) or Medicaid uptake started late (e.g. `fycompa_oral`). `checks.md` lists 15 by start marketing date instead.
@@ -63,8 +63,12 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - **Empty on purpose:** `cost per unit` (empty for now), `market size` and `fills per patient` (dropped). Whether to remove the dropped columns is an open question.
 
 **Pick up here**
-1. **C, review:** approve or fix the 31 seed values in `analog_evidence.csv` (set `approved=true`, `approved_by=<name>`), then rebuild.
-2. **C, extend:** label reads for the rest of the pool, starting with the 261 analogs left in the `checks.md` funnel. Add `analog_id`, `field`, `value`, `quote`, `source_url` rows with `approved=false`.
+1. **C, labels** (the bottleneck for analog matching: the EDA found class and area don't predict uptake, so line of therapy, competition and dosing have to; see [data_model.md](docs/data_model.md#label-reads-plan)):
+   1. **Finish the seed 8:** find actual launch announcements for Otezla, Tremfya, Skyrizi, Sotyktu, and Cosentyx's launch date.
+   2. **Example drug's analogs first:** 4 fields each for Torevia's 5 analogs (Latuda, Rexulti, Vraylar, Caplyta, Lybalvi), then the 41 usable nervous-system analogs.
+   3. **Extend** to the rest of the 261 usable analogs.
+   4. **Other label reads:** self-injected vs clinic-given for every sc analog (self-administered flag); route of the 16 `INJECTABLE;INJECTION` brands; approval letters for efficacy supplements (which ones added an indication).
+2. **C, review process:** new rows go in with `approved=false`; run `python -m pipeline.labels --check` before review, so the reviewer only judges whether each value fits its quote. Launch dates and competitor counts aren't label quotes and need a person to check the source.
 3. **B:** add same-class competitors and `units_per_rx` to SDUD.
 4. **A/D:** add a self-administered flag (or exclude clinic-administered SC drugs). Decide what to do with the missing ATC classes. Read the route of the 16 injectables to bring the sc ones into the pool.
 5. **EDA:** owners rerun their notebooks on the new tables and update their write-ups (`launch_eda` is done). `pool_funnel`, `suppression` and the `volume_vs_shape` simulation still use the old blank-quarter rule and need their owners' updates. Notebooks that read `share_of_peak` (`launch_eda`, `analog_similarity`, `volume_vs_shape`) shift with the Q0–Q28 peak (2026-11-14) once `main` is merged into `eda`.
@@ -72,6 +76,8 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 
 ### Log
 Newest first.
+- **2026-11-17, `main` merged into `c/seed-review` (Christina):** resolved PR #6's conflicts. `data/processed/` taken from `main` (suppression imputation, Q0–Q28 peak), then rebuilt from the 2026-10-30/31 raw pulls so the 27 approved seed values reach `analog_features` and `checks.md`. Only the 8 seed analogs' rows changed; curves and Bass fits are unchanged (the approved launch dates fall in the same quarter as before). The branch's own 2026-10-26 rebuild was superseded; its newer NDC listings were already on `main`. Pick-up list and label-reads plan updated for the chosen example drug and the 261-analog pool.
+- **2026-10-26, seed label review (Gabrielle, `c/seed-review`):** approved 27 of the 31 seed values after checking each against its source (all 16 label quotes verbatim in the ORIG labels; Taltz, Siliq, Ibrance launch dates from company statements; competitor counts against Drugs@FDA dates). Taltz launch date now sourced from Lilly's SEC filing; Ilumya and Cimzia dates corrected in the competitor quotes. Added `python -m pipeline.labels --check`.
 - **2026-11-14, Q0–Q28 peak (Grace, `main`):** `share_of_peak` now divides by the Q0–Q28 peak, not the Q0–Q20 peak (decisions.md 2026-11-14; EDA `peak_window` §5). New `peak_confirmed` flag: 164 of 261 usable analogs have the full window; the other 97 show share of peak as an upper bound. Bass is still fitted on Q0–Q20: p and q unchanged for 86–90% of analogs, median m 1.00 → 0.89, m's floor 0.5 → 0.1, weak fits 107 → 106 (Farxiga no longer on a bound). Year-3 share for the demo analogs: Latuda 0.37, Rexulti 0.59, Vraylar 0.19, Caplyta ≤ 0.54, Lybalvi ≤ 0.80 (`example_drug.md`). Only `launch_curves`, `analog_features`, `bass_fits` and `checks.md` were rebuilt, from the committed upstream tables, because my `data/raw/` is older than the 2026-10-30/31 pulls; a full `--refresh` build gives the same peak rule.
 - **2026-11-01, suppression rebuild and EDA rerun (Christina, `main`):** suppressed SDUD rows are now imputed at 5 Rx and no row = 0 TRx (decisions.md 2026-10-30). Rebuilt from sources pulled 2026-10-30/31, not a final `--refresh`. 250 → 261 usable analogs, 256 → 268 Bass fits. The first-wave HCV orals return, so anti-infective stats shift sharply (median R² 0.83 → 0.32); the 5 demo analogs barely move. EDA findings hold except that class medians are now about level with the overall median, not worse. Oncology is 37 of 64 weak fits (was 41 of 62).
 - **2026-10-27, example drug (Christina, `main`):** the team agreed on the demo's example drug, Torevia (velapiprazole): a fictional oral antipsychotic for adult schizophrenia, 7th branded entrant, launching 2027-01. Profile, expected analogs (Latuda, Rexulti, Vraylar, Caplyta, Lybalvi), illustrative ceiling inputs and caveats in [docs/example_drug.md](docs/example_drug.md). Settles "one area or two" (decisions.md): one area, nervous system. Next: label reads for those 5 analogs.
