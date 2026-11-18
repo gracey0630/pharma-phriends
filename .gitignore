@@ -2,6 +2,8 @@
 data/raw/
 # analog finder embedding cache (rebuilt in minutes)
 data/cache/
+# finder runs with --holdout (evaluation); only the demo scenario outputs are committed
+data/scenarios/*-holdout-*/
 # secrets
 .env
 # python
