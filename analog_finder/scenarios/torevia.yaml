@@ -1,5 +1,32 @@
 # Torevia (velapiprazole): the demo's fictional example drug (docs/example_drug.md).
-# Step 2 adds the target-drug profile under `target`. Optional overrides of config/scoring.yaml:
+# Optional overrides of config/scoring.yaml:
 #   preferences: {<feature>: <weight>}   feature weights (D7); only the features named change
 #   config: {<key>: <value>}             any other scoring.yaml key, merged key by key
+#   weight_overrides: {<analog_id>: {weight: <0-1>, reason: <text>}}   fixed curve weights (D5, step 7)
 name: Torevia
+
+# Target-drug profile: keys follow the target_drug table in docs/data_model.md. Required: name, indication,
+# class_narrow (ATC 4), route_group. Spec: analog_finder/docs/components/target.md
+target:
+  name: Torevia
+  indication: TOREVIA is indicated for the treatment of schizophrenia in adults.
+  target_patient_definition: >-
+    Adults with schizophrenia on antipsychotic therapy who switch because of inadequate response or intolerance
+    (weight gain, metabolic effects, movement disorders) on a generic antipsychotic
+  class_narrow: N05AX Other antipsychotics   # a D2 / 5-HT1A partial agonist, like aripiprazole and brexpiprazole
+  class_broad: N05A Antipsychotics
+  therapeutic_area: N Nervous system
+  route_group: oral
+  dosage_form: TABLET
+  line_of_therapy: after at least one generic antipsychotic   # second line in practice
+  entry_order: 7                  # 7th branded novel antipsychotic
+  first_definition: not first in class, for the indication or at this line
+  expected_n_entrants: 8-10
+  n_competitors_at_launch: 6      # branded novel antipsychotics; generics are the standard of care
+  is_estimate: true               # entry_order and n_competitors_at_launch are pre-launch estimates
+  efficacy_safety_vs_soc: >-
+    Similar efficacy; less weight gain and fewer metabolic effects; low risk of movement disorders (EPS)
+  dosing_frequency: once daily
+  days_supply: 30
+  dosing_vs_alternatives: Same as most branded alternatives; simpler than Cobenfy (twice daily, titrated)
+  launch_date: 2027-01
