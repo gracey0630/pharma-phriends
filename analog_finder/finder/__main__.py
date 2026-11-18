@@ -1,15 +1,15 @@
 """Analog Finder command line: python -m analog_finder.finder --scenario torevia
 
-Runs the finder stage by stage (docs/implementation_plan.md, steps 2-7): target drug -> hard filters -> embeddings.
+Runs the finder stage by stage (docs/implementation_plan.md, steps 2-7): target drug -> hard filters -> embeddings -> scores.
 """
 import argparse
 import sys
 
 from analog_finder import io
-from analog_finder.finder import embed, filters
+from analog_finder.finder import embed, filters, rerank, score
 from analog_finder.finder.target import load_target
 
-STAGES = ["filters", "embed"]
+STAGES = ["filters", "embed", "score"]
 
 
 def parse_args(argv=None):
@@ -42,7 +42,24 @@ def run(args, tables=None, out=sys.stdout):
     emb = embed.embed(cands, evidence, target, tables["analog_features"], embed.get_embedder(name, cfg), cache)
     print(f"Embeddings: {len(emb['analog_ids'])} analogs + target ({name})", file=out)
     state.update(evidence=evidence, embedding=emb, embedder=name)
+    if args.until == "embed":
+        return state
+
+    scores = rerank.rerank(score.score(cands, emb, evidence, target, cfg["weights"]), target, cands)
+    state["scores"] = scores
+    print_ranking(scores, cands, out)
     return state
+
+
+def print_ranking(scores, cands, out, n=10):
+    """The top n with the per-feature breakdown (blank = feature not used for that analog)."""
+    names = cands.set_index("analog_id").drug_name
+    feats = [c for c in scores.columns if c.startswith("s_")]
+    print(f"\nTop {n} of {len(scores)} by similarity:", file=out)
+    print(f"{'rank':>4}  {'analog':<22}{'similarity':>10}  " + " ".join(f"{c[2:][:8]:>8}" for c in feats), file=out)
+    for r in scores.head(n).itertuples(index=False):
+        cells = " ".join(f"{'':>8}" if r._asdict()[c] != r._asdict()[c] else f"{r._asdict()[c]:8.2f}" for c in feats)
+        print(f"{r.rank:>4}  {names[r.analog_id]:<22}{r.similarity:10.3f}  {cells}", file=out)
 
 
 def main(argv=None):
