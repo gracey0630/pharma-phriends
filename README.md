@@ -31,14 +31,22 @@ python -m pipeline.build --refresh  # re-download every source first (do this be
 ```
 The first run downloads ~1 GB and takes about an hour, mostly SDUD at ~3.5 min per year. Later runs reuse `data/raw/` and take a few minutes. `data/processed/` is committed, so you only need to rebuild to refresh or change the data. Output tables and columns: [data_model.md](docs/data_model.md#v1-analog-table-current-spec). Current status and next steps: [CLAUDE.md](CLAUDE.md#status--handoff).
 
-## Analog Finder (planned)
-Not built yet. It will live in `analog_finder/`, read `data/processed/`, and run in two stages: a Label Research Agent that reads approved sources and writes unapproved evidence rows for review, and the finder that ranks analogs for a target drug, has the forecaster confirm 3–5, and builds a similarity-weighted uptake curve. Planned commands:
+## Analog Finder (in progress)
+Lives in `analog_finder/`, reads `data/processed/`, and runs in two stages: a Label Research Agent that reads approved sources and writes unapproved evidence rows for review, and the finder that ranks analogs for a target drug, has the forecaster confirm 3–5, and builds a similarity-weighted uptake curve. Plan and build order: [implementation_plan.md](docs/implementation_plan.md); one spec per component in `analog_finder/docs/components/`.
+```bash
+pip install -r analog_finder/requirements.txt          # includes the pipeline's requirements
+pytest analog_finder/tests                             # offline; no API key needed
+python -m analog_finder.io --scenario torevia          # merged config + what loads (step 1)
+```
+Without `GEMINI_API_KEY` in `.env` the finder uses a fake model and still runs. With a key, also set `GEMINI_MODEL`.
+If `pip` tries to build `cryptography` from source (an x86_64 Python on Apple silicon, e.g. under Rosetta), install a prebuilt one first: `pip install --only-binary=cryptography "cryptography<50"`.
+
+Planned commands, as the steps land:
 ```bash
 python -m analog_finder.finder --scenario torevia      # finder (CLI), outputs in data/scenarios/torevia/
 python -m analog_finder.research --analogs latuda_oral # label research agent
 streamlit run analog_finder/app/Home.py                # review page + finder page
 ```
-It has its own `analog_finder/requirements.txt`. Plan and build order: [implementation_plan.md](docs/implementation_plan.md).
 
 ## Working together
 - Workstreams (0, A–E) and what each owns: [data_model.md](docs/data_model.md#workstreams).

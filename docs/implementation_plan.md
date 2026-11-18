@@ -405,8 +405,8 @@ These are the handoffs between modules, and changing one breaks the step downstr
 
 | Handoff | From → to | Shape |
 | --- | --- | --- |
-| Merged config | `io.load_config` → all | dict: `filters`, `weights` (feature → float), `top_k`, `embedder`, `paths` |
-| Approved evidence (wide) | `io` → embed, score, summarize | one row per `analog_id`; columns `line_of_therapy`, `dosing_frequency`, `launch_date`, `n_competitors`, each with `<field>_quote` and `<field>_url`; NaN when not approved |
+| Merged config | `io.load_config` → all | dict: `filters`, `weights` (feature → float), `top_k`, `embedder`, `embedding_models`, `paths` (absolute), `scenario` |
+| Approved evidence (wide) | `io` → embed, score, summarize | one row per `analog_id` (the index); columns `line_of_therapy`, `dosing_frequency`, `launch_date`, `n_competitors_at_launch` (the evidence field names), each with `<field>_quote` and `<field>_url`; NaN when not approved |
 | `Target` | `target.py` → filters, embed, score, summarize | `name`, `indication_text`, `atc4`, `atc3`, `area`, `route_group`, `dosage_form`, optional `line_of_therapy`, `dosing_frequency`, `n_competitors` (+ `is_estimate`), `order_of_entry`, `preferences` |
 | Candidate table | `filters.py` → embed, score | one row per usable analog in the route group: `analog_id`, `drug_name`, `atc4`, `atc3`, `area`, `route_group`, plus flags `warn_label_expansion`, `warn_multi_route`, `low_volume`, `peak_not_confirmed`, `weak_bass_fit` |
 | Profile text | `embed.build_profile_text` | `str`, same template for target and analogs; fields with no approved value are omitted |
@@ -417,7 +417,7 @@ These are the handoffs between modules, and changing one breaks the step downstr
 | Uptake curve | `curve.py` → `uptake_curve.csv` | `quarter` (0–20), `weighted_share_of_peak`, `band_min`, `band_max`, `n_analogs` |
 | Summary card | `summarize.py` → CLI, app | `analog_id`, `headline`, `similarities[]`, `differences[]`, `score_breakdown`, `flags[]`, `sources[]` (quote, url), `generated_by` (gemini / template) |
 | Evidence row | `research/` → `analog_evidence.csv` | existing columns from `pipeline/build.py`, plus `quote`, `source_url`, `source_type`, `quote_check` (verbatim / partial / not_checked), `extracted_by` (agent / seed / human), `approved`, `approved_by`, `approved_at` |
-| LLM | `llm.py` → extract, summarize | `.generate_json(prompt, schema) -> dict`; `FakeLLM` returns fixed fixtures by prompt type |
+| LLM | `llm.py` → extract, summarize | `.generate_json(prompt, schema) -> dict`, `.name`; the schema's `title` names the prompt type; `FakeLLM` returns fixed fixtures by that title (a schema skeleton when there is none); `LLMError` when an answer lacks the schema's required keys |
 
 ## Evaluation
 
