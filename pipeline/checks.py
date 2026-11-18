@@ -26,17 +26,32 @@ def _section(lines, title, ids, note=""):
         lines.append(", ".join(f"`{i}`" for i in sorted(ids)))
 
 
-def funnel(lines, features, fits):
-    """How many analogs are left after each rule code can apply today, in order."""
+def funnel_steps(features):
+    """The pool rules code can apply today, in order: [(name, boolean Series)]. Shared by the checks.md funnel
+    and the Analog Finder's hard filters (analog_finder/finder/filters.py), so "usable" has one definition."""
     f = features
-    steps = [
+    return [
         ("All analogs (NME / new BLA, approved 2010+, oral or sc)", pd.Series(True, index=f.index)),
         ("Has a launch quarter (any SDUD row)", f.launch_quarter.notna()),
         ("Launch within 1 year of approval (not `late_launch`)", ~f.late_launch.fillna(False).astype(bool)),
-        ("No generic / biosimilar in Q0-Q12", ~f.generic_entry_in_window.astype(bool)),
+        ("No generic / biosimilar in Q0-Q12", ~f.generic_entry_in_window.fillna(False).astype(bool)),
         (f"Enough data (>= {ENOUGH_QUARTERS} quarters, <= {MAX_IMPUTED_SHARE:.0%} of Q3-Q20 TRx imputed)",
-         f.enough_data.astype(bool)),
+         f.enough_data.fillna(False).astype(bool)),
     ]
+
+
+def usable(features):
+    """True for analogs that pass every funnel rule: the "usable" analogs (261 in the current build)."""
+    keep = pd.Series(True, index=features.index)
+    for _, rule in funnel_steps(features):
+        keep &= rule
+    return keep
+
+
+def funnel(lines, features, fits):
+    """How many analogs are left after each rule code can apply today, in order."""
+    f = features
+    steps = funnel_steps(f)
     lines.append("\n## Pool after each rule")
     lines.append("Applied in order. Not applied here (flags only): `low_volume`, `multi_route` (counts IV forms added "
                  "later), `label_expansion_in_window` (counts every efficacy supplement), `enrollment_shock_in_window`, "
