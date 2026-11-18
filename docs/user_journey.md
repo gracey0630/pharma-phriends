@@ -17,6 +17,7 @@
 - **Pharmacy-dispensed, self-administered products** (oral or self-injected). Clinic-administered drugs are out of scope because our data barely covers them.
 - **Unit of analysis: dispensed prescriptions** (not shipments). One analog = one brand × route group.
 - **Payer population:** analog curves come from Medicaid dispensing data (Medicare Part D is used for cross-checks), so they may differ from commercial behavior. Any curve we show states this.
+- **Medicaid data reading (not confirmed with CMS):** a quarter with no SDUD row means 0 prescriptions, and a suppressed row holds fewer than 11.
 
 ## Two questions for leadership
 - **How big can the launch be (ceiling)?** Epi funnel

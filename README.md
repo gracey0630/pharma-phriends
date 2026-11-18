@@ -30,8 +30,8 @@ The first run downloads ~1 GB and takes about an hour, mostly SDUD at ~3.5 min p
 
 ## Working together
 - Workstreams (0, A–E) and what each owns: [data_model.md](docs/data_model.md#workstreams).
-- Branch per task, named `<workstream>/<topic>` (e.g. `b/sdud-ndc-map`); merge to `main` through a PR.
-- If your change affects a rule, table or journey step, update the doc in the same PR.
+- Small tasks (doc edits, a few evidence rows, small fixes) go straight to `main`: pull first, commit small, push. Bigger work (multi-day, new `pipeline/` modules, rule changes, rebuilding `data/processed/`) gets a branch named `<workstream>/<topic>` and a PR. Details in [CLAUDE.md](CLAUDE.md#workflow).
+- If your change affects a rule, table or journey step, update the doc in the same commit or PR.
 - Settled an open question? Add it to the log in [decisions.md](docs/decisions.md) and remove it from the list.
 
 ## Layout

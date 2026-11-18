@@ -4,14 +4,18 @@ Convention (decision 2026-10-22): share_of_peak is treated as the share of event
 with the cumulative Bass curve m * F(t), t = quarters since launch + 1 (end of quarter):
     F(t) = (1 - exp(-(p + q) t)) / (1 + (q / p) exp(-(p + q) t))
 Strictly, Bass models new adopters and TRx counts everyone on therapy; state this wherever the fits are shown.
-m (share of the Q0-Q20 peak at saturation) is fitted too, so curves still climbing at Q20 can end above 1.
+m (share of the Q0-Q28 peak at saturation, decision 2026-11-14) is fitted too: below 1 when the curve keeps rising
+after Q20, above 1 when it is still climbing at the end of the peak window.
 
-Fitted for analogs with enough_data, on non-provisional, non-blank quarters. weak_fit_flag: R^2 < WEAK_R2
-(often curves that rise and fall, e.g. HCV cures) or a parameter on an arbitrary bound (see on_bound; often
-curves still climbing at Q20, where m is unidentified). dropped is for the step-4 review (always False here).
+Fitted for analogs with enough_data, on non-provisional quarters: trx is the mid estimate, with suppressed rows
+imputed and quarters with no SDUD row at 0 (pipeline.curves). weak_fit_flag: R^2 < WEAK_R2 (often curves that
+rise and fall, e.g. HCV cures) or a parameter on an arbitrary bound (see on_bound; often curves still climbing at
+Q20, where m is unidentified). low_volume (from analog_features): peak TRx below LOW_VOLUME a quarter, where
+counting noise alone gives a low R^2, so a weak fit says little about the shape. dropped is for the step-4 review
+(always False here).
 
 Output: data/processed/bass_fits.csv, one row per fitted analog: analog_id, p, q, m, n_points, fit_quality (R^2),
-        weak_fit_flag, dropped
+        weak_fit_flag, low_volume, dropped
 """
 import warnings
 
@@ -19,7 +23,7 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import curve_fit
 
-BOUNDS = ([1e-4, 0.0, 0.5], [0.5, 2.0, 5.0])  # p, q, m
+BOUNDS = ([1e-4, 0.0, 0.1], [0.5, 2.0, 5.0])  # p, q, m; m's floor is low because the Q0-Q28 peak can be well above Q0-Q20
 STARTS = [(0.01, 0.1), (0.01, 0.5), (0.05, 0.3), (0.1, 0.1)]
 WEAK_R2 = 0.9
 
@@ -69,5 +73,7 @@ def build(curves, features):
         rows.append({"analog_id": a, "p": round(p, 5), "q": round(q, 4), "m": round(m, 3), "n_points": len(c),
                      "fit_quality": round(r2, 4), "weak_fit_flag": bool(r2 < WEAK_R2 or on_bound((p, q, m))),
                      "dropped": False})
-    cols = ["analog_id", "p", "q", "m", "n_points", "fit_quality", "weak_fit_flag", "dropped"]
-    return pd.DataFrame(rows, columns=cols)
+    out = pd.DataFrame(rows)
+    out["low_volume"] = out.analog_id.map(features.set_index("analog_id").low_volume).astype(bool)
+    cols = ["analog_id", "p", "q", "m", "n_points", "fit_quality", "weak_fit_flag", "low_volume", "dropped"]
+    return out.reindex(columns=cols)
