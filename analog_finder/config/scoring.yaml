@@ -1,0 +1,37 @@
+# Analog Finder defaults (docs/implementation_plan.md). A scenario overrides any key it names
+# (analog_finder/scenarios/<scenario>.yaml): `preferences` for feature weights, `config` for anything else.
+# Keys a scenario doesn't name keep these values.
+
+# How many candidates are shown at once (D3).
+top_k: 5
+
+# Text embedder for the profile-text similarity: tfidf | rxbert. Step 9 sets the default from the evaluation.
+embedder: tfidf
+embedding_models:
+  rxbert: seldas/rxbert-v1
+
+# Hard filters (D1, D2), applied in step 3.
+filters:
+  usable_only: true        # only analogs that pass the checks.md funnel (enough data, no generic entry, no late launch)
+  match_route_group: true  # only analogs in the target's route group
+
+# Feature weights in the hybrid similarity (D6, D7): similarity = sum(w_i * s_i) / sum(w_i), over the features
+# both the target and the analog have. PROVISIONAL until step 5 (scoring) confirms them; after that they change
+# only through an evaluation result logged in docs/decisions.md (steps 8, 9, 15).
+# ATC class and area are low (EDA: class medians don't beat the overall median).
+weights:
+  text: 1.0              # profile-text similarity (embedder above)
+  atc4: 0.25             # same ATC level 4 (class narrow)
+  atc3: 0.25             # same ATC level 3 (class broad)
+  area: 0.1              # same therapeutic area (ATC level 1)
+  line_of_therapy: 1.0   # approved evidence only (D8)
+  dosing_frequency: 1.0  # approved evidence only (D8)
+  n_competitors: 1.0     # # competitors at launch; approved evidence only (D8)
+  order_of_entry: 1.0
+
+# Where the finder reads and writes, relative to the repo root.
+paths:
+  processed: data/processed
+  reference: data/reference
+  scenarios_out: data/scenarios
+  cache: data/cache

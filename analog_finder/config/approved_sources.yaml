@@ -1,0 +1,41 @@
+# The approved-source list for the Label Research Agent (docs/data_sources.md, "Approved source list").
+# The agent fetches nothing that isn't on this list. Step 10 (research/sources.py) enforces it and settles how
+# hosts match (exact host or subdomains; redirects re-checked).
+# `row` is the source's number in the docs/data_sources.md table.
+
+sources:
+  - name: Original approval labels (ORIG), Drugs@FDA label PDFs
+    row: 6
+    hosts: [www.accessdata.fda.gov]
+    used_for: [line_of_therapy, dosing_frequency]
+
+  - name: ClinicalTrials.gov API v2
+    row: 7
+    hosts: [clinicaltrials.gov]
+    used_for: [line_of_therapy, n_competitors_at_launch]
+
+  - name: SEC EDGAR filings and full-text search
+    row: 8
+    hosts: [www.sec.gov, efts.sec.gov]
+    used_for: [launch_date]
+
+  - name: Company press releases
+    row: 8
+    # Company sites, added one by one as they're found (with the analog they're for). Empty until step 10.
+    hosts: []
+    used_for: [launch_date]
+
+  - name: FDA Novel Drug Approvals reports
+    row: 9
+    hosts: [www.fda.gov]
+    used_for: [first_in_class]
+
+  - name: FDA REMS list
+    row: 10
+    hosts: [www.accessdata.fda.gov]
+    used_for: [rems]
+
+  - name: Drugs@FDA (approval history, to check competitors' approval dates)
+    row: 2
+    hosts: [www.accessdata.fda.gov, www.fda.gov]
+    used_for: [n_competitors_at_launch]

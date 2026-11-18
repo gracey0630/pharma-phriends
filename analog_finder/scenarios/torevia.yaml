@@ -1,0 +1,5 @@
+# Torevia (velapiprazole): the demo's fictional example drug (docs/example_drug.md).
+# Step 2 adds the target-drug profile under `target`. Optional overrides of config/scoring.yaml:
+#   preferences: {<feature>: <weight>}   feature weights (D7); only the features named change
+#   config: {<key>: <value>}             any other scoring.yaml key, merged key by key
+name: Torevia
