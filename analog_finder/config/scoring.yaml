@@ -27,7 +27,8 @@ weights:
   line_of_therapy: 1.0   # approved evidence only (D8)
   dosing_frequency: 1.0  # approved evidence only (D8)
   n_competitors: 1.0     # # competitors at launch; approved evidence only (D8)
-  order_of_entry: 1.0
+  order_of_entry: 0.0     # not scored for analogs in v1 (pool starts in 2010; score.md); 0 until label reads
+                         # supply an analog value, so the config doesn't suggest it counts
 
 # Where the finder reads and writes, relative to the repo root.
 paths:
