@@ -9,6 +9,9 @@ Helps a forecasting team choose and defend the two inputs a launch forecast depe
 | [docs/data_sources.md](docs/data_sources.md) | What to pull, from where, and when to check it's current |
 | [docs/data_model.md](docs/data_model.md) | Tables, dependencies, workstreams, build status |
 | [docs/decisions.md](docs/decisions.md) | Decision log and open questions |
+| [docs/implementation_plan.md](docs/implementation_plan.md) | How the Analog Finder is built: steps, agreed decisions, module contracts, final checks |
+| [docs/example_drug.md](docs/example_drug.md) | Torevia, the fictional example drug the demo runs on |
+| [docs/archive/](docs/archive/) | Earlier versions of the docs above |
 | [CLAUDE.md](CLAUDE.md) | Short project briefing (loaded automatically by Claude Code; useful for anyone) |
 
 ## Setup
@@ -28,9 +31,18 @@ python -m pipeline.build --refresh  # re-download every source first (do this be
 ```
 The first run downloads ~1 GB and takes about an hour, mostly SDUD at ~3.5 min per year. Later runs reuse `data/raw/` and take a few minutes. `data/processed/` is committed, so you only need to rebuild to refresh or change the data. Output tables and columns: [data_model.md](docs/data_model.md#v1-analog-table-current-spec). Current status and next steps: [CLAUDE.md](CLAUDE.md#status--handoff).
 
+## Analog Finder (planned)
+Not built yet. It will live in `analog_finder/`, read `data/processed/`, and run in two stages: a Label Research Agent that reads approved sources and writes unapproved evidence rows for review, and the finder that ranks analogs for a target drug, has the forecaster confirm 3–5, and builds a similarity-weighted uptake curve. Planned commands:
+```bash
+python -m analog_finder.finder --scenario torevia      # finder (CLI), outputs in data/scenarios/torevia/
+python -m analog_finder.research --analogs latuda_oral # label research agent
+streamlit run analog_finder/app/Home.py                # review page + finder page
+```
+It has its own `analog_finder/requirements.txt`. Plan and build order: [implementation_plan.md](docs/implementation_plan.md).
+
 ## Working together
 - Workstreams (0, A–E) and what each owns: [data_model.md](docs/data_model.md#workstreams).
-- Small tasks (doc edits, a few evidence rows, small fixes) go straight to `main`: pull first, commit small, push. Bigger work (multi-day, new `pipeline/` modules, rule changes, rebuilding `data/processed/`) gets a branch named `<workstream>/<topic>` and a PR. Details in [CLAUDE.md](CLAUDE.md#workflow).
+- Small tasks (doc edits, a few evidence rows, small fixes) go straight to `main`: pull first, commit small, push. Bigger work (multi-day, new `pipeline/` modules, rule changes, rebuilding `data/processed/`) gets a branch named `<workstream>/<topic>` and a PR. Analog Finder steps are one PR each, branch `<initials>/step-<NN>-<name>`. Details in [CLAUDE.md](CLAUDE.md#workflow).
 - If your change affects a rule, table or journey step, update the doc in the same commit or PR.
 - Settled an open question? Add it to the log in [decisions.md](docs/decisions.md) and remove it from the list.
 
@@ -38,10 +50,13 @@ The first run downloads ~1 GB and takes about an hour, mostly SDUD at ~3.5 min p
 ```
 data/
 ├── raw/<source>/   downloads, unchanged, + manifest (gitignored)
-├── reference/      approved / manual tables (analog_evidence, target_drug, epi_funnel)
-└── processed/      tables built by code (committed): analogs.csv, sdud_quarterly.csv, ndc_map.csv,
-                    launch_curves.csv, analog_features.csv, bass_fits.csv, indication_history.csv,
-                    medicaid_enrollment.csv, checks.md
-docs/               user journey, sources, data model, decisions
+├── reference/      approved / manual tables (analog_evidence, epi_funnel)
+├── processed/      tables built by code (committed): analogs.csv, sdud_quarterly.csv, ndc_map.csv,
+│                   launch_curves.csv, analog_features.csv, bass_fits.csv, indication_history.csv,
+│                   medicaid_enrollment.csv, checks.md
+├── scenarios/<s>/  per-forecast outputs from the finder (committed for torevia only)
+└── cache/          embedding cache (gitignored)
+docs/               user journey, sources, data model, decisions, implementation plan, example drug; archive/
 pipeline/           build code: fda, sdud, ndc, rxclass, enrollment, curves, features, bass, labels, build, checks
+analog_finder/      (planned) config/, scenarios/ (target drug profiles), finder/, research/, app/, tests/
 ```
