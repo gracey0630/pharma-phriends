@@ -1,15 +1,15 @@
 """Analog Finder command line: python -m analog_finder.finder --scenario torevia
 
-Runs the finder stage by stage (docs/implementation_plan.md, steps 2-7): target drug -> hard filters.
+Runs the finder stage by stage (docs/implementation_plan.md, steps 2-7): target drug -> hard filters -> embeddings.
 """
 import argparse
 import sys
 
 from analog_finder import io
-from analog_finder.finder import filters
+from analog_finder.finder import embed, filters
 from analog_finder.finder.target import load_target
 
-STAGES = ["filters"]
+STAGES = ["filters", "embed"]
 
 
 def parse_args(argv=None):
@@ -17,6 +17,8 @@ def parse_args(argv=None):
     ap.add_argument("--scenario", required=True, help="analog_finder/scenarios/<scenario>.yaml")
     ap.add_argument("--holdout", action="append", default=[], metavar="ANALOG_ID",
                     help="remove this analog before filtering (evaluation); repeatable")
+    ap.add_argument("--embedder", choices=["tfidf", "rxbert"], default=None,
+                    help="text embedder (default: config/scoring.yaml)")
     ap.add_argument("--until", choices=STAGES, default=STAGES[-1], help="stop after this stage")
     return ap.parse_args(argv)
 
@@ -30,7 +32,17 @@ def run(args, tables=None, out=sys.stdout):
     cands = filters.candidates(tables, target, cfg["filters"], holdout=args.holdout, top_k=cfg["top_k"])
     held = f", holdout {', '.join(args.holdout)}" if args.holdout else ""
     print(f"Filters: {len(cands)} candidates ({target.route_group}, usable{held})", file=out)
-    return {"config": cfg, "target": target, "candidates": cands}
+    state = {"config": cfg, "target": target, "candidates": cands}
+    if args.until == "filters":
+        return state
+
+    name = args.embedder or cfg["embedder"]
+    evidence = io.load_approved_evidence(cfg["paths"]["reference"])
+    cache = embed.EmbeddingCache(cfg["paths"]["cache"])
+    emb = embed.embed(cands, evidence, target, tables["analog_features"], embed.get_embedder(name, cfg), cache)
+    print(f"Embeddings: {len(emb['analog_ids'])} analogs + target ({name})", file=out)
+    state.update(evidence=evidence, embedding=emb, embedder=name)
+    return state
 
 
 def main(argv=None):
