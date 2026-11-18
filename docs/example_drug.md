@@ -29,7 +29,7 @@ The one advantage of psoriasis is the label reads already done. The antipsychoti
 
 ## Drug profile
 
-Fields follow the `target_drug` table ([data_model.md](data_model.md#scenario-and-output-tables-created-per-forecast)).
+Fields follow the `target_drug` table ([data_model.md](data_model.md#scenario-and-output-tables-created-per-forecast)). This profile becomes `analog_finder/scenarios/torevia.yaml`, the scenario the Analog Finder is built and tested on ([implementation_plan.md](implementation_plan.md), step 2).
 
 | Field | Value |
 |---|---|
@@ -92,9 +92,10 @@ Decide whether the Zipf share applies to all treated patients or only the brande
 ## Next steps
 
 1. ~~**Team:** agree on this example~~ Done 2026-10-27. This settles the "pick the example drug's therapeutic area" step in the label-reads plan (PR #6).
-2. **Label reads** for the 5 analogs, 4 fields each (line of therapy, dosing, # competitors, launch date), with quotes and links, `approved=false` until reviewed.
-3. **Approval letters** for the analogs' efficacy supplements in Q0–Q12.
-4. **Source the epi funnel** and fill `target_drug` and `market_size`.
+2. **Label reads** for the 5 analogs, 4 fields each (line of therapy, dosing, # competitors, launch date), with quotes and links, `approved=false` until reviewed. Done by the Label Research Agent and reviewed on the app's review page ([implementation_plan.md](implementation_plan.md) steps 10–12; step 12 is done when Torevia's 20 values are reviewed). Then the 41 usable nervous-system analogs (step 15).
+3. **Approval letters** for the analogs' efficacy supplements in Q0–Q12. Until then, `label_expansion_in_window` is a warning on the analog's card, not an exclusion (decision D2, 2026-11-17).
+4. **Run the Analog Finder on Torevia:** `python -m analog_finder.finder --scenario torevia --auto-confirm` should pass all 5 analogs through the filters and write `analog_recommendations`, `analog_weights` and `uptake_curve` to `data/scenarios/torevia/` (plan step 7, checks 2 and 3).
+5. **Source the epi funnel** and fill `target_drug` and `market_size`.
 
 ## Fallback: migraine prevention
 

@@ -7,9 +7,9 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 2. [docs/data_sources.md](docs/data_sources.md): what we pull, source rules, freshness checks
 3. [docs/data_model.md](docs/data_model.md): tables, dependencies, workstreams, build status
 4. [docs/decisions.md](docs/decisions.md): decision log and open questions
+5. [docs/implementation_plan.md](docs/implementation_plan.md): how the Analog Finder (`analog_finder/`) is built: 17 steps, one PR each, agreed decisions D1–D8, shared contracts between modules
 
 **The docs are the spec.** Build code to match them. If the design needs to change, change the doc in the same PR.
-
 ## Fixed scope
 - US only; novel NDA/BLA brands (NME or new biologic), first indication, no generic entry in the first 3 years
 - Pharmacy-dispensed, self-administered (oral or self-injected); no clinic-administered drugs
@@ -23,12 +23,14 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - Never mix Medicaid and Medicare in one curve
 - Suppressed SDUD rows (< 11 Rx) are imputed at 5 Rx (bounds 1 and 10, kept as `trx_low` / `trx_high`); `trx` is that mid estimate and `trx_reported` the visible sum. A quarter with no SDUD row is 0 TRx. Both readings are model assumptions, not confirmed with CMS
 - Indication, dosing and class come from the **original** approval label (Drugs@FDA ORIG), never DailyMed (current label)
-- Agent-extracted values are saved with quote + source link and need human approval before use
-- Folders: `data/raw/<source>/` downloads, unchanged, plus a manifest (gitignored); `data/reference/` manual / approved tables; `data/processed/` tables built by code
+- Agent-extracted values are saved with quote + source link and need human approval before use; the agent fetches from the approved-source list only (data_sources.md) and never overwrites an approved row
+- The Analog Finder matches on approved evidence only. Ranking is deterministic; the language model writes summary cards and doesn't re-rank (D4)
+- Folders: `data/raw/<source>/` downloads, unchanged, plus a manifest (gitignored); `data/reference/` manual / approved tables; `data/processed/` tables built by code; `data/scenarios/<scenario>/` per-forecast outputs (committed for `torevia` only); `data/cache/` embedding cache (gitignored)
+- Code: `pipeline/` builds the data; `analog_finder/` (planned) reads `data/processed/` and never changes the pipeline
 - Secrets in `.env` (gitignored); see `.env.example`
 
 ## Status & handoff
-**Last update: 2026-11-17 (Christina, branch `c/seed-review`).** Keep "Current state" current; add a dated line to the log when you hand off.
+**Last update: 2026-11-17 (Christina, `main`).** Keep "Current state" current; add a dated line to the log when you hand off.
 
 ### Current state
 **What exists** (`data/processed/`, specs in [data_model.md](docs/data_model.md)):
@@ -39,6 +41,7 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - `checks.md`: validation report. **261 analogs** pass the rules code can apply (213 oral, 48 sc); it also lists every NME brand left out of the pool, with the reason.
 - `data/reference/analog_evidence.csv`: label reads (line of therapy, dosing, launch date, # competitors) for the 8 seed brands (Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu, Ibrance). 31 values with quotes and links; **27 approved** (Gabrielle, 2026-10-26), 4 launch dates waiting (below). `python -m pipeline.labels --check` checks every label quote against its label.
 - Code: `pipeline/` (`fda`, `sdud`, `ndc`, `rxclass`, `enrollment`, `curves`, `features`, `bass`, `labels`, `build`, `checks`).
+- **Not built yet:** the Analog Finder (`analog_finder/`): Stage 1 Label Research Agent, Stage 2 finder (filters, hybrid similarity, top-5 confirm loop, weighted uptake curve), CLI and Streamlit app. Plan and status in [implementation_plan.md](docs/implementation_plan.md); step 0 (docs) is in progress.
 
 **How to run**
 - Setup: Python 3.12+ (`python3.13 -m venv .venv && .venv/bin/pip install -r requirements.txt`).
@@ -63,24 +66,27 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - **Empty on purpose:** `cost per unit` (empty for now), `market size` and `fills per patient` (dropped). Whether to remove the dropped columns is an open question.
 
 **Pick up here**
-1. **C, labels** (the bottleneck for analog matching: the EDA found class and area don't predict uptake, so line of therapy, competition and dosing have to; see [data_model.md](docs/data_model.md#label-reads-plan)):
+1. **Plan step 0, finish:** draw `docs/analog_finder_architecture.png`.
+2. **Plan steps 1–7 (Analog Finder core),** one PR each, branch `<initials>/step-<NN>-<name>`: plumbing, target drug, filters + holdout, TF-IDF embeddings, hybrid scoring, confirm loop, weights + uptake curve. Done at step 7 when `python -m analog_finder.finder --scenario torevia --auto-confirm --embedder tfidf` runs end to end.
+3. **C, labels** (the bottleneck for analog matching: the EDA found class and area don't predict uptake, so line of therapy, competition and dosing have to; see [data_model.md](docs/data_model.md#label-reads-plan)). Once built, the Label Research Agent does these reads (plan steps 10–12, 15); until then, manual reads go in `analog_evidence.csv` as `approved=false` rows with quote and link.
    1. **Finish the seed 8:** find actual launch announcements for Otezla, Tremfya, Skyrizi, Sotyktu, and Cosentyx's launch date.
    2. **Example drug's analogs first:** 4 fields each for Torevia's 5 analogs (Latuda, Rexulti, Vraylar, Caplyta, Lybalvi), then the 41 usable nervous-system analogs.
    3. **Extend** to the rest of the 261 usable analogs.
    4. **Other label reads:** self-injected vs clinic-given for every sc analog (self-administered flag); route of the 16 `INJECTABLE;INJECTION` brands; approval letters for efficacy supplements (which ones added an indication).
-2. **C, review process:** new rows go in with `approved=false`; run `python -m pipeline.labels --check` before review, so the reviewer only judges whether each value fits its quote. Launch dates and competitor counts aren't label quotes and need a person to check the source.
-3. **B:** add same-class competitors and `units_per_rx` to SDUD.
-4. **A/D:** add a self-administered flag (or exclude clinic-administered SC drugs). Decide what to do with the missing ATC classes. Read the route of the 16 injectables to bring the sc ones into the pool.
-5. **EDA:** owners rerun their notebooks on the new tables and update their write-ups (`launch_eda` is done). `pool_funnel`, `suppression` and the `volume_vs_shape` simulation still use the old blank-quarter rule and need their owners' updates. Notebooks that read `share_of_peak` (`launch_eda`, `analog_similarity`, `volume_vs_shape`) shift with the Q0–Q28 peak (2026-11-14) once `main` is merged into `eda`.
-6. **Team:** remove the dropped columns from `analogs.csv`, or keep them empty (open question in decisions.md).
+4. **C, review process:** new rows go in with `approved=false`; run `python -m pipeline.labels --check` before review, so the reviewer only judges whether each value fits its quote. Launch dates and competitor counts aren't label quotes and need a person to check the source. The app's review page (plan step 12) replaces the spreadsheet once built.
+5. **B:** add same-class competitors and `units_per_rx` to SDUD.
+6. **A/D:** add a self-administered flag (or exclude clinic-administered SC drugs). Decide what to do with the missing ATC classes. Read the route of the 16 injectables to bring the sc ones into the pool.
+7. **EDA:** owners rerun their notebooks on the new tables and update their write-ups (`launch_eda` is done). `pool_funnel`, `suppression` and the `volume_vs_shape` simulation still use the old blank-quarter rule and need their owners' updates. Notebooks that read `share_of_peak` (`launch_eda`, `analog_similarity`, `volume_vs_shape`) shift with the Q0–Q28 peak (2026-11-14) once `main` is merged into `eda`.
+8. **Team:** remove the dropped columns from `analogs.csv`, or keep them empty (open question in decisions.md). Settle the RxBERT license and the agent's competitor definition (open questions in decisions.md, needed by plan steps 9 and 11).
 
 ### Log
 Newest first.
-- **2026-11-17, `main` merged into `c/seed-review` (Christina):** resolved PR #6's conflicts. `data/processed/` taken from `main` (suppression imputation, Q0–Q28 peak), then rebuilt from the 2026-10-30/31 raw pulls so the 27 approved seed values reach `analog_features` and `checks.md`. Only the 8 seed analogs' rows changed; curves and Bass fits are unchanged (the approved launch dates fall in the same quarter as before). The branch's own 2026-10-26 rebuild was superseded; its newer NDC listings were already on `main`. Pick-up list and label-reads plan updated for the chosen example drug and the 261-analog pool.
-- **2026-10-26, seed label review (Gabrielle, `c/seed-review`):** approved 27 of the 31 seed values after checking each against its source (all 16 label quotes verbatim in the ORIG labels; Taltz, Siliq, Ibrance launch dates from company statements; competitor counts against Drugs@FDA dates). Taltz launch date now sourced from Lilly's SEC filing; Ilumya and Cimzia dates corrected in the competitor quotes. Added `python -m pipeline.labels --check`.
+- **2026-11-17, implementation plan (Christina, `main`, PR #7):** added [implementation_plan.md](docs/implementation_plan.md) for the Analog Finder and wrote its agreed decisions D1–D8 and the evaluation method into the docs (plan step 0): decisions.md, user_journey.md (v2), data_model.md (`target_drug`, `analog_recommendations`, `analog_weights`, new `uptake_curve`, `data/scenarios/`, `data/cache/`), data_sources.md (approved-source list), example_drug.md. Old versions are in `docs/archive/`. Main changes from the v1 journey: no agent re-rank; top 5 confirmed one at a time; curve weights = normalized similarity; label expansion and multi-route are warnings, not exclusions. `.gitignore` (`data/cache/`), `.env.example` (`GEMINI_MODEL`, `SEC_USER_AGENT`) and README updated for the finder. No code or data changed. Merged without a PR review: the team agreed the plan together in person.
+- **2026-11-17, PR #6 merged; `main` merged into `c/seed-review` first (Christina):** resolved PR #6's conflicts. `data/processed/` taken from `main` (suppression imputation, Q0–Q28 peak), then rebuilt from the 2026-10-30/31 raw pulls so the 27 approved seed values reach `analog_features` and `checks.md`. Only the 8 seed analogs' rows changed; curves and Bass fits are unchanged (the approved launch dates fall in the same quarter as before). The branch's own 2026-10-26 rebuild was superseded; its newer NDC listings were already on `main`. Pick-up list and label-reads plan updated for the chosen example drug and the 261-analog pool.
 - **2026-11-14, Q0–Q28 peak (Grace, `main`):** `share_of_peak` now divides by the Q0–Q28 peak, not the Q0–Q20 peak (decisions.md 2026-11-14; EDA `peak_window` §5). New `peak_confirmed` flag: 164 of 261 usable analogs have the full window; the other 97 show share of peak as an upper bound. Bass is still fitted on Q0–Q20: p and q unchanged for 86–90% of analogs, median m 1.00 → 0.89, m's floor 0.5 → 0.1, weak fits 107 → 106 (Farxiga no longer on a bound). Year-3 share for the demo analogs: Latuda 0.37, Rexulti 0.59, Vraylar 0.19, Caplyta ≤ 0.54, Lybalvi ≤ 0.80 (`example_drug.md`). Only `launch_curves`, `analog_features`, `bass_fits` and `checks.md` were rebuilt, from the committed upstream tables, because my `data/raw/` is older than the 2026-10-30/31 pulls; a full `--refresh` build gives the same peak rule.
 - **2026-11-01, suppression rebuild and EDA rerun (Christina, `main`):** suppressed SDUD rows are now imputed at 5 Rx and no row = 0 TRx (decisions.md 2026-10-30). Rebuilt from sources pulled 2026-10-30/31, not a final `--refresh`. 250 → 261 usable analogs, 256 → 268 Bass fits. The first-wave HCV orals return, so anti-infective stats shift sharply (median R² 0.83 → 0.32); the 5 demo analogs barely move. EDA findings hold except that class medians are now about level with the overall median, not worse. Oncology is 37 of 64 weak fits (was 41 of 62).
 - **2026-10-27, example drug (Christina, `main`):** the team agreed on the demo's example drug, Torevia (velapiprazole): a fictional oral antipsychotic for adult schizophrenia, 7th branded entrant, launching 2027-01. Profile, expected analogs (Latuda, Rexulti, Vraylar, Caplyta, Lybalvi), illustrative ceiling inputs and caveats in [docs/example_drug.md](docs/example_drug.md). Settles "one area or two" (decisions.md): one area, nervous system. Next: label reads for those 5 analogs.
+- **2026-10-26, seed label review (Gabrielle, `c/seed-review`):** approved 27 of the 31 seed values after checking each against its source (all 16 label quotes verbatim in the ORIG labels; Taltz, Siliq, Ibrance launch dates from company statements; competitor counts against Drugs@FDA dates). Taltz launch date now sourced from Lilly's SEC filing; Ilumya and Cimzia dates corrected in the competitor quotes. Added `python -m pipeline.labels --check`.
 - **2026-10-23, ATC class fix (Grace, `main`):** each analog's ATC class is now its own, not one from a combination product or a topical form. 16 analogs corrected, e.g. the SGLT2 and DPP-4 drugs (were "combinations"), Victoza and Adlyxin (were insulins), Jakafi and Daliresp (were dermatology, so their area changes).
 - **2026-10-22, route fallback (Grace, `a/route-fallback`):** brands whose NDCs give no route now take it from Drugs@FDA, adding 34 analogs (e.g. Trikafta, Symdeko, Ocaliva). 7 existing analogs corrected: Lynparza, Esbriet, Zejula and Zykadia now launch from their original capsules. `checks.md` lists every brand left out of the pool.
 - **2026-10-22, tables for EDA (Grace, `b/launch-curves`):** added `launch_curves`, `analog_features`, `bass_fits`, `indication_history` and `medicaid_enrollment`, plus the pool funnel in `checks.md`. Fixed arbitrary picks between same-day approvals (submission classification) and tied peak quarters.
@@ -89,5 +95,6 @@ Newest first.
 ## Workflow
 - **Small tasks go straight to `main`:** doc edits, open questions, approving or fixing a few `analog_evidence` rows, a small bug fix in one module. `git pull` first, keep the commit small, push right away.
 - **Use a branch + PR** (`<workstream>/<topic>`, e.g. `b/sdud-ndc-map`) for work that takes more than a day, adds or reworks a `pipeline/` module, changes a rule in the docs, or rebuilds `data/processed/` (big diffs that collide easily).
+- **Analog Finder steps:** one step = one branch = one PR, merged in plan order, branch `<initials>/step-<NN>-<name>` (e.g. `ab/step-05-scoring`). Each PR has code, tests, its component spec (`analog_finder/docs/components/<name>.md`) and every doc it changes; another team member reviews and runs the step's "Done when" check. `pytest analog_finder/tests` stays green offline on `main`. Full rules: [implementation_plan.md](docs/implementation_plan.md#working-agreements).
 - Either way, add a dated line to the Status & handoff log for anything a teammate should know about, so the log is the one place to see what changed.
 - When you add or change a table, update its data_model.md build status; when you settle an open question, log it in decisions.md and remove the question. Same commit or PR.

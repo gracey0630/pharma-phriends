@@ -26,6 +26,14 @@ What to pull. Tables built from these are in [data_model.md](data_model.md).
 
 **Out of scope for now:** Medicaid Spending by Drug, Part D formulary files, NADAC (fills conversion, access scenarios and pricing aren't in the demo).
 
+## Approved source list
+
+Sources 6–10 (original approval labels, ClinicalTrials.gov, press releases / SEC EDGAR, Novel Drug Approvals, the REMS list), plus Drugs@FDA (source 2) for checking competitors' approval dates, are the only sites the Label Research Agent may read ([implementation_plan.md](implementation_plan.md), Stage 1). The list lives in `analog_finder/config/approved_sources.yaml`.
+- Every fetch goes through one gate (`analog_finder/research/sources.py`), which refuses any site not on the list, including a redirect to an unlisted site.
+- URLs from the model's web search are checked against the list before anything is fetched; dropped URLs are logged.
+- Press-release sites are company sites, so they're added to the list one by one as they're found.
+- Downloads reuse `pipeline/common.py` throttling, caching and manifest.
+
 ## Source rules
 
 | Source | Rule |
@@ -38,8 +46,8 @@ What to pull. Tables built from these are in [data_model.md](data_model.md).
 | RxClass | Narrow = ATC level 4 (e.g. CDK inhibitors); broad = ATC level 3 (looked up by id, e.g. `L04A IMMUNOSUPPRESSANTS`) or a manual family (e.g. JAK family); therapeutic area = ATC level 1. FDA's pharmacologic class can be too broad. RxClass returns the classes of every product with the ingredient: for single-ingredient brands keep only classes found on the ingredient itself (not combination products: empagliflozin is SGLT2, not "combinations"), and drop topical / eye classes (ATC D, S) when another class remains (ruxolitinib is JAK, not the dermatitis class of its cream). Classes still several are listed in `checks.md`. |
 | Labels | ORIG label only. DailyMed is the *current* label. URL: Drugs@FDA `ApplicationDocs` (type 2 = Label, `ORIG`); `python -m pipeline.labels <ApplNo>` downloads it and extracts text; `python -m pipeline.labels --check` checks every label quote in `analog_evidence.csv` against its label. |
 | ClinicalTrials.gov | Phase 3 + Phase 2 started before approval. "Adjuvant" in metastatic trials usually means *prior* therapy. |
-| Press releases / SEC | Launch date = first commercial availability. Cross-check with first SDUD quarter. |
-| Agent-read sources | Every extracted value saved with quote + link; a person approves it once. |
+| Press releases / SEC | Launch date = first commercial availability. "Expected to be available" is a forecast, never a launch date. Cross-check with first SDUD quarter. SEC EDGAR requires a descriptive `User-Agent` (`SEC_USER_AGENT` in `.env`). |
+| Agent-read sources | Approved-source list only. Every extracted value saved with a verbatim quote + link and a `quote_check` (verbatim / partial / not_checked, against the fetched page), as an `approved=false` row; a person approves it once. # competitors at launch is proposed by the model and each approval date checked against Drugs@FDA (`[derived, verify each date]`). |
 | Part D | `Overall` manufacturer row; sum formulations to brand. |
 | Epi | Save each page/table to `data/raw/epi/` with URL + access date. |
 | Guidelines | Licensed: cite, don't scrape. |
@@ -49,7 +57,7 @@ What to pull. Tables built from these are in [data_model.md](data_model.md).
 - Raw files go to `data/raw/<source>/` (gitignored), unchanged.
 - **Manifest per source:** URL, download date, version / last-modified, file hash, row count. This is how stale files are caught.
 - Re-download FDA and CMS files right before any final build.
-- Throttle APIs (~1–2 req/s), descriptive `User-Agent`, keys in `.env`.
+- Throttle APIs (~1–2 req/s), descriptive `User-Agent`, keys in `.env` (incl. `GEMINI_MODEL` and `SEC_USER_AGENT` for the Analog Finder; never commit your own `SEC_USER_AGENT`).
 
 ## Data limits to state in the app
 - Pharmacy-dispensed drugs only; no medical-benefit (clinic-administered) data.

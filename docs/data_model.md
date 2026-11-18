@@ -1,11 +1,14 @@
 # Data Model & Workstreams
 
-Tables, columns, sources, dependencies and owners, following the [user journey](user_journey.md): (1) define the drug → (2) find analogs → (3) size the market → (4) review uptake → (5) illustrative curve. Source details: [data_sources.md](data_sources.md). Decisions and open questions: [decisions.md](decisions.md).
+Tables, columns, sources, dependencies and owners, following the [user journey](user_journey.md): (1) define the drug → (2) find analogs → (3) size the market → (4) review uptake → (5) illustrative curve. Source details: [data_sources.md](data_sources.md). Decisions and open questions: [decisions.md](decisions.md). How the query-time tables are built (`analog_finder/`, steps, module contracts): [implementation_plan.md](implementation_plan.md). Earlier versions of this doc: [archive/](archive/).
 
 **Conventions**
 - **One analog = brand × route group.** Key: `analog_id` = `brand_key` + `route_group` (e.g. `skyrizi_sc`).
 - Time series use long format: `analog_id, source, payer, period, metric, value, pulled_at`.
 - Manual / approved tables live in `data/reference/`; built tables in `data/processed/`, overwritten every run.
+- Per-forecast tables live in `data/scenarios/<scenario>/` (written by `analog_finder`; committed for the demo scenario `torevia` only). The scenario's input profile is `analog_finder/scenarios/<scenario>.yaml`.
+- `data/cache/` holds rebuildable caches (`analog_embeddings.npz`, keyed by embedder name + profile-text hash) and is gitignored.
+- Where this doc and the plan's [Shared contracts](implementation_plan.md#shared-contracts) both describe a file, this doc wins; change both in the same PR.
 - ⚠️ = check the input is current before building (see [data_sources.md](data_sources.md)).
 
 ## v1 analog table (current spec)
@@ -66,6 +69,10 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 | In window | Distortion flags (label expansion, generic entry, enrollment shock) look at Q0–Q12, the first 3 years |
 | Agent features | Only attributes knowable for the target drug before launch |
 | Payer | Analog curves are Medicaid; never mix with Medicare |
+| Finder hard filters | Usable analogs from the `checks.md` funnel (enough data, no generic entry in window, no late launch) in the target's route group; a holdout analog is removed first. `label_expansion_in_window` and `multi_route` are warnings, not exclusions (D1, D2, decisions 2026-11-17) |
+| Evidence in matching | Approved `analog_evidence` values only (D8) |
+| Similarity | Σ wᵢsᵢ / Σ wᵢ over the features both target and analog have: text similarity on the profile text plus one 0–1 score per structured feature; weights from `analog_finder/config/scoring.yaml`, overridable per scenario (D6, D7) |
+| Curve weights | Similarity ÷ sum of similarities over the confirmed analogs (sums to 1); forecaster override needs a reason (D5) |
 
 ## Dependencies
 
@@ -79,7 +86,13 @@ Raw pulls (day 1)
   ├─► medicaid_enrollment (flag) ────────────────────────────────────────────────────┘
   └─► target_drug (forecaster) ─► market_size ; epi_funnel (optional)
 
-Query time:  target_drug + analog_features ─► analog_recommendations ─► (approved 3–5) ─► bass_fits ─► analog_weights ─► illustrative curve
+Stage 1 (Label Research Agent, analog_finder/research):
+  approved sources ─► analog_evidence rows (approved=false) ─► human review ─► approved values
+
+Stage 2 (Analog Finder, query time, analog_finder/finder):
+  target_drug + analog_features + approved analog_evidence
+    ─► hard filters ─► embeddings (data/cache) + hybrid score ─► top 5, confirm / reject ─► analog_recommendations
+    ─► (confirmed 3–5) + launch_curves + bass_fits ─► analog_weights ─► uptake_curve ─► illustrative curve
 ```
 Critical path: FDA files → `candidate_pool` → `ndc_map` → `sdud_quarterly` → `analog_features`. Longest task: `analog_evidence` review.
 
@@ -99,14 +112,16 @@ Update in the PR that changes a table. Status: not started / in progress / built
 | `sdud_quarterly` | B | 2, 4 | built for pool analogs (`pipeline/sdud.py`), suppressed rows imputed (low / mid / high); same-class competitors and `units_per_rx` not yet added |
 | `medicaid_enrollment` | B | 2 | built (`pipeline/enrollment.py`); no data 2013-10 to 2017-05, used for shock flags only |
 | `launch_curves` | B | 4 | built (`pipeline/curves.py`); no `trx_per_1k_enrollees` (no normalization in v1) |
-| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved; plan below |
+| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved; label-reads plan below. Label Research Agent (`analog_finder/research/`) and review screen: not started (plan steps 10–12) |
 | `analog_features` | D | 2 | built (`pipeline/features.py`) for the columns code can fill; label-read match fields, `rems`, `limited_distribution` wait on approved evidence |
-| `analog_recommendations` | D | 2 | not started |
-| `target_drug` | E | 1 | not started |
+| `analog_recommendations` | D | 2 | not started (plan steps 3–6, 13–14) |
+| Embedding cache (`data/cache/`) | D | 2 | not started (plan steps 4, 9) |
+| `target_drug` | E | 1 | not started (plan step 2, `scenarios/torevia.yaml`) |
 | `market_size` | E | 3 | not started |
 | `epi_funnel` | E | 3 | not started (prototype for Ibrance 1L mBC in `6e92c63`) |
 | `bass_fits` | E | 4 | built (`pipeline/bass.py`) for analogs with enough data |
-| `analog_weights` | E | 4 | not started |
+| `analog_weights` | E | 4 | not started (plan step 7) |
+| `uptake_curve` | E | 4 | not started (plan step 7) |
 
 ---
 
@@ -127,12 +142,15 @@ Update in the PR that changes a table. Status: not started / in progress / built
 
 Fields: indication / target patients, line_of_therapy, dosing_frequency, days_supply, class_narrow, class_broad, competitors_at_launch, n_competitors_at_launch, efficacy_safety_vs_soc, launch_date, first_in_class, boxed_warning, rems.
 
+**Written by the Label Research Agent** (Stage 1, `python -m analog_finder.research`; [plan](implementation_plan.md) steps 10–12). v1 extracts four fields: line_of_therapy and dosing_frequency (ORIG label), launch_date (press release / SEC filing, first commercial availability; "expected to be available" is a forecast, never a launch date) and n_competitors_at_launch (proposed by the model, each approval date checked against Drugs@FDA, marked `[derived, verify each date]`). It fetches only from the [approved-source list](data_sources.md#approved-source-list), appends rows with `approved=false`, and never overwrites an approved row. A person approves, edits or rejects each row in the app's review screen or the spreadsheet; one reviewer commits a given batch. The finder joins in approved values when it runs, so an approval shows up without a `pipeline.build`.
+
 | Column | Source |
 |---|---|
 | analog_id, field, value | Agent extraction |
-| quote, source_url, source_type | Original label, ClinicalTrials.gov, press release / SEC filing, Novel Drug Approvals, REMS list |
-| extracted_by, extracted_at | Agent / person |
-| approved, approved_by | Human review |
+| quote, source_url, source_type | Original label, ClinicalTrials.gov, press release / SEC filing, Novel Drug Approvals, REMS list, Drugs@FDA |
+| quote_check | verbatim / partial / not_checked: is the quote on the source page (`analog_finder/research/verify.py`) |
+| extracted_by, extracted_at | agent / seed / human |
+| approved, approved_by, approved_at | Human review. If two approved rows exist for the same analog and field, the latest `approved_at` is expected to win (to confirm in plan step 1) |
 
 #### Label-reads plan
 **Why it's next:** analog matching (journey step 2) compares the target drug with analogs on these fields. The EDA ([eda/](../eda/README.md)) found that ATC class and therapeutic area alone don't predict an analog's first 3 years, so line of therapy, competition and dosing have to carry the matching, and they only exist where labels have been read.
@@ -243,20 +261,24 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 
 **Why they matter:**
 - `target_drug`: the forecaster's profile of the new drug, which the analogs are compared against.
-- `analog_recommendations`: the ranked analog shortlist with the reasoning for each, from which the forecaster approves 3–5.
+- `analog_recommendations`: the log of the confirm / reject loop: every candidate shown, with its rank, similarity and the forecaster's decision and reason.
 - `market_size`: the ceiling (peak patients, M), from eligible population × peak share via Zipf.
 - `epi_funnel`: an optional, detailed sourcing of the eligible population behind M.
 - `bass_fits`: it reduces each curve to the p and q our forecast borrows, with a flag showing which fits can't be trusted.
-- `analog_weights`: how much each approved analog counts when their curves are combined into one trajectory.
+- `analog_weights`: how much each confirmed analog counts when their curves are combined into one trajectory.
+- `uptake_curve`: the similarity-weighted trajectory with its band, the trajectory input to the forecast.
+
+`analog_recommendations`, `analog_weights` and `uptake_curve` are written to `data/scenarios/<scenario>/<table>.csv` by `python -m analog_finder.finder --scenario <scenario>` or the app's finder page.
 
 | Table | One row per | Columns | Created by |
 |---|---|---|---|
-| `target_drug` | scenario | indication, target_patient_definition, class_narrow, class_broad, route_group, dosage_form, line_of_therapy, entry_order, first_definition (class / indication / line), expected_n_entrants, n_competitors_at_launch, efficacy_safety_vs_soc, dosing_frequency, days_supply, dosing_vs_alternatives, launch_date | Forecaster (step 1) |
-| `analog_recommendations` | scenario × analog | filter_pass, similarity_score, agent_rank, reasoning, evidence_links, approved | Code filters + scores; agent re-ranks; forecaster approves 3–5 (step 2) |
+| `target_drug` | scenario | name, indication, target_patient_definition, class_narrow (ATC 4), class_broad (ATC 3), therapeutic_area (ATC 1), route_group, dosage_form, line_of_therapy, entry_order, first_definition (class / indication / line), expected_n_entrants, n_competitors_at_launch (+ is_estimate), efficacy_safety_vs_soc, dosing_frequency, days_supply, dosing_vs_alternatives, launch_date, preferences (feature-weight overrides, D7). Route group derived the same way as for analogs. Required vs. optional fields set in plan step 2 | Forecaster (step 1), saved as `analog_finder/scenarios/<scenario>.yaml` |
+| `analog_recommendations` | scenario × analog shown | scenario, analog_id, rank, similarity, decision (shown / confirmed / rejected), reason, decided_by, decided_at | Code filters + scores (deterministic); the model writes a summary card per candidate (not stored here); forecaster confirms or rejects one at a time, a rejection fetches the next-ranked candidate, stop at 3–5 confirmed (step 2; D3, D4) |
 | `market_size` | scenario | entry_order, n_entrants_low/high, alpha_low/high, peak_share_low/base/high, differentiation_adj + reason, M_low/base/high | Forecaster inputs + Zipf code (step 3) |
 | `epi_funnel` (optional) | indication × step | stage, low/base/high, source_url, source_file, source_type | Manual from SEER / CDC / literature (step 3) |
 | `bass_fits` | analog | p, q, m, n_points, fit_quality (R²), weak_fit_flag, low_volume, dropped | Code from launch_curves (step 4). Built ahead for every analog with enough data: cumulative Bass m·F(t) fitted to share_of_peak (mid estimate) on Q0–Q20, so m is the share of the Q0–Q28 peak at saturation (bounds 0.1–5); weak = R² < 0.9 or p, q or m on an arbitrary bound; low_volume shown next to the fit, since a weak fit at low volume is mostly counting noise |
-| `analog_weights` | scenario × analog | weight, reasoning | Agent recommends, code computes (step 4) |
+| `analog_weights` | scenario × confirmed analog | analog_id, similarity, weight (similarity normalized over the confirmed analogs; sums to 1), override_weight, override_reason | Code (step 4; D5); the forecaster may override a weight with a reason |
+| `uptake_curve` | scenario × quarter since launch | quarter (0–20), weighted_share_of_peak, band_min, band_max (min–max of the confirmed analogs), n_analogs (analogs with data that quarter) | Code from `launch_curves` + `analog_weights` (step 4); the Bass table for the confirmed analogs is shown alongside from `bass_fits` |
 
 ---
 
@@ -267,9 +289,11 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 | **0. Setup** | Download/cache module + manifest | — | — | Day 1 (half day) |
 | **A. FDA & candidate pool** | `candidate_pool`, `indication_history`, `drug_master`, `exclusivity` | NME compilation, Drugs@FDA, NDC + excluded, RxClass, Orange/Purple Book | Setup | Day 1 |
 | **B. Medicaid utilization** | `ndc_map`, `sdud_quarterly`, `launch_curves`, `medicaid_enrollment` | SDUD whole years, enrollment | candidate_pool (for ndc_map) | Day 1 (downloads) |
-| **C. Evidence extraction & review** | `analog_evidence` (extraction agent + review UI/sheet) | Original labels, ClinicalTrials.gov, press releases / SEC, Novel Drug Approvals, REMS | candidate_pool | Day 1 (field definitions); extract once pool exists |
-| **D. Analog agent** | `analog_features`, `analog_recommendations` (filters, similarity score, agent re-rank) | — | A, B, C | Day 1 (design scoring on draft data) |
-| **E. Market size & uptake** | `target_drug` schema, `market_size`, `epi_funnel`, `bass_fits`, `analog_weights` | SEER / CDC / literature (optional) | launch_curves (for bass_fits) | Day 1 (Zipf + Bass code) |
+| **C. Evidence extraction & review** | `analog_evidence` (Label Research Agent `analog_finder/research/` + review page / sheet; plan steps 10–12, 15) | Approved sources: original labels, ClinicalTrials.gov, press releases / SEC, Novel Drug Approvals, REMS | candidate_pool | Day 1 (field definitions); extract once pool exists |
+| **D. Analog Finder** | `analog_features`, `analog_recommendations` (`analog_finder/finder/`: filters, embeddings, hybrid score, confirm loop, summary cards; plan steps 3–6, 8–9, 13–14) | — | A, B, C | Day 1 (design scoring on draft data) |
+| **E. Market size & uptake** | `target_drug` schema, `market_size`, `epi_funnel`, `bass_fits`, `analog_weights`, `uptake_curve` (plan steps 2, 7) | SEER / CDC / literature (optional) | launch_curves (for bass_fits) | Day 1 (Zipf + Bass code) |
+
+The Analog Finder is built as one step = one PR in the order of [implementation_plan.md](implementation_plan.md#build-sequence); module handoffs are its [Shared contracts](implementation_plan.md#shared-contracts).
 
 **Handoffs to agree on day 1**
 | Handoff | From → To | Fix early |
@@ -279,7 +303,7 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 | `target_drug` columns | E → D | Same fields and values as `analog_evidence` (so they can be compared) |
 | Long format | B → D, E | Column names above |
 
-**Milestones:** (1) analog agent: `target_drug` + `analog_features` → `analog_recommendations`; (2) uptake review: `launch_curves` → `bass_fits`, `analog_weights`; (3) ceiling: `market_size`; (4) illustrative curve.
+**Milestones:** (1) Analog Finder: `target_drug` + `analog_features` → `analog_recommendations` (CLI end to end on Torevia at plan step 7); (2) uptake review: `launch_curves` → `bass_fits`, `analog_weights`, `uptake_curve`; (3) ceiling: `market_size`; (4) illustrative curve.
 
 **Out of scope for now:** fills conversion, access scenarios, Monte Carlo (Part D spending, formulary files).
 

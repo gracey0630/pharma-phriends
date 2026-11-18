@@ -1,5 +1,7 @@
 # cached API responses (large, re-creatable)
 data/raw/
+# analog finder embedding cache (rebuilt in minutes)
+data/cache/
 # secrets
 .env
 # python
