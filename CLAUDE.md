@@ -66,6 +66,9 @@ Team project. Helps a pharma forecaster choose and defend two launch-forecast in
 - **Empty on purpose:** `cost per unit` (empty for now), `market size` and `fills per patient` (dropped). Whether to remove the dropped columns is an open question.
 
 **Pick up here**
+
+**First, whoever picks up next: review [PR #8](https://github.com/gracey0630/pharma-phriends/pull/8)** (Analog Finder step 1, plumbing, by Christina) before starting anything else. Run its "Done when" check: `pip install -r analog_finder/requirements.txt`, `pytest analog_finder/tests` (37 pass, offline), `python -m analog_finder.io --scenario torevia` (prints merged weights; 27 approved values for 8 analogs). Approve and merge it, or comment with what to fix. Step 2 builds on it.
+
 1. **Plan step 0, finish:** draw `docs/analog_finder_architecture.png`.
 2. **Plan steps 1–7 (Analog Finder core),** one PR each, branch `<initials>/step-<NN>-<name>`: plumbing, target drug, filters + holdout, TF-IDF embeddings, hybrid scoring, confirm loop, weights + uptake curve. Done at step 7 when `python -m analog_finder.finder --scenario torevia --auto-confirm --embedder tfidf` runs end to end.
 3. **C, labels** (the bottleneck for analog matching: the EDA found class and area don't predict uptake, so line of therapy, competition and dosing have to; see [data_model.md](docs/data_model.md#label-reads-plan)). Once built, the Label Research Agent does these reads (plan steps 10–12, 15); until then, manual reads go in `analog_evidence.csv` as `approved=false` rows with quote and link.
