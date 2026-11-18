@@ -1,0 +1,13 @@
+scenario,analog_id,rank,similarity,decision,reason,decided_by,decided_at
+torevia,rexulti_oral,1,0.680685,shown,,,2026-11-18T16:10:44+00:00
+torevia,vraylar_oral,2,0.636985,shown,,,2026-11-18T16:10:44+00:00
+torevia,nuplazid_oral,3,0.600537,shown,,,2026-11-18T16:10:44+00:00
+torevia,caplyta_oral,4,0.585465,shown,,,2026-11-18T16:10:44+00:00
+torevia,latuda_oral,5,0.465369,shown,,,2026-11-18T16:10:44+00:00
+torevia,rexulti_oral,1,0.680685,confirmed,,demo,2026-11-18T16:10:44+00:00
+torevia,vraylar_oral,2,0.636985,confirmed,,demo,2026-11-18T16:10:44+00:00
+torevia,nuplazid_oral,3,0.600537,rejected,"indication: Parkinson's disease psychosis, not schizophrenia",demo,2026-11-18T16:10:44+00:00
+torevia,lybalvi_oral,6,0.412062,shown,,,2026-11-18T16:10:44+00:00
+torevia,caplyta_oral,4,0.585465,confirmed,,demo,2026-11-18T16:10:44+00:00
+torevia,latuda_oral,5,0.465369,confirmed,,demo,2026-11-18T16:10:44+00:00
+torevia,lybalvi_oral,6,0.412062,confirmed,,demo,2026-11-18T16:10:44+00:00

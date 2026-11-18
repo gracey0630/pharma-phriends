@@ -1,10 +1,11 @@
 """Analog Finder command line: python -m analog_finder.finder --scenario torevia
 
 Runs the finder stage by stage (docs/implementation_plan.md, steps 2-7):
-target drug -> hard filters -> embeddings -> scores -> confirm loop.
+target drug -> hard filters -> embeddings -> scores -> confirm loop -> weights + uptake curve.
 
-Outputs go to data/scenarios/<scenario>/ (analog_recommendations.csv). A run with --holdout writes to
-data/scenarios/<scenario>-holdout-<ids>/ instead (gitignored), so evaluation runs never overwrite the demo outputs.
+Outputs go to data/scenarios/<scenario>/: analog_recommendations.csv, analog_weights.csv, uptake_curve.csv.
+A run with --holdout writes to data/scenarios/<scenario>-holdout-<ids>/ instead (gitignored), so evaluation runs
+never overwrite the demo outputs.
 """
 import argparse
 import sys
@@ -12,10 +13,10 @@ import sys
 import pandas as pd
 
 from analog_finder import io
-from analog_finder.finder import embed, filters, loop, rerank, score
+from analog_finder.finder import curve, embed, filters, loop, rerank, score
 from analog_finder.finder.target import load_target
 
-STAGES = ["filters", "embed", "score", "loop"]
+STAGES = ["filters", "embed", "score", "loop", "curve"]
 FLAG_LABELS = {"warn_label_expansion": "possible label expansion in Q0-Q12", "warn_multi_route": "multi-route brand",
                "low_volume": "low Medicaid volume", "peak_not_confirmed": "peak not confirmed (share is <= X)",
                "weak_bass_fit": "weak Bass fit"}
@@ -79,7 +80,51 @@ def run(args, tables=None, out=sys.stdout, ask=input):
         print(f"Rejected {len(queue.rejected)}: {', '.join(names[a] for a in queue.rejected)}", file=out)
     print(f"Decision log: {paths['analog_recommendations']}", file=out)
     state["queue"] = queue
+    if args.until == "loop" or not queue.confirmed:
+        return state
+
+    overrides = io.load_scenario(args.scenario).get("weight_overrides")
+    weight_table = curve.weights(queue.confirmed, scores, overrides)
+    upper = set(cands.analog_id[cands.peak_not_confirmed])
+    uptake = curve.uptake_curve(weight_table, tables["launch_curves"], upper)
+    bass = curve.bass_table(weight_table, tables["bass_fits"], cands)
+    paths = io.write_scenario_outputs(state["output"], {"analog_weights": weight_table, "uptake_curve": uptake},
+                                      cfg["paths"]["scenarios_out"])
+    print_curve(weight_table, uptake, bass, names, upper, out)
+    print(f"Outputs: {paths['analog_weights'].parent}", file=out)
+    state.update(weights=weight_table, uptake_curve=uptake, bass=bass)
     return state
+
+
+# --- curve ----------------------------------------------------------------------------------------------------
+
+def _share(value, bounded):
+    return "" if value != value else f"{'<=' if bounded else '  '}{value:.2f}"
+
+
+def print_curve(weight_table, uptake, bass, names, upper, out):
+    print("\nWeights (similarity, normalized; D5):", file=out)
+    for r in weight_table.itertuples(index=False):
+        note = f"  override: {r.override_reason}" if r.override_reason else ""
+        print(f"   {names[r.analog_id]:<22}{r.weight:6.3f}   similarity {r.similarity:.3f}{note}", file=out)
+    print("\nSimilarity-weighted uptake curve (share of peak; band = min-max of the confirmed analogs):", file=out)
+    print(f"   {'quarter':>7}  {'weighted':>8}  {'band':>13}  analogs", file=out)
+    for r in uptake[uptake.quarter.isin([0, 2, 4, 8, 12, 16, 20])].itertuples(index=False):
+        bound = r.n_upper_bound > 0
+        band = "" if r.band_min != r.band_min else f"{r.band_min:.2f}-{r.band_max:.2f}"
+        note = f"  ({r.n_upper_bound} with peak not confirmed: <=)" if bound else ""
+        print(f"   {'Q' + str(r.quarter):>7}  {_share(r.weighted_share_of_peak, bound):>8}  {band:>13}  "
+              f"{r.n_analogs}{note}", file=out)
+    print("\nBass fits of the confirmed analogs (bass_fits.csv):", file=out)
+    print(f"   {'analog':<22}{'p':>8}{'q':>8}{'m':>7}{'R2':>7}  flags", file=out)
+    for r in bass.itertuples(index=False):
+        flags = ", ".join(f for f, on in [("weak fit", r.weak_fit_flag), ("low volume", r.low_volume),
+                                          ("peak not confirmed", r.analog_id in upper)] if on is True or on == 1)
+        nums = (f"{r.p:8.4f}{r.q:8.3f}{r.m:7.2f}{r.fit_quality:7.3f}" if r.p == r.p else f"{'no fit':>30}")
+        print(f"   {names[r.analog_id]:<22}{nums}  {flags}", file=out)
+    print("\nCaveats:", file=out)
+    for c in curve.CAVEATS:
+        print(f"   - {c}", file=out)
 
 
 # --- ranking and loop -----------------------------------------------------------------------------------------
