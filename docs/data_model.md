@@ -114,14 +114,14 @@ Update in the PR that changes a table. Status: not started / in progress / built
 | `launch_curves` | B | 4 | built (`pipeline/curves.py`); no `trx_per_1k_enrollees` (no normalization in v1) |
 | `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved; label-reads plan below. Label Research Agent (`analog_finder/research/`) and review screen: not started (plan steps 10–12) |
 | `analog_features` | D | 2 | built (`pipeline/features.py`) for the columns code can fill; label-read match fields, `rems`, `limited_distribution` wait on approved evidence |
-| `analog_recommendations` | D | 2 | not started (plan steps 3–6, 13–14) |
-| Embedding cache (`data/cache/`) | D | 2 | not started (plan steps 4, 9) |
-| `target_drug` | E | 1 | not started (plan step 2, `scenarios/torevia.yaml`) |
+| `analog_recommendations` | D | 2 | built for the CLI (`analog_finder/finder/`: filters, TF-IDF embeddings, hybrid score, confirm loop; plan steps 3–6); summary cards and the app page not started (steps 13–14); demo output in `data/scenarios/torevia/` |
+| Embedding cache (`data/cache/`) | D | 2 | built (`finder/embed.py`, step 4); used by fixed-model embedders only, so empty until RxBERT (step 9) |
+| `target_drug` | E | 1 | built (`finder/target.py`, step 2); Torevia's profile in `analog_finder/scenarios/torevia.yaml` |
 | `market_size` | E | 3 | not started |
 | `epi_funnel` | E | 3 | not started (prototype for Ibrance 1L mBC in `6e92c63`) |
 | `bass_fits` | E | 4 | built (`pipeline/bass.py`) for analogs with enough data |
-| `analog_weights` | E | 4 | not started (plan step 7) |
-| `uptake_curve` | E | 4 | not started (plan step 7) |
+| `analog_weights` | E | 4 | built (`finder/curve.py`, step 7) |
+| `uptake_curve` | E | 4 | built (`finder/curve.py`, step 7); adds `n_upper_bound` |
 
 ---
 
@@ -278,7 +278,7 @@ Every ORIG approval under the route group's applications (`kind` = original), pl
 | `epi_funnel` (optional) | indication × step | stage, low/base/high, source_url, source_file, source_type | Manual from SEER / CDC / literature (step 3) |
 | `bass_fits` | analog | p, q, m, n_points, fit_quality (R²), weak_fit_flag, low_volume, dropped | Code from launch_curves (step 4). Built ahead for every analog with enough data: cumulative Bass m·F(t) fitted to share_of_peak (mid estimate) on Q0–Q20, so m is the share of the Q0–Q28 peak at saturation (bounds 0.1–5); weak = R² < 0.9 or p, q or m on an arbitrary bound; low_volume shown next to the fit, since a weak fit at low volume is mostly counting noise |
 | `analog_weights` | scenario × confirmed analog | analog_id, similarity, weight (similarity normalized over the confirmed analogs; sums to 1), override_weight, override_reason | Code (step 4; D5); the forecaster may override a weight with a reason |
-| `uptake_curve` | scenario × quarter since launch | quarter (0–20), weighted_share_of_peak, band_min, band_max (min–max of the confirmed analogs), n_analogs (analogs with data that quarter) | Code from `launch_curves` + `analog_weights` (step 4); the Bass table for the confirmed analogs is shown alongside from `bass_fits` |
+| `uptake_curve` | scenario × quarter since launch | quarter (0–20), weighted_share_of_peak, band_min, band_max (min–max of the confirmed analogs), n_analogs (analogs with data that quarter), n_upper_bound (of those, analogs whose peak isn't confirmed: the weighted value is then an upper bound) | Code from `launch_curves` + `analog_weights` (step 4); the Bass table for the confirmed analogs is shown alongside from `bass_fits` |
 
 ---
 

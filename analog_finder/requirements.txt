@@ -4,5 +4,6 @@
 google-genai==3.4.0
 pyyaml==6.0.3
 pytest==9.2.0
-# Added by the step that first needs them: scikit-learn (step 4, TF-IDF), transformers + torch (step 9, RxBERT),
+scikit-learn==1.9.1
+# Added by the step that first needs them: transformers + torch (step 9, RxBERT),
 # streamlit (step 12, app).
