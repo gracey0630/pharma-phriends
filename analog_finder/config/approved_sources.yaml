@@ -12,18 +12,35 @@ sources:
   - name: ClinicalTrials.gov API v2
     row: 7
     hosts: [clinicaltrials.gov]
-    used_for: [line_of_therapy, n_competitors_at_launch]
+    # Not line_of_therapy: that comes from the ORIG label only, on the same label basis as the target
+    # (decisions.md 2026-11-18 and 2026-11-19). Trials can help find same-indication competitors.
+    used_for: [n_competitors_at_launch]
 
   - name: SEC EDGAR filings and full-text search
     row: 8
     hosts: [www.sec.gov, efts.sec.gov]
     used_for: [launch_date]
 
-  - name: Company press releases
+  # Company sources (row 8), added one by one with the analog they're for: each is approved only for that analog
+  # (`analogs`) and only under the company's own part of the site (`paths`). Checked 2026-11-19 against the launch
+  # statement they hold. Caplyta, Lybalvi and Vraylar launch statements are in their companies' SEC 8-K exhibits
+  # (above), so they need no company site; Latuda's company (Sumitomo, not SEC-registered) and Rexulti's (Otsuka and
+  # Lundbeck, not SEC-registered) do.
+  - name: Lundbeck company releases (Cision, Lundbeck's own disclosure channel)
     row: 8
-    # Company sites, added one by one as they're found (with the analog they're for). Empty until step 10.
-    hosts: []
+    hosts: [news.cision.com]
+    paths: [/h--lundbeck-a-s/]
+    analogs: [rexulti_oral]
     used_for: [launch_date]
+    # "Following the launch in the US in August 2015, Rexulti reached DKK 117 million for the year" (2016-02-10)
+
+  - name: Sumitomo Pharma (formerly Dainippon Sumitomo, Sunovion's parent) IR library
+    row: 8
+    hosts: [d145j8vag8dpyh.cloudfront.net]   # the IR library's own host (sumitomo-pharma.com links to it)
+    paths: [/ir/]
+    analogs: [latuda_oral]
+    used_for: [launch_date]
+    # Annual report 2012: "LATUDA®, an atypical antipsychotic launched in February 2011"
 
   - name: FDA Novel Drug Approvals reports
     row: 9

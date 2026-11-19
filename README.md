@@ -48,6 +48,7 @@ python -m analog_finder.finder --scenario torevia --auto-confirm  # take the top
 python -m analog_finder.finder --scenario torevia --holdout latuda_oral --auto-confirm   # evaluation-style run
 python -m analog_finder.evaluate                                  # leave-one-out evaluation (step 8), ~20 s
 python -m analog_finder.evaluate --embedders tfidf rxbert         # compare embedders (step 9; downloads RxBERT once)
+python -m analog_finder.research.queue --scenario torevia         # label reads still needed, in order (step 10)
 ```
 Outputs: `data/scenarios/torevia/` (`analog_recommendations.csv`, `analog_weights.csv`, `uptake_curve.csv`); `--until filters|embed|score|loop` stops early; `--resume` continues a saved session.
 
