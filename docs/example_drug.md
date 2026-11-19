@@ -39,7 +39,7 @@ Fields follow the `target_drug` table ([data_model.md](data_model.md#scenario-an
 | `class_broad` | ATC N05A Antipsychotics |
 | `route_group` | oral |
 | `dosage_form` | Tablet, 15 mg |
-| `line_of_therapy` | Second line in practice: after at least one generic antipsychotic. Medicaid preferred-drug lists usually require a generic first, and that step is already in the analogs' Medicaid curves |
+| `line_of_therapy` | Any: the label ("treatment of schizophrenia in adults"), like the analogs' original labels, sets no prior-therapy requirement. In practice it is second line, after at least one generic antipsychotic: Medicaid preferred-drug lists usually require a generic first, and that step is already in the analogs' Medicaid curves. The practice line is kept in `target_patient_definition`, so the target and analogs are compared on the same (label) basis |
 | `entry_order` | 7th branded novel antipsychotic, after Latuda (2010), Rexulti (2015), Vraylar (2015), Caplyta (2019), Lybalvi (2021), Cobenfy (2024) |
 | `first_definition` | Not first in class, for the indication or at this line |
 | `expected_n_entrants` | 8–10 |

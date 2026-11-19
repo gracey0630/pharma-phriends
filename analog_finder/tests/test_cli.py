@@ -33,7 +33,7 @@ def test_until_stages(run_cli):
     state, text, _ = run_cli("--until", "filters")
     assert "Filters: 12 candidates" in text and "embedding" not in state
     state, text, _ = run_cli("--until", "embed")
-    assert "Embeddings: 12 analogs + target (tfidf)" in text and "scores" not in state
+    assert "Embeddings: 12 analogs + target (tfidf; approved evidence not used" in text and "scores" not in state
     state, text, _ = run_cli("--until", "score")
     assert "Top 10 of 12 by similarity" in text and len(state["scores"]) == 12
 

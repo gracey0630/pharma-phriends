@@ -6,13 +6,15 @@ build_profile_text() writes one short description per drug from the same templat
      name replaced by "the drug" so unique brand names don't count as a difference
   2. class names (ATC 4, ATC 3, area), without codes: codes are matched by the structured features (step 5)
   3. route group and dosage form
-  4. line of therapy, dosing frequency, # competitors at launch: APPROVED evidence only for analogs (D8)
+  4. line of therapy, dosing frequency, # competitors at launch: APPROVED evidence only for analogs (D8); left out
+     on both sides while config `use_evidence` is false
 A sentence whose value is missing is left out, never written as "unknown".
 
 Embedders share one interface (fit, encode, name, cacheable). TfidfEmbedder is fitted on the analog corpus only and
 then transforms the target, so changing the target never moves an analog's vector; it isn't cached because its
 vectors depend on the whole corpus. It ignores the template's own label words (TEMPLATE_WORDS), so two drugs don't
-look alike just because both have, say, an approved dosing sentence. Fixed-model embedders (RxBERT, step 9) set cacheable and use EmbeddingCache.
+look alike just because both have, say, an approved dosing sentence. RxBertEmbedder (step 9) is a fixed model: it
+sets cacheable and uses EmbeddingCache, so each text is encoded once.
 
 Spec: analog_finder/docs/components/embed.md
 """
@@ -104,12 +106,14 @@ def analog_texts(candidates, evidence):
     return texts
 
 
-def target_text(target, names):
-    """The target's profile text; class names looked up from the analogs' labels (`class_names`)."""
+def target_text(target, names, use_evidence=True):
+    """The target's profile text; class names looked up from the analogs' labels (`class_names`). Without
+    use_evidence the line of therapy, dosing and # competitors sentences are left out, as they are for the analogs."""
+    evidence = ([target.line_of_therapy, target.dosing_frequency,
+                 "" if target.n_competitors is None else target.n_competitors] if use_evidence else ["", "", ""])
     return build_profile_text(
         target.name, target.indication_text, names.get(target.atc4, ""), names.get(target.atc3, ""),
-        names.get(target.area, ""), target.route_group, target.dosage_form, target.line_of_therapy,
-        target.dosing_frequency, "" if target.n_competitors is None else target.n_competitors)
+        names.get(target.area, ""), target.route_group, target.dosage_form, *evidence)
 
 
 # --- embedders ----------------------------------------------------------------------------------------------
@@ -118,6 +122,7 @@ class TfidfEmbedder:
     """TF-IDF on words and word pairs, English stop words removed, rows L2-normalized (cosine = dot product)."""
     name = "tfidf"
     cacheable = False
+    center = False  # TF-IDF already down-weights words every profile shares
 
     def __init__(self):
         from sklearn.feature_extraction.text import TfidfVectorizer
@@ -133,12 +138,56 @@ class TfidfEmbedder:
         return self.vectorizer.transform(list(texts)).toarray()
 
 
+class RxBertEmbedder:
+    """RxBERT (Wu et al. 2024, FDA; BioBERT further trained on prescription drug labels), a fixed model.
+
+    Sentence vector = mean of the last hidden layer over the real tokens (attention mask), as in the RxBERT
+    co-author's own embedding code; rows L2-normalized. `center`: embed() subtracts the analogs' mean vector before
+    the cosine. Every profile shares a large "drug label" component, so uncentered cosines sit at 0.65-0.98 for any
+    two drugs; centered, they measure what a drug shares with the target beyond the typical label. Texts are cut at 128 tokens, the length RxBERT was trained
+    on (profile texts are shorter). The model loads on first use, so tests and TF-IDF runs never need torch.
+    `model` / `tokenizer` can be passed in (tests use a tiny fake)."""
+    name = "rxbert"
+    cacheable = True
+    center = True
+    MAX_TOKENS = 128
+
+    def __init__(self, model_name="seldas/rxbert-v1", model=None, tokenizer=None, batch_size=32):
+        self.model_name, self.model, self.tokenizer, self.batch_size = model_name, model, tokenizer, batch_size
+
+    def _load(self):
+        if self.model is None:
+            from transformers import AutoModel, AutoTokenizer
+            from transformers.utils import logging
+            logging.set_verbosity_error()  # the unused fill-mask head and pooler are expected, not errors
+            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+            self.model = AutoModel.from_pretrained(self.model_name).eval()
+
+    def fit(self, texts):
+        return self  # a fixed model: nothing to fit
+
+    def encode(self, texts):
+        import torch
+        self._load()
+        texts, out = list(texts), []
+        for i in range(0, len(texts), self.batch_size):
+            batch = self.tokenizer(texts[i:i + self.batch_size], padding=True, truncation=True,
+                                   max_length=self.MAX_TOKENS, return_tensors="pt")
+            with torch.no_grad():
+                hidden = self.model(**batch).last_hidden_state
+            mask = batch["attention_mask"].unsqueeze(-1).to(hidden.dtype)
+            vectors = (hidden * mask).sum(1) / mask.sum(1).clamp(min=1)
+            out.append(torch.nn.functional.normalize(vectors, dim=1).cpu().numpy())
+        return np.vstack(out) if out else np.zeros((0, 0))
+
+
 def get_embedder(name, config=None):
-    """The embedder named in config["embedder"] (tfidf; rxbert arrives in step 9)."""
+    """The embedder named in config["embedder"]: tfidf or rxbert (model from config["embedding_models"])."""
     if name == "tfidf":
         return TfidfEmbedder()
     if name == "rxbert":
-        raise NotImplementedError("the RxBERT embedder is plan step 9; use --embedder tfidf")
+        models = (config or {}).get("embedding_models") or {}
+        return RxBertEmbedder(models.get("rxbert", "seldas/rxbert-v1"))
     raise ValueError(f"unknown embedder '{name}' (expected tfidf or rxbert)")
 
 
@@ -182,20 +231,27 @@ def _encode(embedder, texts, cache):
     return np.vstack([cache.get(embedder.name, t) for t in texts])
 
 
-def embed(candidates, evidence, target, features, embedder, cache=None):
+def embed(candidates, evidence, target, features, embedder, cache=None, use_evidence=True):
     """Vectors for the candidates and the target.
 
     Returns {"analog_ids": [...], "vectors": ndarray (one row per analog), "target_vector": ndarray,
              "texts": {analog_id: text}, "target_text": str}.
     The embedder is fitted on the analog texts only (the holdout, if any, is already gone from `candidates`).
+    use_evidence=False (config `use_evidence`) leaves the evidence sentences out on both sides.
+    An embedder with `center` (RxBERT) has the candidates' mean vector subtracted from every vector, the target's
+    included; the cache keeps the raw vectors, since the mean depends on the candidate set.
     """
-    texts = analog_texts(candidates, evidence)
+    texts = analog_texts(candidates, evidence if use_evidence else None)
     ids = list(texts)
-    t_text = target_text(target, class_names(features))
+    t_text = target_text(target, class_names(features), use_evidence)
     embedder.fit([texts[a] for a in ids])
     vectors = _encode(embedder, [texts[a] for a in ids], cache)
-    return {"analog_ids": ids, "vectors": vectors, "target_vector": _encode(embedder, [t_text], cache)[0],
-            "texts": texts, "target_text": t_text}
+    target_vector = _encode(embedder, [t_text], cache)[0]
+    if getattr(embedder, "center", False):
+        mean = vectors.mean(axis=0)
+        vectors, target_vector = vectors - mean, target_vector - mean
+    return {"analog_ids": ids, "vectors": vectors, "target_vector": target_vector, "texts": texts,
+            "target_text": t_text}
 
 
 def cosine(vectors, target_vector):

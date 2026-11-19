@@ -13,6 +13,8 @@ merged with the scenario's `preferences`).
   n_competitors     1 / (1 + |difference| / 2): 2 apart 0.5
   order_of_entry    not scored for analogs in v1 (the pool starts in 2010, so order within it is wrong)
 
+The evidence features (line of therapy, dosing, # competitors) are used only when config `use_evidence` is true.
+
 Ties are broken by analog_id, so every run ranks the same way.
 
 Spec: analog_finder/docs/components/score.md
@@ -137,13 +139,19 @@ def feature_scores(candidates, embedding, evidence, target):
     return out
 
 
-def score(candidates, embedding, evidence, target, weights):
+EVIDENCE_FEATURES = ["line_of_therapy", "dosing_frequency", "n_competitors"]
+
+
+def score(candidates, embedding, evidence, target, weights, use_evidence=True):
     """Score table (Shared contracts): analog_id, rank, similarity, s_<feature> for each feature, n_features_used;
-    sorted by similarity (high first), then analog_id."""
+    sorted by similarity (high first), then analog_id. use_evidence=False (config `use_evidence`) leaves the
+    evidence features out (NaN), whatever their weights."""
     unknown = set(weights) - set(FEATURES)
     if unknown:
         raise ValueError(f"weights for unknown feature(s) {sorted(unknown)}; features are {FEATURES}")
     s = feature_scores(candidates, embedding, evidence, target)
+    if not use_evidence:
+        s[[f"s_{f}" for f in EVIDENCE_FEATURES]] = np.nan
     w = pd.Series({f: float(weights.get(f, 0.0)) for f in FEATURES})
     if w.sum() == 0:
         raise ValueError("every feature weight is 0")

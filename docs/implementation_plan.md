@@ -35,9 +35,9 @@ The team agreed to every proposal for D1–D8. These are now the rules the code 
 | D3 | Shortlist and approval | Top 5 shown, confirmed one at a time. A rejection fetches the next-ranked candidate. The forecaster can stop at 3–5 confirmed. |
 | D4 | Language model's role | v1: the model writes summaries only, no re-rank. Ranking stays deterministic and testable. `rerank.py` is a pass-through for a later re-rank. |
 | D5 | Curve weights | Weight = similarity score, normalized over the confirmed analogs. The forecaster can override a weight with a reason. |
-| D6 | Similarity | Hybrid score: RxBERT text similarity on a profile text, plus one score per structured feature, combined with weights users can set. |
+| D6 | Similarity | Hybrid score: RxBERT text similarity on a profile text, plus one score per structured feature, combined with weights users can set. *Amended 2026-11-18:* the text embedder is TF-IDF (step 9: RxBERT didn't beat it by the margin; `embedder` in `scoring.yaml`, decisions.md). |
 | D7 | Feature preferences | Preferences are the weights in that combination. Defaults sit in `config/scoring.yaml`; any scenario can override them. ATC class and area get low defaults (EDA: class medians don't beat the overall median). |
-| D8 | Evidence used in matching | Approved values only. FDA indication text and ATC class work now. Line of therapy, dosing and competitors count once approved. |
+| D8 | Evidence used in matching | Approved values only. FDA indication text and ATC class work now. Line of therapy, dosing and competitors count once approved. *Amended 2026-11-18:* they count only once an evaluation shows they help (`use_evidence` in `scoring.yaml`, off for now; decisions.md). |
 
 ## Folder layout and where data goes
 
@@ -321,6 +321,8 @@ The sums run over features that both the target and the analog have. A missing f
 
 **Input:** queue items. **Output:** evidence rows (Shared contracts) appended to `analog_evidence.csv` with `approved=false`.
 
+**Depends on:** the line-of-therapy category change, as its own PR before this step (decisions.md open question, 2026-11-18): line of therapy stored as `first` / `later` / `any` / `not stated`, returned by the agent with its quote and approved by the reviewer; `score.py` matches on the category and keeps its keyword reader as a cross-check. It changes Shared contracts (approved evidence, `Target`) and categorizes the seed 8 values.
+
 **Questions to settle:**
 
 - What counts as a competitor: same ATC 4, same indication, or both? This decides the number, so agree it before extraction.
@@ -405,7 +407,7 @@ These are the handoffs between modules, and changing one breaks the step downstr
 
 | Handoff | From → to | Shape |
 | --- | --- | --- |
-| Merged config | `io.load_config` → all | dict: `filters`, `weights` (feature → float), `top_k`, `embedder`, `embedding_models`, `paths` (absolute), `scenario` |
+| Merged config | `io.load_config` → all | dict: `filters`, `weights` (feature → float), `top_k`, `embedder`, `embedding_models`, `use_evidence` (bool; evidence features in matching), `paths` (absolute), `scenario` |
 | Approved evidence (wide) | `io` → embed, score, summarize | one row per `analog_id` (the index); columns `line_of_therapy`, `dosing_frequency`, `launch_date`, `n_competitors_at_launch` (the evidence field names), each with `<field>_quote` and `<field>_url`; NaN when not approved |
 | `Target` | `target.py` → filters, embed, score, summarize | `name`, `indication_text`, `atc4`, `atc3`, `area`, `route_group`, `dosage_form`, optional `line_of_therapy`, `dosing_frequency`, `n_competitors` (+ `is_estimate`), `order_of_entry`, `preferences` |
 | Candidate table | `filters.py` → embed, score | one row per usable analog in the route group: `analog_id`, `drug_name`, `atc4`, `atc3`, `area` (codes, `; `-separated for multi-class analogs), `atc4_name`, `atc3_name`, `area_name`, `route_group`, `dosage_form`, `indication_text`, plus flags `warn_label_expansion`, `warn_multi_route`, `low_volume`, `peak_not_confirmed`, `weak_bass_fit` |
@@ -425,9 +427,9 @@ The finder counts as an improvement if its weighted curve predicts a held-out an
 
 - **Method:** hold out one usable analog, run filters, scoring and the top 5 with auto-confirm, then predict the held-out analog's Q0–Q12 share of peak from the weighted curve.
 - **Error:** mean absolute gap in share of peak, the same measure the EDA used.
-- **Baselines:** the median of all analogs, and the median of the held-out analog's ATC 4 class.
+- **Baselines:** the median of all analogs, and the median of the held-out analog's ATC 4 class, both within the held-out analog's route group, the pool the finder picks from (decisions.md 2026-11-18; the EDA mixed routes: 0.174 vs 0.169 same-route).
 - **Comparisons:** TF-IDF (Step 8), structured features only (Step 8), RxBERT (Step 9). The results set the default weights in `scoring.yaml`.
-- **When it runs:** first in Step 8, again in Step 9, and again in Step 15 once Stage 1 covers the nervous-system pool. Structured features are thin until then, so early results will understate the hybrid score.
+- **When it runs:** first in Step 8, again in Step 9, and again in Step 15 once Stage 1 covers the nervous-system pool. Structured features are thin until then, so early results will understate the hybrid score. Steps 8 and 9 run with `use_evidence` off (text and ATC class only); Step 15 compares on and off, and its result decides whether evidence is turned on.
 
 ## Working agreements
 

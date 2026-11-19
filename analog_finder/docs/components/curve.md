@@ -18,7 +18,7 @@ Decisions made:
 - **Band** = plain min–max of the analogs with data that quarter, as agreed, even when one analog has a small weight: the band shows the spread of history, not a confidence interval.
 - **Upper bounds:** `n_upper_bound` counts the analogs whose share of peak is "≤ X" (peak not confirmed). The CLI prints the weighted value as "≤" whenever it's > 0.
 - **Bass:** shown per analog, not combined. Averaging p and q is a separate question (and Bass is fitted to TRx share of peak, not adopters); the weighted curve is the trajectory input.
-- **Demo outputs** in `data/scenarios/torevia/` come from a forecaster-style session (`--decided-by demo`): confirm Rexulti and Vraylar, reject Nuplazid (Parkinson's disease psychosis, not schizophrenia), confirm Caplyta, Latuda and Lybalvi (offered as #6). Weights: Rexulti 0.245, Vraylar 0.229, Caplyta 0.211, Latuda 0.167, Lybalvi 0.148. Year 3 (Q12): ≤ 0.48 of peak, band 0.19–0.80, 2 of 5 analogs with the peak not confirmed.
+- **Demo outputs** in `data/scenarios/torevia/` come from a forecaster-style session (`--decided-by demo`): confirm Rexulti and Vraylar, reject Nuplazid (Parkinson's disease psychosis, not schizophrenia), confirm Caplyta, Latuda and Lybalvi (offered as #6). Weights (`use_evidence` off, 2026-11-18): Rexulti 0.244, Vraylar 0.228, Caplyta 0.212, Latuda 0.168, Lybalvi 0.148. Year 3 (Q12): ≤ 0.48 of peak, band 0.19–0.80, 2 of 5 analogs with the peak not confirmed.
 
 Open questions:
 - Should the curve also be drawn from the weighted Bass parameters, and how (average p and q, or fit to the weighted curve)? Decides: team (step 14 shows the curve).

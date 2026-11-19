@@ -78,15 +78,27 @@ DEFAULTS = {"text": 1.0, "atc4": 0.25, "atc3": 0.25, "area": 0.1,
 
 
 def test_evidence_can_lift_an_unrelated_analog(finder_tables, schizo_target):
-    """Known behaviour, open question for step 8 (decisions.md): approved evidence that matches the target can
-    rank an unrelated analog above a same-area one with no evidence. On the real data Sotyktu and Ibrance (once
-    daily) rank above Ingrezza for Torevia. If step 8 changes this, flip the assertion."""
+    """With use_evidence on: approved evidence that matches the target can rank an unrelated analog above a
+    same-area one with no evidence (why use_evidence is off for now; decisions.md 2026-11-18)."""
     ev = pd.DataFrame({"line_of_therapy": ["after other systemic therapy"], "dosing_frequency": ["once daily"],
                        "n_competitors_at_launch": ["6"]}, index=pd.Index(["o09_oral"], name="analog_id"))
     c, e = _setup(finder_tables, schizo_target, ev)
     s = score.score(c, e, ev, schizo_target, DEFAULTS).set_index("analog_id")
     assert s.loc["o09_oral", "s_area"] == 0 and s.loc["o05_oral", "s_area"] == 1  # breast cancer vs antidepressant
     assert s.loc["o09_oral", "rank"] < s.loc["o05_oral", "rank"]
+
+
+def test_use_evidence_off_stops_the_lift(finder_tables, schizo_target):
+    """config use_evidence: false (decisions.md 2026-11-18): the same evidence no longer scores or lifts o09."""
+    ev = pd.DataFrame({"line_of_therapy": ["after other systemic therapy"], "dosing_frequency": ["once daily"],
+                       "n_competitors_at_launch": ["6"]}, index=pd.Index(["o09_oral"], name="analog_id"))
+    c = filters.candidates(finder_tables, schizo_target)
+    e = embed.embed(c, ev, schizo_target, finder_tables["analog_features"], embed.TfidfEmbedder(),
+                    use_evidence=False)
+    s = score.score(c, e, ev, schizo_target, DEFAULTS, use_evidence=False).set_index("analog_id")
+    assert s[[f"s_{f}" for f in score.EVIDENCE_FEATURES]].isna().all().all()
+    assert s.n_features_used.max() == 4  # text, atc4, atc3, area
+    assert s.loc["o09_oral", "rank"] > s.loc["o05_oral", "rank"]
 
 
 def test_bad_weights(finder_tables, schizo_target):

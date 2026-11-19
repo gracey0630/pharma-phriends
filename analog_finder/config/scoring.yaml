@@ -5,10 +5,17 @@
 # How many candidates are shown at once (D3).
 top_k: 5
 
-# Text embedder for the profile-text similarity: tfidf | rxbert. Step 9 sets the default from the evaluation.
+# Text embedder for the profile-text similarity: tfidf | rxbert. TF-IDF stays the default after step 9: RxBERT
+# didn't beat it by the adoption margin (decisions.md 2026-11-18). rxbert needs torch and a one-time model download.
 embedder: tfidf
 embedding_models:
   rxbert: seldas/rxbert-v1
+
+# Approved evidence in matching (D8): line of therapy, dosing and # competitors at launch. Off until an evaluation
+# shows it helps (decisions.md 2026-11-18): only a few analogs have approved values, so scoring them favours those
+# analogs for having data, not for being alike. Off = left out of the profile text (target and analogs) and of
+# the scores; approved evidence still loads for display.
+use_evidence: false
 
 # Hard filters (D1, D2), applied in step 3.
 filters:
