@@ -427,7 +427,7 @@ The finder counts as an improvement if its weighted curve predicts a held-out an
 
 - **Method:** hold out one usable analog, run filters, scoring and the top 5 with auto-confirm, then predict the held-out analog's Q0–Q12 share of peak from the weighted curve.
 - **Error:** mean absolute gap in share of peak, the same measure the EDA used.
-- **Baselines:** the median of all analogs, and the median of the held-out analog's ATC 4 class.
+- **Baselines:** the median of all analogs, and the median of the held-out analog's ATC 4 class, both within the held-out analog's route group, the pool the finder picks from (decisions.md 2026-11-18; the EDA mixed routes: 0.174 vs 0.169 same-route).
 - **Comparisons:** TF-IDF (Step 8), structured features only (Step 8), RxBERT (Step 9). The results set the default weights in `scoring.yaml`.
 - **When it runs:** first in Step 8, again in Step 9, and again in Step 15 once Stage 1 covers the nervous-system pool. Structured features are thin until then, so early results will understate the hybrid score. Steps 8 and 9 run with `use_evidence` off (text and ATC class only); Step 15 compares on and off, and its result decides whether evidence is turned on.
 
