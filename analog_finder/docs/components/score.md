@@ -18,7 +18,7 @@ Decisions made (how each feature becomes a 0–1 score):
 - **order_of_entry: not scored for analogs in v1.** The pool starts in 2010, so an order computed within it is wrong (Latuda would be the 1st antipsychotic, not ~9th). Its weight in scoring.yaml is 0 (decisions.md 2026-11-18); set it when label reads supply an analog value. # competitors at launch carries most of the same signal.
 - **No shrinkage for few features:** an analog scored on text + class can outrank one scored on 7 features. `n_features_used` is in the table so the summary card (step 13) and the reviewer can see it. Revisit with the evaluation (step 8).
 - **Ties go to `analog_id`**, so runs are reproducible. A weight of 0 means the feature isn't used (not counted in `n_features_used`). A weight for an unknown feature, or all weights 0, is an error.
-- **Weights unchanged** from step 1's provisional defaults (text 1, ATC 4 0.25, ATC 3 0.25, area 0.1, others 1). They change only through an evaluation result (steps 8, 9, 15).
+- **Weights:** step 1's provisional defaults (text 1, ATC 4 0.25, ATC 3 0.25, area 0.1, line of therapy, dosing and # competitors 1), except order of entry 0 (not scored; decisions.md 2026-11-18). They change only through an evaluation result (steps 8, 9, 15).
 
 Result on Torevia (TF-IDF, 2026-11-18): 1 Rexulti 0.681, 2 Vraylar 0.637, 3 Nuplazid 0.601, 4 Caplyta 0.585, 5 Latuda 0.465, 6 Lybalvi 0.412, then Otezla, Sotyktu, Ibrance (0.28–0.34). All 5 expected analogs are in the top 6. Nuplazid (N05AX, but Parkinson's-disease psychosis) is the kind of candidate the confirm loop's rejection is for. Otezla, Sotyktu and Ibrance score above unrelated drugs only because they have approved evidence that partly matches Torevia's profile (e.g. Otezla's 6 competitors).
 
