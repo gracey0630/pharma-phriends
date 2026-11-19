@@ -15,7 +15,7 @@ Decisions made:
 - **Target from an analog:** its indication text, ATC codes (first ATC 4 if it has several), route group and dosage form; no evidence. Gaps come from the data, not the method: 6 analogs have no ATC class (text only), 7 have several (as a candidate any can match), 15 have no dosage form. Built as a `Target` directly, since the scenario check requires an ATC 4 code.
 - **Methods:**
   - **TF-IDF hybrid:** the `scoring.yaml` weights (text plus ATC 4, ATC 3, area).
-  - **Structured only:** text weight 0, so ATC class alone. Within a class, candidates tie and `analog_id` breaks the tie, so its top 5 there is arbitrary.
+  - **Structured only:** text weight 0, so ATC class alone. Within a class, candidates tie and `analog_id` breaks the tie, so its top 5 there is arbitrary. A held-out analog with no ATC class (6) has nothing to rank on, so it gets the all-analog median, counted as a fallback.
 - **Baselines**, both from the other usable analogs **in the same route group** (the pool the finder picks from; mixing routes would credit the finder for oral and sc drugs ramping differently):
   - **All-analog median:** every new drug launches like the typical drug.
   - **ATC 4 median:** like the typical drug in its class (at least 3 others in the class; otherwise the all-analog median, with the count reported).
@@ -24,10 +24,21 @@ Decisions made:
 - **Spread:** 95% bootstrap intervals (2,000 resamples, fixed seed) for each median error and for each method's gap to the all-analog baseline, plus the share of analogs where the method beats that baseline.
 - **Unconfirmed peaks:** included, as in the EDA; a second set of rows covers only the ~164 analogs with a confirmed peak.
 - **Weights don't change in step 8.** It's a first measurement. A later evaluation (steps 9, 15) changes the defaults only if the median error improves by ≥ 0.01 and the 95% interval of the difference excludes 0 (set now, before any results).
-- **Speed:** one embedding per held-out analog, shared by both methods; a few minutes for all 258.
+- **Speed:** one embedding per held-out analog, shared by both methods; about 20 seconds for all 258.
+
+Result (2026-11-18, TF-IDF, `use_evidence` off, provisional weights), median error over 258 analogs:
+
+| method | error (95% interval) | vs all-analog median (95% interval) | beats it on |
+|---|---|---|---|
+| TF-IDF hybrid | 0.173 (0.155–0.195) | +0.004 (−0.010 to +0.020) | 48% |
+| Structured only | 0.181 (0.166–0.196) | +0.004 (−0.002 to +0.013) | 47% (6 fallbacks) |
+| ATC 4 median | 0.174 (0.157–0.189) | 0.000 | 172 fallbacks |
+| All-analog median | 0.169 (0.153–0.189) | — | — |
+
+The measuring-tool check passes (0.169). Nothing beats the typical-drug guess: the finder picks sensible analogs (Latuda → the other antipsychotics, Skyrizi → the other IL-17/23 psoriasis biologics), but text and class don't separate fast launches from slow ones. Same conclusion on the 164 analogs with a confirmed peak (hybrid 0.192 vs 0.190). Weights unchanged, as agreed. Line of therapy, competition and dosing (step 15) are what's left to test.
 
 Open questions: none.
 
 Caveats for the write-up: matching is on text and class only (no label reads yet), so this understates the hybrid score (step 15). Medicaid (SDUD) only.
 
-Done when: `python -m analog_finder.evaluate` prints TF-IDF and structured-only errors next to both baselines; the all-analog baseline comes out near 0.18.
+Done when: `python -m analog_finder.evaluate` prints TF-IDF and structured-only errors next to both baselines; the all-analog baseline comes out near 0.18. ✅ (`tests/test_evaluate.py`; baseline 0.169)
