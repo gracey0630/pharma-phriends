@@ -42,9 +42,11 @@ def line_group(text):
     if not isinstance(text, str) or not text.strip():
         return None
     t = text.lower()
-    if re.search(r"\bno prior\b|\bnot? (?:previously )?treated\b|treatment[- ]na[iï]ve", t):
+    if re.search(r"\bno prior\b|\bnot? (?:previously )?treated\b|\buntreated\b|treatment[- ]na[iï]ve|"
+                 r"regardless of prior", t):
         return "first"
     if re.search(r"\bafter\b|\bfail|inadequate response|intoleran|\bprior\b|previously treated|refractory|"
+                 r"resistant\b|"
                  r"\bsecond\b|\bthird\b|\b[23]l\b|\b(?:2nd|3rd)\b", t):
         return "later"
     if re.search(r"\bfirst\b|\b1l\b|\b1st\b|\binitial\b", t):

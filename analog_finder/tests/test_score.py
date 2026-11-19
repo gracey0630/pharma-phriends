@@ -72,6 +72,23 @@ def test_approved_evidence_is_scored(finder_tables, schizo_target):
     assert s.loc["o04_oral", "n_features_used"] == 7
 
 
+# scoring.yaml defaults at 2026-11-18 (fixed here so the test doesn't move when step 8 tunes them)
+DEFAULTS = {"text": 1.0, "atc4": 0.25, "atc3": 0.25, "area": 0.1,
+            "line_of_therapy": 1.0, "dosing_frequency": 1.0, "n_competitors": 1.0, "order_of_entry": 0.0}
+
+
+def test_evidence_can_lift_an_unrelated_analog(finder_tables, schizo_target):
+    """Known behaviour, open question for step 8 (decisions.md): approved evidence that matches the target can
+    rank an unrelated analog above a same-area one with no evidence. On the real data Sotyktu and Ibrance (once
+    daily) rank above Ingrezza for Torevia. If step 8 changes this, flip the assertion."""
+    ev = pd.DataFrame({"line_of_therapy": ["after other systemic therapy"], "dosing_frequency": ["once daily"],
+                       "n_competitors_at_launch": ["6"]}, index=pd.Index(["o09_oral"], name="analog_id"))
+    c, e = _setup(finder_tables, schizo_target, ev)
+    s = score.score(c, e, ev, schizo_target, DEFAULTS).set_index("analog_id")
+    assert s.loc["o09_oral", "s_area"] == 0 and s.loc["o05_oral", "s_area"] == 1  # breast cancer vs antidepressant
+    assert s.loc["o09_oral", "rank"] < s.loc["o05_oral", "rank"]
+
+
 def test_bad_weights(finder_tables, schizo_target):
     c, e = _setup(finder_tables, schizo_target)
     with pytest.raises(ValueError, match="unknown feature"):
@@ -90,6 +107,17 @@ def test_bad_weights(finder_tables, schizo_target):
     ("second line", "later"),
     ("treatment of schizophrenia", None),
     ("", None),
+    # wording a label read may use (plan step 11); "first" / "later" checked against the label sense
+    ("first line", "first"), ("first-line", "first"), ("1L", "first"),
+    ("previously untreated", "first"), ("treatment-naive", "first"), ("not previously treated", "first"),
+    ("first line, regardless of prior therapy", "first"),
+    ("after failure of two antipsychotics", "later"), ("treatment-resistant schizophrenia", "later"),
+    ("patients who have received at least one prior systemic therapy", "later"),
+    ("after inadequate response to an antidepressant", "later"), ("after one or more lines of therapy", "later"),
+    ("second-line", "later"), ("2L", "later"), ("third line", "later"),
+    # don't say: left out of the score, not guessed
+    ("adjunct to antidepressants", None), ("monotherapy or adjunctive", None),
+    ("candidates for systemic therapy or phototherapy", None),
 ])
 def test_line_groups(text, group):
     assert score.line_group(text) == group
