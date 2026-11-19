@@ -4,11 +4,12 @@ Leave one out: each usable analog with all of Q0-Q12 becomes the target, the fin
 its route group (filters -> embed -> score -> auto-confirm the top 5 -> weighted curve), and the error is the mean
 absolute gap between the predicted and actual share of peak over Q0-Q12. Lower is better.
 
-Methods: TF-IDF hybrid (scoring.yaml weights) and structured only (text weight 0).
+Methods: the hybrid score with each embedder asked for (TF-IDF, RxBERT; scoring.yaml weights), and structured only
+(text weight 0). With two embedders, the table also gives the paired difference of each from the config default.
 Baselines (no matching), from the other usable analogs in the same route group: the all-analog median and the ATC 4
 class median (at least 3 others in the class, else the all-analog median).
 
-Usage: python -m analog_finder.evaluate [--analogs ID ...] [--out CSV] [--embedder tfidf]
+Usage: python -m analog_finder.evaluate [--embedders tfidf rxbert] [--analogs ID ...] [--out CSV]
 
 Spec: analog_finder/docs/components/evaluate.md
 """
@@ -27,12 +28,14 @@ from pipeline.checks import usable
 
 QUARTERS = list(range(0, 13))  # Q0-Q12, the first 3 years
 MIN_CLASS = 3  # others in the ATC 4 class needed for a class median (as in the EDA)
-METHODS = ["tfidf_hybrid", "structured_only"]
+EMBEDDER_NAMES = {"tfidf": "TF-IDF", "rxbert": "RxBERT"}
 BASELINES = ["atc4_median", "all_analog_median"]
-LABELS = {"tfidf_hybrid": "TF-IDF hybrid", "structured_only": "Structured only (ATC class)",
-          "atc4_median": "ATC 4 median (baseline)", "all_analog_median": "All-analog median (baseline)"}
+LABELS = {"structured_only": "Structured only (ATC class)", "atc4_median": "ATC 4 median (baseline)",
+          "all_analog_median": "All-analog median (baseline)",
+          **{f"{e}_hybrid": f"{n} hybrid" for e, n in EMBEDDER_NAMES.items()}}
 REFERENCE = "all_analog_median"
 EDA_BASELINE = 0.18
+ADOPT_MARGIN = 0.01  # a new default must improve the median error by at least this, interval excluding 0 (spec)
 
 
 # --- inputs -----------------------------------------------------------------------------------------------
@@ -92,22 +95,32 @@ def baselines(analog_id, actual, features):
             "atc4_median": overall if fallback else actual.loc[same].median()}, fallback
 
 
-def method_weights(weights):
-    return {"tfidf_hybrid": dict(weights), "structured_only": {**weights, "text": 0.0}}
+def methods(embedders):
+    return [f"{e}_hybrid" for e in embedders] + ["structured_only"]
 
 
-def finder_predictions(analog_id, tables, cfg, embedder_name):
+def method_weights(weights, embedders=("tfidf",)):
+    """{method: (embedder, weights)}. Structured only ignores the text, so it uses the first embedder's run."""
+    out = {f"{e}_hybrid": (e, dict(weights)) for e in embedders}
+    out["structured_only"] = (embedders[0], {**weights, "text": 0.0})
+    return out
+
+
+def finder_predictions(analog_id, tables, cfg, embedders=("tfidf",), cache=None, embedder_objects=None):
     """{method: (prediction over Q0-Q12 or None, top 5 analog_ids)}. None when the method has nothing to rank on
-    (structured only for a target with no ATC class)."""
+    (structured only for a target with no ATC class). cache: an EmbeddingCache, so a fixed model (RxBERT) encodes
+    each text once across all holdouts. embedder_objects: {name: embedder}, reused across holdouts."""
     target = target_for(analog_id, tables)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")  # "fewer than 2 x top_k candidates" is expected for small pools
         cands = filters.candidates(tables, target, cfg["filters"], holdout=analog_id, top_k=cfg["top_k"])
-    emb = embed.embed(cands, None, target, tables["analog_features"], embed.get_embedder(embedder_name, cfg),
-                      use_evidence=False)
+    objects = embedder_objects or {}
+    embs = {e: embed.embed(cands, None, target, tables["analog_features"],
+                           objects.get(e) or embed.get_embedder(e, cfg), cache, use_evidence=False)
+            for e in embedders}
     out = {}
-    for method, weights in method_weights(cfg["weights"]).items():
-        s = rerank.rerank(score.score(cands, emb, None, target, weights, use_evidence=False), target, cands)
+    for method, (e, weights) in method_weights(cfg["weights"], embedders).items():
+        s = rerank.rerank(score.score(cands, embs[e], None, target, weights, use_evidence=False), target, cands)
         queue = loop.CandidateQueue(s, "evaluate", top_k=cfg["top_k"])
         queue.auto_confirm()
         top = queue.confirmed
@@ -121,9 +134,10 @@ def finder_predictions(analog_id, tables, cfg, embedder_name):
 
 # --- run ----------------------------------------------------------------------------------------------------
 
-def run(tables, cfg, analogs=None, embedder_name=None, progress=None):
+def run(tables, cfg, analogs=None, embedders=None, progress=None, cache=None):
     """Per-analog errors: one row per held-out analog, an `error_<method>` column per method and baseline, plus
-    `atc4_fallback`, `structured_fallback`, the two top-5 lists, `route_group` and `peak_confirmed`."""
+    `atc4_fallback`, `structured_fallback`, a top-5 list per method, `route_group` and `peak_confirmed`.
+    embedders: names (default: config["embedder"]); cache: EmbeddingCache for fixed models (default: none)."""
     if cfg.get("use_evidence"):
         raise ValueError("use_evidence is on, but the evaluation builds targets without evidence (step 15 adds it)")
     actual = actual_curves(tables)
@@ -133,7 +147,8 @@ def run(tables, cfg, analogs=None, embedder_name=None, progress=None):
         if unknown:
             raise ValueError(f"not evaluated (not usable, or missing a quarter in Q0-Q12): {unknown}")
         ids = [a for a in ids if a in set(analogs)]
-    name = embedder_name or cfg["embedder"]
+    embedders = list(embedders or [cfg["embedder"]])
+    objects = {e: embed.get_embedder(e, cfg) for e in embedders}  # one model load per run
     features = tables["analog_features"].set_index("analog_id")
     rows = []
     for i, a in enumerate(ids, 1):
@@ -141,10 +156,10 @@ def run(tables, cfg, analogs=None, embedder_name=None, progress=None):
         row = {"analog_id": a, "route_group": features.route_group[a],
                "peak_confirmed": bool(features.peak_confirmed[a]), "atc4_fallback": atc4_fallback}
         try:
-            preds = finder_predictions(a, tables, cfg, name)
+            preds = finder_predictions(a, tables, cfg, embedders, cache, objects)
         except filters.FilterError as e:  # nothing else in its route group
             preds, row["skipped"] = {}, str(e)
-        for method in METHODS:
+        for method in methods(embedders):
             pred, top = preds.get(method, (None, []))
             if method == "structured_only":
                 row["structured_fallback"] = pred is None and bool(preds)
@@ -169,6 +184,10 @@ def _ci(values, rng, n_boot):
     return np.percentile(np.median(values[idx], axis=1), [2.5, 97.5])
 
 
+def _methods_in(errors):
+    return [c[len("error_"):] for c in errors.columns if c.startswith("error_") and c[len("error_"):] not in BASELINES]
+
+
 def summarize(errors, n_boot=2000, seed=0):
     """One row per method and baseline, for all evaluated analogs and for those with a confirmed peak: median error
     (95% bootstrap interval), mean error, paired median difference from the all-analog median (95% interval; < 0 =
@@ -177,7 +196,7 @@ def summarize(errors, n_boot=2000, seed=0):
     rows = []
     for subset, d in [("all", e), ("peak confirmed", e[e.peak_confirmed])]:
         ref = d[f"error_{REFERENCE}"].to_numpy(float)
-        for m in METHODS + BASELINES:
+        for m in _methods_in(errors) + BASELINES:
             v = d[f"error_{m}"].to_numpy(float)
             rng = np.random.default_rng(seed)
             lo, hi = _ci(v, rng, n_boot) if len(v) else (np.nan, np.nan)
@@ -195,13 +214,25 @@ def summarize(errors, n_boot=2000, seed=0):
     return pd.DataFrame(rows)
 
 
+def compare(errors, method, against, n_boot=2000, seed=0):
+    """Paired comparison of two methods on the same analogs (the adoption rule for a new default): median of the
+    per-analog differences `method - against` (< 0 = method better), its 95% bootstrap interval, the share of
+    analogs where `method` is better, and whether it meets the margin (improves by >= 0.01, interval excludes 0)."""
+    d = errors[errors.skipped == ""]
+    diff = (d[f"error_{method}"] - d[f"error_{against}"]).to_numpy(float)
+    lo, hi = _ci(diff, np.random.default_rng(seed), n_boot)
+    med = float(np.median(diff))
+    return {"method": method, "against": against, "median_diff": med, "ci_low": lo, "ci_high": hi,
+            "share_better": float((diff < 0).mean()), "meets_margin": bool(med <= -ADOPT_MARGIN and hi < 0)}
+
+
 # --- CLI ----------------------------------------------------------------------------------------------------
 
 def _fmt(x, nd=3):
     return "" if x != x else f"{x:.{nd}f}"
 
 
-def print_summary(summary, errors, out=sys.stdout):
+def print_summary(summary, errors, out=sys.stdout, comparisons=()):
     skipped = errors[errors.skipped != ""]
     print(f"\nLeave-one-out over {len(errors) - len(skipped)} analogs, Q0-Q12 (error = mean gap in share of peak; "
           "lower is better)", file=out)
@@ -216,20 +247,26 @@ def print_summary(summary, errors, out=sys.stdout):
             print(f"  {r.method:<30}{_fmt(r.median_error):>8}  {_fmt(r.ci_low)}-{_fmt(r.ci_high):<7}"
                   f"{_fmt(r.mean_error):>8}  {('' if vs != vs else f'{vs:+.3f}'):>14}  {vs_ci:>15}"
                   f"{('' if better != better else f'{better:.0%}'):>8}{(r.fallbacks or ''):>10}", file=out)
+    for c in comparisons:
+        verdict = "meets" if c["meets_margin"] else "does not meet"
+        print(f"\n{LABELS[c['method']]} vs {LABELS[c['against']]} (paired, all analogs): median difference "
+              f"{c['median_diff']:+.3f} (95% interval {c['ci_low']:+.3f} to {c['ci_high']:+.3f}), better on "
+              f"{c['share_better']:.0%}; {verdict} the adoption margin (>= {ADOPT_MARGIN} better, interval below 0).",
+              file=out)
     base = summary[(summary.subset == "all") & (summary.method == LABELS[REFERENCE])].median_error.iloc[0]
     print(f"\nMeasuring-tool check: all-analog median {base:.3f} (EDA: {EDA_BASELINE}).", file=out)
     if len(skipped):
         print(f"Skipped {len(skipped)}: " + "; ".join(f"{r.analog_id} ({r.skipped})" for r in skipped.itertuples()),
               file=out)
-    print("Matching on indication text and ATC class only (use_evidence off), so the hybrid score is understated "
+    print("Matching on profile text and ATC class only (use_evidence off), so the hybrid score is understated "
           "until label reads (step 15). Medicaid (SDUD) only.", file=out)
 
 
 def parse_args(argv=None):
     ap = argparse.ArgumentParser(prog="python -m analog_finder.evaluate", description=__doc__.splitlines()[0])
     ap.add_argument("--analogs", nargs="+", metavar="ANALOG_ID", help="evaluate only these analogs")
-    ap.add_argument("--embedder", choices=["tfidf", "rxbert"], default=None,
-                    help="text embedder (default: config/scoring.yaml)")
+    ap.add_argument("--embedders", nargs="+", choices=list(EMBEDDER_NAMES), default=None,
+                    help="text embedders to compare (default: config/scoring.yaml embedder)")
     ap.add_argument("--out", type=Path, default=None,
                     help="per-analog errors CSV (default: data/cache/evaluation/errors.csv)")
     ap.add_argument("--boot", type=int, default=2000, help="bootstrap resamples")
@@ -246,9 +283,14 @@ def main(argv=None, tables=None, out=sys.stdout):
         if i % 25 == 0 or i == n:
             print(f"  {i}/{n} held out", file=sys.stderr)
 
-    errors = run(tables, cfg, args.analogs, args.embedder, progress)
+    embedders = args.embedders or [cfg["embedder"]]
+    cache = embed.EmbeddingCache(cfg["paths"]["cache"])
+    errors = run(tables, cfg, args.analogs, embedders, progress, cache)
     summary = summarize(errors, args.boot, args.seed)
-    print_summary(summary, errors, out)
+    default = f"{cfg['embedder']}_hybrid"
+    comparisons = [compare(errors, f"{e}_hybrid", default, args.boot, args.seed)
+                   for e in embedders if f"{e}_hybrid" != default and default in _methods_in(errors)]
+    print_summary(summary, errors, out, comparisons)
     path = args.out or cfg["paths"]["cache"] / "evaluation" / "errors.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
     errors.to_csv(path, index=False)

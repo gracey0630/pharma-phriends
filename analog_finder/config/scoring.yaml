@@ -5,7 +5,8 @@
 # How many candidates are shown at once (D3).
 top_k: 5
 
-# Text embedder for the profile-text similarity: tfidf | rxbert. Step 9 sets the default from the evaluation.
+# Text embedder for the profile-text similarity: tfidf | rxbert. TF-IDF stays the default after step 9: RxBERT
+# didn't beat it by the adoption margin (decisions.md 2026-11-18). rxbert needs torch and a one-time model download.
 embedder: tfidf
 embedding_models:
   rxbert: seldas/rxbert-v1

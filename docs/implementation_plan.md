@@ -35,7 +35,7 @@ The team agreed to every proposal for D1–D8. These are now the rules the code 
 | D3 | Shortlist and approval | Top 5 shown, confirmed one at a time. A rejection fetches the next-ranked candidate. The forecaster can stop at 3–5 confirmed. |
 | D4 | Language model's role | v1: the model writes summaries only, no re-rank. Ranking stays deterministic and testable. `rerank.py` is a pass-through for a later re-rank. |
 | D5 | Curve weights | Weight = similarity score, normalized over the confirmed analogs. The forecaster can override a weight with a reason. |
-| D6 | Similarity | Hybrid score: RxBERT text similarity on a profile text, plus one score per structured feature, combined with weights users can set. |
+| D6 | Similarity | Hybrid score: RxBERT text similarity on a profile text, plus one score per structured feature, combined with weights users can set. *Amended 2026-11-18:* the text embedder is TF-IDF (step 9: RxBERT didn't beat it by the margin; `embedder` in `scoring.yaml`, decisions.md). |
 | D7 | Feature preferences | Preferences are the weights in that combination. Defaults sit in `config/scoring.yaml`; any scenario can override them. ATC class and area get low defaults (EDA: class medians don't beat the overall median). |
 | D8 | Evidence used in matching | Approved values only. FDA indication text and ATC class work now. Line of therapy, dosing and competitors count once approved. *Amended 2026-11-18:* they count only once an evaluation shows they help (`use_evidence` in `scoring.yaml`, off for now; decisions.md). |
 

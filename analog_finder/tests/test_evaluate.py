@@ -60,9 +60,31 @@ def test_baselines_use_the_same_route_group_and_exclude_the_analog(finder_tables
 
 
 def test_structured_only_drops_text():
-    w = ev.method_weights({"text": 1.0, "atc4": 0.25})
-    assert w["tfidf_hybrid"] == {"text": 1.0, "atc4": 0.25}
-    assert w["structured_only"] == {"text": 0.0, "atc4": 0.25}
+    w = ev.method_weights({"text": 1.0, "atc4": 0.25}, ["tfidf", "rxbert"])
+    assert w["tfidf_hybrid"] == ("tfidf", {"text": 1.0, "atc4": 0.25})
+    assert w["rxbert_hybrid"] == ("rxbert", {"text": 1.0, "atc4": 0.25})
+    assert w["structured_only"] == ("tfidf", {"text": 0.0, "atc4": 0.25})
+
+
+def test_two_embedders_in_one_run(finder_tables, cfg, monkeypatch, tmp_path):
+    from analog_finder.finder import embed
+    from analog_finder.tests.test_embed import _FakeBert, _FakeTokenizer
+    real = embed.get_embedder
+    monkeypatch.setattr(embed, "get_embedder", lambda name, config=None: embed.RxBertEmbedder(
+        model=_FakeBert(), tokenizer=_FakeTokenizer()) if name == "rxbert" else real(name, config))
+    errors = ev.run(finder_tables, cfg, analogs=["o01_oral", "o05_oral"], embedders=["tfidf", "rxbert"],
+                    cache=embed.EmbeddingCache(tmp_path))
+    assert {"error_tfidf_hybrid", "error_rxbert_hybrid", "error_structured_only"} <= set(errors.columns)
+    c = ev.compare(errors, "rxbert_hybrid", "tfidf_hybrid", n_boot=50)
+    assert c["against"] == "tfidf_hybrid" and 0 <= c["share_better"] <= 1
+
+
+def test_adoption_margin():
+    errors = pd.DataFrame({"skipped": "", "error_new": [0.10, 0.12, 0.08, 0.11], "error_old": [0.13, 0.14, 0.11, 0.13]})
+    c = ev.compare(errors, "new", "old", n_boot=200)
+    assert c["median_diff"] == pytest.approx(-0.025) and c["share_better"] == 1 and c["meets_margin"]
+    errors["error_new"] = errors.error_old - 0.005  # better everywhere, but by less than 0.01
+    assert not ev.compare(errors, "new", "old", n_boot=200)["meets_margin"]
 
 
 def test_run_leaves_each_analog_out_of_its_own_prediction(finder_tables, cfg):
@@ -71,10 +93,10 @@ def test_run_leaves_each_analog_out_of_its_own_prediction(finder_tables, cfg):
     done = errors[errors.skipped == ""]
     assert len(done) == 12
     for a, r in done.iterrows():
-        for m in ev.METHODS:
+        for m in ev.methods(["tfidf"]):
             assert a not in r[f"top5_{m}"].split("; ")
             assert len(r[f"top5_{m}"].split("; ")) == 5
-        for m in ev.METHODS + ev.BASELINES:
+        for m in ev.methods(["tfidf"]) + ev.BASELINES:
             assert 0 <= r[f"error_{m}"] <= 1
     assert done.loc["o01_oral", "top5_tfidf_hybrid"].split("; ")[0] == "o02_oral"  # same class and indication
     assert done.loc["o11_oral", "structured_fallback"]  # no ATC class: structured only has nothing to rank on
@@ -113,7 +135,8 @@ def test_cli_prints_the_table_and_writes_errors(finder_tables, tmp_path):
     errors, summary = ev.main(["--analogs", "o01_oral", "o02_oral", "o05_oral", "--boot", "50", "--out", str(path)],
                               tables=finder_tables, out=out)
     text = out.getvalue()
-    for label in ev.LABELS.values():
-        assert label in text
+    for m in ev.methods(["tfidf"]) + ev.BASELINES:  # the default run: the config embedder only
+        assert ev.LABELS[m] in text
+    assert "RxBERT" not in text
     assert "Measuring-tool check" in text
     assert pd.read_csv(path).analog_id.tolist() == ["o01_oral", "o02_oral", "o05_oral"]

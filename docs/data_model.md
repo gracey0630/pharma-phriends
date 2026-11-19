@@ -115,7 +115,7 @@ Update in the PR that changes a table. Status: not started / in progress / built
 | `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved; label-reads plan below. Label Research Agent (`analog_finder/research/`) and review screen: not started (plan steps 10–12) |
 | `analog_features` | D | 2 | built (`pipeline/features.py`) for the columns code can fill; label-read match fields, `rems`, `limited_distribution` wait on approved evidence |
 | `analog_recommendations` | D | 2 | built for the CLI (`analog_finder/finder/`: filters, TF-IDF embeddings, hybrid score, confirm loop; plan steps 3–6); summary cards and the app page not started (steps 13–14); demo output in `data/scenarios/torevia/` |
-| Embedding cache (`data/cache/`) | D | 2 | built (`finder/embed.py`, step 4); used by fixed-model embedders only, so empty until RxBERT (step 9) |
+| Embedding cache (`data/cache/`) | D | 2 | built (`finder/embed.py`, step 4); used by fixed-model embedders only (RxBERT, step 9; TF-IDF isn't cached), so it fills only when RxBERT runs |
 | `target_drug` | E | 1 | built (`finder/target.py`, step 2); Torevia's profile in `analog_finder/scenarios/torevia.yaml` |
 | `market_size` | E | 3 | not started |
 | `epi_funnel` | E | 3 | not started (prototype for Ibrance 1L mBC in `6e92c63`) |
