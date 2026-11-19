@@ -56,13 +56,17 @@ def run(args, tables=None, out=sys.stdout, ask=input):
     name = args.embedder or cfg["embedder"]
     evidence = io.load_approved_evidence(cfg["paths"]["reference"])
     cache = embed.EmbeddingCache(cfg["paths"]["cache"])
-    emb = embed.embed(cands, evidence, target, tables["analog_features"], embed.get_embedder(name, cfg), cache)
-    print(f"Embeddings: {len(emb['analog_ids'])} analogs + target ({name})", file=out)
+    use_ev = cfg["use_evidence"]
+    emb = embed.embed(cands, evidence, target, tables["analog_features"], embed.get_embedder(name, cfg), cache,
+                      use_evidence=use_ev)
+    print(f"Embeddings: {len(emb['analog_ids'])} analogs + target ({name}; approved evidence "
+          f"{'used' if use_ev else 'not used: use_evidence is off'})", file=out)
     state.update(evidence=evidence, embedding=emb, embedder=name)
     if args.until == "embed":
         return state
 
-    scores = rerank.rerank(score.score(cands, emb, evidence, target, cfg["weights"]), target, cands)
+    scores = rerank.rerank(score.score(cands, emb, evidence, target, cfg["weights"], use_evidence=use_ev),
+                           target, cands)
     state["scores"] = scores
     print_ranking(scores, cands, out)
     if args.until == "score":

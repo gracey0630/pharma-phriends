@@ -64,7 +64,7 @@ The profile is saved as a scenario file (`analog_finder/scenarios/<scenario>.yam
 - Structured sources (NME compilation, NDC directory, Drugs@FDA, RxClass, SDUD) fill the tabular fields, including indication at approval and class (ATC)
 - **Label Research Agent (Stage 1):** reads approved sources only (original approval labels, press releases / SEC filings, Drugs@FDA; the list is in [data_sources.md](data_sources.md#approved-source-list)) to fill the four fields that aren't tabular: line of therapy, dosing frequency, launch date, # competitors at launch
   - Each value is saved with a verbatim quote, a link and a quote check, as an unapproved row; it never overwrites an approved row
-  - A person approves, edits or rejects each value once, in the app's review screen or the spreadsheet. Only approved values are used in matching (D8)
+  - A person approves, edits or rejects each value once, in the app's review screen or the spreadsheet. Only approved values are used in matching (D8), and only once an evaluation shows they help (`use_evidence`, off for now; decisions.md 2026-11-18)
 
 **Analog Finder (Stage 2, at query time):**
 - **Hard filters** run first (D1, D2): only the usable analogs from the `checks.md` funnel (which already excludes generic entry in the first three years and late launches) in the target's route group. Possible label expansion and multi-route brands are **warnings** shown on the card, not exclusions.

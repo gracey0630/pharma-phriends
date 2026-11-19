@@ -59,6 +59,7 @@ def test_repo_config_and_torevia_load():
     cfg = io.load_config("torevia")
     assert cfg["top_k"] == 5
     assert cfg["embedder"] in {"tfidf", "rxbert"}
+    assert cfg["use_evidence"] is False  # off until an evaluation shows it helps (decisions.md 2026-11-18)
     assert {"text", "atc4", "atc3", "area", "line_of_therapy", "dosing_frequency", "n_competitors",
             "order_of_entry"} == set(cfg["weights"])
 

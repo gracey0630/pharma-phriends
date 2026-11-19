@@ -35,6 +35,18 @@ def test_approved_evidence_reaches_analog_text(finder_tables, schizo_target):
     assert "Dosing" not in texts["o01_oral"] and "Line of therapy" not in texts["o02_oral"]
 
 
+def test_use_evidence_off_drops_evidence_on_both_sides(finder_tables, schizo_target):
+    c = filters.candidates(finder_tables, schizo_target)
+    ev = pd.DataFrame({"line_of_therapy": ["no prior therapy required"], "dosing_frequency": ["once daily"],
+                       "n_competitors_at_launch": ["3"]}, index=pd.Index(["o01_oral"], name="analog_id"))
+    e = embed.embed(c, ev, schizo_target, finder_tables["analog_features"], embed.TfidfEmbedder(),
+                    use_evidence=False)
+    for text in [e["texts"]["o01_oral"], e["target_text"]]:
+        assert not any(w in text for w in ["Line of therapy", "Dosing", "Competitors at launch"])
+    on = embed.embed(c, ev, schizo_target, finder_tables["analog_features"], embed.TfidfEmbedder())
+    assert "Dosing: once daily." in on["texts"]["o01_oral"] and "Dosing: once daily." in on["target_text"]
+
+
 def test_target_text_uses_analog_class_names(finder_tables, schizo_target):
     names = embed.class_names(finder_tables["analog_features"])
     text = embed.target_text(schizo_target, names)

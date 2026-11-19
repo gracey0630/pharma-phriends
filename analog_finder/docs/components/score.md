@@ -20,9 +20,11 @@ Decisions made (how each feature becomes a 0–1 score):
 - **Ties go to `analog_id`**, so runs are reproducible. A weight of 0 means the feature isn't used (not counted in `n_features_used`). A weight for an unknown feature, or all weights 0, is an error.
 - **Weights:** step 1's provisional defaults (text 1, ATC 4 0.25, ATC 3 0.25, area 0.1, line of therapy, dosing and # competitors 1), except order of entry 0 (not scored; decisions.md 2026-11-18). They change only through an evaluation result (steps 8, 9, 15).
 
-Result on Torevia (TF-IDF, 2026-11-18, Torevia's line of therapy `any` on a label basis, not scored yet): 1 Rexulti 0.681, 2 Vraylar 0.637, 3 Nuplazid 0.601, 4 Caplyta 0.585, 5 Latuda 0.465, 6 Otezla 0.440, 7 Lybalvi 0.412, then Sotyktu, Ibrance (0.36–0.37). All 5 expected analogs are in the top 7. Nuplazid (N05AX, but Parkinson's-disease psychosis) is the kind of candidate the confirm loop's rejection is for. Otezla, Sotyktu and Ibrance score above unrelated drugs only because they have approved evidence that partly matches Torevia's profile (e.g. Otezla's 6 competitors).
+- **Evidence features switched off for now** (`use_evidence: false`, decisions.md 2026-11-18): line of therapy, dosing and # competitors are NaN in the score table whatever their weights, until an evaluation shows they help (step 15).
+
+Result on Torevia (TF-IDF, 2026-11-18, `use_evidence` off): 1 Rexulti 0.699, 2 Vraylar 0.652, 3 Nuplazid 0.614, 4 Caplyta 0.607, 5 Latuda 0.480, 6 Lybalvi 0.423, then Ingrezza 0.140. All 5 expected analogs are in the top 6. With evidence on, Otezla, Sotyktu and Ibrance (seed evidence, text similarity ≤ 0.08) ranked 6, 8 and 9. Nuplazid (N05AX, but Parkinson's-disease psychosis) is the kind of candidate the confirm loop's rejection is for. Otezla, Sotyktu and Ibrance score above unrelated drugs only because they have approved evidence that partly matches Torevia's profile (e.g. Otezla's 6 competitors).
 
 Open questions:
-- Should an analog with approved evidence that mismatches rank below one with no evidence at all? Today missing = left out, so evidence can only help when it matches. Decides: step 8 (evaluation).
+- Should an analog with approved evidence that mismatches rank below one with no evidence at all? Missing = left out, so evidence can only help when it matches. Moot while `use_evidence` is off. Decides: step 15 (evaluation with evidence on).
 
-Done when: tests cover the formula, missing features and weight overrides; Torevia's 5 known analogs rank near the top with TF-IDF. ✅ (`tests/test_score.py`; ranks 1, 2, 4, 5, 7)
+Done when: tests cover the formula, missing features and weight overrides; Torevia's 5 known analogs rank near the top with TF-IDF. ✅ (`tests/test_score.py`; ranks 1, 2, 4, 5, 6)

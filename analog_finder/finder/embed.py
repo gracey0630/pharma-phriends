@@ -6,7 +6,8 @@ build_profile_text() writes one short description per drug from the same templat
      name replaced by "the drug" so unique brand names don't count as a difference
   2. class names (ATC 4, ATC 3, area), without codes: codes are matched by the structured features (step 5)
   3. route group and dosage form
-  4. line of therapy, dosing frequency, # competitors at launch: APPROVED evidence only for analogs (D8)
+  4. line of therapy, dosing frequency, # competitors at launch: APPROVED evidence only for analogs (D8); left out
+     on both sides while config `use_evidence` is false
 A sentence whose value is missing is left out, never written as "unknown".
 
 Embedders share one interface (fit, encode, name, cacheable). TfidfEmbedder is fitted on the analog corpus only and
@@ -104,12 +105,14 @@ def analog_texts(candidates, evidence):
     return texts
 
 
-def target_text(target, names):
-    """The target's profile text; class names looked up from the analogs' labels (`class_names`)."""
+def target_text(target, names, use_evidence=True):
+    """The target's profile text; class names looked up from the analogs' labels (`class_names`). Without
+    use_evidence the line of therapy, dosing and # competitors sentences are left out, as they are for the analogs."""
+    evidence = ([target.line_of_therapy, target.dosing_frequency,
+                 "" if target.n_competitors is None else target.n_competitors] if use_evidence else ["", "", ""])
     return build_profile_text(
         target.name, target.indication_text, names.get(target.atc4, ""), names.get(target.atc3, ""),
-        names.get(target.area, ""), target.route_group, target.dosage_form, target.line_of_therapy,
-        target.dosing_frequency, "" if target.n_competitors is None else target.n_competitors)
+        names.get(target.area, ""), target.route_group, target.dosage_form, *evidence)
 
 
 # --- embedders ----------------------------------------------------------------------------------------------
@@ -182,16 +185,17 @@ def _encode(embedder, texts, cache):
     return np.vstack([cache.get(embedder.name, t) for t in texts])
 
 
-def embed(candidates, evidence, target, features, embedder, cache=None):
+def embed(candidates, evidence, target, features, embedder, cache=None, use_evidence=True):
     """Vectors for the candidates and the target.
 
     Returns {"analog_ids": [...], "vectors": ndarray (one row per analog), "target_vector": ndarray,
              "texts": {analog_id: text}, "target_text": str}.
     The embedder is fitted on the analog texts only (the holdout, if any, is already gone from `candidates`).
+    use_evidence=False (config `use_evidence`) leaves the evidence sentences out on both sides.
     """
-    texts = analog_texts(candidates, evidence)
+    texts = analog_texts(candidates, evidence if use_evidence else None)
     ids = list(texts)
-    t_text = target_text(target, class_names(features))
+    t_text = target_text(target, class_names(features), use_evidence)
     embedder.fit([texts[a] for a in ids])
     vectors = _encode(embedder, [texts[a] for a in ids], cache)
     return {"analog_ids": ids, "vectors": vectors, "target_vector": _encode(embedder, [t_text], cache)[0],
