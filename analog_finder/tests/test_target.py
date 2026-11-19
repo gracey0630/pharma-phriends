@@ -1,6 +1,7 @@
 import pytest
 
 from analog_finder.finder import target as tg
+from analog_finder.finder.score import line_group
 
 BASE = {"name": "X", "indication": "X is indicated for schizophrenia.", "class_narrow": "N05AX", "route_group": "oral"}
 
@@ -52,3 +53,10 @@ def test_committed_torevia_loads():
     assert (t.name, t.atc4, t.route_group, t.dosing_frequency) == ("Torevia", "N05AX", "oral", "once daily")
     assert t.n_competitors == 6 and t.order_of_entry == 7 and t.is_estimate
     assert t.extra["launch_date"] == "2027-01"
+
+
+def test_torevia_line_of_therapy_is_on_a_label_basis():
+    # Label basis (decisions.md 2026-11-18): the label sets no prior-therapy requirement ("any"), which the
+    # first / later scorer doesn't use yet, so it isn't scored.
+    t = tg.load_target("torevia")
+    assert t.line_of_therapy == "any" and line_group(t.line_of_therapy) is None

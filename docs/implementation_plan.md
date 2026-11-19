@@ -321,6 +321,8 @@ The sums run over features that both the target and the analog have. A missing f
 
 **Input:** queue items. **Output:** evidence rows (Shared contracts) appended to `analog_evidence.csv` with `approved=false`.
 
+**Depends on:** the line-of-therapy category change, as its own PR before this step (decisions.md open question, 2026-11-18): line of therapy stored as `first` / `later` / `any` / `not stated`, returned by the agent with its quote and approved by the reviewer; `score.py` matches on the category and keeps its keyword reader as a cross-check. It changes Shared contracts (approved evidence, `Target`) and categorizes the seed 8 values.
+
 **Questions to settle:**
 
 - What counts as a competitor: same ATC 4, same indication, or both? This decides the number, so agree it before extraction.
