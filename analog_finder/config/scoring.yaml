@@ -17,6 +17,10 @@ embedding_models:
 # the scores; approved evidence still loads for display.
 use_evidence: false
 
+# Candidate cards (step 13): template | gemini | auto. template is built from the facts only and works offline;
+# auto uses Gemini when GEMINI_API_KEY is set, else the template; gemini without a key is an error.
+summaries: template
+
 # Hard filters (D1, D2), applied in step 3.
 filters:
   usable_only: true        # only analogs that pass the checks.md funnel (enough data, no generic entry, no late launch)
