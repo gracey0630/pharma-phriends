@@ -50,13 +50,9 @@ python -m analog_finder.evaluate                                  # leave-one-ou
 python -m analog_finder.evaluate --embedders tfidf rxbert         # compare embedders (step 9; downloads RxBERT once)
 python -m analog_finder.research.queue --scenario torevia         # label reads still needed, in order (step 10)
 python -m analog_finder.research --analogs latuda_oral            # label research agent (step 11); writes only with a Gemini key
+streamlit run analog_finder/app/Home.py                           # app: review page (step 12); finder page in step 14
 ```
 Outputs: `data/scenarios/torevia/` (`analog_recommendations.csv`, `analog_weights.csv`, `uptake_curve.csv`); `--until filters|embed|score|loop` stops early; `--resume` continues a saved session.
-
-Planned commands, as the steps land:
-```bash
-streamlit run analog_finder/app/Home.py                # review page + finder page
-```
 
 ## Working together
 - Workstreams (0, A–E) and what each owns: [data_model.md](docs/data_model.md#workstreams).
@@ -76,5 +72,5 @@ data/
 └── cache/          embedding cache (gitignored)
 docs/               user journey, sources, data model, decisions, implementation plan, example drug; archive/
 pipeline/           build code: fda, sdud, ndc, rxclass, enrollment, curves, features, bass, labels, build, checks
-analog_finder/      (planned) config/, scenarios/ (target drug profiles), finder/, research/, app/, tests/
+analog_finder/      config/, scenarios/ (target drug profiles), finder/, research/, app/, tests/, docs/components/
 ```

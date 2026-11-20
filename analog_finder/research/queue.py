@@ -1,7 +1,8 @@
 """The work queue: which (analog, field) label reads still need doing, in the order to do them.
 
 An (analog, field) stays in the queue until analog_evidence.csv has an approved value for it. `status` says whether
-an unapproved row is already waiting for review (`pending_review`) or nothing has been read yet (`todo`).
+an unapproved row is already waiting for review (`pending_review`) or nothing has been read yet (`todo`); an item
+whose rows were all rejected in review is `todo` again (step 12).
 Order: tier 1 = the scenario's expected analogs, tier 2 = other usable analogs in the target's therapeutic area and route group,
 tier 3 = the rest of the usable analogs.
 
@@ -57,6 +58,11 @@ def _approved(ev):
     return ev.approved.astype(str).str.strip().str.lower() == "true"
 
 
+def _waiting(ev):
+    """Rows waiting for review: neither approved nor rejected (a rejected item goes back to todo, step 12)."""
+    return ~_approved(ev) & (ev.approved.astype(str).str.strip().str.lower() != "rejected")
+
+
 def build_queue(tables, evidence, target=None, expected=(), fields=None, analogs=None, sources=None):
     """Work-queue table (columns COLUMNS), sorted by priority, analog_id, then field (EVIDENCE_FIELDS order).
 
@@ -103,7 +109,7 @@ def build_queue(tables, evidence, target=None, expected=(), fields=None, analogs
 
     ev = evidence[evidence.field.isin(fields)]
     done = set(zip(ev.analog_id[_approved(ev)], ev.field[_approved(ev)]))
-    waiting = set(zip(ev.analog_id[~_approved(ev)], ev.field[~_approved(ev)]))
+    waiting = set(zip(ev.analog_id[_waiting(ev)], ev.field[_waiting(ev)]))
 
     rows = []
     for r in pool.itertuples(index=False):

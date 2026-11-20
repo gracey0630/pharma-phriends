@@ -27,7 +27,7 @@ Decisions made:
 - **Dependencies** live in `analog_finder/requirements.txt` (`-r ../requirements.txt` plus google-genai, pyyaml, pytest); scikit-learn, transformers, torch and streamlit are added by the steps that need them.
 
 Open questions:
-- Rows marked rejected in review (step 12) need a representation in `analog_evidence.csv`; until then "not approved" covers them. Decides: step 12 owner.
+- ~~Rows marked rejected in review need a representation~~ Settled in step 12: `approved=rejected` (review.md).
 - `pipeline/features.py` resolves duplicate approvals by file order only; once `approved_at` exists, it should use the same rule as `io`. Decides: step 11 owner.
 
 Done when: `pytest analog_finder/tests` passes offline ✅ (37 tests); loading Torevia's config prints merged weights ✅ (`python -m analog_finder.io --scenario torevia`).
