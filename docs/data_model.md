@@ -28,7 +28,7 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 | 5 | generic name | NME compilation `Active Ingredient/Moiety` | all |
 | 6 | application number | NDA/BLA numbers whose NDCs are in this route group | all |
 | 7 | submission classification | Drugs@FDA submission class of the ORIG approval | all |
-| 8 | line of therapy | ORIG label indication (label read) | seed 8 |
+| 8 | line of therapy | ORIG label indication (label read), as a category: `first` (label limits it to untreated patients) / `later` (label requires prior therapy) / `any` (no prior-therapy requirement) / `not stated` (decisions.md 2026-11-19). The seed 8's approved values are free text until their category rows are approved | seed 8 |
 | 9 | approval date | Earliest ORIG + AP submission in Drugs@FDA | all |
 | 10 | cost per unit | Empty for now; if filled later, add cost per Rx alongside ([decisions](decisions.md)) | none |
 | 11 | market size | Empty; dropped, sizing is per forecast in `market_size` ([decisions](decisions.md)) | none |
@@ -37,7 +37,7 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 | 14 | market category | NDC Directory `MARKETINGCATEGORYNAME` | all |
 | 15 | dosage form | NDC Directory `DOSAGEFORMNAME` values | all |
 | 16 | indication | NME compilation `Approved Use(s)` (indication at original approval) | all |
-| 17 | # competitors at launch | Label read. Branded advanced systemic therapies (biologic or novel oral) approved for the same first indication before launch; excludes biosimilars and withdrawn drugs | seed 8 |
+| 17 | # competitors at launch | Label read. Branded novel drugs (NME NDA or new BLA, any class or route) approved for the same disease and treatment setting as the analog's first indication, before its launch, with no generic entry by then; excludes biosimilars and withdrawn drugs. Counted from Drugs@FDA's full history, not the pool; not by ATC 4 (decisions.md 2026-11-19) | seed 8 |
 | 18 | novel drugs | `True` for every row: the pool comes from the NME compilation | all |
 | 19 | launch date | Label read: first commercial availability (press release / trade press). `YYYY-MM` when only the month is known | seed 7 (Cosentyx not found) |
 | 20 | class (narrow) | RxClass ATC level 4, e.g. `L04AC Interleukin inhibitors`; the brand's own class, not those of combination products or topical forms ([data_sources.md](data_sources.md)) | all RxClass knows |

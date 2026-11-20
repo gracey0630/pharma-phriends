@@ -8,7 +8,9 @@ merged with the scenario's `preferences`).
 
   text              cosine of the profile-text vectors (step 4), clipped to [0, 1]
   atc4, atc3, area  1 if the target's code is one of the analog's codes, else 0
-  line_of_therapy   both sides sorted into "first" (no prior therapy) or "later" (after prior therapy); 1 if equal
+  line_of_therapy   category on both sides: "first" (label limits it to untreated patients), "later" (label requires
+                    prior therapy) or "any" (label sets no prior-therapy requirement); 1 if equal, else 0.
+                    "not stated" is left out. Free text (approved before the categories) is read by keywords
   dosing_frequency  doses per week on both sides; 1 / (1 + |log2(ratio)|): same 1, twice as often 0.5
   n_competitors     1 / (1 + |difference| / 2): 2 apart 0.5
   order_of_entry    not scored for analogs in v1 (the pool starts in 2010, so order within it is wrong)
@@ -26,6 +28,7 @@ import numpy as np
 import pandas as pd
 
 from analog_finder.finder.embed import cosine
+from analog_finder.finder.target import LINE_CATEGORIES  # first / later / any / not stated ("not stated" not scored)
 
 FEATURES = ["text", "atc4", "atc3", "area", "line_of_therapy", "dosing_frequency", "n_competitors", "order_of_entry"]
 
@@ -39,13 +42,17 @@ def class_match(target_code, analog_codes):
     return 1.0 if target_code in [c.strip() for c in analog_codes.split(";")] else 0.0
 
 
-def line_group(text):
-    """'first' (no prior therapy needed), 'later' (after prior therapy) or None if the text doesn't say."""
+def line_keywords(text):
+    """Keyword reading of a line-of-therapy text: 'first', 'later', 'any' or None if the text doesn't say.
+
+    Used for free-text values approved before the categories, and as a cross-check of a category against its
+    label quote (line_cross_check)."""
     if not isinstance(text, str) or not text.strip():
         return None
     t = text.lower()
-    if re.search(r"\bno prior\b|\bnot? (?:previously )?treated\b|\buntreated\b|treatment[- ]na[iï]ve|"
-                 r"regardless of prior", t):
+    if re.search(r"\bno prior (?:\w+ )?(?:therapy |treatment )?(?:is )?required\b|regardless of prior", t):
+        return "any"
+    if re.search(r"\bno prior\b|\bnot? (?:previously )?treated\b|\buntreated\b|treatment[- ]na[iï]ve", t):
         return "first"
     if re.search(r"\bafter\b|\bfail|inadequate response|intoleran|\bprior\b|previously treated|refractory|"
                  r"resistant\b|"
@@ -54,6 +61,25 @@ def line_group(text):
     if re.search(r"\bfirst\b|\b1l\b|\b1st\b|\binitial\b", t):
         return "first"
     return None
+
+
+def line_category(value):
+    """The scored category of a line-of-therapy value: 'first', 'later', 'any', or None (blank, 'not stated', or
+    free text that doesn't say). A category value is taken as is; other text goes through line_keywords."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    v = value.strip().lower()
+    if v in LINE_CATEGORIES:
+        return None if v == "not stated" else v
+    return line_keywords(v)
+
+
+def line_cross_check(category, quote):
+    """The keyword reading of `quote` when it disagrees with `category`, else None (agrees, or the quote doesn't
+    say). For review: a non-None result means a person should look at that value again."""
+    got = line_keywords(quote)
+    want = line_category(category)
+    return got if got is not None and want is not None and got != want else None
 
 
 _DAILY = [(r"\bfour times (?:a |per )?day|\bfour times daily|\bqid\b", 28.0),
@@ -110,7 +136,7 @@ def count_similarity(a, b):
 
 
 def line_similarity(a, b):
-    ga, gb = line_group(a), line_group(b)
+    ga, gb = line_category(a), line_category(b)
     if ga is None or gb is None:
         return np.nan
     return 1.0 if ga == gb else 0.0

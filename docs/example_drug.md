@@ -43,7 +43,7 @@ Fields follow the `target_drug` table ([data_model.md](data_model.md#scenario-an
 | `entry_order` | 7th branded novel antipsychotic, after Latuda (2010), Rexulti (2015), Vraylar (2015), Caplyta (2019), Lybalvi (2021), Cobenfy (2024) |
 | `first_definition` | Not first in class, for the indication or at this line |
 | `expected_n_entrants` | 8–10 |
-| `n_competitors_at_launch` | 6 branded novel antipsychotics; generics are the standard of care |
+| `n_competitors_at_launch` | 5 branded novel schizophrenia drugs without generic entry by launch: Rexulti, Vraylar, Caplyta, Lybalvi, Cobenfy (Latuda went generic in 2023; definition in decisions.md 2026-11-19). Generics are the standard of care |
 | `efficacy_safety_vs_soc` | Similar efficacy; less weight gain and fewer metabolic effects; low risk of movement disorders (EPS) |
 | `dosing_frequency` | Once daily, no titration |
 | `days_supply` | 30 |

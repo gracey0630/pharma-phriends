@@ -175,5 +175,5 @@ def schizo_target():
     from analog_finder.finder.target import from_dict
     return from_dict({"name": "Tgt", "indication": "TGT is indicated for the treatment of schizophrenia in adults.",
                       "class_narrow": "N05AX", "route_group": "oral", "dosage_form": "TABLET",
-                      "line_of_therapy": "after at least one generic antipsychotic", "dosing_frequency": "once daily",
+                      "line_of_therapy": "later", "dosing_frequency": "once daily",
                       "n_competitors_at_launch": 6})

@@ -18,14 +18,15 @@ target:
   therapeutic_area: N Nervous system
   route_group: oral
   dosage_form: TABLET
-  line_of_therapy: any   # label basis, like the analogs': the label ("treatment of schizophrenia in adults") sets no
-                         # prior-therapy requirement. Not scored yet: the scorer knows only first / later, so "any"
-                         # reads as no line until the category contract is agreed (before step 11; decisions.md).
-                         # In practice second line, after a generic antipsychotic: see target_patient_definition.
+  line_of_therapy: any   # first / later / any / not stated, on the label basis like the analogs' (decisions.md
+                         # 2026-11-19): the label ("treatment of schizophrenia in adults") sets no prior-therapy
+                         # requirement. In practice second line, after a generic antipsychotic: see
+                         # target_patient_definition.
   entry_order: 7                  # 7th branded novel antipsychotic
   first_definition: not first in class, for the indication or at this line
   expected_n_entrants: 8-10
-  n_competitors_at_launch: 6      # branded novel antipsychotics; generics are the standard of care
+  n_competitors_at_launch: 5      # branded novel schizophrenia drugs without generic entry by 2027-01 (Rexulti, Vraylar,
+                                  # Caplyta, Lybalvi, Cobenfy; Latuda went generic in 2023); decisions.md 2026-11-19
   is_estimate: true               # entry_order and n_competitors_at_launch are pre-launch estimates
   efficacy_safety_vs_soc: >-
     Similar efficacy; less weight gain and fewer metabolic effects; low risk of movement disorders (EPS)
