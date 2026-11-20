@@ -418,6 +418,8 @@ These are the handoffs between modules, and changing one breaks the step downstr
 | Weights | `curve.py` → `analog_weights.csv` | `analog_id`, `similarity`, `weight` (sums to 1), `override_weight`, `override_reason` |
 | Uptake curve | `curve.py` → `uptake_curve.csv` | `quarter` (0–20), `weighted_share_of_peak`, `band_min`, `band_max`, `n_analogs`, `n_upper_bound` |
 | Summary card | `summarize.py` → CLI, app | `analog_id`, `headline`, `similarities[]`, `differences[]`, `score_breakdown`, `flags[]`, `sources[]` (quote, url), `generated_by` (gemini / template) |
+| Source gate | `research/sources.py` → extract, verify | `Gate.check(url, field=None, analog_id=None) -> Source` (raises `SourceRefused`), `.allowed`, `.filter(urls, field, analog_id) -> (kept, dropped)`, `.fetch(url, field, analog_id=) -> Fetched(url, final_url, path, content_type, redirects)` |
+| Work queue | `research/queue.py` → extract, review | `priority` (1 expected analog, 2 same area, 3 other usable), `tier`, `analog_id`, `drug_name`, `application_number`, `orig_application`, `field`, `sources`, `status` (todo / pending_review); one row per (analog, field) with no approved value |
 | Evidence row | `research/` → `analog_evidence.csv` | existing columns from `pipeline/build.py`, plus `quote`, `source_url`, `source_type`, `quote_check` (verbatim / partial / not_checked), `extracted_by` (agent / seed / human), `approved`, `approved_by`, `approved_at` |
 | LLM | `llm.py` → extract, summarize | `.generate_json(prompt, schema) -> dict`, `.name`; the schema's `title` names the prompt type; `FakeLLM` returns fixed fixtures by that title (a schema skeleton when there is none); `LLMError` when an answer lacks the schema's required keys |
 
