@@ -112,7 +112,7 @@ Update in the PR that changes a table. Status: not started / in progress / built
 | `sdud_quarterly` | B | 2, 4 | built for pool analogs (`pipeline/sdud.py`), suppressed rows imputed (low / mid / high); same-class competitors and `units_per_rx` not yet added |
 | `medicaid_enrollment` | B | 2 | built (`pipeline/enrollment.py`); no data 2013-10 to 2017-05, used for shock flags only |
 | `launch_curves` | B | 4 | built (`pipeline/curves.py`); no `trx_per_1k_enrollees` (no normalization in v1) |
-| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved; label-reads plan below. Label Research Agent (`analog_finder/research/`) and review screen: not started (plan steps 10–12) |
+| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved; label-reads plan below. Label Research Agent (`analog_finder/research/`): source gate and queue built (step 10), extraction and quote checks built (step 11; runs live once a Gemini key is set); review screen not started (step 12) |
 | `analog_features` | D | 2 | built (`pipeline/features.py`) for the columns code can fill; label-read match fields, `rems`, `limited_distribution` wait on approved evidence |
 | `analog_recommendations` | D | 2 | built for the CLI (`analog_finder/finder/`: filters, TF-IDF embeddings, hybrid score, confirm loop; plan steps 3–6); summary cards and the app page not started (steps 13–14); demo output in `data/scenarios/torevia/` |
 | Embedding cache (`data/cache/`) | D | 2 | built (`finder/embed.py`, step 4); used by fixed-model embedders only (RxBERT, step 9; TF-IDF isn't cached), so it fills only when RxBERT runs |
@@ -149,7 +149,8 @@ Fields: indication / target patients, line_of_therapy, dosing_frequency, days_su
 | analog_id, field, value | Agent extraction |
 | quote, source_url, source_type | Original label, ClinicalTrials.gov, press release / SEC filing, Novel Drug Approvals, REMS list, Drugs@FDA |
 | quote_check | verbatim / partial / not_checked: is the quote on the source page (`analog_finder/research/verify.py`) |
-| extracted_by, extracted_at | agent / seed / human |
+| extracted_by, extracted_at | `agent:<model>` / seed / human |
+| notes | The agent's checks, for the reviewer: line-of-therapy keywords that disagree with the category, dosing the scorer can't read, competitors dropped and why, how far a partial quote matched |
 | approved, approved_by, approved_at | Human review. If two approved rows exist for the same analog and field, the latest `approved_at` is expected to win (to confirm in plan step 1) |
 
 #### Label-reads plan
