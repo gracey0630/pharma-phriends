@@ -19,13 +19,20 @@ LABEL_DOC_TYPE = "2"  # ApplicationsDocsType_Lookup: 1 Letter, 2 Label
 
 
 def orig_label_url(appl_no):
-    """URL of the label filed with the application's ORIG approval (earliest, if several)."""
+    """URL of the label filed with the application's ORIG approval (earliest, if several).
+
+    A few applications have their original label filed under a SUPPL row (Caplyta NDA209500: 209500s000lbl.pdf,
+    submission 1, dated the approval day). When there's no ORIG label row, the label whose file name is the
+    original submission's (`s000lbl`) is used instead; it's the same document."""
     appl_no = appl_no.zfill(6)
     path = RAW / "drugsfda" / "unzipped" / "ApplicationDocs.txt"
     # read with csv: a few rows have stray tabs that pandas rejects
     with path.open(encoding="latin-1", newline="") as f:
-        rows = [r for r in csv.reader(f, delimiter="\t")
-                if len(r) >= 8 and r[2] == appl_no and r[3].strip() == "ORIG" and r[1] == LABEL_DOC_TYPE]
+        labels = [r for r in csv.reader(f, delimiter="\t")
+                  if len(r) >= 8 and r[2] == appl_no and r[1] == LABEL_DOC_TYPE]
+    rows = [r for r in labels if r[3].strip() == "ORIG"]
+    if not rows:
+        rows = [r for r in labels if re.search(r"(?:orig1)?s000lbl\.pdf$", r[-2].lower())]
     if not rows:
         return ""
     return sorted(rows, key=lambda r: r[-1])[0][-2].replace("http://", "https://")

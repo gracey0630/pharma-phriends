@@ -5,6 +5,10 @@
 #   weight_overrides: {<analog_id>: {weight: <0-1>, reason: <text>}}   fixed curve weights (D5, step 7)
 name: Torevia
 
+# The analogs the team expects for Torevia (docs/example_drug.md). Only the Label Research Agent's work queue reads
+# this (tier 1: read these first); the finder doesn't, so it can't steer a ranking.
+expected_analogs: [latuda_oral, rexulti_oral, vraylar_oral, caplyta_oral, lybalvi_oral]
+
 # Target-drug profile: keys follow the target_drug table in docs/data_model.md. Required: name, indication,
 # class_narrow (ATC 4), route_group. Spec: analog_finder/docs/components/target.md
 target:
