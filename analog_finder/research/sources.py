@@ -13,7 +13,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urljoin, urlsplit, urlunsplit
+from urllib.parse import unquote, urljoin, urlsplit, urlunsplit
 
 import requests
 import yaml
@@ -119,6 +119,10 @@ class Gate:
         limited to some paths only for URLs under one of them."""
         _, host = _parse(url)
         path = urlsplit(str(url).strip()).path or "/"
+        # "." / ".." segments (also percent-encoded) are refused, not resolved: the request library resolves them,
+        # so /h--lundbeck-a-s/../h--other/ would pass a path rule and then fetch another company's page
+        if any(seg in (".", "..") for seg in unquote(path).split("/")):
+            raise SourceRefused(f"URL path has a '.' or '..' segment ({url})")
         matches = [s for s in self.sources if host in s.hosts]
         if not matches:
             raise SourceRefused(f"host {host} is not on the approved-source list ({url})")

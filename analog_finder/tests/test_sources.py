@@ -131,6 +131,34 @@ def test_company_source_limited_to_its_analog_and_path(tmp_path):
     assert kept == ["https://www.sec.gov/x.htm"] and dropped == [ok]
 
 
+@pytest.mark.parametrize("url", [
+    "https://news.acme.com/press/../careers/x",            # escapes the approved path
+    "https://news.acme.com/press/%2e%2e/careers/x",        # same, percent-encoded
+    "https://news.acme.com/press/%2E%2E%2Fcareers/x",      # encoded slash too
+    "https://news.acme.com/press/./2015-launch",           # "." is refused as well, not resolved
+])
+def test_dot_segments_refused(tmp_path, url):
+    company = Source("Acme releases", 8, ("news.acme.com",), ("launch_date",), ("alpha_oral",), ("/press/",))
+    g, get = gate(tmp_path)
+    g.sources.append(company)
+    with pytest.raises(SourceRefused, match="'.' or '..' segment"):
+        g.fetch(url, "launch_date", analog_id="alpha_oral")
+    assert get.calls == [] and refused_log(tmp_path)[0]["url"] == url
+    assert g.allowed("https://news.acme.com/press/2015.launch..final", "launch_date", "alpha_oral")  # dots in a name
+
+
+def test_redirect_with_dot_segments_checked_where_it_lands(tmp_path):
+    """A redirect's Location is resolved (urljoin drops the dot segments) before it's checked, so a '..' that leaves
+    the approved path is refused by the path rule."""
+    company = Source("Acme releases", 8, ("news.acme.com",), ("launch_date",), ("alpha_oral",), ("/press/",))
+    start = "https://news.acme.com/press/2015-launch"
+    g, get = gate(tmp_path, {start: Resp(302, b"", {"Location": "/press/../careers/x"})})
+    g.sources.append(company)
+    with pytest.raises(SourceRefused, match="redirect.*only under other paths"):
+        g.fetch(start, "launch_date", analog_id="alpha_oral")
+    assert len(get.calls) == 1  # the redirect target is never requested
+
+
 def test_redirect_checked_against_the_analog(tmp_path):
     company = Source("Acme releases", 8, ("news.acme.com",), ("launch_date",), ("alpha_oral",), ("/press/",))
     sec = "https://www.sec.gov/Archives/x.htm"
