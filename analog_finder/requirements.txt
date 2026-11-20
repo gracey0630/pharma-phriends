@@ -7,4 +7,4 @@ pytest==9.2.0
 scikit-learn==1.9.1
 torch==2.15.0           # step 9, RxBERT (loaded only when --embedder rxbert is used)
 transformers==5.23.0    # step 9, RxBERT
-# Added by the step that first needs it: streamlit (step 12, app).
+streamlit==1.67.0       # step 12, app (streamlit run analog_finder/app/Home.py)

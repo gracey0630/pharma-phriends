@@ -41,7 +41,8 @@ def build(pool, analogs, ndc_map, quarterly, curves, launch, peak, history, evid
     out["class_narrow"] = a["class (narrow)"]
 
     ev = evidence.copy()
-    ev["approved"] = ev.approved.str.lower() == "true"
+    ev["rejected"] = ev.approved.str.strip().str.lower() == "rejected"  # step 12 review
+    ev["approved"] = ev.approved.str.strip().str.lower() == "true"
     approved = ev[ev.approved].drop_duplicates(["analog_id", "field"], keep="last")
     approved = approved.pivot(index="analog_id", columns="field", values="value")
     for f in EVIDENCE_MATCH:
@@ -75,7 +76,7 @@ def build(pool, analogs, ndc_map, quarterly, curves, launch, peak, history, evid
     out["imputed_share_high"] = (HIDDEN_HIGH * hidden / rg.trx_high.sum()).round(4)
     out["provisional_quarters"] = curves[curves.provisional].groupby("analog_id").size()
     out["ndc_match_issues"] = ndc_map[ndc_map.match_method != "application_number"].groupby("analog_id").size()
-    out["fields_not_approved"] = ev[~ev.approved].groupby("analog_id").size()
+    out["fields_not_approved"] = ev[~ev.approved & ~ev.rejected].groupby("analog_id").size()
     for c in ["peak_trx", "peak_q", "suppressed_quarters", "hidden_quarters_after_q2", "no_row_quarters_after_q2"]:
         out[c] = out[c].astype("Int64")
     for c in ["provisional_quarters", "ndc_match_issues", "fields_not_approved"]:
