@@ -13,13 +13,10 @@ import sys
 import pandas as pd
 
 from analog_finder import io
-from analog_finder.finder import curve, embed, filters, loop, rerank, score
+from analog_finder.finder import curve, embed, filters, loop, rerank, score, summarize
 from analog_finder.finder.target import load_target
 
 STAGES = ["filters", "embed", "score", "loop", "curve"]
-FLAG_LABELS = {"warn_label_expansion": "possible label expansion in Q0-Q12", "warn_multi_route": "multi-route brand",
-               "low_volume": "low Medicaid volume", "peak_not_confirmed": "peak not confirmed (share is <= X)",
-               "weak_bass_fit": "weak Bass fit"}
 
 
 def parse_args(argv=None):
@@ -33,6 +30,8 @@ def parse_args(argv=None):
     ap.add_argument("--auto-confirm", action="store_true", help="confirm the top k without asking")
     ap.add_argument("--resume", action="store_true", help="continue from the saved analog_recommendations.csv")
     ap.add_argument("--decided-by", default="forecaster", help="name recorded with each decision")
+    ap.add_argument("--summaries", choices=summarize.MODES, default=None,
+                    help="candidate cards: template (offline), gemini, or auto (default: config/scoring.yaml)")
     return ap.parse_args(argv)
 
 
@@ -72,11 +71,18 @@ def run(args, tables=None, out=sys.stdout, ask=input):
     if args.until == "score":
         return state
 
+    summarizer = summarize.Summarizer(args.summaries or cfg.get("summaries", "template"),
+                                      cache_dir=cfg["paths"]["cache"], scenario=args.scenario)
+    show = card_maker(summarizer, scores, cands, target, cfg, evidence, embed.class_names(tables["analog_features"]))
+    state["cards"] = show.cards
     queue = make_queue(args, cfg, scores, state["output"])
     if args.auto_confirm:
         queue.auto_confirm()
+        print("\nCandidate cards (" + summarizer.generator + "):", file=out)
+        for a in queue.confirmed:
+            print("\n" + show(a), file=out)
     else:
-        interact(queue, cands, args.decided_by, out, ask, lambda: save_log(queue, cfg, state["output"]))
+        interact(queue, cands, args.decided_by, out, ask, lambda: save_log(queue, cfg, state["output"]), show)
     paths = save_log(queue, cfg, state["output"])
     names = cands.set_index("analog_id").drug_name
     print(f"\nConfirmed {len(queue.confirmed)}: {', '.join(names[a] for a in queue.confirmed)}", file=out)
@@ -163,28 +169,28 @@ def save_log(queue, cfg, output):
                                      cfg["paths"]["scenarios_out"])
 
 
-def card(analog_id, queue, cands):
-    """A plain-text candidate card: rank, similarity, the features that were scored, warning flags."""
-    s = queue.scores.loc[analog_id]
-    c = cands.set_index("analog_id").loc[analog_id]
-    used = [f"{k[2:]} {s[k]:.2f}" for k in queue.scores.columns if k.startswith("s_") and s[k] == s[k]]
-    flags = [label for col, label in FLAG_LABELS.items() if bool(c[col])]
-    indication = c.indication_text if len(c.indication_text) <= 160 else c.indication_text[:160] + "..."
-    lines = [f"#{int(s['rank'])} {c.drug_name} ({analog_id})   similarity {s['similarity']:.3f}",
-             f"   class: {c.atc4_name or 'none'}",
-             f"   indication: {indication}",
-             f"   scored on: {', '.join(used)}"]
-    if flags:
-        lines.append(f"   flags: {'; '.join(flags)}")
-    return "\n".join(lines)
+def card_maker(summarizer, scores, cands, target, cfg, evidence, class_names):
+    """show(analog_id) -> the candidate's card as text (step 13); the card dicts are kept in show.cards."""
+    by_id = scores.set_index("analog_id")
+    cand = cands.set_index("analog_id")
+
+    def show(analog_id):
+        if analog_id not in show.cards:
+            row = {"analog_id": analog_id, **by_id.loc[analog_id].to_dict()}
+            show.cards[analog_id] = summarizer.card(
+                row, {"analog_id": analog_id, **cand.loc[analog_id].to_dict()}, target, cfg["weights"], evidence,
+                cfg["use_evidence"], class_names)
+        return summarize.render(show.cards[analog_id])
+    show.cards = {}
+    return show
 
 
-def interact(queue, cands, by, out, ask, save):
+def interact(queue, cands, by, out, ask, save, show):
     """Ask about each open candidate in rank order until none are open or the forecaster stops."""
     reasons = list(loop.REJECT_REASONS)
     while not queue.done:
         analog_id = queue.open[0]
-        print("\n" + card(analog_id, queue, cands), file=out)
+        print("\n" + show(analog_id), file=out)
         stop = "/[s]top" if queue.can_stop else ""
         choice = ask(f"[c]onfirm/[r]eject{stop} ({len(queue.confirmed)} confirmed): ").strip().lower()[:1]
         if choice == "c":
@@ -213,7 +219,10 @@ def interact(queue, cands, by, out, ask, save):
 
 
 def main(argv=None):
-    run(parse_args(argv))
+    try:
+        run(parse_args(argv))
+    except summarize.SummaryError as e:
+        raise SystemExit(f"error: {e}") from None
 
 
 if __name__ == "__main__":

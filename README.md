@@ -45,6 +45,7 @@ Run the finder (steps 2–9; offline, no API key):
 ```bash
 python -m analog_finder.finder --scenario torevia                 # interactive: confirm / reject the top 5
 python -m analog_finder.finder --scenario torevia --auto-confirm  # take the top 5 as ranked
+python -m analog_finder.finder --scenario torevia --summaries auto   # candidate cards from Gemini if a key is set (step 13)
 python -m analog_finder.finder --scenario torevia --holdout latuda_oral --auto-confirm   # evaluation-style run
 python -m analog_finder.evaluate                                  # leave-one-out evaluation (step 8), ~20 s
 python -m analog_finder.evaluate --embedders tfidf rxbert         # compare embedders (step 9; downloads RxBERT once)
