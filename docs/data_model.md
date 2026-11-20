@@ -112,7 +112,7 @@ Update in the PR that changes a table. Status: not started / in progress / built
 | `sdud_quarterly` | B | 2, 4 | built for pool analogs (`pipeline/sdud.py`), suppressed rows imputed (low / mid / high); same-class competitors and `units_per_rx` not yet added |
 | `medicaid_enrollment` | B | 2 | built (`pipeline/enrollment.py`); no data 2013-10 to 2017-05, used for shock flags only |
 | `launch_curves` | B | 4 | built (`pipeline/curves.py`); no `trx_per_1k_enrollees` (no normalization in v1) |
-| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved; label-reads plan below. Label Research Agent (`analog_finder/research/`): source gate and queue built (step 10), extraction and quote checks built (step 11; runs live once a Gemini key is set); review screen not started (step 12) |
+| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved, plus the 8 line-of-therapy categories (approved 2026-11-20); label-reads plan below. Label Research Agent (`analog_finder/research/`): source gate and queue built (step 10), extraction and quote checks built (step 11; runs live once a Gemini key is set); review screen not started (step 12) |
 | `analog_features` | D | 2 | built (`pipeline/features.py`) for the columns code can fill; label-read match fields, `rems`, `limited_distribution` wait on approved evidence |
 | `analog_recommendations` | D | 2 | built for the CLI (`analog_finder/finder/`: filters, TF-IDF embeddings, hybrid score, confirm loop; plan steps 3–6); summary cards and the app page not started (steps 13–14); demo output in `data/scenarios/torevia/` |
 | Embedding cache (`data/cache/`) | D | 2 | built (`finder/embed.py`, step 4); used by fixed-model embedders only (RxBERT, step 9; TF-IDF isn't cached), so it fills only when RxBERT runs |
@@ -158,7 +158,7 @@ Fields: indication / target patients, line_of_therapy, dosing_frequency, days_su
 
 | Step | What | Unblocks | Status |
 |---|---|---|---|
-| 1 | Seed 8: 4 fields each, checked against source | the review process, end to end | 27 of 31 approved; 4 launch dates rest on pre-launch statements; Cosentyx launch date not found |
+| 1 | Seed 8: 4 fields each, checked against source | the review process, end to end | 27 of 31 approved, plus the 8 line-of-therapy categories (2026-11-20); 4 launch dates rest on pre-launch statements; Cosentyx launch date not found |
 | 2 | Rebuild so approved values reach `analog_features` | anything that reads approved fields | done 2026-11-17 (merge of `main` into PR #6) |
 | 3 | The example drug's therapeutic area: 4 fields for its usable analogs | testing whether matching on these fields beats class matching (`analog_similarity` EDA) | area chosen 2026-10-27: nervous system ([example_drug.md](example_drug.md)); Torevia's 5 analogs first, then the 41 usable nervous-system analogs; not started |
 | 4 | The rest of the 261 usable analogs | `analog_recommendations` | not started |
