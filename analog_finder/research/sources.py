@@ -168,7 +168,7 @@ class Gate:
 
     # --- fetching -----------------------------------------------------------------------------------------
 
-    def fetch(self, url, field=None, refresh=False, analog_id=None):
+    def fetch(self, url, field=None, *, refresh=False, analog_id=None):
         """Fetch an approved URL, following redirects only to approved URLs. Returns Fetched; raises SourceRefused.
 
         The response is saved unchanged under raw_dir/<host>/ with a manifest row, and read from there next time."""
