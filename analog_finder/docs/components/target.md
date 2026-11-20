@@ -3,7 +3,7 @@ Purpose: load the drug being forecast from its scenario file and check it has wh
 
 Input: `analog_finder/scenarios/<scenario>.yaml`, `target:` block. Keys follow the `target_drug` table in [data_model.md](../../../docs/data_model.md#scenario-and-output-tables-created-per-forecast); `preferences` (feature weights) sits at the top level of the scenario, as in step 1.
 
-Output: `target.load_target(scenario) -> Target` ([Shared contracts](../../../docs/implementation_plan.md#shared-contracts)): `name`, `indication_text`, `atc4`, `atc3`, `area`, `route_group`, `dosage_form`, `line_of_therapy`, `dosing_frequency`, `n_competitors`, `order_of_entry`, `is_estimate`, `preferences`, plus `extra` (the descriptive fields the finder doesn't score, e.g. `launch_date`, `efficacy_safety_vs_soc`). A bad profile raises `TargetError` naming the field.
+Output: `target.load_target(scenario) -> Target` ([Shared contracts](../../../docs/implementation_plan.md#shared-contracts)): `name`, `indication_text`, `atc4`, `atc3`, `area`, `route_group`, `dosage_form`, `line_of_therapy`, `dosing_frequency`, `n_competitors`, `order_of_entry`, `is_estimate`, `preferences`, plus `extra` (the descriptive fields the finder doesn't score, e.g. `launch_date`, `efficacy_safety_vs_soc`). A bad profile raises `TargetError` naming the field. `line_of_therapy`, when given, must be one of `first` / `later` / `any` / `not stated` (lowercased), on the label basis; free text is refused with a pointer to `target_patient_definition` (decisions.md 2026-11-19).
 
 Depends on: step 1 (`io.load_scenario`).
 

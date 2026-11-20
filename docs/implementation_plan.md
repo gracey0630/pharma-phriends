@@ -321,11 +321,12 @@ The sums run over features that both the target and the analog have. A missing f
 
 **Input:** queue items. **Output:** evidence rows (Shared contracts) appended to `analog_evidence.csv` with `approved=false`.
 
-**Depends on:** the line-of-therapy category change, as its own PR before this step (decisions.md open question, 2026-11-18): line of therapy stored as `first` / `later` / `any` / `not stated`, returned by the agent with its quote and approved by the reviewer; `score.py` matches on the category and keeps its keyword reader as a cross-check. It changes Shared contracts (approved evidence, `Target`) and categorizes the seed 8 values.
+**Depends on:** the line-of-therapy category change, as its own PR before this step (done, decisions.md 2026-11-19): line of therapy stored as `first` / `later` / `any` / `not stated`, returned by the agent with its quote and approved by the reviewer; `score.py` matches on the category and keeps its keyword reader as a cross-check (`score.line_cross_check`, for this step's checks). The seed 8 values are categorized as unapproved rows.
+
+**Competitor definition** (settled, decisions.md 2026-11-19): branded novel drugs (NME NDA or new BLA, any class or route) approved for the same disease and treatment setting as the analog's first indication, before its launch, with no generic entry by then; biosimilars and withdrawn drugs excluded; counted from Drugs@FDA's full history, not the pool. Not by ATC 4.
 
 **Questions to settle:**
 
-- What counts as a competitor: same ATC 4, same indication, or both? This decides the number, so agree it before extraction.
 - Quote-check normalization: whitespace, hyphenation and PDF line breaks. Where is the line between "verbatim" and "partial"?
 - Re-runs: skip an (analog, field) that already has an unapproved row with the same value, so the CSV doesn't fill with duplicates?
 - No ORIG label found: write nothing, or a row saying so for the reviewer?
@@ -408,8 +409,8 @@ These are the handoffs between modules, and changing one breaks the step downstr
 | Handoff | From → to | Shape |
 | --- | --- | --- |
 | Merged config | `io.load_config` → all | dict: `filters`, `weights` (feature → float), `top_k`, `embedder`, `embedding_models`, `use_evidence` (bool; evidence features in matching), `paths` (absolute), `scenario` |
-| Approved evidence (wide) | `io` → embed, score, summarize | one row per `analog_id` (the index); columns `line_of_therapy`, `dosing_frequency`, `launch_date`, `n_competitors_at_launch` (the evidence field names), each with `<field>_quote` and `<field>_url`; NaN when not approved |
-| `Target` | `target.py` → filters, embed, score, summarize | `name`, `indication_text`, `atc4`, `atc3`, `area`, `route_group`, `dosage_form`, optional `line_of_therapy`, `dosing_frequency`, `n_competitors` (+ `is_estimate`), `order_of_entry`, `preferences` |
+| Approved evidence (wide) | `io` → embed, score, summarize | one row per `analog_id` (the index); columns `line_of_therapy`, `dosing_frequency`, `launch_date`, `n_competitors_at_launch` (the evidence field names), each with `<field>_quote` and `<field>_url`; NaN when not approved. `line_of_therapy` is a category (`first` / `later` / `any` / `not stated`); free-text values approved before 2026-11-19 are read by keywords |
+| `Target` | `target.py` → filters, embed, score, summarize | `name`, `indication_text`, `atc4`, `atc3`, `area`, `route_group`, `dosage_form`, optional `line_of_therapy` (one of `first` / `later` / `any` / `not stated`, label basis), `dosing_frequency`, `n_competitors` (+ `is_estimate`), `order_of_entry`, `preferences` |
 | Candidate table | `filters.py` → embed, score | one row per usable analog in the route group: `analog_id`, `drug_name`, `atc4`, `atc3`, `area` (codes, `; `-separated for multi-class analogs), `atc4_name`, `atc3_name`, `area_name`, `route_group`, `dosage_form`, `indication_text`, plus flags `warn_label_expansion`, `warn_multi_route`, `low_volume`, `peak_not_confirmed`, `weak_bass_fit` |
 | Profile text | `embed.build_profile_text` | `str`, same template for target and analogs; fields with no approved value are omitted |
 | `Embedder` | `embed.py` → score | `.fit(texts)`, `.encode(texts) -> np.ndarray`, `.name`; cache key = `name` + text hash |

@@ -1,7 +1,7 @@
 import pytest
 
 from analog_finder.finder import target as tg
-from analog_finder.finder.score import line_group
+from analog_finder.finder.score import line_category
 
 BASE = {"name": "X", "indication": "X is indicated for schizophrenia.", "class_narrow": "N05AX", "route_group": "oral"}
 
@@ -51,12 +51,27 @@ def test_scenario_without_target_block(scenarios_dir):
 def test_committed_torevia_loads():
     t = tg.load_target("torevia")
     assert (t.name, t.atc4, t.route_group, t.dosing_frequency) == ("Torevia", "N05AX", "oral", "once daily")
-    assert t.n_competitors == 6 and t.order_of_entry == 7 and t.is_estimate
+    assert t.n_competitors == 5 and t.order_of_entry == 7 and t.is_estimate
     assert t.extra["launch_date"] == "2027-01"
 
 
 def test_torevia_line_of_therapy_is_on_a_label_basis():
-    # Label basis (decisions.md 2026-11-18): the label sets no prior-therapy requirement ("any"), which the
-    # first / later scorer doesn't use yet, so it isn't scored.
+    # Label basis (decisions.md 2026-11-18): the label sets no prior-therapy requirement, so "any", which is
+    # scored now that line of therapy is a category (decisions.md 2026-11-19).
     t = tg.load_target("torevia")
-    assert t.line_of_therapy == "any" and line_group(t.line_of_therapy) is None
+    assert t.line_of_therapy == "any" and line_category(t.line_of_therapy) == "any"
+
+
+@pytest.mark.parametrize("value, stored", [("later", "later"), ("Any", "any"), (" not stated ", "not stated"),
+                                           ("", ""), (None, "")])
+def test_line_of_therapy_categories(value, stored):
+    spec = {"name": "X", "indication": "X treats Y.", "class_narrow": "N05AX", "route_group": "oral",
+            "line_of_therapy": value}
+    assert tg.from_dict(spec).line_of_therapy == stored
+
+
+def test_line_of_therapy_free_text_is_refused():
+    spec = {"name": "X", "indication": "X treats Y.", "class_narrow": "N05AX", "route_group": "oral",
+            "line_of_therapy": "after at least one generic antipsychotic"}
+    with pytest.raises(tg.TargetError, match="line_of_therapy.*target_patient_definition"):
+        tg.from_dict(spec)

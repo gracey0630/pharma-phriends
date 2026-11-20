@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from analog_finder import io
 from analog_finder.finder import embed, filters, rerank, score
 
 ALL = {f: 1.0 for f in score.FEATURES}
@@ -109,20 +110,23 @@ def test_bad_weights(finder_tables, schizo_target):
         score.score(c, e, None, schizo_target, {"text": 0.0})
 
 
-@pytest.mark.parametrize("text, group", [
-    ("no prior therapy required", "first"),
-    ("no prior therapy required (systemic or phototherapy candidates)", "first"),
+@pytest.mark.parametrize("value, category", [
+    # categories (decisions.md 2026-11-19) are taken as is; "not stated" isn't scored
+    ("first", "first"), ("later", "later"), ("any", "any"), ("Any", "any"), ("not stated", None),
+    # free text approved before the categories: the seed 8 values
+    ("no prior therapy required", "any"),
+    ("no prior therapy required (systemic or phototherapy candidates)", "any"),
     ("after other systemic therapy", "later"),
     ("1L metastatic (initial endocrine-based therapy)", "first"),
+    # other wording
     ("after at least one generic antipsychotic", "later"),
     ("patients with inadequate response to TNF blockers", "later"),
     ("second line", "later"),
     ("treatment of schizophrenia", None),
-    ("", None),
-    # wording a label read may use (plan step 11); "first" / "later" checked against the label sense
+    ("", None), (None, None),
     ("first line", "first"), ("first-line", "first"), ("1L", "first"),
     ("previously untreated", "first"), ("treatment-naive", "first"), ("not previously treated", "first"),
-    ("first line, regardless of prior therapy", "first"),
+    ("first line, regardless of prior therapy", "any"),
     ("after failure of two antipsychotics", "later"), ("treatment-resistant schizophrenia", "later"),
     ("patients who have received at least one prior systemic therapy", "later"),
     ("after inadequate response to an antidepressant", "later"), ("after one or more lines of therapy", "later"),
@@ -131,8 +135,32 @@ def test_bad_weights(finder_tables, schizo_target):
     ("adjunct to antidepressants", None), ("monotherapy or adjunctive", None),
     ("candidates for systemic therapy or phototherapy", None),
 ])
-def test_line_groups(text, group):
-    assert score.line_group(text) == group
+def test_line_categories(value, category):
+    assert score.line_category(value) == category
+
+
+def test_line_similarity_matches_categories_exactly():
+    assert score.line_similarity("any", "any") == 1
+    assert score.line_similarity("any", "no prior therapy required") == 1  # a pre-category approved value
+    assert score.line_similarity("any", "first") == 0 and score.line_similarity("first", "later") == 0
+    assert math.isnan(score.line_similarity("any", "not stated"))
+    assert math.isnan(score.line_similarity("not stated", "later"))
+
+
+def test_line_cross_check():
+    siliq = "have failed to respond or have lost response to other systemic therapies"
+    assert score.line_cross_check("later", siliq) is None  # agrees
+    assert score.line_cross_check("first", siliq) == "later"  # disagrees: a person looks again
+    assert score.line_cross_check("any", "candidates for systemic therapy or phototherapy") is None  # doesn't say
+    assert score.line_cross_check("not stated", siliq) is None
+
+
+def test_seed_categories_agree_with_their_quotes():
+    """The seed 8 category rows (2026-11-19) pass the cross-check against their own label quotes."""
+    ev = io.load_evidence()
+    rows = ev[(ev.field == "line_of_therapy") & ev.value.isin(["first", "later", "any"])]
+    assert len(rows) >= 8
+    assert all(score.line_cross_check(r.value, r.quote) is None for r in rows.itertuples())
 
 
 @pytest.mark.parametrize("text, per_week", [

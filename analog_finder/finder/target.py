@@ -5,7 +5,8 @@ n_competitors_at_launch, ...). The `Target` record uses the names in the plan's 
 order_of_entry, n_competitors), which the rest of the finder reads.
 
 Required: name, indication, class_narrow (ATC 4), route_group. class_broad (ATC 3) and therapeutic_area (ATC 1) are
-derived from the ATC 4 code when not given. Pre-launch numbers (# competitors, order of entry) are estimates for a
+derived from the ATC 4 code when not given. line_of_therapy, when given, is one of first / later / any / not stated
+(what the target's label says about prior therapy). Pre-launch numbers (# competitors, order of entry) are estimates for a
 target, so they carry is_estimate (default true).
 
 Spec: analog_finder/docs/components/target.md
@@ -16,6 +17,8 @@ from dataclasses import dataclass, field
 from analog_finder import io
 
 ROUTE_GROUPS = ("oral", "sc")  # the pipeline's in-scope route groups (decisions.md 2026-10-21)
+# line_of_therapy categories, on the label basis (decisions.md 2026-11-19); score.py reads them from here
+LINE_CATEGORIES = ("first", "later", "any", "not stated")
 ATC4 = re.compile(r"^[A-Z]\d{2}[A-Z]{2}$")  # e.g. N05AX
 
 REQUIRED = ["name", "indication", "class_narrow", "route_group"]
@@ -87,6 +90,11 @@ def from_dict(spec, preferences=None):
     route = str(spec["route_group"]).strip().lower()
     if route not in ROUTE_GROUPS:
         raise TargetError(f"target.route_group: expected one of {ROUTE_GROUPS}, got {spec['route_group']!r}")
+    line = str(spec.get("line_of_therapy") or "").strip().lower()
+    if line and line not in LINE_CATEGORIES:
+        raise TargetError(f"target.line_of_therapy: expected one of {LINE_CATEGORIES} (what the label says about "
+                          f"prior therapy; practice patterns go in target_patient_definition), "
+                          f"got {spec['line_of_therapy']!r}")
     is_estimate = spec.get("is_estimate", True)
     if not isinstance(is_estimate, bool):
         raise TargetError(f"target.is_estimate: expected true or false, got {is_estimate!r}")
@@ -98,7 +106,7 @@ def from_dict(spec, preferences=None):
         indication_text=str(spec["indication"]).strip(),
         atc4=atc4, atc3=atc3, area=area, route_group=route,
         dosage_form=str(spec.get("dosage_form") or "").strip(),
-        line_of_therapy=str(spec.get("line_of_therapy") or "").strip(),
+        line_of_therapy=line,
         dosing_frequency=str(spec.get("dosing_frequency") or "").strip(),
         n_competitors=_number(spec, "n_competitors_at_launch", float),
         order_of_entry=_number(spec, "entry_order", int),
