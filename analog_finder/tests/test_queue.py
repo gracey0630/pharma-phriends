@@ -85,6 +85,15 @@ def test_tiers_order_expected_then_same_area_then_rest(tables, schizo_target):
     assert set(queue.build_queue(tables, ev(), sources=SOURCES).priority) == {3}  # no scenario: no tiers
 
 
+def test_tier_2_needs_the_target_route_group(tables, schizo_target):
+    """An analog the finder can't pick for this target (other route group) isn't read early (step 11 follow-up)."""
+    feats = tables["analog_features"].copy()
+    feats.loc[feats.analog_id == "o05_oral", "route_group"] = "sc"
+    q = queue.build_queue({**tables, "analog_features": feats}, ev(), target=schizo_target, sources=SOURCES)
+    tiers = q.drop_duplicates("analog_id").set_index("analog_id").priority
+    assert tiers["o05_oral"] == 3 and tiers["o04_oral"] == 2
+
+
 def test_expected_analog_kept_even_if_the_funnel_drops_it(tables, schizo_target):
     q = queue.build_queue(tables, ev(), target=schizo_target, expected=["late_oral"], sources=SOURCES)
     assert q.set_index("analog_id").priority.get("late_oral").tolist() == [1, 1, 1, 1]

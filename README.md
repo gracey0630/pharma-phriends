@@ -49,12 +49,12 @@ python -m analog_finder.finder --scenario torevia --holdout latuda_oral --auto-c
 python -m analog_finder.evaluate                                  # leave-one-out evaluation (step 8), ~20 s
 python -m analog_finder.evaluate --embedders tfidf rxbert         # compare embedders (step 9; downloads RxBERT once)
 python -m analog_finder.research.queue --scenario torevia         # label reads still needed, in order (step 10)
+python -m analog_finder.research --analogs latuda_oral            # label research agent (step 11); writes only with a Gemini key
 ```
 Outputs: `data/scenarios/torevia/` (`analog_recommendations.csv`, `analog_weights.csv`, `uptake_curve.csv`); `--until filters|embed|score|loop` stops early; `--resume` continues a saved session.
 
 Planned commands, as the steps land:
 ```bash
-python -m analog_finder.research --analogs latuda_oral # label research agent
 streamlit run analog_finder/app/Home.py                # review page + finder page
 ```
 

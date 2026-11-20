@@ -2,7 +2,7 @@
 
 An (analog, field) stays in the queue until analog_evidence.csv has an approved value for it. `status` says whether
 an unapproved row is already waiting for review (`pending_review`) or nothing has been read yet (`todo`).
-Order: tier 1 = the scenario's expected analogs, tier 2 = other usable analogs in the target's therapeutic area,
+Order: tier 1 = the scenario's expected analogs, tier 2 = other usable analogs in the target's therapeutic area and route group,
 tier 3 = the rest of the usable analogs.
 
 Usage: python -m analog_finder.research.queue --scenario torevia [--analogs ID ...] [--fields F ...] [--todo-only]
@@ -24,7 +24,7 @@ FIELDS = list(EVIDENCE_FIELDS)
 COLUMNS = ["priority", "tier", "analog_id", "drug_name", "application_number", "orig_application", "field", "sources",
            "status"]
 TABLES = ["analog_features", "candidate_pool", "indication_history"]
-TIERS = {1: "expected analog", 2: "same therapeutic area", 3: "other usable"}
+TIERS = {1: "expected analog", 2: "same area and route group", 3: "other usable"}
 
 
 class QueueError(ValueError):
@@ -84,11 +84,13 @@ def build_queue(tables, evidence, target=None, expected=(), fields=None, analogs
             raise QueueError(f"expected analog(s) {unknown_expected} not in analog_features")
         pool = feats[usable(feats) | feats.analog_id.isin(expected)]
     area = getattr(target, "area", "") or ""
+    route = getattr(target, "route_group", "") or ""
 
     def tier(row):
         if row.analog_id in expected:
             return 1
-        if area and _area(row.therapeutic_area) == area:
+        # tier 2 = analogs the finder could pick for this target: same area and route group (filters.py)
+        if area and _area(row.therapeutic_area) == area and (not route or row.route_group == route):
             return 2
         return 3
 

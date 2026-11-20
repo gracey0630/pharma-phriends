@@ -8,7 +8,7 @@ Input:
 - `.env`: `SEC_USER_AGENT` (needed only to fetch from SEC hosts)
 
 Output ([Shared contracts](../../../docs/implementation_plan.md#shared-contracts)):
-- `sources.Gate(...)`: `.check(url, field=None, analog_id=None)` → the matching source (raises `SourceRefused`), `.allowed(...)` → bool, `.filter(urls, field=None, analog_id=None)` → `(kept, dropped)`, `.fetch(url, field=None, analog_id=None)` → `Fetched(url, final_url, path, content_type, redirects)`. `sources.default_gate()` builds one from the repo's config.
+- `sources.Gate(...)`: `.check(url, field=None, analog_id=None)` → the matching source (raises `SourceRefused`), `.allowed(...)` → bool, `.filter(urls, field=None, analog_id=None)` → `(kept, dropped)`, `.fetch(url, field=None, *, refresh=False, analog_id=None)` (keyword-only after `field`, since step 11) → `Fetched(url, final_url, path, content_type, redirects)`. `sources.default_gate()` builds one from the repo's config.
 - `queue.build_queue(tables, evidence, target=None, expected=(), fields=None, analogs=None)` → work queue table: `priority`, `tier`, `analog_id`, `drug_name`, `application_number`, `orig_application` (the application whose ORIG label to read), `field`, `sources` (approved source names for that field), `status` (`todo` / `pending_review`), sorted by priority then analog then field.
 - `python -m analog_finder.research.queue --scenario torevia [--analogs ID ...] [--fields F ...] [--todo-only] [--limit N]` prints it with counts per tier and status.
 
@@ -30,7 +30,7 @@ Decisions made:
 - **Fetching reuses the pipeline's habits:** about 2 requests a second, retries on 429 / 5xx, the pipeline's `User-Agent` (SEC hosts use `SEC_USER_AGENT` instead and fail with a clear message without it), the file saved unchanged under `data/raw/research/<host>/` and a manifest row per file. Cached: a second fetch of the same URL reads the saved file. `pipeline.common._fetch` follows redirects on its own, so the gate has its own small loop rather than changing the pipeline.
 - **Queue pool = the usable analogs** (`pipeline.checks.usable`, 261), not every analog with `enough_data`: a label read only matters to the finder for an analog it can pick. The scenario's expected analogs are always included, even if the funnel drops one. `--analogs` can name any analog in `analog_features`.
 - **An (analog, field) is in the queue until it has an approved value.** `status` is `pending_review` when an unapproved row already exists (the agent shouldn't redo it; the reviewer should look at it), else `todo`.
-- **Order:** tier 1 = the scenario's `expected_analogs` (Torevia: Latuda, Rexulti, Vraylar, Caplyta, Lybalvi), tier 2 = the other usable analogs in the target's therapeutic area (nervous system: 36 more), tier 3 = the rest. Within a tier, by `analog_id`, then field in `EVIDENCE_FIELDS` order. With no scenario, everything is tier 3.
+- **Order:** tier 1 = the scenario's `expected_analogs` (Torevia: Latuda, Rexulti, Vraylar, Caplyta, Lybalvi), tier 2 = the other usable analogs in the target's therapeutic area and route group, the ones the finder could pick for it (oral nervous system: 32 more; the route-group rule was added in step 11, before it 36 including 4 sc), tier 3 = the rest. Within a tier, by `analog_id`, then field in `EVIDENCE_FIELDS` order. With no scenario, everything is tier 3.
 - **`expected_analogs`** is a new optional top-level key in a scenario YAML (the analogs the team expects, from docs/example_drug.md). Only the queue reads it; the finder doesn't, so it can't steer a ranking.
 
 Open questions:
