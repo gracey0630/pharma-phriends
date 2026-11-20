@@ -161,6 +161,18 @@ def test_fetch_saves_unchanged_with_manifest_and_caches(tmp_path):
     assert g.fetch(LABEL).path == f.path and len(get.calls) == 1  # second fetch from the saved file
 
 
+def test_dotted_file_names_dont_collide(tmp_path):
+    """Two URLs whose file names have a dot in the stem keep separate files, and each is read back from cache."""
+    a = "https://www.sec.gov/Archives/edgar/data/1/report.2016-q1.htm"
+    b = "https://www.sec.gov/Archives/edgar/data/2/report.2016-q2.htm"
+    html = {"Content-Type": "text/html"}
+    g, get = gate(tmp_path, {a: Resp(content=b"q1", headers=html), b: Resp(content=b"q2", headers=html)},
+                  sec_user_agent="test test@example.com")
+    fa, fb = g.fetch(a, "launch_date"), g.fetch(b, "launch_date")
+    assert fa.path != fb.path and fa.path.read_bytes() == b"q1" and fb.path.read_bytes() == b"q2"
+    assert g.fetch(a).path == fa.path and g.fetch(b).path == fb.path and len(get.calls) == 2
+
+
 def test_unlisted_url_never_requested(tmp_path):
     g, get = gate(tmp_path)
     with pytest.raises(SourceRefused):

@@ -241,7 +241,9 @@ class Gate:
         last = urlsplit(url).path.rsplit("/", 1)[-1]
         stem = Path(last).stem if last else "index"
         key = hashlib.sha1(url.encode()).hexdigest()[:10]
-        safe = "".join(c if c.isalnum() or c in "-_." else "_" for c in stem)[:60] or "page"
+        # no "." in the name: fetch() sets the extension with with_suffix, which would cut a dotted name (and its
+        # key) short, e.g. report.2016-q1 -> report.html for every such URL
+        safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in stem)[:60] or "page"
         return self.raw_dir / host / f"{safe}-{key}"
 
     def _cached(self, path):
