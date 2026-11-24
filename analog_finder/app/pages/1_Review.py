@@ -40,7 +40,8 @@ def esc(text):
 
 with st.sidebar:
     reviewer = st.text_input("Your name (saved as approved_by)", key="reviewer")
-    scenario = st.text_input("Scenario (sets the order)", value="torevia", key="scenario")
+    scenario = st.text_input("Scenario (optional: review its likely analogs first)", value="", key="scenario",
+                             placeholder="e.g. torevia; empty = all analogs, A to Z")
     show = st.radio("Show", list(SHOW), key="show")
     fields = st.multiselect("Fields", list(review.FIELD_LABELS), format_func=review.FIELD_LABELS.get, key="fields")
     analog = st.text_input("Analog contains", key="analog")
