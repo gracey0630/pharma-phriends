@@ -86,7 +86,8 @@ def assemble(pool, ndc_map, quarterly, generic_q, classes, evidence):
     trx["value"] = pd.to_numeric(trx.value, errors="coerce")
     rx_total = trx.groupby("analog_id").value.sum(min_count=1)
     ndcs = ndc_map.groupby("analog_id").ndc9.apply(lambda s: "; ".join(sorted(s)))
-    ev = evidence[evidence.field.isin(EVIDENCE_FIELDS)].drop_duplicates(["analog_id", "field"], keep="last")
+    rejected = evidence.approved.str.strip().str.lower() == "rejected"  # step 12 review: never shown
+    ev = evidence[evidence.field.isin(EVIDENCE_FIELDS) & ~rejected].drop_duplicates(["analog_id", "field"], keep="last")
     ev = ev.pivot(index="analog_id", columns="field", values="value")
 
     out = pd.DataFrame({"analog_id": pool.analog_id})

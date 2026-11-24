@@ -112,7 +112,7 @@ Update in the PR that changes a table. Status: not started / in progress / built
 | `sdud_quarterly` | B | 2, 4 | built for pool analogs (`pipeline/sdud.py`), suppressed rows imputed (low / mid / high); same-class competitors and `units_per_rx` not yet added |
 | `medicaid_enrollment` | B | 2 | built (`pipeline/enrollment.py`); no data 2013-10 to 2017-05, used for shock flags only |
 | `launch_curves` | B | 4 | built (`pipeline/curves.py`); no `trx_per_1k_enrollees` (no normalization in v1) |
-| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved, plus the 8 line-of-therapy categories (approved 2026-11-20); label-reads plan below. Label Research Agent (`analog_finder/research/`): source gate and queue built (step 10), extraction and quote checks built (step 11; runs live once a Gemini key is set); review screen not started (step 12) |
+| `analog_evidence` | C | 2 | in progress: 4 fields × seed 8 analogs, 27 of 31 approved, plus the 8 line-of-therapy categories (approved 2026-11-20); label-reads plan below. Label Research Agent (`analog_finder/research/`): source gate and queue built (step 10), extraction and quote checks built (step 11; runs live once a Gemini key is set); review screen built (step 12, `streamlit run analog_finder/app/Home.py`; rejected rows are `approved=rejected`) |
 | `analog_features` | D | 2 | built (`pipeline/features.py`) for the columns code can fill; label-read match fields, `rems`, `limited_distribution` wait on approved evidence |
 | `analog_recommendations` | D | 2 | built for the CLI (`analog_finder/finder/`: filters, TF-IDF embeddings, hybrid score, confirm loop; plan steps 3–6); summary cards and the app page not started (steps 13–14); demo output in `data/scenarios/torevia/` |
 | Embedding cache (`data/cache/`) | D | 2 | built (`finder/embed.py`, step 4); used by fixed-model embedders only (RxBERT, step 9; TF-IDF isn't cached), so it fills only when RxBERT runs |
@@ -151,7 +151,7 @@ Fields: indication / target patients, line_of_therapy, dosing_frequency, days_su
 | quote_check | verbatim / partial / not_checked: is the quote on the source page (`analog_finder/research/verify.py`) |
 | extracted_by, extracted_at | `agent:<model>` / seed / human |
 | notes | The agent's checks, for the reviewer: line-of-therapy keywords that disagree with the category, dosing the scorer can't read, competitors dropped and why, how far a partial quote matched |
-| approved, approved_by, approved_at | Human review. If two approved rows exist for the same analog and field, the latest `approved_at` is expected to win (to confirm in plan step 1) |
+| approved, approved_by, approved_at | Human review: `approved` is `true`, `false` (waiting) or `rejected` (step 12; a rejected row is never used or copied into `analogs.csv`, and its item goes back to the work queue). If two approved rows exist for the same analog and field, the latest `approved_at` wins (plan step 1) |
 
 #### Label-reads plan
 **Why it's next:** analog matching (journey step 2) compares the target drug with analogs on these fields. The EDA ([eda/](../eda/README.md)) found that ATC class and therapeutic area alone don't predict an analog's first 3 years, so line of therapy, competition and dosing have to carry the matching, and they only exist where labels have been read.
@@ -168,7 +168,7 @@ Fields: indication / target patients, line_of_therapy, dosing_frequency, days_su
 
 **Where each field comes from:** line of therapy and dosing frequency from the ORIG label (indication; dosage and administration); launch date from a press release or SEC filing (first commercial availability, not approval); # competitors at launch derived from FDA approval history (definition in the v1 table above).
 
-**Review:** rows go in with `approved=false`, a quote and a link. `python -m pipeline.labels --check` reports whether each label quote is verbatim in the label at its `source_url`; the reviewer then only judges whether the value fits the quote. Launch dates and competitor counts aren't label quotes: the reviewer checks the source itself. A forecast ("expected to be available in May") isn't a launch date.
+**Review:** rows go in with `approved=false`, a quote and a link. `python -m pipeline.labels --check` reports whether each label quote is verbatim in the label at its `source_url`; the reviewer then only judges whether the value fits the quote. Launch dates and competitor counts aren't label quotes: the reviewer checks the source itself. A forecast ("expected to be available in May") isn't a launch date. The app's review page (step 12) asks for an explicit "I checked the value against the source" for those two fields and for any quote that isn't verbatim, and records it in `notes`.
 
 ### `ndc_map`: one row per analog_id × NDC ⚠️
 **Why it matters:** it links each analog to all its product codes, since Medicaid reports by NDC rather than by brand.

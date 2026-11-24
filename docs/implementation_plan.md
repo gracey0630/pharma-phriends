@@ -339,7 +339,7 @@ The sums run over features that both the target and the analog have. A missing f
 
 **Builds:** `app/Home.py`, `app/pages/1_Review.py`.
 
-**Input:** unapproved evidence rows. **Output:** the same rows updated with `approved=true`, `approved_by`, `approved_at`, or marked rejected.
+**Input:** unapproved evidence rows. **Output:** the same rows updated with `approved=true`, `approved_by`, `approved_at`, or `approved=rejected` (decisions.md 2026-11-20; answers in `analog_finder/docs/components/review.md`).
 
 **Questions to settle:**
 
@@ -421,7 +421,8 @@ These are the handoffs between modules, and changing one breaks the step downstr
 | Summary card | `summarize.py` → CLI, app | `analog_id`, `drug_name`, `rank`, `similarity`, `headline`, `similarities[]`, `differences[]`, `score_breakdown` (feature → {score, weight}, scored features only), `flags[]`, `sources[]` (field, quote, url), `generated_by` (template / the model's name, or `template (...)` when the model's text was not used) |
 | Source gate | `research/sources.py` → extract, verify | `Gate.check(url, field=None, analog_id=None) -> Source` (raises `SourceRefused`), `.allowed`, `.filter(urls, field, analog_id) -> (kept, dropped)`, `.fetch(url, field, analog_id=) -> Fetched(url, final_url, path, content_type, redirects)` |
 | Work queue | `research/queue.py` → extract, review | `priority` (1 expected analog, 2 same area, 3 other usable), `tier`, `analog_id`, `drug_name`, `application_number`, `orig_application`, `field`, `sources`, `status` (todo / pending_review); one row per (analog, field) with no approved value |
-| Evidence row | `research/` → `analog_evidence.csv` | existing columns from `pipeline/build.py`, plus `quote`, `source_url`, `source_type`, `quote_check` (verbatim / partial / not_checked), `extracted_by` (`agent:<model>` / seed / human), `approved`, `approved_by`, `approved_at`, `notes` (the agent's checks for the reviewer: line-of-therapy cross-check, unreadable dosing, dropped competitors, how far a partial quote matched). Older rows have no value in the new columns (short rows; loaders read them as blank) |
+| Evidence row | `research/` → `analog_evidence.csv` | existing columns from `pipeline/build.py`, plus `quote`, `source_url`, `source_type`, `quote_check` (verbatim / partial / not_checked), `extracted_by` (`agent:<model>` / seed / human), `approved` (`true` / `false` = waiting / `rejected`, step 12), `approved_by`, `approved_at` (local time to the second, e.g. `2026-11-20T14:05:09`), `notes` (the agent's checks for the reviewer: line-of-therapy cross-check, unreadable dosing, dropped competitors, how far a partial quote matched; then the reviewer's edits, source checks and reject reasons). Older rows have no value in the new columns (short rows; loaders read them as blank) |
+| Review decision | `research/review.py` → app page 1, `analog_evidence.csv` | `load(path)` → every row + `row`, `status` (waiting / approved / rejected), `fingerprint`; `to_review(ev, order)`; `decide(path, row, seen, 'approve' / 'reject', reviewer, value=, quote=, checked=, reason=, note=)` rewrites that one row (raises `ReviewError`, file unchanged); approved and rejected rows are never changed |
 | LLM | `llm.py` → extract, summarize | `.generate_json(prompt, schema) -> dict`, `.name`; the schema's `title` names the prompt type; `FakeLLM` returns fixed fixtures by that title (a schema skeleton when there is none); `LLMError` when an answer lacks the schema's required keys |
 
 ## Evaluation

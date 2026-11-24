@@ -178,10 +178,13 @@ def run(analogs, ndc_map, quarterly, evidence, features, fits, not_in_pool):
         lines.append("None yet.")
     else:
         e = evidence.copy()
-        e["approved"] = e.approved.str.lower() == "true"
+        e["rejected"] = e.approved.str.strip().str.lower() == "rejected"  # step 12 review
+        e["approved"] = e.approved.str.strip().str.lower() == "true"
+        waiting = ~e.approved & ~e.rejected
         lines.append(f"{len(e)} values for {e.analog_id.nunique()} analogs; {e.approved.sum()} approved, "
-                     f"{(~e.approved).sum()} waiting for review.")
-        _section(lines, "Analogs with unapproved values", e[~e.approved].analog_id.unique())
+                     f"{waiting.sum()} waiting for review"
+                     + (f", {e.rejected.sum()} rejected." if e.rejected.any() else "."))
+        _section(lines, "Analogs with unapproved values", e[waiting].analog_id.unique())
         launch = e[e.field == "launch_date"].set_index("analog_id").value
         off = [i for i, d in launch.items() if i in first_rx and abs(_date_q(d) - _q(first_rx[i])) > 1]
         _section(lines, "Launch date vs first SDUD Rx quarter differ by > 1 quarter", off)
