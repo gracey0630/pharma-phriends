@@ -44,6 +44,7 @@ def test_auto_confirm_writes_the_decision_log(run_cli):
     assert (log.decision == "confirmed").sum() == 5
     assert list(log[log.decision == "confirmed"].analog_id) == list(state["scores"].analog_id[:5])
     assert "Confirmed 5:" in text
+    assert "Candidate cards (template):" in text and text.count("   scored on: ") == 5
 
 
 def test_interactive_reject_offers_the_sixth(run_cli):
@@ -53,6 +54,11 @@ def test_interactive_reject_offers_the_sixth(run_cli):
     ranked = list(state["scores"].analog_id)
     assert q.rejected == [ranked[1]] and ranked[5] in q.confirmed and len(q.confirmed) == 5
     assert "next candidate offered: #6" in text
+    # a card for each candidate asked about: the top 5 and the replacement (step 13)
+    names = state["candidates"].set_index("analog_id").drug_name
+    for i, a in enumerate(ranked[:6], 1):
+        assert f"\n#{i} {names[a]}, similarity " in text
+    assert len(state["cards"]) == 6 and all(c["generated_by"] == "template" for c in state["cards"].values())
     log = pd.read_csv(out / "torevia" / "analog_recommendations.csv")
     assert log[log.decision == "rejected"].reason.tolist() == ["indication: Parkinson's psychosis"]
     assert set(log.decided_by.dropna()) == {"forecaster"}
@@ -92,3 +98,10 @@ def test_full_run_writes_weights_and_curve(run_cli):
 def test_until_loop_skips_the_curve(run_cli):
     state, _, out = run_cli("--auto-confirm", "--until", "loop")
     assert "weights" not in state and not (out / "torevia" / "analog_weights.csv").exists()
+
+
+def test_summaries_gemini_without_key_is_a_clear_error(run_cli, monkeypatch):
+    from analog_finder import llm
+    monkeypatch.setattr(llm, "env", lambda name, default=None: None)
+    with pytest.raises(cli.summarize.SummaryError, match="GEMINI_API_KEY"):
+        run_cli("--auto-confirm", "--summaries", "gemini")
