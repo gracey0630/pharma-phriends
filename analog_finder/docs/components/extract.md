@@ -49,6 +49,6 @@ Result (2026-11-19, offline, `FakeLLM`): `--analogs latuda_oral` fetches Latuda'
 
 ## Open questions
 - Model web search for launch dates (step 15, when scaling past Torevia's analogs): worth resolving grounding redirect links through the gate?
-- Whether a `partial` quote should block approval in the review screen (step 12).
+- ~~Whether a `partial` quote should block approval~~ Settled in step 12: it doesn't, but approving needs the reviewer's "checked against the source" tick (review.md).
 
 Done when: `python -m analog_finder.research --analogs latuda_oral` adds rows with quotes; label quotes check as verbatim; `git diff` shows no approved row changed; tests run on `FakeLLM` and saved pages.

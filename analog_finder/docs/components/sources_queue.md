@@ -9,7 +9,7 @@ Input:
 
 Output ([Shared contracts](../../../docs/implementation_plan.md#shared-contracts)):
 - `sources.Gate(...)`: `.check(url, field=None, analog_id=None)` → the matching source (raises `SourceRefused`), `.allowed(...)` → bool, `.filter(urls, field=None, analog_id=None)` → `(kept, dropped)`, `.fetch(url, field=None, *, refresh=False, analog_id=None)` (keyword-only after `field`, since step 11) → `Fetched(url, final_url, path, content_type, redirects)`. `sources.default_gate()` builds one from the repo's config.
-- `queue.build_queue(tables, evidence, target=None, expected=(), fields=None, analogs=None)` → work queue table: `priority`, `tier`, `analog_id`, `drug_name`, `application_number`, `orig_application` (the application whose ORIG label to read), `field`, `sources` (approved source names for that field), `status` (`todo` / `pending_review`), sorted by priority then analog then field.
+- `queue.build_queue(tables, evidence, target=None, expected=(), fields=None, analogs=None)` → work queue table: `priority`, `tier`, `analog_id`, `drug_name`, `application_number`, `orig_application` (the application whose ORIG label to read), `field`, `sources` (approved source names for that field), `status` (`todo` / `pending_review`; an item whose rows were all rejected in review is `todo` again, step 12), sorted by priority then analog then field.
 - `python -m analog_finder.research.queue --scenario torevia [--analogs ID ...] [--fields F ...] [--todo-only] [--limit N]` prints it with counts per tier and status.
 
 Depends on: step 1 (`io`); `pipeline.checks.usable` (the usable analogs), `pipeline.build.EVIDENCE_FIELDS`, `pipeline.common` (`RAW`, `USER_AGENT`, `MIN_INTERVAL`, `log_manifest`, `env`).
