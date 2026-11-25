@@ -316,3 +316,18 @@ def test_review_page_number_resets_when_a_filter_shrinks_the_list(evfile):
     assert len(at.get("form")) == 2                                                # 22 rows: 10 + 10 + 2
     at.multiselect(key="fields").set_value(["line_of_therapy", "dosing_frequency"]).run()  # 14 rows: page 3 is gone
     assert not at.exception and at.number_input(key="page").value == 1 and len(at.get("form")) == 10
+
+
+def test_analogs_csv_takes_approved_values_only(evfile):
+    from pipeline.build import approved_label_reads
+    ev = review.load(evfile)
+    assert approved_label_reads(ev).loc["otezla_oral", "line_of_therapy"] == "no prior therapy required"
+    assert "taltz_sc" not in approved_label_reads(ev).index                       # its launch date is waiting
+    # a newer waiting row doesn't replace the approved value; a newer approved one does
+    newer = "otezla_oral,line_of_therapy,later,OTEZLA is indicated for...,https://x.gov/otezla.pdf,ORIG label," \
+            "agent:gemini,2026-11-24,{},,verbatim,,"
+    evfile.write_text(evfile.read_text() + newer.format("false") + "\n")
+    assert approved_label_reads(review.load(evfile)).loc["otezla_oral", "line_of_therapy"] == \
+        "no prior therapy required"
+    evfile.write_text(evfile.read_text() + newer.format("true") + "\n")
+    assert approved_label_reads(review.load(evfile)).loc["otezla_oral", "line_of_therapy"] == "later"

@@ -73,6 +73,15 @@ def load_evidence():
     return pd.read_csv(path, dtype=str, keep_default_na=False)
 
 
+def approved_label_reads(evidence):
+    """analog_id x field -> value, from approved rows only (the latest approved row wins, file order, as in
+    analog_features). Waiting and rejected values stay in analog_evidence.csv and are never copied into analogs.csv,
+    so a newer waiting row can't replace an approved value there (step 12 follow-up, decisions.md 2026-11-24)."""
+    approved = evidence.approved.astype(str).str.strip().str.lower() == "true"
+    ev = evidence[evidence.field.isin(EVIDENCE_FIELDS) & approved].drop_duplicates(["analog_id", "field"], keep="last")
+    return ev.pivot(index="analog_id", columns="field", values="value")
+
+
 def generic_entry(generics, national, pool):
     """First SDUD quarter in which any generic / biosimilar NDC for the brand was dispensed."""
     hits = national.merge(generics[["brand_key", "ndc9"]], on="ndc9")
@@ -86,9 +95,7 @@ def assemble(pool, ndc_map, quarterly, generic_q, classes, evidence):
     trx["value"] = pd.to_numeric(trx.value, errors="coerce")
     rx_total = trx.groupby("analog_id").value.sum(min_count=1)
     ndcs = ndc_map.groupby("analog_id").ndc9.apply(lambda s: "; ".join(sorted(s)))
-    rejected = evidence.approved.str.strip().str.lower() == "rejected"  # step 12 review: never shown
-    ev = evidence[evidence.field.isin(EVIDENCE_FIELDS) & ~rejected].drop_duplicates(["analog_id", "field"], keep="last")
-    ev = ev.pivot(index="analog_id", columns="field", values="value")
+    ev = approved_label_reads(evidence)
 
     out = pd.DataFrame({"analog_id": pool.analog_id})
     p = pool.set_index("analog_id")

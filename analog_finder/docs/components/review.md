@@ -19,6 +19,7 @@ Decisions made:
 - **Order:** no scenario by default, since review doesn't need a target (evidence is shared by every forecast): rows go by analog A to Z. A scenario typed in the sidebar puts its queue priority first (Torevia: the 5 expected analogs, then the nervous-system analogs, then the rest). Then analog, then field in queue order, so a reviewer reads one label once for its two label fields. Rows for analogs outside the queue come last.
 - **Forecast launch dates get a warning** (PR #16 review): a launch-date quote with `[excerpt, verify]`, "expect…" or "plan…" (whole words) is flagged on its card, pointing at the "a forecast, not a launch" reject reason (`review.is_forecast`). It doesn't block approving: the reviewer may have checked that the drug did launch.
 - **Source links:** only `http(s)` URLs become links, with spaces, brackets and parentheses percent-encoded (`review.link`), so a hand-typed URL with `)` can't break the link; anything else shows as text.
+- **`analogs.csv` takes approved values only** (decisions.md 2026-11-24), so a newer waiting row can't replace an approved value there (`pipeline.build.approved_label_reads`).
 - **`approved_at`** = local time to the second (`2026-11-20T14:05:09`), so two approvals on one day still order; the header gains the column if it's missing, as in step 11.
 - **The reviewer's name** is typed once in the sidebar and required; the app doesn't read the OS user name (same rule as `loop.py`).
 
