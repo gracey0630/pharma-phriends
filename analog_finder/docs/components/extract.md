@@ -49,6 +49,7 @@ Result (2026-11-19, offline, `FakeLLM`): `--analogs latuda_oral` fetches Latuda'
 
 ## Open questions
 - Model web search for launch dates (step 15, when scaling past Torevia's analogs): worth resolving grounding redirect links through the gate?
+- Retrying a rejected read (step 15, once rejections start): today a rejected item goes back to `todo`, but the next run isn't told what was rejected or why, and doesn't avoid the rejected link; a repeat of the same value and quote is skipped, so the item can stay `todo` for good. Proposal: label fields (line of therapy, dosing) stay on the ORIG label, with the rejected value and reason given to the model; launch dates and competitor counts skip the rejected `source_url` and try the next hit (or a person's `--source-url`); a retry with nothing new reports "no new source found; needs a person". Decides: team (raised by Grace, 2026-11-24).
 - ~~Whether a `partial` quote should block approval~~ Settled in step 12: it doesn't, but approving needs the reviewer's "checked against the source" tick (review.md).
 
 Done when: `python -m analog_finder.research --analogs latuda_oral` adds rows with quotes; label quotes check as verbatim; `git diff` shows no approved row changed; tests run on `FakeLLM` and saved pages.
