@@ -140,3 +140,117 @@ def test_model_error_falls_back(ranked, schizo_target):
 
     card = make(ranked, schizo_target, "o01_oral", summarize.Summarizer("gemini", llm=Broken()))
     assert card["generated_by"] == "template (model call failed: LLMError)"
+
+
+# --- fact check (PR #17 review) -------------------------------------------------------------------------------
+
+NAMES = {"drugs": frozenset({"abilify", "aripiprazole", "zyprexa"}), "companies": frozenset({"otsuka", "catalyst"})}
+
+
+def facts_of(ranked, target, analog_id):
+    cands, scores, names = ranked
+    return summarize.facts({"analog_id": analog_id, **scores.loc[analog_id].to_dict()},
+                           {"analog_id": analog_id, **cands.loc[analog_id].to_dict()}, target, WEIGHTS,
+                           target_class_names=names)
+
+
+def check(ranked, target, *texts):
+    body = {"headline": texts[0], "similarities": list(texts[1:]), "differences": []}
+    return summarize.fact_check(body, facts_of(ranked, target, "o01_oral"), NAMES)
+
+
+@pytest.mark.parametrize("text", [
+    "Shares the Other antipsychotics class with Tgt.",
+    "Treats hallucinations and delusions, like the target.",           # first word capitalized; plain words
+    "Approved for schizophrenia, as Tgt will be.",
+    "Ranked #1 with similarity 1.0: same ATC 4 class and same ATC 3 class.",
+    "Text similarity 1.00; the ATC 4 class carries weight 0.25 (25%).",
+    "Both are in the Nervous system area. Its uptake is in Medicaid data.",
+    "Oone works as a catalyst for comparison.",                         # a company word, but not capitalized
+])
+def test_honest_wording_passes(ranked, schizo_target, text):
+    assert check(ranked, schizo_target, text) == []
+
+
+@pytest.mark.parametrize("text, problem", [
+    ("Oone is made by Otsuka.", "name Otsuka"),
+    ("Otsuka also makes Oone.", "name Otsuka"),                        # a company at the start of a sentence
+    ("Abilify was approved first.", "name Abilify"),                    # a drug at the start of a sentence
+    ("Oone works like aripiprazole.", "name aripiprazole"),            # a drug in lower case
+    ("Oone is like Zyprexa.", "name Zyprexa"),
+    ("Oone is sold by a Japanese company.", "name Japanese"),          # capitalized mid-sentence, not in the facts
+    ("Oone was approved in 2015.", "number 2015"),
+    ("Oone reached 0.5 of peak.", "number 0.5"),                        # no fact rounds to 0.5 (1, 0.25, 0.1)
+    ("Oone peaked at 42% in year 2.", "number 42%"),
+    ("Oone is in ATC 7.", "number 7"),                                  # ATC levels are 1-5
+])
+def test_invented_names_and_numbers_fail(ranked, schizo_target, text, problem):
+    problems = check(ranked, schizo_target, text)
+    assert any(p.startswith(problem + " ") for p in problems), problems
+
+
+@pytest.mark.parametrize("text, percent, ok", [
+    ("0.523", "", True), ("0.52", "", True), ("0.5", "", True),        # rounded to the text's decimals
+    ("52", "%", True), ("52.3", "%", True),                             # as a percentage
+    ("0.6", "", False), ("0.53", "", False), ("1", "", False),          # 0.52 isn't "1"
+    ("52", "", False),                                                  # 52 without % isn't 0.523
+])
+def test_number_rule(text, percent, ok):
+    from decimal import Decimal
+    assert summarize.number_ok(text, percent, {Decimal("0.523")}) is ok
+
+
+def test_number_rule_whole_numbers_and_boundaries():
+    from decimal import Decimal
+    assert summarize.number_ok("6", "", {Decimal("6.0")}) and summarize.number_ok("0", "", {Decimal("0")})
+    assert summarize.number_ok("0.07", "", {Decimal("0.075")})          # the template's 0.0746 -> 0.075 -> "0.07"
+    assert summarize.number_ok("0.08", "", {Decimal("0.075")})
+
+
+def test_template_cards_always_pass_the_fact_check(ranked, schizo_target):
+    cands, scores, _ = ranked
+    for analog_id in scores.index:
+        f = facts_of(ranked, schizo_target, analog_id)
+        assert summarize.fact_check(summarize.template_card(f), f, NAMES) == [], analog_id
+
+
+def test_known_names_from_the_pool_and_drugsfda(tmp_path):
+    processed, raw = tmp_path / "processed", tmp_path / "raw"
+    processed.mkdir()
+    pd.DataFrame({"brand_name": ["Rexulti"], "generic_name": ["brexpiprazole"],
+                  "sponsor": ["OTSUKA PHARMACEUTICAL CO LTD"], "dosage_form": ["TABLET"],
+                  "indication": ["REXULTI is indicated for schizophrenia and rheumatoid arthritis"]}) \
+        .to_csv(processed / "candidate_pool.csv", index=False)
+    summarize.known_names.cache_clear()
+    pool_only = summarize.known_names(processed, raw)
+    assert pool_only == {"drugs": {"rexulti", "brexpiprazole"}, "companies": {"otsuka"}}
+    (raw / "drugsfda" / "unzipped").mkdir(parents=True)
+    (raw / "drugsfda" / "unzipped" / "Products.txt").write_text(
+        "ApplNo\tProductNo\tForm\tStrength\tReferenceDrug\tDrugName\tActiveIngredient\tReferenceStandard\n"
+        "021436\t001\tTABLET;ORAL\t2MG\t1\tABILIFY\tARIPIPRAZOLE\t0\n"
+        "018337\t001\tTABLET;ORAL\t500MG\t0\tARTHRITIS PAIN\tACETAMINOPHEN\t0\n"
+        "018337\t002\tTABLET;ORAL\t1MG\t0\tSODIUM CHLORIDE\tSODIUM CHLORIDE\t0\n", encoding="latin-1")
+    summarize.known_names.cache_clear()
+    n = summarize.known_names(processed, raw)
+    assert {"abilify", "aripiprazole", "acetaminophen"} <= n["drugs"]
+    assert not {"arthritis", "pain", "sodium", "chloride"} & n["drugs"]  # disease and salt words aren't names
+    summarize.known_names.cache_clear()
+
+
+def test_cache_key_changes_with_the_model_and_the_prompt(ranked, schizo_target, monkeypatch):
+    f = facts_of(ranked, schizo_target, "o01_oral")
+    key = summarize.cache_key(f, "gemini-a")
+    assert summarize.cache_key(f, "gemini-a") == key != summarize.cache_key(f, "gemini-b")
+    monkeypatch.setattr(summarize, "PROMPT", summarize.PROMPT + "Be brief.\n")
+    assert summarize.cache_key(f, "gemini-a") != key
+
+
+def test_a_new_model_writes_a_new_card(ranked, schizo_target, tmp_path):
+    body = {"headline": "Oone ranks first: same class, schizophrenia.", "similarities": [], "differences": []}
+    for name in ("gemini-a", "gemini-b"):
+        fake = llm.FakeLLM({"summary_card": body})
+        fake.name = name
+        make(ranked, schizo_target, "o01_oral", summarize.Summarizer("gemini", llm=fake, cache_dir=tmp_path,
+                                                                      scenario="torevia", names=NAMES))
+        assert len(fake.calls) == 1                                    # not served from the other model's card
+    assert len(list((tmp_path / "cards" / "torevia").glob("o01_oral-*.json"))) == 2
