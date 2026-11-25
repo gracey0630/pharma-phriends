@@ -265,3 +265,54 @@ def test_review_page_without_a_name_shows_an_error(evfile):
     at.button(key=f"reject-{row}").click().run()
     assert at.error and "name" in at.error[0].value
     assert rec(evfile, "taltz_sc", "launch_date")["status"] == "waiting"
+
+
+# --- PR #16 review follow-ups ------------------------------------------------------------------------------------
+
+@pytest.mark.parametrize("field, quote, forecast", [
+    ("launch_date", "[excerpt, verify] Celgene planned to launch the drug in March 2014", True),
+    ("launch_date", "SKYRIZI is expected to be commercially available in the U.S. in early May", True),
+    ("launch_date", "BMS plans to launch Sotyktu later this month", True),
+    ("launch_date", "In addition, we recently launched Taltz in the U.S.", False),
+    ("launch_date", "IBRANCE is available to order immediately through select specialty pharmacies", False),
+    ("launch_date", "the company's explanation of the planet", False),               # whole words only
+    ("dosing_frequency", "patients are expected to take one tablet daily", False),  # launch dates only
+])
+def test_is_forecast(field, quote, forecast):
+    assert review.is_forecast(field, quote) is forecast
+
+
+@pytest.mark.parametrize("url, out", [
+    ("https://www.sec.gov/a.htm", "https://www.sec.gov/a.htm"),
+    ("https://example.com/release (2017).htm", "https://example.com/release%20%282017%29.htm"),
+    ("javascript:alert(1)", ""),
+    ("", ""),
+])
+def test_link_is_safe_in_markdown(url, out):
+    assert review.link(url) == out
+
+
+def test_review_page_warns_on_a_forecast_launch_date(evfile):
+    at = app(evfile, APP / "pages" / "1_Review.py", reviewer="Joshua", scenario="")
+    forecasts = [w.value for w in at.warning if "reads like a forecast" in w.value]
+    assert len(forecasts) == 1 and review.FORECAST_REASON in forecasts[0]   # taltz_sc's "[excerpt, verify] ... expected"
+
+
+def test_review_page_link_with_parentheses(evfile):
+    text = evfile.read_text().replace("https://www.sec.gov/a.htm", "https://www.sec.gov/a (1).htm")
+    evfile.write_text(text)
+    at = app(evfile, APP / "pages" / "1_Review.py", reviewer="Joshua", scenario="")
+    src = [m.value for m in at.markdown if m.value.startswith("Source:") and "sec.gov" in m.value]
+    assert src == ["Source: [SEC filing](https://www.sec.gov/a%20%281%29.htm) · read by claude \\(Claude Code\\) on "
+                   "2026\\-10\\-21"]
+
+
+def test_review_page_number_resets_when_a_filter_shrinks_the_list(evfile):
+    rows = [r.replace("latuda_oral", f"lat{i:02d}_oral") for i, r in enumerate(AGENT * 6)]  # 18 more: 22 waiting
+    evfile.write_text(evfile.read_text() + "\n".join(rows) + "\n")
+    at = app(evfile, APP / "pages" / "1_Review.py", reviewer="Joshua", scenario="")
+    assert at.number_input(key="page").value == 1                                  # no default: starts at the minimum
+    at.number_input(key="page").set_value(3).run()
+    assert len(at.get("form")) == 2                                                # 22 rows: 10 + 10 + 2
+    at.multiselect(key="fields").set_value(["line_of_therapy", "dosing_frequency"]).run()  # 14 rows: page 3 is gone
+    assert not at.exception and at.number_input(key="page").value == 1 and len(at.get("form")) == 10

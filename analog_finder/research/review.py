@@ -14,6 +14,7 @@ Spec: analog_finder/docs/components/review.md
 import csv
 import hashlib
 import io as _io
+import re
 from datetime import datetime
 from pathlib import Path
 
@@ -29,9 +30,13 @@ FIELD_LABELS = {"line_of_therapy": "Line of therapy", "n_competitors_at_launch":
                 "launch_date": "Launch date", "dosing_frequency": "Dosing frequency"}
 # Not label quotes: the reviewer checks the source itself (data_model.md, label-reads plan, review)
 SOURCE_CHECK_FIELDS = ("launch_date", "n_competitors_at_launch")
+FORECAST_REASON = "a forecast, not a launch"
 CHECK_LABEL = "I checked the value against the source myself"
 REJECT_REASONS = ["value doesn't match the quote", "quote isn't on the source page", "wrong source or drug",
-                  "a forecast, not a launch", "other"]
+                  FORECAST_REASON, "other"]
+# A launch-date quote that only says the drug will launch: seed rows marked "[excerpt, verify]", "expected to...",
+# "plans / planned to launch..." (PR #16 review). The reviewer looks for an actual launch announcement.
+_FORECAST = re.compile(r"\[excerpt, verify\]|\bexpect(?:s|ed|ing)?\b|\bplan(?:s|ned|ning)?\b", re.IGNORECASE)
 FINGERPRINT_COLS = ["analog_id", "field", "value", "quote", "source_url", "extracted_at", "approved"]
 
 
@@ -89,6 +94,22 @@ def to_review(ev, order=None):
 def needs_source_check(field, quote_check):
     """A partial or unchecked quote, a launch date or a competitor count: approving needs the reviewer's tick."""
     return field in SOURCE_CHECK_FIELDS or str(quote_check).strip().lower() != "verbatim"
+
+
+def is_forecast(field, quote):
+    """True for a launch-date quote that reads like a forecast, not a launch (a warning; it doesn't block)."""
+    return field == "launch_date" and bool(_FORECAST.search(str(quote or "")))
+
+
+def link(url):
+    """A source URL safe to put in a markdown link: http(s) only, with spaces, brackets and parentheses
+    percent-encoded (a ')' in a hand-typed URL ended the link early, PR #16 review). '' for anything else."""
+    url = str(url or "").strip()
+    if not re.match(r"https?://", url, re.IGNORECASE):
+        return ""
+    for ch, code in [(" ", "%20"), ("(", "%28"), (")", "%29"), ("<", "%3C"), (">", "%3E")]:
+        url = url.replace(ch, code)
+    return url
 
 
 # --- writing one decision ---------------------------------------------------------------------------------------
