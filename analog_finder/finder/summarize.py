@@ -13,7 +13,11 @@ Spec: analog_finder/docs/components/summarize.md
 import hashlib
 import json
 import re
+from decimal import Decimal
+from functools import lru_cache
 from pathlib import Path
+
+import pandas as pd
 
 from analog_finder.finder.embed import indication_statement
 from analog_finder.finder.score import FEATURES, doses_per_week, line_similarity
@@ -228,22 +232,160 @@ def _fact_text(f):
     return json.dumps(f, ensure_ascii=False, sort_keys=True)
 
 
-def fact_check(body, f):
-    """Problems with model text: numbers not in the facts, capitalized names not in the facts. [] = passes."""
-    text = " ".join([body.get("headline", "")] + list(body.get("similarities", [])) + list(body.get("differences", [])))
-    known = _fact_text(f).lower()
+# Fact check (PR #17 review). Names: a known drug or company name that isn't in the facts fails, in any case and
+# anywhere; so does a capitalized word in mid-sentence that isn't in the facts (the first word of a sentence or
+# bullet may be capitalized). Numbers: each whole number must be a number of the facts, rounded to the text's own
+# decimals (0.523 -> 0.52 or 0.5; within half a unit of the last digit) or as a percentage (52%); a whole number
+# only stands for a fact of 1 or more, or an exact whole number, so 0.52 can't become "1".
+# Words that may be capitalized mid-sentence without being in the facts: sources and terms the card is about.
+CAPS_OK = {"atc", "fda", "us", "u.s", "medicaid", "medicare", "sdud", "bass", "trx", "rx", "nme", "bla", "nda"}
+# Parts of company names that aren't names (sponsor names in the pool are upper case: "OTSUKA PHARMACEUTICAL CO LTD")
+COMPANY_WORDS = {"pharmaceutical", "pharmaceuticals", "pharma", "pharms", "pharmaceutica", "therapeutics", "inc",
+                 "llc", "ltd", "co", "corp", "corporation", "company", "laboratories", "labs", "sciences", "science",
+                 "holdings", "international", "usa", "america", "americas", "global", "group", "research",
+                 "development", "products", "healthcare", "health", "medical", "biologics", "biopharma", "biotech",
+                 "bio", "oncology", "north", "and", "the", "of", "plc", "ag", "sa", "gmbh", "kk", "lp", "ireland",
+                 "uk", "us", "division", "sub", "subsidiary", "unit", "operations", "worldwide", "specialty"}
+# Salts and plain words in Drugs@FDA ingredient names, which say nothing about a particular drug
+SALT_WORDS = {"sodium", "potassium", "calcium", "magnesium", "hydrochloride", "hcl", "sulfate", "acetate",
+              "citrate", "phosphate", "chloride", "acid", "water", "maleate", "tartrate", "mesylate", "besylate",
+              "bromide", "succinate", "fumarate", "oxide", "hydrobromide", "monohydrate", "dihydrate", "anhydrous",
+              "extended", "release", "injection", "tablets", "dextrose", "oxygen", "alcohol", "lactate", "zinc",
+              "iron", "hydroxide", "carbonate", "bicarbonate", "nitrate", "gluconate", "dipropionate", "propionate",
+              "hydrate", "free", "base", "complex", "kit", "solution", "oral", "topical", "and", "in", "with"}
+_WORD = re.compile(r"[A-Za-z][A-Za-z'’\-]*")
+_NUMBER = re.compile(r"(?<![A-Za-z0-9.])(?:Q)?(\d+(?:\.\d+)?)(%?)(?!\d)")
+_ATC_LEVEL = re.compile(r"\bATC\s*$", re.IGNORECASE)
+
+
+def _norm(word):
+    w = word.replace("’", "'").lower().strip("'-")
+    return w[:-2] if w.endswith("'s") else w
+
+
+def _name_tokens(value, drop=frozenset(), min_len=4):
+    return {w for w in (_norm(t) for t in re.split(r"[^A-Za-z'\-]+", str(value or ""))) if len(w) >= min_len
+            and w not in drop and w not in _STOP}
+
+
+@lru_cache(maxsize=4)
+def known_names(processed=None, raw=None):
+    """Drug and company names the fact check knows: {'drugs': ..., 'companies': ...}, lower case.
+
+    From candidate_pool.csv (brand, generic, sponsor) and, when it's on this machine, Drugs@FDA's Products.txt
+    (brand names and active ingredients; data/raw/ is gitignored, so not every machine has it). Drugs@FDA words that
+    the pool's indications or dosage forms use are left out: they're disease or form words."""
+    from pipeline.common import PROCESSED, RAW
+    processed, raw = Path(processed or PROCESSED), Path(raw or RAW)
+    drugs, companies, vocab = set(), set(), set()
+    pool = processed / "candidate_pool.csv"
+    if pool.exists():
+        p = pd.read_csv(pool, dtype=str, keep_default_na=False)
+        for col in ("indication", "dosage_form"):  # disease and form words: never names
+            for v in p.get(col, []):
+                vocab |= {_norm(t) for t in _WORD.findall(v)}
+        for col in ("brand_name", "generic_name"):
+            for v in p.get(col, []):
+                drugs |= _name_tokens(v, SALT_WORDS)
+        for v in p.get("sponsor", []):
+            companies |= _name_tokens(v, COMPANY_WORDS)
+    products = raw / "drugsfda" / "unzipped" / "Products.txt"
+    if products.exists():
+        d = pd.read_csv(products, sep="\t", dtype=str, keep_default_na=False, encoding="latin-1",
+                        usecols=["DrugName", "ActiveIngredient"], on_bad_lines="skip")
+        for v in pd.concat([d.DrugName, d.ActiveIngredient]).unique():  # product names include "ARTHRITIS PAIN"
+            drugs |= _name_tokens(v, SALT_WORDS | BOILERPLATE | vocab, min_len=5)
+    return {"drugs": frozenset(drugs), "companies": frozenset(companies - drugs)}
+
+
+def _fact_words(f):
+    words = set()
+    for v in _strings(f):
+        for t in _WORD.findall(v):
+            w = _norm(t)
+            words.add(w)
+            words.update(_norm(part) for part in w.split("-"))
+    return words
+
+
+def _strings(x):
+    if isinstance(x, dict):
+        for v in x.values():
+            yield from _strings(v)
+    elif isinstance(x, (list, tuple)):
+        for v in x:
+            yield from _strings(v)
+    elif isinstance(x, str):
+        yield x
+
+
+def _fact_numbers(f, out=None):
+    out = set() if out is None else out
+    if isinstance(f, dict):
+        for v in f.values():
+            _fact_numbers(v, out)
+    elif isinstance(f, (list, tuple)):
+        for v in f:
+            _fact_numbers(v, out)
+    elif isinstance(f, bool) or f is None:
+        pass
+    elif isinstance(f, (int, float)):
+        if f == f:
+            out.add(Decimal(repr(f)))
+    elif isinstance(f, str):
+        out.update(Decimal(n) for n, _ in _NUMBER.findall(f))
+    return out
+
+
+def _rounds_to(fact, text, decimals):
+    """fact rounds to text at text's decimals: within half a unit of its last digit, either way at the boundary
+    (a fact stored as 0.075 may be written 0.07 or 0.08: the template's own 0.0746 -> 0.075 -> "0.07")."""
+    if decimals == 0 and abs(fact) < 1 and fact != fact.to_integral_value():
+        return False  # 0.52 isn't "1"
+    return abs(fact - text) <= Decimal(5).scaleb(-decimals - 1)
+
+
+def number_ok(text_number, percent, numbers):
+    """A number written in the text stands for one of the facts' numbers (rounded, or as a percentage)."""
+    t = Decimal(text_number)
+    d = len(text_number.split(".")[1]) if "." in text_number else 0
+    return any(_rounds_to(n, t, d) or (percent and _rounds_to(n * 100, t, d)) for n in numbers)
+
+
+def _sentences(body):
+    """The text's sentences: the headline and each bullet, split at sentence ends."""
+    for part in [body.get("headline", "")] + list(body.get("similarities", [])) + list(body.get("differences", [])):
+        yield from (x for x in re.split(r"(?<=[.!?;])\s+", str(part)) if x.strip())
+
+
+def fact_check(body, f, names=None):
+    """Problems with model text: numbers, drug or company names, and mid-sentence capitalized words that aren't in
+    the facts. [] = passes. names: known_names() (default: from data/processed and, if present, Drugs@FDA)."""
+    names = known_names() if names is None else names
+    words, numbers = _fact_words(f), _fact_numbers(f)
     problems = []
-    for num in re.findall(r"\d+(?:\.\d+)?", text):
-        variants = {num, num.rstrip("0").rstrip(".") if "." in num else num}
-        if not any(v in known for v in variants):
-            problems.append(f"number {num} not in the facts")
-    for name in re.findall(r"\b[A-Z][a-zA-Z]{3,}\b", text):
-        if name.lower() not in known and name not in {"Same", "Both", "Different", "Its", "This", "That", "The",
-                                                      "Target", "Analog", "Indication", "Class", "Similar",
-                                                      "Ranked", "Ranks", "Similarity", "Dosing", "Line", "Their",
-                                                      "These", "Medicaid", "Bass", "Peak", "Also", "Unlike"}:
-            problems.append(f"name {name} not in the facts")
-    return problems
+    for sentence in _sentences(body):
+        for m in _NUMBER.finditer(sentence):
+            num, pct = m.groups()
+            if _ATC_LEVEL.search(sentence[:m.start()]) and num in {"1", "2", "3", "4", "5"}:
+                continue  # "ATC 4 class"
+            if not number_ok(num, pct, numbers):
+                problems.append(f"number {num}{pct} not in the facts")
+        for i, m in enumerate(_WORD.finditer(sentence)):
+            token, w = m.group(), _norm(m.group())
+            if w in words:
+                continue
+            if w in names.get("drugs", ()) or (token[0].isupper() and w in names.get("companies", ())):
+                problems.append(f"name {token} not in the facts")
+            elif token[0].isupper() and i > 0 and w not in CAPS_OK and w not in _STOP:
+                problems.append(f"name {token} not in the facts")
+    return list(dict.fromkeys(problems))
+
+
+def cache_key(f, model):
+    """Card cache key: the model, the prompt and schema, and the facts, so a new model or prompt writes new cards."""
+    text = "\x1f".join([model, PROMPT, json.dumps(SCHEMA, sort_keys=True), _fact_text(f)])
+    return hashlib.sha1(text.encode()).hexdigest()[:12]
 
 
 class Summarizer:
@@ -251,10 +393,11 @@ class Summarizer:
 
     llm: an object with generate_json (default llm.get_llm()); cache_dir: where Gemini cards are cached."""
 
-    def __init__(self, mode="template", llm=None, cache_dir=None, scenario=""):
+    def __init__(self, mode="template", llm=None, cache_dir=None, scenario="", names=None):
         if mode not in MODES:
             raise SummaryError(f"summaries must be one of {MODES}, got {mode!r}")
         self.scenario = scenario
+        self.names = names  # known_names() by default, loaded on the first model card
         self.cache_dir = Path(cache_dir) if cache_dir else None
         self.llm = None
         if mode != "template":
@@ -277,7 +420,7 @@ class Summarizer:
         f = facts(score_row, cand, target, weights, evidence, use_evidence, target_class_names)
         if self.llm is None:
             return _card(f, template_card(f), "template")
-        key = hashlib.sha1(_fact_text(f).encode()).hexdigest()[:12]
+        key = cache_key(f, getattr(self.llm, "name", "model"))
         path = (self.cache_dir / "cards" / (self.scenario or "default") / f"{f['analog_id']}-{key}.json"
                 if self.cache_dir else None)
         if path is not None and path.exists():
@@ -286,7 +429,7 @@ class Summarizer:
             body = self.llm.generate_json(PROMPT.format(facts=_fact_text(f)), SCHEMA)
         except Exception as e:  # any model failure falls back to the facts-only card
             return _card(f, template_card(f), f"template (model call failed: {type(e).__name__})")
-        problems = fact_check(body, f)
+        problems = fact_check(body, f, self.names)
         if problems:
             return _card(f, template_card(f), "template (model output failed the fact check: "
                          + "; ".join(problems[:3]) + ")")

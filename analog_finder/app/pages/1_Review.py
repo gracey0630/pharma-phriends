@@ -79,7 +79,9 @@ if rows.empty:
 pages = (len(rows) - 1) // PER_PAGE + 1
 if st.session_state.get("page", 1) > pages:  # a filter shrank the list
     st.session_state["page"] = 1
-page =st.number_input(f"Page (of {pages}; {len(rows)} rows)", 1, pages, 1, key="page") if pages > 1 else 1
+# No default value: the page starts at the minimum (1), and setting st.session_state["page"] above doesn't clash
+# with a widget default (Streamlit's "default value but also set via the Session State API" warning).
+page = st.number_input(f"Page (of {pages}; {len(rows)} rows)", 1, pages, key="page") if pages > 1 else 1
 start = (page - 1) * PER_PAGE
 
 for r in rows.iloc[start:start + PER_PAGE].to_dict("records"):
@@ -90,8 +92,9 @@ for r in rows.iloc[start:start + PER_PAGE].to_dict("records"):
                     f":{CHECK_COLOURS.get(check, 'gray')}[{esc(check)}]")
         st.markdown(f"Value: **{esc(r['value'])}**")
         st.markdown("> " + esc(r["quote"]).replace("\n", " "))
-        st.markdown(f"Source: [{esc(r['source_type'] or 'link')}]({r['source_url']}) · read by "
-                    f"{esc(r['extracted_by'])} on {esc(r['extracted_at'])}")
+        url, kind = review.link(r["source_url"]), esc(r["source_type"] or "link")
+        source = f"[{kind}]({url})" if url else f"{kind} ({esc(r['source_url']) or 'no link'})"
+        st.markdown(f"Source: {source} · read by {esc(r['extracted_by'])} on {esc(r['extracted_at'])}")
         if r["notes"]:
             st.warning(r["notes"])
         if r["status"] != "waiting":
@@ -100,6 +103,10 @@ for r in rows.iloc[start:start + PER_PAGE].to_dict("records"):
             continue
         if r["field"] in review.SOURCE_CHECK_FIELDS:
             st.caption("Not a label quote: open the source and check the value yourself.")
+        if review.is_forecast(r["field"], r["quote"]):
+            st.warning("This quote reads like a forecast (\"expected\", \"plans to\" or [excerpt, verify]), not a "
+                       "launch. Approve only if the source confirms the drug actually launched; otherwise reject "
+                       f"with \"{review.FORECAST_REASON}\".", icon="⚠️")
 
         with st.form(key=f"form-{n}"):
             if r["field"] == "line_of_therapy":

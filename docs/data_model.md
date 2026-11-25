@@ -45,7 +45,7 @@ Tables, columns, sources, dependencies and owners, following the [user journey](
 | 22 | fills per patient | Empty; dropped ([decisions](decisions.md)) | none |
 | 23 | generic / exclusivity date | First quarter (`YYYYQn`) in which a generic (ANDA, same active ingredient) or biosimilar (351(k) referencing the brand) NDC is dispensed in Medicaid SDUD; blank = none yet. Approval and NDC listing aren't used because generics are often approved and listed years before patents let them launch | all |
 
-"Seed 8" are the prototype brands: Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu, Ibrance. Label-read values live in `data/reference/analog_evidence.csv` with a quote and link. They are copied into `analogs.csv` even before approval, and `checks.md` lists every analog with unapproved values.
+"Seed 8" are the prototype brands: Otezla, Cosentyx, Taltz, Siliq, Tremfya, Skyrizi, Sotyktu, Ibrance. Label-read values live in `data/reference/analog_evidence.csv` with a quote and link. Only approved values are copied into `analogs.csv` (decisions.md 2026-11-24); values waiting for review stay in `analog_evidence.csv` (same `analog_id`), and `analog_features.fields_not_approved` and `checks.md` show which analogs have them.
 
 **Supporting files** (`data/processed/`, rebuilt every run):
 - `sdud_quarterly.csv`: analog × quarter, long format; metrics `trx` (mid estimate), `trx_low`, `trx_high`, `trx_reported`, `suppressed_rows`, `imputed_share`, `units`, `reimbursed_usd`
